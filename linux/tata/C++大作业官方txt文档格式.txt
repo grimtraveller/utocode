@@ -1,0 +1,47 @@
+
+the file format might be something like:
+
+
+cart form:
+_CART_ owner \n location ( meal \n cost \n rating )* 
+
+
+restaurant form:
+_RESTAURANT_ name \n owner \n address \n phone \n openingHour \n ( meal \n cost \n rating )*
+
+
+
+
+
+example:
+
+
+_RESTAURANT_
+Jai's Palace
+Jai
+123 Wusi Street, Beijing
+123456
+9am 
+noodles
+2.6
+Yummy
+soup
+3
+Okay
+pie
+5.5
+Avoid
+#
+_CART_
+Joanne
+Cairns
+noodles
+2.2
+Okay
+jianbing guozi
+2.5
+Yummy
+yangrou chuan
+4.5
+Okay
+#

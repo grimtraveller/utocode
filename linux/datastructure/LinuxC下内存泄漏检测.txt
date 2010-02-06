@@ -1,0 +1,13 @@
+1 代码中加入
+#include <mcheck.h>
+
+int mian()
+{
+	mtrace();
+	...
+}
+2 编译 gcc x.c -o -lmcheck x
+3 设置环境变量 MALLOC_TRACE=x.log
+4 执行 ./x 
+5 mtrace ./x x.log
+6 enjoy it
