@@ -1,2 +1,11 @@
-test ,when delete project status.
+initial test 
+	when delete project status.
 2010 02 06 add linux demo codes
+2010 02 06 add pfx demo codes.
+	these codes was ready for PFX system in shxy,but the codes is not used in
+	that project.
+
+
+
+-
+vim:filetype=changelog
