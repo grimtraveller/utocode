@@ -5,6 +5,13 @@ initial test
 	these codes was ready for PFX system in shxy,but the codes is not used in
 	that project.
 2010 02 07 add codes in win32
+2010 02 20
+	add mmf_t			Memory Map File
+	add cleanvs6.bat	delete unuseful files in vc6 project
+	mod cleanvs8.bat	
+	add exception_t.c	set my own function to deal with exception
+	add loading.c		go round
+	add rand_matrix.c	make rand number
 
 
 
