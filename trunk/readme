@@ -12,6 +12,8 @@ initial test
 	add exception_t.c	set my own function to deal with exception
 	add loading.c		go round
 	add rand_matrix.c	make rand number
+2010 02 28
+	add hibaidu_editor	baidu space offline edit
 
 
 
