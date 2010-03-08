@@ -14,7 +14,8 @@ initial test
 	add rand_matrix.c	make rand number
 2010 02 28
 	add hibaidu_editor	baidu space offline edit
-
+2010 03 07
+	create a common pulic library
 
 
 -
