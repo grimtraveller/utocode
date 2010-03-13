@@ -1,0 +1,22 @@
+TODO
+	增加登录管理功能
+文件结构
+ /
+ │  conn.asp	连接数据库
+ │  view.asp	新闻显示页面
+ │  index.asp	新闻索引页面
+ │
+ ├─admin
+ │      conn.asp	连接数据库
+ │      del.asp	删除新闻
+ │      save.asp	保存新闻
+ │      edit.asp	增加/编辑新闻
+ │      ls.asp		新闻列表
+ │
+ └─date
+		 news.mdb	数据库文件
+
+
+
+============
+vim:filetype=changelog
