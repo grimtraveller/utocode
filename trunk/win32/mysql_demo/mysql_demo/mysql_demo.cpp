@@ -65,7 +65,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	/* connect database*/
 
 
-	char *serv = "localhost";
+	//char *serv = "localhost";
+	//char* serv = "192.168.0.2";
+	char* serv = "192.168.0.1";
 	char *usr = "root";
 	char *passwd = "password"; //此处改成你的密码
 	char *db = "wg_db";

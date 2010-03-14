@@ -16,6 +16,10 @@ initial test
 	add hibaidu_editor	baidu space offline edit
 2010 03 07
 	create a common pulic library
+2010 03 14
+	modify mysqldemo_t
+	move mysql database to virtual pc,so modify source about connect database
+	add allow_any_ip.sql for all any ip host to access database
 
 
 -
