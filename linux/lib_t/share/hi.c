@@ -1,4 +1,4 @@
-#include "hilib.h"
+#include "libhi.h"
 int
 main()
 {
