@@ -1,25 +1,26 @@
 /**
-  @file		sq_squeue.h
+  @file		sq_queue.h
   @brief	declaration sq_squeue structure and functions
-  @details	
+  @details	more see Makefile
   @author	zuohaitao
   @date		2009-03-28
   @warning	
   @bug		
   */
+
 #ifndef SQ_QUEUE_H
 #define SQ_QUEUE_H
 #include "public.h"
-//element
+//! element
 typedef int Element;
-//element head
+//! element head
 typedef struct tagSqQueueHead
 {
-	int maxSize;
-	Element* pBase;
-	BOOLEAN bFull;
-	int front;
-	int rear;	//alway point a empty item
+	int maxSize;	//!< SqQueue max size
+	Element* pBase;	//!< SqQueue base address
+	BOOLEAN bFull;	//!< SqQueue is full or not
+	int front;		//!< SqQueue's top
+	int rear;	//!< SqQueue's bottom alway point a empty item
 
 } SqQueue;
 /**
@@ -40,34 +41,36 @@ extern void CreateSqQueue(SqQueue* head, int maxSize);
 extern void DeleteSqQueue(SqQueue* head);
 
 /**
-  @name		*
-  @brief	
-  @param	 [I/O] 
-  @return	
+  @name		InitSqQueue()
+  @brief	Initial SqQueue
+  @param	SqQueue* head [I/ ] SqQueue 
+  @param	int maxSize [I/ ] SqQueue length
+  @param	Element* pMem [I/ ] memory address
+  @return	void
   */
 extern void InitSqQueue(SqQueue* head, int maxSize, Element* pMem);
 
 /**
-  @name		*
-  @brief	
-  @param	 [I/O] 
-  @return	
+  @name		IsSqQueueEmpty()
+  @brief	Is SqQueue empty or not
+  @param	SqQueue* head [I/ ] 
+  @return	BOOLEAN TRUE = empty or FALSE 
   */
 extern BOOLEAN IsSqQueueEmpty(SqQueue* head);
 
 /**
-  @name		*
-  @brief	
-  @param	 [I/O] 
-  @return	
+  @name		GetSqQueueLen()
+  @brief	Get SqQueue Length
+  @param	SqQueue* head [I/ ] 
+  @return	int - length
   */
 extern int GetSqQueueLen(SqQueue* head);
 
 /**
-  @name		*
-  @brief	
-  @param	 [I/O] 
-  @return	
+  @name		ClearSqQueue
+  @brief	clean SqQueue
+  @param	SqQueue* head [I/ ] 
+  @return	void
   */
 extern void ClearSqQueue(SqQueue* head);
 
@@ -99,4 +102,4 @@ extern BOOLEAN PopSqQueueElem(SqQueue* head, Element* e);
   */
 extern BOOLEAN GetSqQueueElem(SqQueue* head, int index, Element* e);
 
-#endif	//SQ_QUEUE_H
+#endif	//SQ_QUEUE_H*/

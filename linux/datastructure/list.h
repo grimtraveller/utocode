@@ -12,20 +12,20 @@
 #include "public.h"
 typedef int Element;			//!< element in list
 
-//! a node in list
+//! node in list
 typedef struct ListItem
 {
-	Element e;
-	struct ListItem* next;
+	Element e;					//!< element
+	struct ListItem* next;		//!< point to next
 } LISTITEM;
 
 //! list header
 typedef struct ListHead
 {
-	struct ListItem* next;
+	struct ListItem* next;	//!< point to next
 } LISTHEAD;
 
-//list
+//! list
 typedef struct ListHead LIST;
 
 //callback function about travelList
