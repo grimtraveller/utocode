@@ -1,4 +1,14 @@
+/**
+  @file		public_t.c
+  @brief	test public
+  @details	
+  @author	zuohaitao
+  @date		2009-03-20
+  @warning	
+  @bug		
+  */
 #include "public.h"
+
 int main(int argc, char* argv[])
 {
 	printf("NULL=%d TRUE=%d FALSE=%d OK=%d ERROR=%d INFEASIBLE=%d OVERFLOW=%d\n",

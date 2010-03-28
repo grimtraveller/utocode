@@ -1,11 +1,15 @@
-/*
- * Name:	matchbrackets.c
- * Descr:	match brackets
- * Usage:	$>matchbrackets
- *			$>2+[3+(7+8)*7
- * Author:	zuohaitao
- * Date:	2010-01-29
- */
+/**
+  @file		matchbrackets.c
+  @brief	match brackets
+  @details	usage 
+			$>matchbrackets
+			$>2+[3+(7+8)*7
+  @author	zuohaitao
+  @date		2010-01-29
+  @warning	
+  @bug		
+  */
+
 #include "public.h"
 #include "stack.h"
 #define Bshe	'{'
@@ -14,6 +18,14 @@
 #define Mhe		']'
 #define Sshe	'('
 #define She		')'
+
+/**
+  @name		match
+  @brief	match function
+  @param	char he [I/ ]  left bracket
+  @param	char she [I/ ]  right bracket
+  @return	BOOLEAN
+  */
 BOOLEAN match(char he, char she)
 {
 	if (((Bhe == he) AND (Bshe == she)) 
@@ -27,6 +39,8 @@ BOOLEAN match(char he, char she)
 		return FALSE;
 	}
 }
+
+
 int main()
 {
 	char buf[1000] = {0};

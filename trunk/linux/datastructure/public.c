@@ -1,12 +1,16 @@
-/*
- * Name:	public.c
- * Desc:	pack base system call
- * Usage:	$>gcc -c public.c -o public.o
- * Author:	zuohaitao
- * Date:	2009-03-02
- *
- */
+/**
+  @file		public.c
+  @brief	pack base system call
+  @details	
+			usage $>gcc -c public.c -o public.o
+  @author	zuohaitao
+  @date		2009-03-02
+  @warning	
+  @bug		
+  */
+
 #include "public.h"
+
 void DSperror(const char* s)
 {
 	perror(s);
@@ -44,7 +48,3 @@ void DSfree(void* ptr)
 		ptr = NULL;
 	}
 }
-
-
-
-

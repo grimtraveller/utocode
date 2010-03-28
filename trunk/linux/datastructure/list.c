@@ -1,16 +1,20 @@
-/*
- * Name:	list.c
- * Desc:	some functions about list
- * Usage:	gcc -c list.c -o list.o
- * Author:	zuohaitao 
- * Date:	2009-03-02
- */
+/**
+  @file		list.c
+  @brief	implement functions about list
+  @details	usage - see ./Makefile
+  @author	zuohaitao
+  @date		2009-03-02
+  @warning	
+  @bug		
+  */
 
 #include "list.h"
+
 void InitList(LISTHEAD* L)
 {
 	L->next = NULL;
 }
+
 void TravelList(LISTHEAD* LA, VISITFUN pfunVisit)
 {
 	LISTITEM* item;
@@ -22,7 +26,7 @@ void TravelList(LISTHEAD* LA, VISITFUN pfunVisit)
 	}
 }
 
-long GetListElem(LISTHEAD* L, int pos, Element* e)
+BOOLEAN GetListElem(LISTHEAD* L, int pos, Element* e)
 {
 	int i;
 	LISTITEM* where;

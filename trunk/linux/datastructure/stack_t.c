@@ -1,3 +1,12 @@
+/**
+  @file		stack_t.c
+  @brief	test stack
+  @details	
+  @author	zuohaitao
+  @date		2010-03-28
+  @warning	
+  @bug		
+  */
 #include "stack.h"
 #include <stdlib.h>
 #include <stdio.h>

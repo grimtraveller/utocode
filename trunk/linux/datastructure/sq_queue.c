@@ -1,3 +1,13 @@
+/**
+  @file		sq_queue.c
+  @brief	squeue functions
+  @details	
+  @author	zuohaitao
+  @date		2009-03-28
+  @warning	
+  @bug		
+  */
+
 #include "public.h"
 #include "sq_queue.h"
 void CreateSqQueue(SqQueue* head, int maxSize)

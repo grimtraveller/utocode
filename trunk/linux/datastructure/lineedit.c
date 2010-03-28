@@ -1,15 +1,17 @@
-/*
- * Name:	lineedit.c
- * Descr:	a line edit applicaion
- * Usage:	$>lineedit
- * Author:	zuohaitao
- * Date:	2010 02 03
- */
+/**
+  @file		lineedit.c
+  @brief	a line edit application
+  @details	usage - $>lineedit
+  @author	zuohaitao
+  @date		2010-02-03
+  @warning	
+  @bug		
+  */
+
 #include "public.h"
 #include "stack.h"
-#define BACKSPACE	'#'
-#define DELLINE		'@'
-#define BUFLEN		1000
+#define BACKSPACE	'#'			//!< backspace
+#define DELLINE		'@'			//!< delete current line
 int
 main()
 {

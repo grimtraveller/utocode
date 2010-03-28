@@ -1,4 +1,14 @@
-//#include "public.h"
+/**
+  @file		DSstring.c	
+  @brief	implement string functions
+  @details	see more ./Makefile
+  @author	zuohaitao
+  @date		2010-03-28
+  @warning	many functions are NOT implement
+  @bug		NO test
+  */
+
+#include "public.h"
 #include "DSstring.h"
 #include <string.h>
 void SetStringN(char *s, const char c, int n)
