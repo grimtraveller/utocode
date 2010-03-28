@@ -1,3 +1,11 @@
+/**
+ * @file	stack.c
+ * @brief	implement stack functions
+ * @details	
+ * @author	zuohaitao
+ * @date	2010 03 28
+ */
+
 #include "public.h"
 #include "stack.h"
 

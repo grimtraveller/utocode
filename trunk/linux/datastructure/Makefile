@@ -1,3 +1,13 @@
+#
+# /*!@file	Makefile
+#  *@brief	Make DataStruct project
+#  *
+#  *usage	$>make all
+#  			$>make clean
+#  *@author	zuohaitao
+#  *@date	2010-03-26
+#  */
+#
 CC=gcc
 CFLAGS=-ggdb -Wall -O
 INCD=-I.

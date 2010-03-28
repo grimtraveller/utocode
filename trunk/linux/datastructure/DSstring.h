@@ -11,11 +11,11 @@
 #ifndef DSSTRING_H
 #define DSSTRING_H
 #include "public.h"
-/*
+/**
  * @name	SetStringN()
  * @brief	like memset
  *
- *			set n - 1 char in string value and *(s+n-1) = '\0' 
+ *			set n - 1 char in string value and *(s+n-1) = 0 
  * @param	char* s [I/ ] string
  * @param	const char c [I/ ] set value
  * @param	int n [I/ ] size
@@ -26,7 +26,7 @@ extern void SetStringN(char* s, const char c, int n);
 /**
   @name			CpyStringN()
   @brief		like strncpy
-				strncpy n - 1 chars and set *(des+n-1) = '\0' 
+				strncpy n - 1 chars and set *(des+n-1) = 0 
   @param		char* des [ /O] destination address
   @param		char* src [I/ ] source address
   @param		char* n   [I/ ] destination max size

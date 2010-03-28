@@ -1,7 +1,7 @@
 /**
   @file		stack.h
   @brief	declaration stack functions
-  @details	
+  @details	more see Makefile
   @author	zuohaitao
   @date		2009-03-28
   @warning	
@@ -14,14 +14,16 @@
 #define	STACKINCREMENT	10
 #define SElement int
 //typedef int SElement;
+//! stack
 struct tagStack
 {
-	SElement* base;
-	SElement* top;
-	int nSize;
+	SElement* base;	//!< stack base
+	SElement* top;	//!< stack top
+	int nSize;		//!< stack size
 };
-//!@brief tagStack
+//! tagStack
 typedef struct tagStack STACK;
+
 /**
   @name		CreateStack()
   @brief	create stack

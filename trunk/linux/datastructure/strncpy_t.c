@@ -1,3 +1,10 @@
+/**
+ * @file	strncpy_t.c
+ * @brief	test system call strncpy() function
+ * @details	
+ * @author	zuohaitao
+ * @date	2010 03 26
+ */
 int main()
 {
 	char s[11];
