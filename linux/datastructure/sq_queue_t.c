@@ -1,3 +1,12 @@
+/**
+  @file		sq_queue_t.c
+  @brief	test sqqueue
+  @details	
+  @author	zuohaitao
+  @date		2010-03-28
+  @warning	
+  @bug		
+  */
 #include "public.h"
 #include "sq_queue.h"
 int main()

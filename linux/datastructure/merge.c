@@ -1,11 +1,16 @@
-/*
- * Name:	merge.c
- * Desc:	merge two list
- * Usage:	$>make merge
- *			$>merge
- * Author:	zuohaitao
- * date:	2009-03-02
- */
+/**
+  @file		merge.c
+  @brief	merge two list
+  @details	
+			usage
+			$>make merge
+			$>merge
+  @author	zuohaitao
+  @date		2009-03-02
+  @warning	
+  @bug		
+  */
+
 #include "public.h"
 #include "list.h"
 
@@ -51,11 +56,24 @@ int main()
 	return 0;
 }
 
+/**
+  @name		ShowItem()
+  @brief	print screen
+  @param	LISTITEM* item [I/ ] item 
+  @return	void
+  */
 void ShowItem(LISTITEM* item)
 {
 	printf("%d ", item->e);
 }
 
+/**
+  @name		MergeList
+  @brief	merge two list
+  @param	LISTHEAD* LA [I/O] all list
+  @param	LISTHEAD* LB [I/ ] list
+  @return	void
+  */
 void MergeList(LISTHEAD* LA, LISTHEAD* LB)
 {
 	int i;

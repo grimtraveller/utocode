@@ -1,17 +1,20 @@
-/*
- * @file	conversion.c
- * @brief	deciaml convert num
- * 
- * usage	$>conversion 2 	
- * @author	zuohaitao
- * @date	2010-01-29
- */
+/**
+  @file		conversion.c
+  @brief	deciaml convert number
+  @details	usage
+			$>conversion 2
+  @author	zuohaitao
+  @date		2010-03-28
+  @warning	none
+  @bug		none
+  */
 #include "stack.h"
 int main(int argc, char* argv[])
 {
 	int b,c;
 	int i;
 	STACK stack;
+	//! check argments
 	if (argc != 2)
 	{
 		printf("Usage: conversion num\ne.g. conversion 2 (decimal convert binary)\n");
@@ -20,6 +23,7 @@ int main(int argc, char* argv[])
 	c = atoi(argv[1]);
 	scanf("%d", &b);
 	printf("->\n");
+	//! save every bit in stack
 	CreateStack(&stack);
 	do
 	{
