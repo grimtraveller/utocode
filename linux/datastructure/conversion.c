@@ -1,9 +1,10 @@
 /*
- * Name:	conversion.c
- * Desc:	deciaml convert num
- * Usage:	$>conversion 2 	
- * Author:	zuohaitao
- * Date:	2010-01-29
+ * @file	conversion.c
+ * @brief	deciaml convert num
+ * 
+ * usage	$>conversion 2 	
+ * @author	zuohaitao
+ * @date	2010-01-29
  */
 #include "stack.h"
 int main(int argc, char* argv[])
