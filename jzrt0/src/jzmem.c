@@ -1,3 +1,12 @@
+/**
+  @file		jzmem.c	
+  @brief	implement memory functions
+  @details	
+  @author	zuohaitao
+  @date		2010-04-18
+  @warning	
+  @bug		
+  */
 #include "jzmem.h"
 #include "jztype.h"
 #include <stdlib.h>
@@ -39,10 +48,15 @@ void* jzmalloc(unsigned int size, const char* file, int line)
 {
 	jzmem_item_st* p;
 	p = malloc(sizeof(jzmem_item_st) + size);
+	if (NULL == p)
+	{
+		perror("jzmalloc");
+		exit(1);
+	}
 	memcpy(p->flag, JZMEM_ITEM_FLAG, JZMEM_ITEM_FLAG_LEN);
 	strncpy(p->file, file, JZ_MAX_PATH);
 	p->line = line;
-	p->real_p = p + sizeof(jzmem_item_st);
+	p->real_p = (char*)p + sizeof(jzmem_item_st);
 	p->len = size;
 	p->prev = NULL;
 	p->next = g_pjzmem->next;
