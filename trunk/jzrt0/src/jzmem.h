@@ -1,3 +1,18 @@
+/**
+  @file		jzmem.h
+  @brief	declare memory functions
+  @details	
+			usage 
+				JZINIT()
+				JZMALLOC()
+				JZREALLOC()
+				JZFREE()
+				JZUNINIT()
+  @author	zuohaitao
+  @date		2010-04-18
+  @warning	
+  @bug		
+  */
 #ifndef JZMEMORY_H
 #define JZMEMORY_H
 #ifdef __cplusplus
@@ -7,8 +22,12 @@ extern "C"
 //jzrmemory macro
 #include "jztype.h"
 #ifdef DEBUG
+#define JZINIT(p)\
+	construct_jzmem(p)
 #define	JZMALLOC(size)\
 	jzmalloc(size, __FILE__, __LINE__)
+#define JZREALLOC(p, size)\
+	jzrealloc(p, size)
 #else
 #define JZMALLOC(size)\
 	malloc(size)
