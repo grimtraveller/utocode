@@ -1,3 +1,4 @@
+#include <windows.h>
 #include "jzmem.h"
 #include <stdio.h>
 #include <memory.h>
@@ -25,6 +26,7 @@ main()
 	count = make_rand(ALLOC_COUNT_MAX);
 	printf("malloc count = %d\n", count);
 	construct_jzmem(NULL);
+	
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
 	{

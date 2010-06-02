@@ -1,14 +1,17 @@
 /**
-  @file		jztyep.h
-  @brief	common macro, type, operation, and myself type for portable 
-  @details	
+  @file		jztype.h
+  @brief	define crossplatform c inline types
+  @details	interger float etc
   @author	zuohaitao
-  @date		2010-04-18
+  @date		2010-05-28
   @warning	
   @bug		
+			line 73 64 bit integer in linux 
+			line 48 - 53 test MAX_PATH in linux
   */
 #ifndef JZTYPE_H
 #define JZTYPE_H
+#include <stddef.h>
 /**
  * @brief inalid point
  */
@@ -44,23 +47,45 @@
  */
 #define	OVERFLOW	-2
 /**
- * logic operation 'and'
+ * @brief logic operation 'and'
  */
 #define	AND		&&
 /**
- * logic operation 'or'
+ * @brief logic operation 'or'
  */
 #define	OR		||
 /**
  * @brief function status normally, is OK ERROR 
  */
 typedef int status;
-//USELESS
-#define MACHINE_WORD_LEN (sizeof(long)/sizeof(char))
-#define JZ_MAX_PATH	260
-
-/*USELESS
- * @brief zjmem size type
- */
-typedef unsigned int size_jz;
+#ifdef WIN32
+#define JZ_MAX_PATH	MAX_PATH
+#else
+#define JZ_MAX_PATH PATH_MAX
 #endif
+/**
+ * @brief jzrt0 types
+ */
+typedef signed char jzint8;
+typedef unsigned char jzuint8;
+
+typedef signed short jzint16;
+typedef unsigned short jzuint16;
+
+typedef int jzint32;
+typedef unsigned int jzuint32;
+
+#ifdef WIN32
+typedef long long jzint64;
+typedef unsigned long long jzuint64;
+#else
+//typedef long jzint64;
+#endif
+typedef float jzfloat32;
+typedef double jzfloat64;
+typedef size_t jzsize;
+typedef jzuint32 jzoffset32;
+typedef jzuint64 jzoffset64;
+typedef ptrdiff_t PRPtrdiff;
+#endif
+
