@@ -22,6 +22,7 @@ status construct_jzmem(jzmem_header_st* pjzmem)
 		{
 			return ERROR;
 		}
+        pjzmem->next = NULL;
 		pjzmem->mgr = JZRT;
 	}
 	else

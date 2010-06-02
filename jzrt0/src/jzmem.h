@@ -21,7 +21,7 @@ extern "C"
 #endif //_cplusplus
 //jzrmemory macro
 #include "jztype.h"
-#ifdef DEBUG
+#ifdef JZDEBUG
 #define JZINIT(p)\
 	construct_jzmem(p)
 #define	JZMALLOC(size)\
@@ -31,16 +31,16 @@ extern "C"
 #else
 #define JZMALLOC(size)\
 	malloc(size)
-#endif	//DEBUG
+#endif	//JZDEBUG
 #define JZMEM_ITEM_FLAG	"jzrt0"
 #define JZMEM_ITEM_FLAG_LEN	6
 typedef struct _mem_tracer_item_st
 {
 	char flag[JZMEM_ITEM_FLAG_LEN];
 	char file[JZ_MAX_PATH];
-	int line;
+	jzuint32 line;
 	void* real_p;
-	unsigned int len;
+	jzuint32 len;
 	struct _mem_tracer_item_st* prev;
 	struct _mem_tracer_item_st* next;
 } jzmem_item_st;
@@ -52,10 +52,10 @@ typedef enum
 typedef struct _mem_tracer_header_st
 {
 	char mgr;
-	int version;
+	jzuint32 version;
 	jzmem_item_st* next;
 } jzmem_header_st;
-typedef void (*CHECKLEAKCALLBACK)(char* file, int line, void* p, int len);
+typedef void (*CHECKLEAKCALLBACK)(char* file, jzint32 line, void* p, int len);
 //memory alloc
 extern status construct_jzmem(jzmem_header_st* pjzmem);
 extern void* jzmalloc(unsigned int size, const char* file, int line);
