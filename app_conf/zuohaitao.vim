@@ -13,6 +13,7 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2010/06/05 modify _fl porting in win32
 "		2010/03/28 map _fn for function comment
 "					map _fl for file header comment
 "		2009/06/22 set tags comment
@@ -22,6 +23,7 @@
 "		2008/12/06 set tags 
 "
 "Todo:
+"		map _fl using variant to optimize
 ""			
 "Set character in linux
 if (has("unix")||has("linux"))
@@ -37,7 +39,7 @@ elseif has("linux")
 	set shell=bash
 elseif has("win32")
 	"I have to run win32 python without cygwin
-	set shell=D:\bin\cygwin\cygwin.bat
+	"set shell=D:\bin\cygwin\cygwin.bat
 endif
 "For All (Linux & Windows)
 set showmode "显示当前模式
@@ -128,11 +130,14 @@ func! z:template()
 	syntax match replace /《.*》/
 endfunc
 
+let datecmd=":r !date /T"
 map <F12> <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
-
-map _fn <ESC>^i/**<ESC>o<ESC>i @name<TAB><TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O] <ESC>o@return<TAB><ESC>o*/<ESC>o<ESC>
-
-map _fl <ESC>^o/**<ESC>o<ESC>i @file<TAB><TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/
+	map _fn <ESC>^i/**<ESC>o<ESC>i @name<TAB><TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O] <ESC>o@return<TAB><ESC>o*/<ESC>o<ESC>5k^$a
+if (has("unix")||has("linux"))
+	map _fl <ESC>i/**<ESC>o<ESC>i @file<TAB><TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
+elseif (has("win32"))
+	map _fl <ESC>i/**<ESC>o<ESC>i @file<TAB><TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date /T<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
+endif
 
 
 if (has("unix")||has("linux"))
