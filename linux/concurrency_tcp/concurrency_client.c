@@ -22,11 +22,7 @@
   @warning	
   @bug		
   */
-#ifdef WIN32
-#else
-#include <sys/socket.h>
-#endif
-#include <netinet/in.h>
+#include "../jzsock.h"
 #include <stdio.h>
 #define MAXLINE 1000
 int main()
