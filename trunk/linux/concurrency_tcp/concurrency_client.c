@@ -7,8 +7,25 @@
  * date:	2008/08/15
  *
  */
-#include <sys/types.h>
+
+/**
+  @file		concurrency_client.c
+  @brief	concurrency tcp communicate client
+  @details	
+			usage:
+				$gcc concurrency_client.c -o concurrency_client
+				$concurrency_client
+			modify:
+				why porting to win32 os
+  @author	zuohaitao
+  @date		2008/08/15
+  @warning	
+  @bug		
+  */
+#ifdef WIN32
+#else
 #include <sys/socket.h>
+#endif
 #include <netinet/in.h>
 #include <stdio.h>
 #define MAXLINE 1000
