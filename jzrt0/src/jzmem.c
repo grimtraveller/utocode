@@ -5,7 +5,7 @@
   @author	zuohaitao
   @date		2010-04-18
   @warning	
-  @bug		
+  @bug	    jzfree() exception	
   */
 #include "jzmem.h"
 #include "jztype.h"
@@ -91,7 +91,7 @@ void* jrealloc(void* ptr, size_t size)
 void jzfree(void* ptr)
 {
 	jzmem_item_st* p;
-	p = ptr;
+	p = (char*)ptr - sizeof(jzmem_item_st);
 	p->prev->next = p->next;
 	p->next->prev = p->prev;
 	free(ptr);

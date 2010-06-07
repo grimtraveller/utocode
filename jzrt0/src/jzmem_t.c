@@ -1,9 +1,11 @@
+#define JZDEBUG
 #include <windows.h>
 #include "jzmem.h"
 #include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <time.h>
+
 #define MEMSIZE_MAX		(1024*1024*1)
 #define ALLOC_COUNT_MAX (100)
 int make_rand(int max);
@@ -25,7 +27,7 @@ main()
 	srand((unsigned)time(NULL));
 	count = make_rand(ALLOC_COUNT_MAX);
 	printf("malloc count = %d\n", count);
-	construct_jzmem(NULL);
+	JZMEMINIT(NULL);
 	
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
@@ -43,8 +45,8 @@ main()
 	{
 		//JZFREE(*(pp+i));
 	}
-	jzcheck_leak(show_leak);
-	destruct_jzmem();
+	JZCHECKLEAK(show_leak);
+	JZMEMUNINIT;
 	return 0;
 }
 

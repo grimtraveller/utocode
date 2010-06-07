@@ -12,6 +12,9 @@
 #ifndef JZTYPE_H
 #define JZTYPE_H
 #include <stddef.h>
+#ifdef WIN32
+#include <windows.h>
+#endif
 /**
  * @brief inalid point
  */
