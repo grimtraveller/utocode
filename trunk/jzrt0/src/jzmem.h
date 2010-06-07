@@ -22,15 +22,19 @@ extern "C"
 //jzrmemory macro
 #include "jztype.h"
 #ifdef JZDEBUG
-#define JZINIT(p)\
-	construct_jzmem(p)
-#define	JZMALLOC(size)\
-	jzmalloc(size, __FILE__, __LINE__)
-#define JZREALLOC(p, size)\
-	jzrealloc(p, size)
+#define JZMEMINIT(p) construct_jzmem(p)
+#define	JZMALLOC(size) jzmalloc(size, __FILE__, __LINE__)
+#define JZREALLOC(p, size) jzrealloc(p, size)
+#define JZFREE(p) jzfree(p)
+#define JZMEMUNINIT destruct_jzmem
+#define JZCHECKLEAK(f)   jzcheck_leak(f) 
 #else
-#define JZMALLOC(size)\
-	malloc(size)
+#define JZMEMINIT(p)
+#define JZMALLOC(size) malloc(size)
+#define JZREALLOC(p, size) realloc(p, size)
+#define JZFREE(p) free(p)
+#define JZMEMUNINIT
+#define JZCHECKLEAK(f)
 #endif	//JZDEBUG
 #define JZMEM_ITEM_FLAG	"jzrt0"
 #define JZMEM_ITEM_FLAG_LEN	6
