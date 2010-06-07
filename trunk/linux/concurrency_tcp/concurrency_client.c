@@ -1,13 +1,3 @@
-/*
- * name:	concurrency_client.c
- * desc:	concurrency tcp communicate client 
- * usage:	$gcc concurrency_client.c -o concurrency_client
-			$concurrency_client
- * author:	zuohaitao
- * date:	2008/08/15
- *
- */
-
 /**
   @file		concurrency_client.c
   @brief	concurrency tcp communicate client
@@ -22,9 +12,13 @@
   @warning	
   @bug		
   */
-#include "../jzsock.h"
 #include <stdio.h>
 #define MAXLINE 1000
+#ifdef WIN32
+#include <WinSock2.h>
+#include <Ws2tcpip.h>
+#pragma comment(lib, "Ws2_32.lib")
+#endif
 int main()
 {
     int socketfd;
@@ -33,6 +27,15 @@ int main()
     int n;
     char str[MAXLINE];
     char c;
+#ifdef WIN32
+	WSADATA wsaData;
+	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (NO_ERROR == result)
+	{
+		printf("Error at WSAStartup()\n");
+		exit(0);
+	}
+#endif
     if ((socketfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     {
         perror("socket");
@@ -69,7 +72,11 @@ int main()
             }
         }
         *p = 0;
+#ifdef WIN32
+		if (send(socketfd, str, strlen(str), 0))
+#else
         if (0 > write(socketfd,str,strlen(str)))
+#endif
         {
             perror("write");
             return 0;
@@ -80,6 +87,11 @@ int main()
         }
         //printf("%s", str);
     }
+#ifdef WIN32
     close(socketfd);
+#else
+	closesocket(socketfd);
+	WSACleanup();
+#endif
     return 0;
 }
