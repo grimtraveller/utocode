@@ -114,6 +114,7 @@ void DelListItem(LISTHEAD* L, int pos)
 {
 	int i;
 	LISTITEM* where;
+	LISTITEM* item;
 	where = L->next;
 	for (i = 0; i < pos-1; i++)
 	{
@@ -123,7 +124,6 @@ void DelListItem(LISTHEAD* L, int pos)
 		}
 		where = where->next;
 	}
-	LISTITEM* item;
 	item = where->next;
 	if (NULL == item)
 	{

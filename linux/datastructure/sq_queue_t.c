@@ -14,6 +14,7 @@ int main()
 	//Element sqQueue[10];
 	SqQueue head;
 	//InitSqQueue(&head, 10, sqQueue);
+	int i;
 	CreateSqQueue(&head, 10);
 	if (IsSqQueueEmpty(&head))
 	{
@@ -24,7 +25,6 @@ int main()
 		printf("sqQueue is not Empty\n");
 	}
 	printf("Len=%d\n", GetSqQueueLen(&head));
-	int i;
 	printf("PUSH 5\n");
 	for (i = 0; i < 5; i++)
 	{

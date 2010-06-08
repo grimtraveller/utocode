@@ -11,10 +11,10 @@
 
 int main(int argc, char* argv[])
 {
+	char* p = NULL;
 	printf("NULL=%d TRUE=%d FALSE=%d OK=%d ERROR=%d INFEASIBLE=%d OVERFLOW=%d\n",
-	(int)NULL,TRUE, FALSE, OK, ERROR, INFEASIBLE, OVERFLOW);
+(int)NULL,TRUE, FALSE, OK, ERROR, INFEASIBLE, OVERFLOW);
 	DSperror("Test Error!");
-	char* p;
 	p = DSmalloc(sizeof(char)*100);
 	memset(p, 0x20, 100);
 	*(p+100) = 0;
