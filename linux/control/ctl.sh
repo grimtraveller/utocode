@@ -6,8 +6,9 @@
 #		2. ctl.sh
 #author:zuohaitao
 #date:	2008/07/27
-#modify:fix 如果tshark中使用printf输出信息则保存不到logtext.txt中
-#		加入fflush(stdout);
+#modify:fix
+#			if printf nothing information to logtext.txt in shark,
+#			add fflush(stdout)
 #
 #!/bin/sh
 while((1))
