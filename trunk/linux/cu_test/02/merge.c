@@ -25,14 +25,28 @@ struct tagHead
 	struct tagInterval* next
 };
 
-int ReadFrom(struct tagHead* head)
+int ReadFrom(struct tagHead* pHead)
 {
 	int i;
-	head->nCount 
-	fscanf(stdin, "%d", &(head->nCount));
-	for (i = 0; i < head->nCount; i++)
+	tagInterval* pItem;
+	fscanf(stdin, "%d", &(pHead->nCount));
+	for (i = 0; i < pHead->nCount; i++)
 	{
-		fread(
+		fgets(stdin, line, MAX_LINE);
+		split_line(line, min, max);
+		pItem = (tagInterval*)malloc(sizeof(tagInterval));
+		pItem->min = min;
+		pItem->max = max;
+		pItem->next = pHead->next;
+		pHead->next = pItem;
+	}
+	return pHead->nCount;
+}
+
+int WriteTo(struct tagHead* pHead)
+{
+}
+
 int main()
 {
 	int i,j;
