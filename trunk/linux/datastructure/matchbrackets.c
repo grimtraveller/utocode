@@ -46,8 +46,8 @@ int main()
 	char buf[1000] = {0};
 	char c, e;
 	STACK s;
-	scanf("%s", buf);
 	int i = 0;
+	scanf("%s", buf);
 	CreateStack(&s);
 	do
 	{

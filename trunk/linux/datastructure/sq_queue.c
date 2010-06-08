@@ -12,8 +12,8 @@
 #include "sq_queue.h"
 void CreateSqQueue(SqQueue* head, int maxSize)
 {
-	head->maxSize = maxSize;
 	Element* pMem;
+	head->maxSize = maxSize;
 	pMem = (Element*)DSmalloc(sizeof(Element)*maxSize);
 	InitSqQueue(head, maxSize, pMem);
 }
