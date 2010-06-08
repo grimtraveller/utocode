@@ -1,17 +1,28 @@
 /*
  * Name:	printPATH.c
- * Desc:	printf SYSTEM environment PATH
- * Usage:	
- *			In Windows:
- *			>cl printPATH.c -D WIN32
- *			>printPATH
- *			In Linux:
- *			$>gcc printPATH.c -o printPATH
- *			$>./printPATH
+
  * Author:	zuohaitao
  * Date:	2009/02/21
  *
  */
+
+/**
+  @file		printPATH.c
+  @brief	printf SYSTEM environment PATH
+  @details
+		Usage:	
+ 			In Windows:
+ 			>cl printPATH.c -D WIN32
+ 			>printPATH
+ 			In Linux:
+ 			$>gcc printPATH.c -o printPATH
+ 			$>./printPATH
+  @author	zuohaitao
+  @date		2010-06-08 ÐÇÆÚ¶þ 
+  @warning
+			build in linux
+  @bug		
+  */
 #include <stdlib.h>
 #include <stdio.h>
 #define		NAME	"PATH"
@@ -35,11 +46,11 @@ int main()
 #endif
 		exit(1);
 	}
-	token = strtok(psz, SPLIT);
+	token = (char*)strtok(psz, SPLIT);
 	while(0 != token)
 	{
 		printf("%s\n", token);
-		token = strtok(0, SPLIT);
+		token = (char*)strtok(0, SPLIT);
 	}
 	return 0;
 }
