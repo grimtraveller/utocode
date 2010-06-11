@@ -1,6 +1,8 @@
 #include "dbf.h"
 #include <stdio.h>
+#ifndef WIN32
 #include <unistd.h>
+#endif //WIN32
 #include <string.h>
 #include <stdlib.h>
 void ShowDBFData(struct DBFFILE* dbfp);
@@ -18,18 +20,20 @@ void SaveDBFRecords(int RecIndex, struct DBFFILE* dbfp);
 int main()
 {
 	char filename[260];
+	struct DBFFILE* dbfp;
+	char answer[8];
 	printf("file name:\n");
 	scanf("%s", filename);
 	printf("%s:\n", filename);
 	if (IsDBF(filename) < 0)
 	{
 		printf("NO DBF\n");
+        return 0;
 	}
 	else
 	{
 		printf("DBF\n");
 	}
-	struct DBFFILE* dbfp;
 	dbfp = OpenDBF(filename, DB_WR);
 	if (0 == dbfp)
 	{
@@ -48,7 +52,7 @@ int main()
 		printf("+6. compare            +\n");
 		printf("+7. exit               +\n");
 		printf("++++++++++++++++++++++++\n");
-		char answer[8];
+		memset(answer, 0, 8);
 		printf("choice(1-7)\n");
 		printf("answer:\n");
 		scanf("%s", answer); 
@@ -84,6 +88,7 @@ int main()
 	
 void ShowDBFHeadInfo(struct DBFFILE* dbfp)
 {
+	int i = 0;
 	printf("LastUpdate: \n");
 	printf("%d/%d/%d", 
 			(int)(dbfp->hi.LastUpdate[0]), 
@@ -94,7 +99,6 @@ void ShowDBFHeadInfo(struct DBFFILE* dbfp)
 	printf("+----------+----+----------+---+----------+\n");
 	printf("+%-10s+%s+%-10s+%s+%-10s+\n", "name", "type", "width", "dec", "offset");
 	printf("+----------+----+----------+---+----------+\n");
-	int i;
 	for (i=0; i<dbfp->hi.FieldsNum; i++)
 	{
 		printf("+%-10s+%c   +%-10d+%c  +%-10d+\n", 
@@ -136,14 +140,18 @@ void ShowDBFRecords(struct DBFFILE* dbfp)
 {
 	int LinesPerRec;
 	int RecordsPerScr;
+	int ShowWidth = 0;
+	int j;
+	int i;
+	int i1;
+	int i2;
+	char answer[8];
 
 	if (dbfp->hi.RecNum <= 0)
 	{
 		return;
 	}
 
-	int ShowWidth = 0;
-	int j;
 	for (j=0; j<dbfp->hi.FieldsNum; j++)
 	{
 		int tmp = strlen(dbfp->hi.fl[j].name);
@@ -151,8 +159,6 @@ void ShowDBFRecords(struct DBFFILE* dbfp)
 	}
 	LinesPerRec = (ShowWidth-1)/80+1;
 	RecordsPerScr = 23/LinesPerRec-1;
-	int i;
-	int i1;
 	for(i=0; i< dbfp->hi.RecNum/RecordsPerScr; i++ )
 	{
 		ShowFields(dbfp);
@@ -161,7 +167,7 @@ void ShowDBFRecords(struct DBFFILE* dbfp)
 			ShowDBFRecord(i*RecordsPerScr+i1, dbfp);
 		}
 		printf("continue(y/n)\n");
-		char answer[8];
+		memset(answer, 0, 8);
 		scanf("%s", answer);
 		if( answer[0]!='y' && answer[0]!='Y' )
 		{
@@ -171,7 +177,6 @@ void ShowDBFRecords(struct DBFFILE* dbfp)
 
 	//SHOW LEFT RECORDS
 	ShowFields(dbfp);
-	int i2;
 	for(i2=0; i2<dbfp->hi.RecNum%RecordsPerScr; i2++ )
 	{
 		ShowDBFRecord(i*RecordsPerScr + i2, dbfp);
