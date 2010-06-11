@@ -9,9 +9,15 @@
  * useage:	$>cat send.txt|clinet 127.0.0.1 1212
  *
  */
+#ifdef WIN32
+#include <Winsock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "Ws2_32.lib")
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#endif //WIN32
 #include <stdio.h>
 #include <string.h>
 void __echo_client(int fd);
@@ -37,10 +43,17 @@ int main(int argc, char* argv[])
 	}
 	servaddr.sin_family = AF_INET;
 	strcpy(servip, "127.0.0.1");
+#ifdef WIN32
+	if (INADDR_NONE == inet_addr(servip))
+	{
+		perror("inet_aton");
+	}
+#else
 	if (inet_aton(servip, (struct in_addr*)&servaddr.sin_addr) < 0)
 	{
 		perror("inet_aton");
 	}
+#endif //WIN32
 	servport = 1202;
 	servaddr.sin_port = htons(servport);
 	servaddrlen = sizeof(servaddr);
@@ -61,14 +74,22 @@ void __echo_client(int connfd)
 	char buf[1024] = {0};
 	int nlen = 0;
 	int readlen = -1;
+#ifdef WIN32
+	unsigned int netlong;
+#else
 	uint32_t netlong;
+#endif
 	while(1)
 	{
 		fgets(buf, 1024, stdin);
 		if (0 == strncmp(buf, "bye", 3))
 		{
 			netlong = htonl(0);
+#ifdef WIN32
+			if (write(connfd, &netlong, sizeof(unsigned int)) < 0)
+#else
 			if (write(connfd, &netlong, sizeof(uint32_t)) < 0)
+#endif //WIN32
 			{
 				perror("write()");	
 			}
@@ -77,7 +98,11 @@ void __echo_client(int connfd)
 
 		nlen = strlen(buf);
 		netlong = htonl(nlen);
+#ifdef WIN32
+		if (write(connfd, &netlong, sizeof(unsigned int)) < 0)
+#else
 		if (write(connfd, &netlong, sizeof(uint32_t)) < 0)
+#endif //WIN32
 		{
 			perror("write()");
 			return;
