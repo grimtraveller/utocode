@@ -3,8 +3,11 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
+#ifdef WIN32
+#include <windows.h>
+#endif //WIN32
 //////FILE API/////////////////////
-int GetFileSize(const char* Name)
+int DBFGetFileSize(const char* Name)
 {
 	struct stat buf;
 	if (stat(Name, &buf) < 0)
@@ -76,6 +79,7 @@ int	IsDBF( const char *FileName )
 
 	/*CFile file;*/
 	FILE* pf;
+	DebugBreak();
 	pf = fopen(FileName, "r");
 	if (0 == pf)
 	{
@@ -107,6 +111,11 @@ struct DBFFILE* OpenDBF(const char *DBName, int mode)
 	struct DBFFILE* dbfp;
 	char buf[32];
 	short tmp;
+	int err;
+	int i;
+	int j;
+	int nFileSize = 0;
+	char szMode[3] = {0};
 	dbfp = 0;
 	//isValid = 1;
 	if (!IsDBF(DBName))
@@ -114,8 +123,6 @@ struct DBFFILE* OpenDBF(const char *DBName, int mode)
 		//dbase_errno = de_NOT_DBASE_FILE;
 		return 0;
 	}
-	int err;
-	char szMode[3] = {0};
 	switch(mode)
 	{
 	case DB_RD:	
@@ -154,7 +161,7 @@ struct DBFFILE* OpenDBF(const char *DBName, int mode)
 	memcpy(&tmp, buf+OFRECOFFSET, 2);
 	dbfp->hi.RecOffset = (unsigned int)tmp;
 	dbfp->hi.FieldsNum = dbfp->hi.RecOffset/32 - 1;
-	int nFileSize = GetFileSize(DBName);
+	nFileSize = DBFGetFileSize((const char*)DBName);
 ////
 	dbfp->hi.RecNum=(nFileSize-dbfp->hi.RecOffset)/dbfp->hi.RecLength;
 ////
@@ -186,8 +193,8 @@ struct DBFFILE* OpenDBF(const char *DBName, int mode)
 		//isValid = 0;
 		goto FAIL0;
 	}
-	int i = 0;
-	int j=1;
+	i = 0;
+	j = 1;
 	for(i=0; i<dbfp->hi.FieldsNum; i++ )
 	{
 		if (32 != fread(buf, sizeof(char), 32, dbfp->fp))
@@ -214,7 +221,7 @@ struct DBFFILE* OpenDBF(const char *DBName, int mode)
 	dbfp->mode = mode;
 	return dbfp;
 FAIL0:
-	close(dbfp->fp);
+	fclose(dbfp->fp);
 FAIL1:
 	free(dbfp);
 	return 0;
@@ -274,6 +281,7 @@ int GetMaxLenOfCol(struct DBFFILE* dbfp)
 
 int GetRecord(int RecIndex, char *rec, struct DBFFILE* dbfp)
 {
+	int nbytes;
 	if (RecIndex > dbfp->hi.RecNum )
 	{
 		//dbase_errno = de_ERROR_RECPTR;
@@ -284,7 +292,6 @@ int GetRecord(int RecIndex, char *rec, struct DBFFILE* dbfp)
 		//dbase_errno = de_ERROR_LSEEK_FILE;
 		return -1;
 	}
-	int nbytes;
 	nbytes = fread(rec, sizeof(char), dbfp->hi.RecLength, dbfp->fp);
 	if (nbytes != (int)dbfp->hi.RecLength)
 	{
@@ -409,12 +416,13 @@ win32
 
 int GetFieldData(int FieldIndex, char *field, char *rec, struct DBFFILE* dbfp)
 {
+	int width;
 	if (FieldIndex<0 || FieldIndex>=dbfp->hi.FieldsNum)
 	{
 		return -1;
 	}
 
-	int width = GetFieldWidth(FieldIndex, dbfp);
+	width = GetFieldWidth(FieldIndex, dbfp);
 	memcpy(field, rec+dbfp->hi.fl[FieldIndex].offset, width);
 	field[width] = 0;
 	return width;
@@ -433,6 +441,11 @@ int GetFieldWidth(int FieldIndex, struct DBFFILE* dbfp)
 int DBFStrucCompare(char *file1, char *file2 )
 {
 	struct DBFFILE *dbfp1, *dbfp2;
+	struct FieldsList *fl1;
+	struct FieldsList *fl2;
+	int i;
+	int ret;
+	
 	dbfp1 = OpenDBF(file1, DB_RD);
 	dbfp2 = OpenDBF(file2, DB_RD);
 	if ((0 == dbfp1)||(0 == dbfp2))
@@ -445,10 +458,8 @@ int DBFStrucCompare(char *file1, char *file2 )
 		return 0;
 	}
 
-	int ret;
-	struct FieldsList *fl1 = dbfp1->hi.fl;
-	struct FieldsList *fl2 = dbfp2->hi.fl;
-	int i;
+	fl1 = dbfp1->hi.fl;
+	fl2 = dbfp2->hi.fl;
 	for (i=0; i<dbfp1->hi.FieldsNum; i++)
 	{
 		ret = i;
@@ -512,12 +523,12 @@ struct FieldsList* GetFieldInfo(int nIndex, struct DBFFILE* dbfp)
 int SetValue(long row, long col, char* newVal, struct DBFFILE* dbfp)
 {
 	struct FieldsList* colinfo;
+	char *RecBuf;
 	if (col > dbfp->hi.FieldsNum)
 	{
 		return -1;
 	}
 	colinfo = (struct FieldsList*)(dbfp->hi.fl+col);
-	char *RecBuf;
 	RecBuf=(char *)malloc(dbfp->hi.RecLength+1);
 	if (0 == RecBuf)
 	{
@@ -563,23 +574,23 @@ int LockRecord(int nRecord, struct DBFFILE* dbfp)
 {
 	int fd = fileno(dbfp->fp);
 #ifdef WIN32
-	HANDLE h = _get_osfhandle(fd);
+	HANDLE h = (HANDLE)_get_osfhandle(fd);
 	if (INVALID_HANDLE_VALUE == h)
 	{
 		return -1;
 	}
-	return (::LockFile(h, dbfp->hi.RecOffset+nRecord*dbfp->hi.RecLength, 0, dbfp->hi.RecLength, 0)?0:-1);
+	return ((LockFile(h, dbfp->hi.RecOffset+nRecord*dbfp->hi.RecLength, 0, dbfp->hi.RecLength, 0)?0:-1));
 #endif
 }
 int UnlockRecord(int nRecord, struct DBFFILE* dbfp)
 {
 	int fd = fileno(dbfp->fp);
 #ifdef WIN32
-	HANDLE h = _get_osfhandle(fd);
+	HANDLE h = (HANDLE)_get_osfhandle(fd);
 	if (INVALID_HANDLE_VALUE == h)
 	{
 		return -1;
 	}
-	return (::UnlockFile(h, dbfp->hi.RecOffset+nRecord*dbfp->hi.RecLength, 0, dbfp->hi.RecLength, 0)?0:-1);
+	return (UnlockFile(h, dbfp->hi.RecOffset+nRecord*dbfp->hi.RecLength, 0, dbfp->hi.RecLength, 0)?0:-1);
 #endif
 }
