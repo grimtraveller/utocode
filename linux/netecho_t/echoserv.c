@@ -14,9 +14,15 @@
  *
  */
 #include <stdio.h>
+#ifdef WIN32
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+#pragma comment(lib, "Ws2_32.lib")
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#endif //WIN32
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -33,11 +39,22 @@ int main()
 	int servport = 1202;
 	char clientip[INET_ADDRSTRLEN+1] = {0};
 	int clientaddrlen;
+#ifndef WIN32
 	if (SIG_ERR == signal(SIGCHLD, doSIGCHLD))
 	{
 		perror("signal");
 		return 0;
 	}
+#endif //WIN32
+#ifdef WIN32
+	WSADATA wsaData;
+	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (NO_ERROR == result)
+	{
+		printf("Error at WSAStartup()\n");
+		exit(0);
+	}
+#endif
 	if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
 	{
 		perror("socket()");
@@ -88,12 +105,20 @@ int main()
 void __echo_serv(int accept)
 {
 	long nlen;
+#ifdef WIN32
+	unsigned int netlong;
+#else
 	uint32_t netlong;
+#endif
 	char* pbuf = 0;
 	char buf[1024] = {0};
 	while(1)
 	{
+#ifdef WIN32
+		if ((nlen = read(accept, &netlong, sizeof(unsigned int))) < 0)
+#else
 		if ((nlen = read(accept, &netlong, sizeof(uint32_t))) < 0)
+#endif //WIN32
 		{
 			perror("read()");
 			break;
