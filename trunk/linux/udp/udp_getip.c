@@ -6,10 +6,17 @@
  * date:		2008/07/31
  *
  */
+#ifdef WIN32
+#include <Winsock2.h>
+#include <ws2tcpip.h>
+#include <Inaddr.h>
+#pragma comment(lib, "Ws2_32.lib")
+#else
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif //WIN32
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -21,7 +28,20 @@ int main(int argv, char* argc[])
 	int sockfd;
 	struct sockaddr_in servaddr = {0};
 	struct sockaddr_in localaddr = {0};
+#ifdef WIN32
+	int len;
+#else
 	socklen_t len;
+#endif //WIN32
+#ifdef WIN32
+	WSADATA wsaData;
+	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	if (NO_ERROR == result)
+	{
+		printf("Error at WSAStartup()\n");
+		exit(0);
+	}
+#endif
 
 	if (argv < 3)
 	{
@@ -50,7 +70,11 @@ int main(int argv, char* argc[])
 		perror("getsockname()");
 		return 0;
 	}
+#ifdef WIN32
+	localip = inet_ntoa(localaddr.sin_addr);
+#else
 	localip = inet_ntoa((struct in_addr)localaddr.sin_addr);
+#endif //WIN32
 	if (0 == localip )
 	{
 		perror("inet_ntoa()");
