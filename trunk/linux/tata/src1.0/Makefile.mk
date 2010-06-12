@@ -1,5 +1,5 @@
 CC=$(CC) $(CFLAG)
-CFLAG=/nologo /Zi /O2 /INCREMENTAL:NO
+CFLAG=/nologo /Zi /O2 /INCREMENTAL:NO /DWIN32
 all: Eatery
 
 Meal.obj: Meal.h Meal.cpp
