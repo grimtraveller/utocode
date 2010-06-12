@@ -23,7 +23,9 @@
 "		2008/12/06 set tags 
 "
 "Todo:
+"		test _fl in linux
 "		map _fl using variant to optimize
+"
 ""			
 "Set character in linux
 if (has("unix")||has("linux"))
@@ -68,7 +70,7 @@ let mapleader = ","
 map <silent> <leader>tl :TlistToggle<cr>
 if has("win32")                "设定windows系统中ctags程序的位置
 	"let Tlist_Ctags_Cmd = 'ctags'
-	let Tlist_Ctags_Cmd='D:\bin\ctags\ctags.exe'
+	let Tlist_Ctags_Cmd='c:\ctags\ctags.exe'
 elseif has("linux")              "设定linux系统中ctags程序的位置
 	let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 endif
@@ -129,16 +131,16 @@ func! z:template()
 	syntax match replace /$.*\$/
 	syntax match replace /《.*》/
 endfunc
-
-let datecmd=":r !date /T"
+"map <F2> <ESC>^i//<ESC>
 map <F12> <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
-	map _fn <ESC>^i/**<ESC>o<ESC>i @name<TAB><TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O] <ESC>o@return<TAB><ESC>o*/<ESC>o<ESC>5k^$a
+
+map _fn <ESC>^i/**<ESC>o<ESC>i @name<TAB><TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O] <ESC>o@return<TAB><ESC>o*/<ESC>o<ESC>
 if (has("unix")||has("linux"))
 	map _fl <ESC>i/**<ESC>o<ESC>i @file<TAB><TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
 elseif (has("win32"))
-	map _fl <ESC>i/**<ESC>o<ESC>i @file<TAB><TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date /T<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
+	map _fl <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<ESC>i<ESC>:r !date /T<ESC>k<s-j>xi<TAB><ESC>11l4xo@warning<TAB><ESC>o@bug<TAB><ESC>o/<ESC>7k6l<ESC>:r !echo %:t<ESC>k<s-j>j$a
+	
 endif
-
 
 if (has("unix")||has("linux"))
 	"$>cd /usr/include
@@ -150,8 +152,14 @@ endif
 filetype plugin indent on
 set completeopt=longest,menu
 "ctrl+x ctrl+o
-
+"
+"
+"""""""""""""""""""
 """""some useful command"""""
+"read unicode in vim set encoding=utf-8
+":%!xxd :%xxd -r
+"auto ident code gg=G
+
 "del comment '88 //'
 ":n,m s/\/\//
 ":%s/\/\//
