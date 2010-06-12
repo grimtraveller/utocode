@@ -57,5 +57,6 @@ Meal& Meal::operator = (const Meal& that)
 	cost = that.cost;
 	number = that.number;
 	rate = that.rate;
+	return *this;
 }
 
