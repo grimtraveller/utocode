@@ -6,11 +6,16 @@
  * date:		2008/07/31
  *
  */
+#ifdef WIN32
+#include <Winsock2.h>
+#pragma  comment(lib, "Ws2_32.lib")
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <stdio.h>
 #include <arpa/inet.h>
+#endif //WIN32
+#include <stdio.h>
 #include <string.h>
 int main(int argc, char* argv[])
 {

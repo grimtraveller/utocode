@@ -6,10 +6,15 @@
  * date:		2008/07/31
  *
  */
+#ifdef WIN32
+#include <Winsock2.h>
+#pragma  comment(lib, "Ws2_32.lib")
+#else
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif //WIN32
 #include <stdio.h>
 #include <string.h>
 int main()
@@ -17,7 +22,11 @@ int main()
 	int sock;
 	struct sockaddr_in serv = {0};
 	struct sockaddr_in from = {0};
+#ifdef WIN32
+	int fromlen = 0;
+#else
 	socklen_t fromlen = 0;
+#endif
 	int servport = 1202;
 	char recvbuf[100] = {0};
 
