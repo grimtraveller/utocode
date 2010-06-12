@@ -73,7 +73,9 @@ ostream& Eatery::operator << (ostream &output)
 		meals[i].putMeal(output, false);
 	}
 	output<<endl;
+#ifdef WIN32
 	return output;
+#endif
 }
 istream& Eatery::operator >> (istream &input)
 {
