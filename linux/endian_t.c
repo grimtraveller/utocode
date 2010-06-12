@@ -7,7 +7,12 @@
  * Date:		2009-06-28
  */
 #include <stdio.h>
+#ifdef WIN32
+#include <Winsock2.h>
+#pragma comment(lib, "Ws2_32.lib")
+#else
 #include <arpa/inet.h>
+#endif
 int main()
 {
 	int dian = 0x12345678;

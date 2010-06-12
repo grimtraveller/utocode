@@ -11,3 +11,7 @@ int main(int argc, char* argv[])
 		if (-1 == lstat(argv[i],buf))
 		{
 			perror("argv[i]");
+		}
+	}
+	return 0;
+}

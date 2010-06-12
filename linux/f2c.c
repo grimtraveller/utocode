@@ -4,7 +4,7 @@
  * Usage:	$>gcc f2c.c -o f2c
  *			$>./f2c
  * Author:	zuohaitao
- * Date:	2009年 09月 03日 星期四 16:07:32 CST
+ * Date:	2009 09 03
  */
 #include <stdio.h>
 int main()
