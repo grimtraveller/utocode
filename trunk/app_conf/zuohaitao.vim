@@ -139,7 +139,7 @@ endfunc
 map <F12> <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
 
 map _fnb ^i/*{{{*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////<ESC>o<ESC>o<ESC>^i/*}}}*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-map _fn <ESC>^i/**<ESC>o<ESC>a @name<TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O]  - <ESC>o@return < > <ESC>o/<ESC>4k6la
+map _fn <ESC>^i/**<ESC>o<ESC>a @name<TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O]  - <ESC>o@return   - <ESC>o/<ESC>4k6la
 if (has("unix")||has("linux"))
 	map _fl <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
 elseif (has("win32"))
