@@ -4,7 +4,7 @@
  * Usage:	$>gcc c2f.c -o c2f
  *			$>./c2f
  * Author:	zuohaitao
- * Date:	2009年 09月 03日 星期四 16:15:56 CST
+ * Date:	2009 09 03
  */
 
 #include <stdio.h>
