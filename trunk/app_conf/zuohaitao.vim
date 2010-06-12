@@ -54,6 +54,10 @@ set hlsearch "高亮显示匹配
 set helplang=cn " 设置帮助语言为中文
 set cindent " C语言缩进
 set backspace=indent,eol,start " 退格键能够删除空行、缩进等
+"set foldmethod=marker " 代码折叠
+"zF 生成折叠标记
+"zc 折叠标记之间的代码
+"zo 展开标记之间的代码
 if has("gui_running")
 	colorscheme pablo	"颜色
 endif
@@ -134,9 +138,10 @@ endfunc
 "map <F2> <ESC>^i//<ESC>
 map <F12> <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
 
-map _fn <ESC>^i/**<ESC>o<ESC>i @name<TAB><TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O] <ESC>o@return<TAB><ESC>o*/<ESC>o<ESC>
+map _fnb ^i/*{{{*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////<ESC>o<ESC>o<ESC>^i/*}}}*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+map _fn <ESC>^i/**<ESC>o<ESC>a @name<TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O]  - <ESC>o@return < > <ESC>o/<ESC>4k6la
 if (has("unix")||has("linux"))
-	map _fl <ESC>i/**<ESC>o<ESC>i @file<TAB><TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
+	map _fl <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
 elseif (has("win32"))
 	map _fl <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<ESC>i<ESC>:r !date /T<ESC>k<s-j>xi<TAB><ESC>11l4xo@warning<TAB><ESC>o@bug<TAB><ESC>o/<ESC>7k6l<ESC>:r !echo %:t<ESC>k<s-j>j$a
 	
