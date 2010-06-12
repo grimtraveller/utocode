@@ -73,6 +73,7 @@ ostream& Eatery::operator << (ostream &output)
 		meals[i].putMeal(output, false);
 	}
 	output<<endl;
+	return output;
 }
 istream& Eatery::operator >> (istream &input)
 {
@@ -83,4 +84,5 @@ istream& Eatery::operator >> (istream &input)
 		meals[i].getMeal(input, false);
 		meals[i].number=i+1;
 	}
+	return input;
 }
