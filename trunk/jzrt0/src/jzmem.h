@@ -24,7 +24,7 @@ extern "C"
 #ifdef JZDEBUG
 #define JZMEMINIT(p) construct_jzmem(p)
 #define	JZMALLOC(size) jzmalloc(size, __FILE__, __LINE__)
-#define JZREALLOC(p, size) jzrealloc(p, size)
+#define JZREALLOC(p, size) jzrealloc(p, size, __FILE__, __LINE__)
 #define JZFREE(p) jzfree(p)
 #define JZMEMUNINIT destruct_jzmem
 #define JZCHECKLEAK(f)   jzcheck_leak(f) 
@@ -63,7 +63,7 @@ typedef void (*CHECKLEAKCALLBACK)(char* file, jzint32 line, void* p, int len);
 //memory alloc
 extern status construct_jzmem(jzmem_header_st* pjzmem);
 extern void* jzmalloc(unsigned int size, const char* file, int line);
-extern void* jzrealloc(void* ptr, int size);
+extern void* jzrealloc(void* ptr, int size, const char* file, int line);
 extern void jzfree(void* ptr);
 extern void destruct_jzmem();
 extern void jzcheck_leak(CHECKLEAKCALLBACK fclbck);

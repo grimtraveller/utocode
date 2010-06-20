@@ -40,8 +40,11 @@ main()
 
 		size = make_rand(MEMSIZE_MAX);
 		*(pp + i) = JZMALLOC(size);
-		printf("[%d] malloc size = %d ", i, size);
-		if (isRealloc)
+		if (!isRealloc)
+		{
+			printf("[%d] malloc size = %d ", i, size);
+		}
+		else
 		{
 			resize = 100;
 			*(pp + i) = JZREALLOC(*(pp+i), resize+size);
