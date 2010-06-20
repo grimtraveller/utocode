@@ -72,7 +72,7 @@ void* jzmalloc(unsigned int size, const char* file, int line)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void* jzrealloc(void* ptr, size_t size)
+void* jzrealloc(void* ptr, size_t size, const char* file, int line)
 {
 	jzmem_item_st item;
 	jzmem_item_st* p;
@@ -85,8 +85,8 @@ void* jzrealloc(void* ptr, size_t size)
 	item.next = ((jzmem_item_st*)pitem)->next;
 	p = realloc(pitem, sizeof(jzmem_item_st) + size);
 	memcpy(p->flag, item.flag, JZMEM_ITEM_FLAG_LEN);
-	strncpy(p->file, ((jzmem_item_st*)ptr)->file, JZ_MAX_PATH);
-	p->line = item.line;
+	strncpy(p->file, file, JZ_MAX_PATH);
+	p->line = line;
 	p->real_p = (char*)p + sizeof(jzmem_item_st);
 	p->len = size;
 	p->prev = item.prev;
