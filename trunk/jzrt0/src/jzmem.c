@@ -72,7 +72,7 @@ void* jzmalloc(unsigned int size, const char* file, int line)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void* jrealloc(void* ptr, size_t size)
+void* jzrealloc(void* ptr, size_t size)
 {
 	jzmem_item_st item;
 	jzmem_item_st* p;
