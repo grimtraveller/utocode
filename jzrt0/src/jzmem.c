@@ -76,20 +76,25 @@ void* jzrealloc(void* ptr, size_t size)
 {
 	jzmem_item_st item;
 	jzmem_item_st* p;
-	memcpy(item.flag, ((jzmem_item_st*)ptr)->flag, JZMEM_ITEM_FLAG_LEN);
-	strncpy(item.file, ((jzmem_item_st*)ptr)->file, JZ_MAX_PATH);
-	item.line = ((jzmem_item_st*)ptr)->line;
-	item.prev = ((jzmem_item_st*)ptr)->prev;
-	item.next = ((jzmem_item_st*)ptr)->next;
-	p = realloc(ptr, sizeof(jzmem_item_st) + size);
+	jzmem_item_st* pitem;
+	pitem = (char*)ptr - sizeof(jzmem_item_st);
+	memcpy(item.flag, ((jzmem_item_st*)pitem)->flag, JZMEM_ITEM_FLAG_LEN);
+	strncpy(item.file, ((jzmem_item_st*)pitem)->file, JZ_MAX_PATH);
+	item.line = ((jzmem_item_st*)pitem)->line;
+	item.prev = ((jzmem_item_st*)pitem)->prev;
+	item.next = ((jzmem_item_st*)pitem)->next;
+	p = realloc(pitem, sizeof(jzmem_item_st) + size);
 	memcpy(p->flag, item.flag, JZMEM_ITEM_FLAG_LEN);
 	strncpy(p->file, ((jzmem_item_st*)ptr)->file, JZ_MAX_PATH);
 	p->line = item.line;
-	p->real_p = p + sizeof(jzmem_item_st);
+	p->real_p = (char*)p + sizeof(jzmem_item_st);
 	p->len = size;
 	p->prev = item.prev;
 	p->next = item.next;
-	(item.prev)->next = p;
+	if (NULL != item.prev)
+	{
+		(item.prev)->next = p;
+	}
 	return p->real_p;
 }
 
