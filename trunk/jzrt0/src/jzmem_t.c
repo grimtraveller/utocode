@@ -24,6 +24,9 @@ main()
 	char** pp = NULL;
 	int size = 0;
 	int i = 0;
+	boolean isRealloc = FALSE;
+	int resize = 0;
+	char* pold = NULL;
 	//easy_test();
 	srand((unsigned)time(NULL));
 	count = make_rand(ALLOC_COUNT_MAX);
@@ -33,13 +36,23 @@ main()
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
 	{
+		isRealloc = (boolean)make_rand(1);
+
 		size = make_rand(MEMSIZE_MAX);
-		printf("[%d] malloc size = %d ", i, size);
 		*(pp + i) = JZMALLOC(size);
+		printf("[%d] malloc size = %d ", i, size);
+		if (isRealloc)
+		{
+			resize = 100;
+			*(pp + i) = JZREALLOC(*(pp+i), resize+size);
+			printf("[%d] realloc size = %d ", i, resize+size);
+		}
+		
 		printf("address = %x", (unsigned int)*(pp + i));
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
+
 	free_count = make_rand(count);
 	printf("free count = %d\n", free_count);
 	for (i = 0; i <= free_count; i++)
