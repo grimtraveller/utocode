@@ -18,6 +18,7 @@ show_leak(char* file, int line, void* p, int len)
 int
 main()
 {
+
 	int count = 0;
 	int free_count = 0;
 	char** pp = NULL;
@@ -43,8 +44,9 @@ main()
 	printf("free count = %d\n", free_count);
 	for (i = 0; i <= free_count; i++)
 	{
-		//JZFREE(*(pp+i));
+		JZFREE(*(pp+i));
 	}
+	printf("memory leak\n");
 	JZCHECKLEAK(show_leak);
 	JZMEMUNINIT;
 	return 0;
