@@ -30,7 +30,7 @@ int main()
 #ifdef WIN32
 	WSADATA wsaData;
 	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if (NO_ERROR == result)
+	if (NO_ERROR != result)
 	{
 		printf("Error at WSAStartup()\n");
 		exit(0);
@@ -44,11 +44,16 @@ int main()
 
     memset(&servaddr, 0, sizeof(servaddr));
     servaddr.sin_family = AF_INET;
+#ifndef WIN32
     if (inet_pton(AF_INET, "127.0.0.1", &servaddr.sin_addr) <= 0)
     {
         perror("inet_pton");
         return 0;
     }
+#else 
+	//addrSrv.sin_addr.S_un.S_addr=inet_addr("127.0.0.1"); 
+	servaddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
+#endif
     servaddr.sin_port = htons(1212);
 
     if (connect(socketfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0)

@@ -10,8 +10,10 @@
 #@warning	
 #@bug		
 ###########################################
-all:
-	cl concurrency_server.c /Zi  /DWIN32
+all: concurrency_client.exe concurrency_server.exe
+concurrency_client.exe:concurrency_client.c
 	cl concurrency_client.c /Zi /DWIN32
+concurrency_server.exe:concurrency_server.c
+	cl concurrency_server.c /Zi  /DWIN32
 clean:
 	del *.exe *.pdb *.obj *.ilk
