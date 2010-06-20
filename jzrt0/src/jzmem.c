@@ -5,7 +5,7 @@
   @author	zuohaitao
   @date		2010-04-18
   @warning	
-  @bug	    jzfree() exception	
+  @bug	    
   */
 #include "jzmem.h"
 #include "jztype.h"
@@ -61,7 +61,13 @@ void* jzmalloc(unsigned int size, const char* file, int line)
 	p->len = size;
 	p->prev = NULL;
 	p->next = g_pjzmem->next;
+
 	g_pjzmem->next = p;
+	
+	if (NULL != p->next)
+	{
+		p->next->prev = p;
+	}
 	return p->real_p;
 }
 
@@ -94,7 +100,7 @@ void jzfree(void* ptr)
 	p = (char*)ptr - sizeof(jzmem_item_st);
 	p->prev->next = p->next;
 	p->next->prev = p->prev;
-	free(ptr);
+	free(p);
 	return;
 }
 
