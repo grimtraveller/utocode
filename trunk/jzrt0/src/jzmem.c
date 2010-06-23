@@ -103,8 +103,14 @@ void jzfree(void* ptr)
 {
 	jzmem_item_st* p;
 	p = (char*)ptr - sizeof(jzmem_item_st);
-	p->prev->next = p->next;
-	p->next->prev = p->prev;
+	if (NULL != p->prev)
+	{
+		p->prev->next = p->next;
+	}
+	if (NULL != p->next)
+	{
+		p->next->prev = p->prev;
+	}
 	free(p);
 	return;
 }
