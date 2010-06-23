@@ -107,6 +107,10 @@ void jzfree(void* ptr)
 	{
 		p->prev->next = p->next;
 	}
+	else
+	{
+		g_pjzmem->next = NULL;
+	}
 	if (NULL != p->next)
 	{
 		p->next->prev = p->prev;

@@ -21,6 +21,7 @@ extern "C"
 #endif //_cplusplus
 //jzrmemory macro
 #include "jztype.h"
+#include <stdlib.h>
 #ifdef JZDEBUG
 #define JZMEMINIT(p) construct_jzmem(p)
 #define	JZMALLOC(size) jzmalloc(size, __FILE__, __LINE__)
@@ -62,8 +63,8 @@ typedef struct _mem_tracer_header_st
 typedef void (*CHECKLEAKCALLBACK)(char* file, jzint32 line, void* p, int len);
 //memory alloc
 extern status construct_jzmem(jzmem_header_st* pjzmem);
-extern void* jzmalloc(unsigned int size, const char* file, int line);
-extern void* jzrealloc(void* ptr, int size, const char* file, int line);
+extern void* jzmalloc(unsigned unsigned int size, const char* file, int line);
+extern void* jzrealloc(void* ptr, unsigned int  size, const char* file, int line);
 extern void jzfree(void* ptr);
 extern void destruct_jzmem();
 extern void jzcheck_leak(CHECKLEAKCALLBACK fclbck);

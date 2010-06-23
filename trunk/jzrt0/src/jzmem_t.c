@@ -1,10 +1,12 @@
 #define JZDEBUG
-#include <windows.h>
 #include "jzmem.h"
+#include <windows.h>
 #include <stdio.h>
 #include <memory.h>
 #include <stdlib.h>
 #include <time.h>
+#include "jztype.h"
+#include "jztimer.h"
 
 #define MEMSIZE_MAX		(1024*1024*1)
 #define ALLOC_COUNT_MAX (100)
@@ -18,7 +20,6 @@ show_leak(char* file, int line, void* p, int len)
 int
 main()
 {
-
 	int count = 0;
 	int free_count = 0;
 	char** pp = NULL;
@@ -27,7 +28,10 @@ main()
 	boolean isRealloc = FALSE;
 	int resize = 0;
 	char* pold = NULL;
+	jzint64 rtime;
+
 	//easy_test();
+	START_JZTIMER;
 	srand((unsigned)time(NULL));
 	count = make_rand(ALLOC_COUNT_MAX);
 	printf("malloc count = %d\n", count);
@@ -36,17 +40,20 @@ main()
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
 	{
-		isRealloc = (boolean)make_rand(1);
+		isRealloc = (BOOLEAN)make_rand(1);
 
 		size = make_rand(MEMSIZE_MAX);
+		STOP_JZTIMER(rtime);
 		*(pp + i) = JZMALLOC(size);
+		STOP_JZTIMER(rtime);
+		printf("JZMALLOC time = %lld\n", rtime);
 		if (!isRealloc)
 		{
 			printf("[%d] malloc size = %d ", i, size);
 		}
 		else
 		{
-			resize = 100;
+			resize = make_rand(MEMSIZE_MAX);
 			*(pp + i) = JZREALLOC(*(pp+i), resize+size);
 			printf("[%d] realloc size = %d ", i, resize+size);
 		}
@@ -58,13 +65,16 @@ main()
 
 	free_count = make_rand(count);
 	printf("free count = %d\n", free_count);
-	for (i = 0; i <= free_count; i++)
+	for (i = 0; i < free_count; i++)
 	{
+		printf("free [%d]\n", i);
 		JZFREE(*(pp+i));
 	}
 	printf("memory leak\n");
 	JZCHECKLEAK(show_leak);
-	JZMEMUNINIT;
+	JZMEMUNINIT();
+	STOP_JZTIMER(rtime);
+	printf("time = %lld ms\n", rtime);
 	return 0;
 }
 
