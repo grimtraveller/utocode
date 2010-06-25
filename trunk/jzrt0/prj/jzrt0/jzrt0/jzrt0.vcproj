@@ -152,6 +152,10 @@
 				RelativePath="..\..\..\src\jzmem.c"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\src\jztimer.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -160,6 +164,10 @@
 			>
 			<File
 				RelativePath="..\..\..\src\jzmem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\src\jztimer.h"
 				>
 			</File>
 			<File
