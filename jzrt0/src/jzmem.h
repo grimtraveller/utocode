@@ -20,6 +20,9 @@ extern "C"
 {
 #endif //_cplusplus
 //jzrmemory macro
+#ifdef WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 #include "jztype.h"
 #include <stdlib.h>
 #ifdef JZDEBUG
@@ -45,7 +48,7 @@ typedef struct _mem_tracer_item_st
 	char file[JZ_MAX_PATH];
 	jzuint32 line;
 	void* real_p;
-	jzuint32 len;
+	size_t len;
 	struct _mem_tracer_item_st* prev;
 	struct _mem_tracer_item_st* next;
 } jzmem_item_st;
@@ -60,11 +63,11 @@ typedef struct _mem_tracer_header_st
 	jzuint32 version;
 	jzmem_item_st* next;
 } jzmem_header_st;
-typedef void (*CHECKLEAKCALLBACK)(char* file, jzint32 line, void* p, int len);
+typedef void (*CHECKLEAKCALLBACK)(char* file, jzuint32 line, void* p, size_t len);
 //memory alloc
 extern status construct_jzmem(jzmem_header_st* pjzmem);
-extern void* jzmalloc(unsigned unsigned int size, const char* file, int line);
-extern void* jzrealloc(void* ptr, unsigned int  size, const char* file, int line);
+extern void* jzmalloc(size_t size, const char* file, jzuint32 line);
+extern void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line);
 extern void jzfree(void* ptr);
 extern void destruct_jzmem();
 extern void jzcheck_leak(CHECKLEAKCALLBACK fclbck);

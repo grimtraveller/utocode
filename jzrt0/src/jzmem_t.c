@@ -10,10 +10,11 @@
 
 #define MEMSIZE_MAX		(1024*1024*1)
 #define ALLOC_COUNT_MAX (100)
+#define _CRT_SECURE_NO_WARNINGS
 int make_rand(int max);
 void easy_test();
 void 
-show_leak(char* file, int line, void* p, int len)
+show_leak(char* file, jzuint32 line, void* p, size_t len)
 {
 	printf("%s %d : 0x%x %d\n", file, line, (int)p, len);
 } 
@@ -29,19 +30,27 @@ main()
 	int resize = 0;
 	char* pold = NULL;
 	jzint64 rtime;
+	jzmem_header_st* pjzmem_header = NULL;
 
 	//easy_test();
 	START_JZTIMER;
 	srand((unsigned)time(NULL));
 	count = make_rand(ALLOC_COUNT_MAX);
 	printf("malloc count = %d\n", count);
-	JZMEMINIT(NULL);
+	if ((BOOLEAN)make_rand(1))
+	{
+		JZMEMINIT(NULL);
+	}
+	else
+	{
+		pjzmem_header = malloc(sizeof(jzmem_header_st));
+		JZMEMINIT(pjzmem_header);
+	}
 	
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
 	{
 		isRealloc = FALSE;//(BOOLEAN)make_rand(1);
-
 		size = make_rand(MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp + i) = JZMALLOC(size);
