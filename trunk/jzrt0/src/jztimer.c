@@ -44,7 +44,7 @@ void start_jztimer(jztimer_st* ptimer)
 #endif //WIN32
 }
 
-void stop_jztimer(struct jztimer_st* ptimer)
+void stop_jztimer(jztimer_st* ptimer)
 {
 #ifdef WIN32
 	LARGE_INTEGER stopTime;
