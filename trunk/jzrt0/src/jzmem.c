@@ -27,6 +27,7 @@ status construct_jzmem(jzmem_header_st* pjzmem)
 	}
 	else
 	{
+		pjzmem->next = NULL;
 		pjzmem->mgr = USER;
 	}
 	g_pjzmem = pjzmem;
@@ -45,7 +46,7 @@ void destruct_jzmem()
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void* jzmalloc(unsigned int size, const char* file, int line)
+void* jzmalloc(size_t size, const char* file, jzuint32 line)
 {
 	jzmem_item_st* p;
 	p = malloc(sizeof(jzmem_item_st) + size);
@@ -72,12 +73,12 @@ void* jzmalloc(unsigned int size, const char* file, int line)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void* jzrealloc(void* ptr, size_t size, const char* file, int line)
+void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line)
 {
 	jzmem_item_st item;
 	jzmem_item_st* p;
 	jzmem_item_st* pitem;
-	pitem = (char*)ptr - sizeof(jzmem_item_st);
+	pitem = (jzmem_item_st*)((char*)ptr - sizeof(jzmem_item_st));
 	memcpy(item.flag, ((jzmem_item_st*)pitem)->flag, JZMEM_ITEM_FLAG_LEN);
 	strncpy(item.file, ((jzmem_item_st*)pitem)->file, JZ_MAX_PATH);
 	item.line = ((jzmem_item_st*)pitem)->line;
@@ -102,7 +103,7 @@ void* jzrealloc(void* ptr, size_t size, const char* file, int line)
 void jzfree(void* ptr)
 {
 	jzmem_item_st* p;
-	p = (char*)ptr - sizeof(jzmem_item_st);
+	p = (jzmem_item_st*)((char*)ptr - sizeof(jzmem_item_st));
 	if (NULL != p->prev)
 	{
 		p->prev->next = p->next;
