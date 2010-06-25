@@ -26,7 +26,7 @@ main()
 	char** pp = NULL;
 	int size = 0;
 	int i = 0;
-	boolean isRealloc = FALSE;
+	BOOLEAN isRealloc = FALSE;
 	int resize = 0;
 	char* pold = NULL;
 	jzint64 rtime;
@@ -55,19 +55,21 @@ main()
 		STOP_JZTIMER(rtime);
 		*(pp + i) = JZMALLOC(size);
 		STOP_JZTIMER(rtime);
-		printf("JZMALLOC time = %lld\n", rtime);
 		if (!isRealloc)
 		{
-			printf("[%d] malloc size = %d ", i, size);
+			printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
+			printf("malloc size = %7d ", size);
 		}
 		else
 		{
 			resize = make_rand(MEMSIZE_MAX);
+			STOP_JZTIMER(rtime);
 			*(pp + i) = JZREALLOC(*(pp+i), resize+size);
-			printf("[%d] realloc size = %d ", i, resize+size);
-		}
-		
-		printf("address = %x", (unsigned int)*(pp + i));
+			STOP_JZTIMER(rtime);
+			printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
+			printf("realloc size = %7d ", resize);
+		}	
+		printf("address = %0xx", (unsigned int)*(pp + i));
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
@@ -82,14 +84,35 @@ main()
 	printf("free count = %d\n", free_count);
 	for (i = 0; i < free_count; i++)
 	{
-		printf("free [%d]\n", i);
+		switch(i%4)
+		{
+			case 0:
+				printf("\b-");
+				fflush(stdout);
+				break;
+			case 1:
+				printf("\b\\");
+				fflush(stdout);
+				break;
+			case 2:
+				printf("\b|");
+				fflush(stdout);
+				break;
+			case 3:
+				printf("\b/");
+				fflush(stdout);
+				break;
+			default:
+				break;
+		}
 		JZFREE(*(pp+i));
 	}
+	printf("\n");
 	printf("memory leak\n");
 	JZCHECKLEAK(show_leak);
 	JZMEMUNINIT();
 	STOP_JZTIMER(rtime);
-	printf("time = %lld ms\n", rtime);
+	printf("time = %.2f ms \n", ((double)rtime/1000.00));
 	return 0;
 }
 
