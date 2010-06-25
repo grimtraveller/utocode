@@ -20,7 +20,7 @@ extern "C"
 
 #include "jztype.h"
 #define START_JZTIMER \
-	struct jztimer_st timer;\
+	jztimer_st timer;\
 	init_jztimer(&timer);\
 	start_jztimer(&timer);
 #define STOP_JZTIMER(x) \
