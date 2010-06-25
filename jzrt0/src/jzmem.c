@@ -75,26 +75,28 @@ void* jzmalloc(size_t size, const char* file, jzuint32 line)
 //////////////////////////////////////////////////////////////////////////////
 void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line)
 {
-	jzmem_item_st item;
+	jzmem_item_st* prev;
+	jzmem_item_st* next;
 	jzmem_item_st* p;
 	jzmem_item_st* pitem;
 	pitem = (jzmem_item_st*)((char*)ptr - sizeof(jzmem_item_st));
-	memcpy(item.flag, ((jzmem_item_st*)pitem)->flag, JZMEM_ITEM_FLAG_LEN);
-	strncpy(item.file, ((jzmem_item_st*)pitem)->file, JZ_MAX_PATH);
-	item.line = ((jzmem_item_st*)pitem)->line;
-	item.prev = ((jzmem_item_st*)pitem)->prev;
-	item.next = ((jzmem_item_st*)pitem)->next;
+	prev = ((jzmem_item_st*)pitem)->prev;
+	next = ((jzmem_item_st*)pitem)->next;
 	p = realloc(pitem, sizeof(jzmem_item_st) + size);
-	memcpy(p->flag, item.flag, JZMEM_ITEM_FLAG_LEN);
+	//memcpy(p->flag, item.flag, JZMEM_ITEM_FLAG_LEN);
 	strncpy(p->file, file, JZ_MAX_PATH);
 	p->line = line;
 	p->real_p = (char*)p + sizeof(jzmem_item_st);
 	p->len = size;
-	p->prev = item.prev;
-	p->next = item.next;
-	if (NULL != item.prev)
+	p->prev = prev;
+	p->next = next;
+	if (p != pitem)
 	{
-		(item.prev)->next = p;
+		next->prev = p;
+		if (NULL != prev)
+		{
+			prev->next = p;
+		}
 	}
 	return p->real_p;
 }

@@ -10,7 +10,7 @@
 #include "jztimer.h"
 #include "jztype.h"
 
-void init_jztimer(struct jztimer_st* ptimer)
+void init_jztimer(jztimer_st* ptimer)
 {
 #ifdef WIN32
 	DWORD dwError;
@@ -33,7 +33,7 @@ void init_jztimer(struct jztimer_st* ptimer)
 	ptimer->rtime = 0;
 }
 
-void start_jztimer(struct jztimer_st* ptimer)
+void start_jztimer(jztimer_st* ptimer)
 {
 #ifdef WIN32
 	LARGE_INTEGER startTime;
@@ -53,6 +53,6 @@ void stop_jztimer(struct jztimer_st* ptimer)
 #else
 	
 #endif
-	ptimer->rtime = ((ptimer->stop - ptimer->start) * (jzint64)1000 )/ ptimer->unit;
+	ptimer->rtime = ((ptimer->stop - ptimer->start) * (jzint64)1000000 )/ ptimer->unit;
 	ptimer->start = ptimer->stop;
 }

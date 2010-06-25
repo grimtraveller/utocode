@@ -27,17 +27,17 @@ extern "C"
 	stop_jztimer(&timer); \
 	x = timer.rtime;\
 
-struct jztimer_st
+typedef struct _jztimer_st
 {
 	BOOLEAN bOK;
 	jzint64 unit;
 	jzint64 start;
 	jzint64 stop;
 	jzint64 rtime;
-};
-void init_jztimer(struct jztimer_st* ptimer);
-void start_jztimer(struct jztimer_st* ptimer);
-void stop_jztimer(struct jztimer_st* ptimer);
+} jztimer_st;
+void init_jztimer(jztimer_st* ptimer);
+void start_jztimer(jztimer_st* ptimer);
+void stop_jztimer(jztimer_st* ptimer);
 #ifdef __cplusplus
 }
 #endif //__cplusplus
