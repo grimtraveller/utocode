@@ -40,7 +40,7 @@ main()
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
 	{
-		isRealloc = (BOOLEAN)make_rand(1);
+		isRealloc = FALSE;//(BOOLEAN)make_rand(1);
 
 		size = make_rand(MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
@@ -62,8 +62,14 @@ main()
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
-
-	free_count = make_rand(count);
+	if((BOOLEAN)make_rand(1))
+	{
+		free_count = make_rand(count);
+	}
+	else
+	{
+		free_count = count;
+	}
 	printf("free count = %d\n", free_count);
 	for (i = 0; i < free_count; i++)
 	{
