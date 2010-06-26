@@ -1,17 +1,16 @@
 #define JZDEBUG
 #include "jzmem.h"
-#include <windows.h>
 #include <stdio.h>
-#include <memory.h>
-#include <stdlib.h>
 #include <time.h>
-#include "jztype.h"
 #include "jztimer.h"
 
 #define MEMSIZE_MAX		(1024*1024*1)
+#define MEMSIZE_MIN		(1)
 #define ALLOC_COUNT_MAX (100)
+#define ALLOC_COUNT_MIN (1)
 #define _CRT_SECURE_NO_WARNINGS
-int make_rand(int max);
+BOOLEAN make_boolean();
+int make_rand(int min, int max);
 void easy_test();
 void 
 show_leak(char* file, jzuint32 line, void* p, size_t len)
@@ -19,25 +18,48 @@ show_leak(char* file, jzuint32 line, void* p, size_t len)
 	printf("%s %d : 0x%x %d\n", file, line, (int)p, len);
 } 
 int
-main()
+main(int argc, char** argv)
 {
-	int count = 0;
-	int free_count = 0;
+	//! malloc count
+	jzuint32 malloc_count = 0;
+	//! realloc count
+	jzuint32 realloc_count = 0;
+	//! free count
+	jzuint32 free_count = 0;
+	//! point array
 	char** pp = NULL;
-	int size = 0;
-	int i = 0;
-	BOOLEAN isRealloc = FALSE;
-	int resize = 0;
-	char* pold = NULL;
-	jzint64 rtime;
+	//! malloc length
+	jzsize size = 0;
+	//! index
+	jzuint32 i = 0;
+	//BOOLEAN isRealloc = FALSE;
+	//! realloc size
+	jzsize resize = 0;
+	//! performace time
+	jzint64 rtime = 0;
+	//! jzmem_header point
 	jzmem_header_st* pjzmem_header = NULL;
+	//! test case total time
+	jztimer_st total_timer = {0};
 
-	//easy_test();
-	START_JZTIMER;
+	//! realloc the first item in jzmem is test or not
+	BOOLEAN bReallocFirst = FALSE;
+	//! realloc the last item in jzmem is test or not
+	BOOLEAN bReallocLast = TRUE;
+
+	START_JZTIMER();
+	//test total jztimer	
+	init_jztimer(&total_timer);
+	start_jztimer(&total_timer);
+
+	//initial random
 	srand((unsigned)time(NULL));
-	count = make_rand(ALLOC_COUNT_MAX);
-	printf("malloc count = %d\n", count);
-	if ((BOOLEAN)make_rand(1))
+	
+	//initial jztimer
+	STOP_JZTIMER(rtime);
+
+	//initial jzmem
+	if (make_boolean())
 	{
 		JZMEMINIT(NULL);
 	}
@@ -46,100 +68,116 @@ main()
 		pjzmem_header = malloc(sizeof(jzmem_header_st));
 		JZMEMINIT(pjzmem_header);
 	}
-	
-	pp = JZMALLOC(count * sizeof(char*));
-	for (i = 0; i < count; i++)
+
+	STOP_JZTIMER(rtime);
+	printf("JZMEMINIT time = %.2f ms \n", ((double)rtime/1000.00));
+
+	//! malloc test case
+	malloc_count = make_rand(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
+	printf("[malloc test case:] malloc count = %d\n", malloc_count);
+	pp = JZMALLOC(malloc_count * sizeof(char*));
+	for (i = 0; i < malloc_count; i++)
 	{
-		isRealloc = (BOOLEAN)make_rand(1);
-		size = make_rand(MEMSIZE_MAX);
+		size = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp + i) = JZMALLOC(size);
 		STOP_JZTIMER(rtime);
-		if (!isRealloc)
-		{
-			printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
-			printf("malloc size = %7d ", size);
-		}
-		else
-		{
-			resize = make_rand(MEMSIZE_MAX);
-			STOP_JZTIMER(rtime);
-			*(pp + i) = JZREALLOC(*(pp+i), resize+size);
-			STOP_JZTIMER(rtime);
-			printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
-			printf("realloc size = %7d ", resize);
-		}	
+		printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
+		printf("malloc size = %7d ", size);
 		printf("address = 0x%08x", (unsigned int)*(pp + i));
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
-	if((BOOLEAN)make_rand(1))
+
+	//! realloc test case
+	printf("[realloc test case:] realloc count = %d\n", realloc_count);
+	realloc_count = make_rand(ALLOC_COUNT_MIN, malloc_count);
+
+	for (i = 0; i < realloc_count; i++)
 	{
-		free_count = make_rand(count);
+		resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_JZTIMER(rtime);
+		*(pp + i) = JZREALLOC(*(pp+i), resize);
+		STOP_JZTIMER(rtime);
+		printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
+		printf("realloc size = %7d ", resize);
+		printf("address = 0x%08x", (unsigned int)*(pp + i));
+		memset(*(pp+i), 0x20, resize);
+		printf("---[ok]\n");
+	}
+
+	//! realloc the first in jzmem test case
+	if (make_boolean())
+	{
+		resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_JZTIMER(rtime);
+		*(pp) = JZREALLOC(*(pp), resize);
+		STOP_JZTIMER(rtime);
+		printf("[%2d] time = %.2f ms ", 0, ((double)rtime/1000.00));
+		printf("realloc size = %7d ", resize);
+		printf("address = 0x%08x", (unsigned int)*(pp));
+		memset(*(pp), 0x20, resize);
+		printf("---[ok]\n");
 	}
 	else
 	{
-		free_count = count;
+		printf("--- no test\n");
 	}
-	printf("free count = %d\n", free_count);
+
+	//! realloc the last in jzmem test case
+	if (make_boolean())
+	{
+		resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_JZTIMER(rtime);
+		*(pp+malloc_count-1) = JZREALLOC(*(pp+malloc_count-1), resize);
+		STOP_JZTIMER(rtime);
+		printf("[%2d] time = %.2f ms ", malloc_count-1, ((double)rtime/1000.00));
+		printf("realloc size = %7d ", resize);
+		printf("address = 0x%08x", (unsigned int)*(pp+malloc_count-1));
+		memset(*(pp+malloc_count-1), 0x20, resize);
+		printf("---[ok]\n");
+	}
+
+	//free test case
+	if(make_boolean())
+	{
+		free_count = make_rand(0, malloc_count);
+	}
+	else
+	{
+		free_count = malloc_count;
+	}
+	printf("[last realloc test case:] free count = %d\n", free_count);
 	for (i = 0; i < free_count; i++)
 	{
-		switch(i%4)
-		{
-			case 0:
-				printf("\b-");
-				fflush(stdout);
-				break;
-			case 1:
-				printf("\b\\");
-				fflush(stdout);
-				break;
-			case 2:
-				printf("\b|");
-				fflush(stdout);
-				break;
-			case 3:
-				printf("\b/");
-				fflush(stdout);
-				break;
-			default:
-				break;
-		}
 		JZFREE(*(pp+i));
 	}
 	printf("\n");
 	printf("memory leak\n");
 	JZCHECKLEAK(show_leak);
+	JZFREE(pp);
 	JZMEMUNINIT();
-	STOP_JZTIMER(rtime);
-	printf("time = %.2f ms \n", ((double)rtime/1000.00));
+	stop_jztimer(&total_timer);
+	printf("time = %.2f ms \n", ((double)total_timer.rtime/1000.00));
 	return 0;
 }
 
-void base_test()
-{
-	char* p = NULL;
-	p = JZMALLOC(100);
-	memset(p, 0x20, 100);
-}
-void easy_test()
-{
-	size_t size = 1803298383;
-	char* p = (char*)malloc(size);
-	perror("");
-	memset(p, 0x20, size);
-}
 int 
-make_rand(int max)
+make_rand(int min, int max)
 {
 	int n;
 	while(1)
 	{
 		n = rand();
-		if (n <= max)
+		if ((n >= min) &&(n <= max))
 		{
 			break;
 		}
 	}
 	return n;
+}
+BOOLEAN
+make_boolean()
+{
+	return (BOOLEAN)make_rand(0, 1);
 }

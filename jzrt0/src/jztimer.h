@@ -19,7 +19,7 @@ extern "C"
 #endif //__cplusplus
 
 #include "jztype.h"
-#define START_JZTIMER \
+#define START_JZTIMER() \
 	jztimer_st timer;\
 	init_jztimer(&timer);\
 	start_jztimer(&timer);
@@ -27,7 +27,7 @@ extern "C"
 	stop_jztimer(&timer); \
 	x = timer.rtime;\
 
-typedef struct _jztimer_st
+typedef struct _performance_timer_st
 {
 	BOOLEAN bOK;
 	jzint64 unit;
