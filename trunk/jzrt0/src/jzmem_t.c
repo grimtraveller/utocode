@@ -15,7 +15,7 @@ void easy_test();
 void 
 show_leak(char* file, jzuint32 line, void* p, size_t len)
 {
-	printf("%s %d : 0x%x %d\n", file, line, (int)p, len);
+	printf("%s %10d : 0x%08x %10d\n", file, line, (int)p, len);
 } 
 int
 main(int argc, char** argv)
