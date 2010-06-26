@@ -173,6 +173,5 @@ make_boolean()
 {
 	int n;
 	n = rand();
-	printf("%d", n);
 	return (BOOLEAN)(n%2);
 }
