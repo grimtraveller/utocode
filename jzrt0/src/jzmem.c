@@ -11,10 +11,11 @@
 #include "jztype.h"
 #include <stdlib.h>
 #include <string.h>
-jzmem_header_st* g_pjzmem;
+jzmem_header_st* g_pjzmem = NULL;
 ///////////////////////////////////////////////////////////////////////////////
 status construct_jzmem(jzmem_header_st* pjzmem)
 {
+
 	if (NULL == pjzmem)
 	{
 		pjzmem = (jzmem_header_st*)malloc(sizeof(jzmem_header_st));
@@ -22,14 +23,13 @@ status construct_jzmem(jzmem_header_st* pjzmem)
 		{
 			return ERROR;
 		}
-        pjzmem->next = NULL;
 		pjzmem->mgr = JZRT;
 	}
 	else
 	{
-		pjzmem->next = NULL;
 		pjzmem->mgr = USER;
 	}
+	pjzmem->next = NULL;
 	g_pjzmem = pjzmem;
 	return OK;
 }
@@ -59,43 +59,45 @@ void* jzmalloc(size_t size, const char* file, jzuint32 line)
 	strncpy(p->file, file, JZ_MAX_PATH);
 	p->line = line;
 	p->real_p = (char*)p + sizeof(jzmem_item_st);
+	
 	p->len = size;
 	p->prev = NULL;
 	p->next = g_pjzmem->next;
-
-	g_pjzmem->next = p;
 	
+	g_pjzmem->next = p;
+
 	if (NULL != p->next)
 	{
 		p->next->prev = p;
 	}
+
 	return p->real_p;
 }
 
 //////////////////////////////////////////////////////////////////////////////
 void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line)
 {
-	jzmem_item_st* prev;
-	jzmem_item_st* next;
 	jzmem_item_st* p;
 	jzmem_item_st* pitem;
 	pitem = (jzmem_item_st*)((char*)ptr - sizeof(jzmem_item_st));
-	prev = ((jzmem_item_st*)pitem)->prev;
-	next = ((jzmem_item_st*)pitem)->next;
 	p = realloc(pitem, sizeof(jzmem_item_st) + size);
-	//memcpy(p->flag, item.flag, JZMEM_ITEM_FLAG_LEN);
 	strncpy(p->file, file, JZ_MAX_PATH);
 	p->line = line;
 	p->real_p = (char*)p + sizeof(jzmem_item_st);
-	p->len = size;
-	p->prev = prev;
-	p->next = next;
+
 	if (p != pitem)
 	{
-		next->prev = p;
-		if (NULL != prev)
+		if (NULL != p->next)
 		{
-			prev->next = p;
+			p->next->prev = p;
+		}
+		if (NULL != p->prev)
+		{
+			p->prev->next = p;
+		}
+		else
+		{
+			g_pjzmem->next = p;
 		}
 	}
 	return p->real_p;
