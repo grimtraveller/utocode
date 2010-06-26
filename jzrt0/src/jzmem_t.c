@@ -73,7 +73,6 @@ main()
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
-	return 0;
 	if((BOOLEAN)make_rand(1))
 	{
 		free_count = make_rand(count);
