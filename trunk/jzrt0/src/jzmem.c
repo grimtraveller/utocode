@@ -11,6 +11,10 @@
 #include "jztype.h"
 #include <stdlib.h>
 #include <string.h>
+#ifndef WIN32
+#include <errno.h>
+#include <stdio.h>
+#endif
 jzmem_header_st* g_pjzmem = NULL;
 ///////////////////////////////////////////////////////////////////////////////
 status construct_jzmem(jzmem_header_st* pjzmem)
@@ -55,7 +59,6 @@ void* jzmalloc(size_t size, const char* file, jzuint32 line)
 		perror("jzmalloc");
 		exit(1);
 	}
-	memcpy(p->flag, JZMEM_ITEM_FLAG, JZMEM_ITEM_FLAG_LEN);
 	strncpy(p->file, file, JZ_MAX_PATH);
 	p->line = line;
 	p->real_p = (char*)p + sizeof(jzmem_item_st);

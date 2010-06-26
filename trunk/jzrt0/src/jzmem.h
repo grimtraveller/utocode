@@ -41,11 +41,8 @@ extern "C"
 #define JZMEMUNINIT
 #define JZCHECKLEAK(f)
 #endif	//JZDEBUG
-#define JZMEM_ITEM_FLAG	"jzrt0"
-#define JZMEM_ITEM_FLAG_LEN	6
 typedef struct _mem_tracer_item_st
 {
-	char flag[JZMEM_ITEM_FLAG_LEN];
 	char file[JZ_MAX_PATH];
 	jzuint32 line;
 	void* real_p;
