@@ -50,7 +50,7 @@ main()
 	pp = JZMALLOC(count * sizeof(char*));
 	for (i = 0; i < count; i++)
 	{
-		isRealloc = FALSE;//(BOOLEAN)make_rand(1);
+		isRealloc = (BOOLEAN)make_rand(1);
 		size = make_rand(MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp + i) = JZMALLOC(size);
@@ -69,10 +69,11 @@ main()
 			printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
 			printf("realloc size = %7d ", resize);
 		}	
-		printf("address = %0xx", (unsigned int)*(pp + i));
+		printf("address = 0x%08x", (unsigned int)*(pp + i));
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
+	return 0;
 	if((BOOLEAN)make_rand(1))
 	{
 		free_count = make_rand(count);
