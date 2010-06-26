@@ -56,3 +56,4 @@ void stop_jztimer(jztimer_st* ptimer)
 	ptimer->rtime = ((ptimer->stop - ptimer->start) * (jzint64)1000000 )/ ptimer->unit;
 	ptimer->start = ptimer->stop;
 }
+

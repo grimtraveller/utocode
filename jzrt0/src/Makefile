@@ -21,7 +21,7 @@ BINS=jzmem_t
 all:$(BINS)
 %.o:%.c %.h
 	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) -c $(INCDIR)$< -o $(BINDIR)$@
-libjzrt0.a:jzmem.o
+libjzrt0.a:jzmem.o jztimer.o
 	$(AR) $(ARFLAG) $@ $^
 jzmem_t:jzmem_t.o libjzrt0.a
 	$(CC) $(CFLAGS) $(LDFLAGS) -ljzrt0 $^ -o $@

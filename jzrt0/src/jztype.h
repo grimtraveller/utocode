@@ -13,6 +13,9 @@
 #define JZTYPE_H
 #ifdef WIN32
 #include <windows.h>
+#else 
+#include <stdlib.h>	//such as size_t,
+#include <limits.h>	//such as PATH_MAX,
 #endif
 
 /**
@@ -82,13 +85,14 @@ typedef unsigned int jzuint32;
 typedef long long jzint64;
 typedef unsigned long long jzuint64;
 #else
-//typedef long jzint64;
+typedef long long jzint64;
+typedef unsigned long long jzuint64;
 #endif
 typedef float jzfloat32;
 typedef double jzfloat64;
 typedef size_t jzsize;
 typedef jzuint32 jzoffset32;
 typedef jzuint64 jzoffset64;
-typedef ptrdiff_t PRPtrdiff;
+//typedef ptrdiff_t __PRPtrdiff;
 #endif
 
