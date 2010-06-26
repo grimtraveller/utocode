@@ -9,6 +9,12 @@
  */
 #include "jztimer.h"
 #include "jztype.h"
+#ifndef WIN32
+#include <sys/time.h>
+#include <time.h>
+#include <errno.h>
+#include <stdio.h>
+#endif
 
 void init_jztimer(jztimer_st* ptimer)
 {
@@ -40,7 +46,14 @@ void start_jztimer(jztimer_st* ptimer)
 	QueryPerformanceCounter(&startTime);
 	ptimer->start = startTime.QuadPart;
 #else
-	
+	struct timeval tv;
+	if (-1 == gettimeofday(&tv, NULL))
+	{
+		ptimer->bOK = FALSE;
+		perror("start_jztimer");
+		exit(errno);
+	}
+	ptimer->start = tv.tv_sec * 1000000 + tv.tv_usec;
 #endif //WIN32
 }
 
@@ -50,10 +63,17 @@ void stop_jztimer(jztimer_st* ptimer)
 	LARGE_INTEGER stopTime;
 	QueryPerformanceCounter(&stopTime);
 	ptimer->stop = stopTime.QuadPart;
-#else
-	
-#endif
 	ptimer->rtime = ((ptimer->stop - ptimer->start) * (jzint64)1000000 )/ ptimer->unit;
+#else
+	struct timeval tv;
+	if (-1 == gettimeofday(&tv, NULL))
+	{
+		ptimer->bOK = FALSE;
+		exit(errno);
+	}
+	ptimer->stop = tv.tv_sec * 1000000 + tv.tv_usec;
+	ptimer->rtime = ptimer->stop - ptimer->start;
+#endif
 	ptimer->start = ptimer->stop;
 }
 
