@@ -42,11 +42,6 @@ main(int argc, char** argv)
 	//! test case total time
 	jztimer_st total_timer = {0};
 
-	//! realloc the first item in jzmem is test or not
-	BOOLEAN bReallocFirst = FALSE;
-	//! realloc the last item in jzmem is test or not
-	BOOLEAN bReallocLast = TRUE;
-
 	START_JZTIMER();
 	//test total jztimer	
 	init_jztimer(&total_timer);
@@ -90,8 +85,8 @@ main(int argc, char** argv)
 	}
 
 	//! realloc test case
-	printf("[realloc test case:] realloc count = %d\n", realloc_count);
 	realloc_count = make_rand(ALLOC_COUNT_MIN, malloc_count);
+	printf("[realloc test case:] realloc count = %d\n", realloc_count);
 
 	for (i = 0; i < realloc_count; i++)
 	{
@@ -118,10 +113,6 @@ main(int argc, char** argv)
 		printf("address = 0x%08x", (unsigned int)*(pp));
 		memset(*(pp), 0x20, resize);
 		printf("---[ok]\n");
-	}
-	else
-	{
-		printf("--- no test\n");
 	}
 
 	//! realloc the last in jzmem test case
@@ -169,7 +160,8 @@ make_rand(int min, int max)
 	while(1)
 	{
 		n = rand();
-		if ((n >= min) &&(n <= max))
+		n = n%max;
+		if ((n >= min))
 		{
 			break;
 		}
@@ -179,5 +171,8 @@ make_rand(int min, int max)
 BOOLEAN
 make_boolean()
 {
-	return (BOOLEAN)make_rand(0, 1);
+	int n;
+	n = rand();
+	printf("%d", n);
+	return (BOOLEAN)(n%2);
 }

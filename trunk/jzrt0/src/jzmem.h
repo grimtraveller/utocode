@@ -25,6 +25,7 @@ extern "C"
 #endif
 #include "jztype.h"
 #include <stdlib.h>
+#include <string.h> //such as memset
 #ifdef JZDEBUG
 #define JZMEMINIT(p) construct_jzmem(p)
 #define	JZMALLOC(size) jzmalloc(size, __FILE__, __LINE__)
