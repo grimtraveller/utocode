@@ -1,14 +1,21 @@
-/*
- * name:	concurrency_server.c
- * desc:	concurrency tcp comunicate server
- * usage:	$gcc concurrency_server.c -o concurrency_server
-			$concurrency_server
- * author:	zuohaitao
- * date:	2008/08/15
-v1.1
+/**
+ * @file	concurrency_server.c
+ * @brief	concurrency tcp comunicate server
+ * @details	
+ *			usage
+ *				$gcc concurrency_server.c -o concurrency_server
+ *				$concurrency_server
+ *			v1.1
  * what:	avoid zombi child process
  * who:		zuohaitao
  * when:	2009-06-28
+ *			v1.2
+ * what:	it is ported in win32
+ *			comment reconstruction
+ * @author	zuohaitao
+ * @date	2009-06-29
+ * @warning	
+ * @bug	
  */
 #include <string.h>
 #include <errno.h>
@@ -41,6 +48,48 @@ void doChildExit(int sig)
 	return;
 }
 #endif //WIN32
+typedef struct _parameter_st
+{
+	int listenfd;
+	int connfd;
+} parameter_st;
+unsigned __stdcall client_proc(void* param);
+unsigned __stdcall client_proc(void* param)
+{
+	parameter_st* pthis = (parameter_st*)param;
+	char str[MAXLINE] = {0};
+	int recvlen = 0;
+#ifndef WIN32
+		close(pthis->listenfd);
+#endif
+	while(1)
+	{
+		memset(str, 0x0, MAXLINE);
+		recvlen = recv(pthis->connfd, str, MAXLINE, 0);
+		if (recvlen < 0)
+		{
+#ifdef WIN32
+			//WSAGetLastError();
+			//FormatMessage(
+#else
+			perror();
+#endif
+			continue;
+		}
+		printf("%s\n", str);
+		if (0 == strncmp(str, "bye", 3))
+		{
+#ifdef WIN32
+			closesocket(pthis->connfd);
+#else
+			close(pthis->connfd);
+#endif
+			break;
+		}
+	}
+	return 0;
+}
+
 int main()
 {
 #ifndef WIN32
@@ -50,14 +99,16 @@ int main()
 #else
 	int cliaddrlen = 0;
 	char* straddr = NULL;
+	unsigned long ret;
+	unsigned tid;
 #endif //WIN32
     int listenfd, connfd;
     struct sockaddr_in servaddr,cliaddr;
-    char str[MAXLINE];
-    int recvlen;
     char* p;
 	int n;
-#ifdef WIN32
+	parameter_st data;
+#ifndef WIN32
+#else
 	WSADATA wsaData;
 	int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if (NO_ERROR != result)
@@ -127,7 +178,8 @@ int main()
 		straddr = inet_ntoa(cliaddr.sin_addr);
 		printf("IP:%s\n", straddr);
 #endif //WIN32
-
+		data.connfd = connfd; 
+		data.listenfd = listenfd;
 #ifndef WIN32
         pid = fork();
         if (pid < 0)
@@ -136,31 +188,21 @@ int main()
         }
         else if (pid == 0)
         {
-//////////////////////////////////////////////////////////
-            close(listenfd);
-            memset(str, 0, MAXLINE);
-            recvlen = 0;
-            p = str;
-            while(1)
-            {
-                n = read(connfd, str, MAXLINE);
-                if (n < 0)
-                {
-                    perror("read");
-                }
-                str[n] = 0;
-                printf("%s\n", str);
-                if (0 == strncmp(str, "bye", 3))     exit(0);
-            }
-			close(connfd);
-/////////////////////////////////////////////////////////////
+			client_proc(&data);
         }
-        close(connfd);
 #else
-	closesocket(connfd);
+		ret = _beginthreadex(NULL, 0, client_proc, &data, 0, &tid);
+		if (-1L == ret)
+		{
+			printf("%d\n", GetLastError());
+			//FormatMessage(
+		}
 #endif //WIN32
     }
-#ifdef WIN32
+#ifndef WIN32
+	close(listenfd);
+#else
+	closesocket(listenfd);
 	WSACleanup();
 #endif //WIN32
     return 0;
