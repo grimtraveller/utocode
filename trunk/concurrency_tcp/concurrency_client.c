@@ -7,6 +7,8 @@
 				$concurrency_client
 			modify:
 				why porting to win32 os
+			modify:
+				fix bug
   @author	zuohaitao
   @date		2008/08/15
   @warning	
@@ -78,25 +80,27 @@ int main()
         }
         *p = 0;
 #ifdef WIN32
-		if (send(socketfd, str, strlen(str), 0))
+		if (send(socketfd, str, strlen(str), 0) < 0)
+		{
+			printf("%d\n", WSAGetLastError());
+		}
 #else
         if (0 > write(socketfd,str,strlen(str)))
-#endif
         {
             perror("write");
             return 0;
         }
+#endif //WIN32
         if (0 == strncmp(str, "bye", 3))
         {
             break;
         }
-        //printf("%s", str);
     }
 #ifdef WIN32
-    close(socketfd);
+  	closesocket(socketfd);
+	WSACleanup();  
 #else
-	closesocket(socketfd);
-	WSACleanup();
+	close(socketfd);
 #endif
     return 0;
 }
