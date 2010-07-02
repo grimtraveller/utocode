@@ -9,6 +9,7 @@
   */
 #include "jzmem.h"
 #include "jztype.h"
+#include "jzerror.h"
 #include <stdlib.h>
 #include <string.h>
 #ifndef WIN32
@@ -25,7 +26,7 @@ status construct_jzmem(jzmem_header_st* pjzmem)
 		pjzmem = (jzmem_header_st*)malloc(sizeof(jzmem_header_st));
 		if (NULL == pjzmem)
 		{
-			return ERROR;
+			jzerror_return(ERROR);
 		}
 		pjzmem->mgr = JZRT;
 	}
@@ -56,8 +57,7 @@ void* jzmalloc(size_t size, const char* file, jzuint32 line)
 	p = malloc(sizeof(jzmem_item_st) + size);
 	if (NULL == p)
 	{
-		perror("jzmalloc");
-		exit(1);
+		jzerror_exit();
 	}
 	strncpy(p->file, file, JZ_MAX_PATH);
 	p->line = line;
@@ -124,6 +124,7 @@ void jzfree(void* ptr)
 		p->next->prev = p->prev;
 	}
 	free(p);
+	p = NULL;
 	return;
 }
 

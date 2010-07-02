@@ -14,11 +14,8 @@
  */
 #ifndef JZERROR_H
 #define JZERROR_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif //__cplusplus
 #include "jztype.h"
+EXTERN_C_BEGIN
 #ifdef WIN32
 #define jzerrno GetLastError()
 #else
@@ -36,8 +33,5 @@ extern "C"
 typedef void (*SHOWMSG)(const char*);
 extern SHOWMSG g_showfn;
 extern void jzperror();
-
-#ifdef __cplusplus
-}
-#endif //__cplusplus
+EXTERN_C_END
 #endif //JZERROR_H

@@ -17,6 +17,14 @@
 #include <stdlib.h>	//such as size_t,
 #include <limits.h>	//such as PATH_MAX,
 #endif
+#ifdef __cplusplus
+#	define EXTERN_C_BEGIN	extern "C" {
+#	define EXTERN_C_END	}
+#else	/* !__cplusplus */
+#	define EXTERN_C_BEGIN
+#	define EXTERN_C_END
+#endif	/*__cplusplus */
+
 
 /**
  * @brief inalid point
