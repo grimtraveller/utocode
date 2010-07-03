@@ -1,0 +1,2 @@
+tshark >>logtext.txt
+exit
