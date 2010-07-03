@@ -1,0 +1,3 @@
+1 in linux£¬run mkhole make a file with hole.
+  it means the file have a large size (you can see it throuhgt stat), but the file use little block space.
+2 in win32, there is no hole in file.
