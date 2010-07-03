@@ -2,22 +2,35 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
+#ifdef WIN32
+#include <io.h>
+#define open _open
+#define close _close
+#define read _read
+#define write _write
+#define lseek _lseek
+#else
 #include <unistd.h>
+#endif
+
 int
 main(int argc, char** argv)
 {
 	char buf;
+#ifdef WIN32
+	int n;
+#else
 	ssize_t n;
+#endif //WIN32
 	int src, tar;
 	if (argc < 3)
 	{
-		printf("uage:cphole target source\n");
+		printf("uage:cphole source target \n");
 		return 1;
 	}
 	src = open(argv[1], O_RDONLY);
 	if (src < 0)
 	{
-		close(src);
 		perror("open");
 		return 1;
 	}

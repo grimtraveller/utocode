@@ -1,5 +1,14 @@
+#ifdef WIN32
+#include <io.h>
+#include <SYS/Stat.h>
+#define creat _creat
+#define lseek	_lseek
+#define write	_write
+#define close	_close
+#else
 #include <sys/types.h>
 #include <unistd.h>
+#endif //WIN32
 #include <stdio.h>
 int 
 main(int argc, char** argv)
@@ -11,8 +20,11 @@ main(int argc, char** argv)
 		printf("USAGE:mkhole filename string\n");
 		return 1;
 	}
-
+#ifdef WIN32
+	if ((fd = creat(argv[1], _S_IREAD | _S_IWRITE)) < 0)
+#else
 	if ((fd = creat(argv[1], 000744)) < 0)
+#endif
 	{
 		perror("creat");
 		return 1;
