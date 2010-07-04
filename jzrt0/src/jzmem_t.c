@@ -3,14 +3,12 @@
 #include <stdio.h>
 #include <time.h>
 #include "jztimer.h"
-
+#include "jzrand.h"
 #define MEMSIZE_MAX		(1024*1024*1)
 #define MEMSIZE_MIN		(1)
 #define ALLOC_COUNT_MAX (100)
 #define ALLOC_COUNT_MIN (1)
 #define _CRT_SECURE_NO_WARNINGS
-BOOLEAN make_boolean();
-int make_rand(int min, int max);
 void easy_test();
 void 
 show_leak(char* file, jzuint32 line, void* p, size_t len)
@@ -54,7 +52,8 @@ main(int argc, char** argv)
 	STOP_JZTIMER(rtime);
 
 	//initial jzmem
-	if (make_boolean())
+	//if (make_boolean())
+	if (jzrand_boolean())
 	{
 		JZMEMINIT(NULL);
 	}
@@ -68,12 +67,14 @@ main(int argc, char** argv)
 	printf("JZMEMINIT time = %.2f ms \n", ((double)rtime/1000.00));
 
 	//! malloc test case
-	malloc_count = make_rand(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
+	//malloc_count = make_rand(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
+	malloc_count = jzrand_scope(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
 	printf("[malloc test case:] malloc count = %d\n", malloc_count);
 	pp = JZMALLOC(malloc_count * sizeof(char*));
 	for (i = 0; i < malloc_count; i++)
 	{
-		size = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		//size = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		size = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp + i) = JZMALLOC(size);
 		STOP_JZTIMER(rtime);
@@ -85,12 +86,14 @@ main(int argc, char** argv)
 	}
 
 	//! realloc test case
-	realloc_count = make_rand(ALLOC_COUNT_MIN, malloc_count);
+	//realloc_count = make_rand(ALLOC_COUNT_MIN, malloc_count);
+	realloc_count = jzrand_scope(ALLOC_COUNT_MIN, malloc_count);
 	printf("[realloc test case:] realloc count = %d\n", realloc_count);
 
 	for (i = 0; i < realloc_count; i++)
 	{
-		resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		resize = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp + i) = JZREALLOC(*(pp+i), resize);
 		STOP_JZTIMER(rtime);
@@ -102,9 +105,11 @@ main(int argc, char** argv)
 	}
 
 	//! realloc the first in jzmem test case
-	if (make_boolean())
+	//if (make_boolean())
+	if (jzrand_boolean())
 	{
-		resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		resize = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp) = JZREALLOC(*(pp), resize);
 		STOP_JZTIMER(rtime);
@@ -116,9 +121,11 @@ main(int argc, char** argv)
 	}
 
 	//! realloc the last in jzmem test case
-	if (make_boolean())
+	//if (make_boolean())
+	if (jzrand_boolean())
 	{
-		resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
+		resize = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_JZTIMER(rtime);
 		*(pp+malloc_count-1) = JZREALLOC(*(pp+malloc_count-1), resize);
 		STOP_JZTIMER(rtime);
@@ -130,9 +137,11 @@ main(int argc, char** argv)
 	}
 
 	//free test case
-	if(make_boolean())
+	//if(make_boolean())
+	if(jzrand_boolean())
 	{
-		free_count = make_rand(0, malloc_count);
+		//free_count = make_rand(0, malloc_count);
+		free_count = jzrand_scope(0, malloc_count);
 	}
 	else
 	{
@@ -151,27 +160,4 @@ main(int argc, char** argv)
 	stop_jztimer(&total_timer);
 	printf("time = %.2f ms \n", ((double)total_timer.rtime/1000.00));
 	return 0;
-}
-
-int 
-make_rand(int min, int max)
-{
-	int n;
-	while(1)
-	{
-		n = rand();
-		n = n%max;
-		if ((n >= min))
-		{
-			break;
-		}
-	}
-	return n;
-}
-BOOLEAN
-make_boolean()
-{
-	int n;
-	n = rand();
-	return (BOOLEAN)(n%2);
 }

@@ -14,15 +14,18 @@ INCD=/I.
 LDFLAGS= 
 AR=lib
 ARFLAG=
-OBJS=
+OBJS=jzmem.obj	\
+	 jztimer.obj	\
+	 jzerror.obj 	\
+	 jzrand.obj		
 BINS=jzmem_t.exe jzerror_t.exe
 .PHONY:all clean
 
 all:$(BINS)
 %.o:%.c %.h
 	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) /c $(INCDIR)$< -o $(BINDIR)$@
-libjzrt0.lib:jzmem.obj jztimer.obj jzerror.obj
-	$(AR) $(ARFLAG) jzmem.obj jztimer.obj jzerror.obj /OUT:$@
+libjzrt0.lib:$(OBJS)
+	$(AR) $(ARFLAG) $(OBJS) /OUT:$@
 jzmem_t.exe:jzmem_t.obj libjzrt0.lib
 	$(CC) $(CFLAGS) $(LDFLAGS) jzmem_t.obj libjzrt0.lib  /Fe$@
 jzerror_t.exe:jzerror_t.obj libjzrt0.lib
