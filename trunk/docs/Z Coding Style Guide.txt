@@ -1,7 +1,148 @@
+[project structure]
+
+[file name]
+.h   declare struct/export functions/class 
+.cpp function implement
+.inl inline function implement
+[file context]
+<Prefix><model type><model name>
+macro define
+<PREFIX><MACRONAME> all letters are upcase.
+avoid repeate include header file
+must be do this,
+#ifndef XXXX_H
+#define XXXX_H
+#endif //XXXX_H
+
+
+
+Q:
+		对于想结构等一些有区域限制的定义使用如下格式写注释：
+		/* @{ [有关的信息说明] */
+		struct ST_XXX{
+		 JINT XXX;
+			};
+		/* }@ */
+		诸如此类。 
+
+
+
+
+
+
+
+
+
+
+
+all code comments are wrote in English.
+only declaration in header file
+extern g_variant in source file
+split
+
+
+function and function use 120 '/'
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function1()
+{
+	...
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function2()
+{
+	...
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+add blank line between two logic parts.
+
+declaration variant in the begin of function and no initial
+1 we can through the Compiler warning to be check the variant is used or not.
+2 it can support both C and C++.
+there is space behind C/C++ keyword
+there is not a space between function and '('.
+there is not a space in font of  '(', ',', ';'.
+there is a space behind ')', ',' ';'.
+there is a space in binary operator
+'{' and '}' have a lonly line, and align with that line what refers to it.
+
+a long line, split it. like this:
+
+if ((the_very_long_variant > the_very_very_long_variant)
+	&&(the_very_very_very_long_variant >= the_very_very_very_long_long_variant))
+{
+	...
+}
+ret function(type variant_xxx_yyy_zzz,
+			type variant_xxx_yyy_zzz_xxx)
+{
+	...
+}
+printf("print a very very very very long long long"
+		" long long line!\n");
+declaration point variant like this:int* 
+
+comment
+comment is in the font of the code that is explaned.
+the top of header file need a comment.
+the font of function need a comment
+a logic module that is over 50 lines need a comment to suggestion. 
+must modify comment at the same time as modify code.
+
+class name
+{
+public:
+	fuction();
+	variant;
+protected:
+	functions();
+	variant;
+private:
+	functions();
+	variant;
+};
+
+viarant name 
+noun
+we use abbreviation in name viriant and normal and bussiness abbreviation can be find in directory file path is "prj/doc/dic.txt".
+
+if (boolean_variant)
+{
+	...
+}
+if (!boolean_variant)
+{
+	...
+}
+
+float variant compare 
+
+if (x == 0.0)	=>	if ((x>=-EPSINON) && (x<=EPSINON))
+
+??ret function(OUT, IN, IN)
+
+
+
+
+
+fuction structure
+
+ret name(input, output)
+{
+	//1. declaration
+	//2. initial
+	//3. logic
+}
+
 0. project directory structure
 svn-+-trunk
     +-branches
     +-tags
+
 trunk-+-src-----+-makefile
       |         |
       |         +-*.h
@@ -9,6 +150,7 @@ trunk-+-src-----+-makefile
       |         +-*.c
       |         |
       |         +-*.cpp
+	  |  
       |
       +-prj-----+-vs2008-----+-*.sln
       |         +-autotools--+-configure
@@ -16,11 +158,12 @@ trunk-+-src-----+-makefile
       |         +-module-----+-*.prj
       |
       |-docs   
-1.File 
+ 1.File 
  1.1 suffix
   *.h C/C++ header file
   *.c C source file
   *.cpp c++ source file
+  *.inl C++ inline functions
  1.2 name 
   use noun
   the name of C++ header file is class name without pre-suffix
@@ -164,3 +307,170 @@ functions()
 2 type class/struct/enum
 3 variant
 4 function
+
+
+
+comment 
+every header file have a comment section like this:
+/**
+ @file		Z Coding Style Guide.txt 
+ @brief		declaration something
+ @details	
+ @author	zuohaitao
+ @date		YYYY-MM-DD
+ @warning	
+ @bug	
+ /
+file:file name
+brief:a 
+every function in c/cpp file have a comment section like this:
+/**
+ @name	
+ @brief	
+ @param	 [I/O]  - 
+ @return   - 
+ /
+
+
+
+
+
+
+
+
+
+
+cpp_key_word
+Keyword	Description
+and	alternative to && operator
+and_eq	alternative to &= operator
+asm	insert an assembly instruction
+auto	declare a local variable
+bitand	alternative to bitwise & operator
+bitor	alternative to | operator
+bool	declare a boolean variable
+break	break out of a loop
+case	a block of code in a switch statement
+catch	handles exceptions from throw
+char	declare a character variable
+class	declare a class
+compl	alternative to ~ operator
+const	declare immutable data or functions that do not change data
+const_cast	cast from const variables
+continue	bypass iterations of a loop
+default	default handler in a case statement
+delete	make dynamic memory available
+do	looping construct
+double	declare a double precision floating-point variable
+dynamic_cast	perform runtime casts
+else	alternate case for an if statement
+enum	create enumeration types
+explicit	only use constructors when they exactly match
+export	allows template definitions to be separated from their declarations
+extern	tell the compiler about variables defined elsewhere
+false	a constant representing the boolean false value
+float	declare a floating-point variable
+for	looping construct
+friend	grant non-member function access to private data
+goto	jump to a different part of the program
+if	execute code based on the result of a test
+inline	optimize calls to short functions
+int	declare an integer variable
+long	declare a long integer variable
+mutable	override a const variable
+namespace	partition the global namespace by defining a scope
+new	allocate dynamic memory for a new variable
+not	alternative to ! operator
+not_eq	alternative to != operator
+operator	create overloaded operator functions
+or	alternative to || operator
+or_eq	alternative to |= operator
+private	declare private members of a class
+protected	declare protected members of a class
+public	declare public members of a class
+register	request that a variable be optimized for speed
+reinterpret_cast	change the type of a variable
+return	return from a function
+short	declare a short integer variable
+signed	modify variable type declarations
+sizeof	return the size of a variable or type
+static	create permanent storage for a variable
+static_cast	perform a nonpolymorphic cast
+struct	define a new structure
+switch	execute code based on different possible values for a variable
+template	create generic functions
+this	a pointer to the current object
+throw	throws an exception
+true	a constant representing the boolean true value
+try	execute code that can throw an exception
+typedef	create a new type name from an existing type
+typeid	describes an object
+typename	declare a class or undefined type
+union	a structure that assigns multiple variables to the same memory location
+unsigned	declare an unsigned integer variable
+using	import complete or partial namespaces into the current scope
+virtual	create a function that can be overridden by a derived class
+void	declare functions or data with no associated data type
+volatile	warn the compiler about variables that can be modified unexpectedly
+wchar_t	declare a wide-character variable
+while	looping construct
+xor	alternative to ^ operator
+xor_eq	alternative to ^= operator
+
+
+------
+signed
+short
+register
+int
+long
+float
+double
+char
+wchar_t
+
+int8
+int16
+int32
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====advi C-C++ Coding Guide
+
+[References]
+林锐，《高质量C/C++编程》（2007年7月24日）
+Richard Stallman and other GNU Project volunteers, <GNU Coding Standards>(http://www.gnu.org/prep/standards/standards.html, August 24, 2010)
+Benjy Weinberger Craig Silverstein Gregory Eitzmann Mark Mentovai Tashana Landray, <Google C++ Style Guide>(http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml, Revision 3.171)
+张事奇，《JGameRenderEngine》（2010年3月8日）

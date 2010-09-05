@@ -1,0 +1,131 @@
+目录
+第一章 介绍NSPR
+ NSPR 命名规则
+ NSPR 线程
+ 线程调度
+ 设置线程属性
+ 线程的抢占性
+ 线程的中断
+ 
+ NSPR线程异步
+ 锁和监视区
+ 条件变量
+
+ NSPR 示例代码
+
+第二章 NSPR类型
+ 调用规则类型
+ PR_EXTERN宏
+ PR_IMPLEMENT宏
+ PR_CALLBACK宏
+
+ 代数类型
+ 8位，16位，和32位整型
+ 有符号整型
+ PRInt8
+ PRInt16
+ PRInt32
+ 无符号整型
+ PRUint
+ PRUint16
+ PRUint32
+
+ 64位整数类型
+ PRInt64
+ PRUint64
+
+ 浮点整型
+ 本地操作系统整型
+
+ 杂项类型
+ Size 类型
+ PRSize
+ 
+ 指针差类型
+ PRPtrdiff
+ PRUptrdiff
+ 
+ 布尔类型
+ PRBool
+ PRPackedBool
+
+ 返回状态类型
+ PRStatus
+
+ 第三章 线程
+ 线程类型和常数
+ PRThread
+ PRThreadType
+ PRThreadScope
+ PRThreadState
+ PRThreadPriority
+ PRThreadPrivateDTOR
+
+ 线程函数
+ 创建，加入和线程ID
+ PR_CreateThread
+ PR_JoinThread
+ PR_GetCurrentThread
+ PR_AttachThread
+ PR_DetachThread
+
+ 控制线程属性
+ PR_GetThreadPriority
+ PR_SetThreadPriority
+
+ 控制每个线程的私有数据
+ PR_NewThreadPrivateIndex
+ PR_SetThreadPrivate
+ PR_GetThreadPrivate
+
+ 中断和让先
+ PR_Interrupt
+ PR_CleanInterrupt
+ PR_Sleep
+
+ 设置全局线程并发
+ PR_SetConcurrency
+
+ 得到线程的范围属性
+ PR_GetThreadScope
+
+ 第四章 进程初始化
+ 身份和版本
+ 名字和版本常量
+ PR_VersionCheck
+
+ 初始化和清理
+ PR_Init
+ PR_Initialize
+ PR_Initialized
+ PR_Cleanup
+ PR_DisableClockInterrupts
+ PR_BlockClockInterrupts
+ PR_UnblockClockInterrupts
+ PR_SetConcurrency
+ PR_ProcessExit
+ PR_Abort
+
+ 模块初始化
+ PRCallOnce
+ PRCallOnceFN
+ PR_CallOnce
+
+ 第五章 锁
+ 锁类型
+ PRLock
+
+ 锁函数
+ PR_NewLock
+ PR_DestroyLock
+ PR_Lock
+ PR_Unlock
+
+ 第六章 条件变量
+ 条件变量类型
+ PRCondVar
+
+ 条件变量函数
+ PR_NewCondVar
+ PR_DestroyCondVar
+ PR_

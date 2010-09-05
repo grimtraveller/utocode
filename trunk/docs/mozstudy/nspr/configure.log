@@ -1,0 +1,41 @@
+creating cache ./config.cache
+checking host system type... i686-pc-mingw32
+checking target system type... i686-pc-mingw32
+checking build system type... i686-pc-mingw32
+checking for cl... cl
+updating cache ./config.cache
+creating ./config.status
+creating Makefile
+creating config/Makefile
+creating config/autoconf.mk
+creating config/nsprincl.mk
+creating config/nsprincl.sh
+creating config/nspr-config
+creating lib/Makefile
+creating lib/ds/Makefile
+creating lib/libc/Makefile
+creating lib/libc/include/Makefile
+creating lib/libc/src/Makefile
+creating lib/tests/Makefile
+creating pkg/Makefile
+creating pkg/linux/Makefile
+creating pkg/solaris/Makefile
+creating pkg/solaris/SUNWpr/Makefile
+creating pkg/solaris/SUNWprd/Makefile
+creating pr/Makefile
+creating pr/include/Makefile
+creating pr/include/md/Makefile
+creating pr/include/obsolete/Makefile
+creating pr/include/private/Makefile
+creating pr/src/Makefile
+creating pr/src/io/Makefile
+creating pr/src/linking/Makefile
+creating pr/src/malloc/Makefile
+creating pr/src/md/Makefile
+creating pr/src/md/windows/Makefile
+creating pr/src/memory/Makefile
+creating pr/src/misc/Makefile
+creating pr/src/threads/Makefile
+creating pr/tests/Makefile
+creating pr/tests/dll/Makefile
+creating pr/src/threads/combined/Makefile
