@@ -1,0 +1,741 @@
+Chapter 3     Threads
+NSPR provides an execution environment that promotes促进 the use of lightweight threads. Each thread is an execution entity that is scheduled independently from other threads in the same process. This chapter describes the basic NSPR threading API.
+
+Threading Types and Constants
+Threading Functions
+
+A thread has a limited number of resources that it truly owns真正拥有. These resources include a stack and the CPU registers (including PC). To an NSPR client, a thread is represented代表 by a pointer to an opaque不透明的 structure of type PRThread. A thread is created by an explicit client request and remains a valid, independent execution entity until it returns from its root function or the process abnormally terminates. Threads are critical resources and therefore require some management. To synchronize the termination of a thread, you can join it with another thread (see PR_JoinThread). Joining a thread provides definitive proof that the target thread has terminated and has finished with both the resources to which the thread has access and the resources of the thread itself.
+
+For an overview of the NSPR threading model and sample code that illustrates its use, see Chapter 1 "Introduction to NSPR."
+
+For API reference information related to thread synchronization同步, see Chapter 5 "Locks" and Chapter 6 "Condition Variables."
+
+Threading Types and Constants
+PRThread
+PRThreadType
+PRThreadScope
+PRThreadState
+PRThreadPriority
+PRThreadPrivateDTOR
+
+PRThread
+An NSPR thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+typedef struct PRThread PRThread;
+
+
+Description
+In NSPR, a thread is represented by a pointer to an opaque structure of type PRThread. This pointer is a required parameter for most of the functions that operate on threads.
+
+A PRThread* is the successful result of creating a new thread. The identifier remains valid until it returns from its root function and, if the thread was created joinable, is joined.
+
+PRThreadType
+The type of an NSPR thread, specified as a parameter to PR_CreateThread.
+
+
+Syntax
+
+#include <prthread.h>
+
+typedef enum PRThreadType {
+   PR_USER_THREAD,
+   PR_SYSTEM_THREAD
+} PRThreadType; 
+
+
+Enumerators
+
+ PR_USER_THREAD
+
+
+
+	PR_Cleanup blocks until the last thread of type PR_USER_THREAD terminates.
+
+ PR_SYSTEM_THREAD
+
+
+
+	NSPR ignores threads of type PR_SYSTEM_THREAD when determining when a call to PR_Cleanup should return.
+
+
+Description
+Threads can be either user threads or system threads. NSPR allows the client to synchronize the termination of all user threads and ignores those created as system threads. This arrangement implies that a system thread should not have volatile data that needs to be safely stored away. The applicability of system threads is somewhat dubious; therefore, they should be used with caution.
+
+PRThreadScope
+The scope of an NSPR thread, specified as a parameter to PR_CreateThread or returned by PR_GetThreadScope.
+
+
+Syntax
+
+#include <prthread.h>
+
+typedef enum PRThreadScope {
+   PR_LOCAL_THREAD,
+   PR_GLOBAL_THREAD
+   PR_GLOBAL_BOUND_THREAD
+} PRThreadScope; 
+
+
+Enumerators
+
+PR_LOCAL_THREAD
+
+	A local thread, scheduled locally by NSPR within the process.
+
+PR_GLOBAL_THREAD
+
+	A global thread, scheduled by the host OS.
+
+PR_GLOBAL_BOUND_THREAD
+
+	A global bound (kernel) thread, scheduled by the host OS
+
+
+Description
+An enumerator of type PRThreadScope specifies how a thread is scheduled: either locally by NSPR within the process (a local thread) or globally by the host (a global thread).
+
+Global threads are scheduled by the host OS and compete with all other threads on the host OS for resources. They are subject to fairly sophisticated scheduling techniques.
+
+Local threads are scheduled by NSPR within the process. The process is assumed假定 to be globally scheduled, but NSPR can manipulate local threads without system intervention介入. In most cases, this leads to a significant performance benefit优势.
+
+However, on systems that require NSPR to make a distinction分别 between global and local threads, global threads are invariably无变化 required to do any form of I/O. If a thread is likely to do a lot of I/O, making it a global thread early is probably warranted值得.
+
+On systems that don't make a distinction between local and global threads, NSPR silently ignores the scheduling request. To find the scope of the thread, call PR_GetThreadScope.
+
+PRThreadState
+A thread's thread state is either joinable or unjoinable.
+
+
+Syntax
+
+#include <prthread.h>
+
+typedef enum PRThreadState {
+   PR_JOINABLE_THREAD,
+   PR_UNJOINABLE_THREAD
+} PRThreadState; 
+
+
+Enumerators
+
+PR_UNJOINABLE_THREAD
+
+	Thread termination happens implicitly when the thread returns from the root function. The time of release of the resources assigned to the thread cannot be determined in advance. Threads created with a PR_UNJOINABLE_THREAD state cannot be used as arguments to PR_JoinThread.
+
+PR_JOINABLE_THREAD
+
+	Joinable thread references remain valid after they have returned from their root function until PR_JoinThread is called. This approach facilitates management of the process' critical resources.
+
+
+Description
+A thread is a critical resource and must be managed.
+
+The lifetime of a thread extends from the time it is created to the time it returns from its root function. What happens when it returns from its root function depends on the thread state passed to PR_CreateThread when the thread was created.
+
+If a thread is created as a joinable thread, it continues to exist after returning from its root function until another thread joins it. The join process permits strict synchronization of thread termination and therefore promotes effective resource management.
+
+If a thread is created as an unjoinable (also called detached) thread, it terminates and cleans up after itself after returning from its root function. This results in some ambiguity after the thread's root function has returned and before the thread has finished terminating itself.
+
+PRThreadPriority
+A thread's priority setting.
+
+
+Syntax
+
+#include <prthread.h>
+
+typedef enum PRThreadPriority 
+{   
+   PR_PRIORITY_FIRST   = 0,
+   PR_PRIORITY_LOW     = 0,
+   PR_PRIORITY_NORMAL  = 1,
+   PR_PRIORITY_HIGH    = 2,
+   PR_PRIORITY_URGENT  = 3,
+   PR_PRIORITY_LAST    = 3
+} PRThreadPriority;
+
+
+Enumerators
+
+PR_PRIORITY_FIRST
+
+	Placeholder.
+
+PR_PRIORITY_LOW
+
+	The lowest possible priority. This priority is appropriate for threads that are expected to perform intensive computation.
+
+PR_PRIORITY_NORMAL
+
+	The most commonly expected priority.
+
+PR_PRIORITY_HIGH
+
+	Slightly higher priority than PR_PRIORITY_NORMAL. This priority is for threads performing work of high urgency but short duration.
+
+PR_PRIORITY_URGENT
+
+	Highest priority. Only one thread at a time typically has this priority.
+
+PR_PRIORITY_LAST
+
+	Placeholder
+
+
+Description
+In general, an NSPR thread of higher priority has a statistically better chance of running relative to threads of lower priority. However, because of the multiple strategies NSPR uses to implement threading on various host platforms, NSPR priorities are not precisely defined. At best they are intended to specify a preference in the amount of CPU time that a higher-priority thread might expect relative to a lower-priority thread. This preference is still subject to resource availability and must not be used in place of proper synchronization.
+
+
+See Also
+Setting Thread Priorities.
+
+PRThreadPrivateDTOR
+The destructor function passed to PR_NewThreadPrivateIndex that is associated with the resulting thread private index.
+
+
+Syntax
+
+#include <prthread.h>
+
+typedef void (PR_CALLBACK *PRThreadPrivateDTOR)(void *priv);
+
+
+Description
+Until the data associated with an index is actually set with a call to PR_SetThreadPrivate, the value of the data is NULL. If the data associated with the index is not NULL, NSPR passes a reference to the data to the destructor function when the thread terminates.
+
+Threading Functions
+Most of the functions described here accept a pointer to the thread as an argument. NSPR does not check for the validity of the thread. It is the caller's responsibility to ensure that the thread is valid. The effects of these functions on invalid threads are undefined.
+
+Creating, Joining, and Identifying Threads
+Controlling Thread Priorities
+Interrupting and Yielding
+Setting Global Thread Concurrency
+Getting a Thread's Scope
+
+Creating, Joining, and Identifying Threads
+
+    * PR_CreateThread creates a new thread.
+
+    * PR_JoinThread blocks the calling thread until a specified thread terminates.
+
+    * PR_GetCurrentThread returns the current thread object for the currently running code.
+
+    * PR_AttachThread associates a PRThread object with an existing native thread.
+
+PR_CreateThread
+Creates a new thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRThread* PR_CreateThread(
+   PRThreadType type,
+   void (*start)(void *arg),
+   void *arg,
+   PRThreadPriority priority,
+   PRThreadScope scope,
+   PRThreadState state,
+   PRUint32 stackSize);
+
+
+Parameters
+PR_CreateThread has the following parameters:
+
+type
+
+	Specifies that the thread is either a user thread (PR_USER_THREAD) or a system thread (PR_SYSTEM_THREAD).
+
+start
+
+	A pointer to the thread's root function, which is called as the root of the new thread. Returning from this function is the only way to terminate a thread.
+
+arg
+
+	A pointer to the root function's only parameter. NSPR does not assess the type or the validity of the value passed in this parameter.
+
+priority
+
+	The initial priority of the newly created thread.
+
+scope
+
+	Specifies your preference for making the thread local (PR_LOCAL_THREAD), global (PR_GLOBAL_THREAD) or global bound (PR_GLOBAL_BOUND_THREAD). However, NSPR may override this preference if necessary.
+
+state
+
+	Specifies whether the thread is joinable (PR_JOINABLE_THREAD) or unjoinable (PR_UNJOINABLE_THREAD).
+
+stackSize
+
+	Specifies your preference for the size of the stack, in bytes, associated with the newly created thread. If you pass zero in this parameter, PR_CreateThread chooses the most favorable machine-specific stack size.
+
+
+Returns
+The function returns one of the following values:
+
+    * If successful, a pointer to the new thread. This pointer remains valid until the thread returns from its root function.
+
+    * If unsuccessful, (for example, if system resources are unavailable), NULL.
+
+
+Description
+If you want the thread to start up waiting for the creator to do something, enter a lock before creating the thread and then have the thread's roof function enter and exit the same lock. When you are ready for the thread to run, exit the lock. For more information on locks and thread synchronization, see Chapter 1 "Introduction to NSPR"
+
+If you want to detect the completion of the created thread, make it joinable. You can then use PR_JoinThread to synchronize the termination of another thread.
+
+PR_JoinThread
+Blocks the calling thread until a specified thread terminates.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRStatus PR_JoinThread(PRThread *thread);
+
+
+Parameter
+PR_JoinThread has the following parameter:
+
+thread
+
+	A valid identifier for the thread that is to be joined.
+
+
+Returns
+The function returns one of the following values:
+
+    * If successful, PR_SUCCESS
+
+    * If unsuccessful--for example, if no joinable thread can be found that corresponds to the specified target thread, or if the target thread is unjoinable--PR_FAILURE.
+
+
+Description
+PR_JoinThread is used to synchronize the termination of a thread. The function is synchronous in that it blocks the calling thread until the target thread is in a joinable state. PR_JoinThread returns to the caller only after the target thread returns from its root function.
+
+Several threads cannot wait for the same thread to complete. One of the calling threads operates successfully, and the others terminate with the error PR_FAILURE.
+
+The calling thread is not blocked if the target thread has already terminated.
+
+PR_JoinThread is interruptable.
+
+PR_GetCurrentThread
+Returns the current thread object for the currently running code.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRThread* PR_GetCurrentThread(void);
+
+
+Returns
+Always returns a valid reference to the calling thread--a self-identity.
+
+
+Description
+The currently running thread may discover its own identity by calling PR_GetCurrentThread.
+
+
+Note 	This is the only safe way to establish the identity of a thread. Creation and enumeration are both subject to race conditions.
+
+
+PR_AttachThread
+Associates a PRThread object with an existing native thread.
+
+
+Syntax
+
+#include <pprthread.h>
+
+PRThread* PR_AttachThread(
+   PRThreadType type,
+   PRThreadPriority priority,
+   PRThreadStack *stack);
+
+
+Parameters
+PR_AttachThread has the following parameters:
+
+type
+
+	Specifies that the thread is either a user thread (PR_USER_THREAD) or a system thread (PR_SYSTEM_THREAD).
+
+priority
+
+	The priority to assign to the thread being attached.
+
+stack
+
+	The stack for the thread being attached.
+
+
+Returns
+The function returns one of these values:
+
+    * If successful, a pointer to a PRThread object.
+
+    * If unsuccessful, for example if system resources are not available, NULL.
+
+
+Description
+You use PR_AttachThread when you want to use NSS functions on the native thread that was not created with NSPR. PR_AttachThread informs NSPR about the new thread by associating a PRThread object with the native thread.
+
+The thread object is automatically destroyed when it is no longer needed.
+
+You don't need to call PR_AttachThread unless you create your own native thread. PR_Init calls PR_AttachThread automatically for the primordial thread.
+
+
+Note 	As of NSPR release v3.0, PR_AttachThread and PR_DetachThread are obsolete. A native thread not created by NSPR is automatically attached the first time it calls an NSPR function, and automatically detached when it exits.
+
+
+In NSPR release 19980529B and earlier, it is necessary for a native thread not created by NSPR to call PR_AttachThread before it calls any NSPR functions, and call PR_DetachThread when it is done calling NSPR functions.
+
+PR_DetachThread
+Disassociates a PRThread object from a native thread.
+
+
+Syntax
+
+#include <pprthread.h>
+
+void PR_DetachThread(void);
+
+
+Parameters
+PR_DetachThread has no parameters.
+
+
+Returns
+The function returns nothing.
+
+
+Description
+This function detaches the NSPR thread from the currently executing native thread. The thread object and all related data attached to it are destroyed. The exit process is invoked. The call returns after the NSPR thread object is destroyed.
+
+This call is needed only if you attached the thread using PR_AttachThread.
+
+
+Note 	As of NSPR release v3.0, PR_AttachThread and PR_DetachThread are obsolete. A native thread not created by NSPR is automatically attached the first time it calls an NSPR function, and automatically detached when it exits.
+
+
+In NSPR release 19980529B and earlier, it is necessary for a native thread not created by NSPR to call PR_AttachThread before it calls any NSPR functions, and call PR_DetachThread when it is done calling NSPR functions.
+
+Controlling Thread Priorities
+For an overview of the way NSPR controls thread priorities, see Setting Thread Priorities.
+
+You set a thread's NSPR priority when you create it with PR_CreateThread. After a thread has been created, you can get and set its priority with these functions:
+
+PR_GetThreadPriority
+PR_SetThreadPriority
+
+PR_GetThreadPriority
+Returns the priority of a specified thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRThreadPriority PR_GetThreadPriority(PRThread *thread);
+
+
+Parameter
+PR_GetThreadPriority has the following parameter:
+
+thread
+
+	A valid identifier for the thread whose priority you want to know.
+
+PR_SetThreadPriority
+Sets the priority of a specified thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+void PR_SetThreadPriority(
+   PRThread *thread,
+   PRThreadPriority priority);
+
+
+Parameters
+PR_SetThreadPriority has the following parameters:
+
+thread
+
+	A valid identifier for the thread whose priority you want to set.
+
+priority
+
+	The priority you want to set.
+
+
+Description
+Modifying the priority of a thread other than the calling thread is risky. It is difficult to ensure that the state of the target thread permits a priority adjustment without ill effects. It is preferable for a thread to specify itself in the thread parameter when it calls PR_SetThreadPriority.
+
+Controlling Per-Thread Private Data
+You can use these functions to associate private data with each of the threads in a process:
+
+    * PR_NewThreadPrivateIndex allocates a unique index. If the call is successful, every thread in the same process is capable of associating private data with the new index.
+
+    * PR_SetThreadPrivate associates private thread data with an index.
+
+    * PR_GetThreadPrivate retrieves data associated with an index.
+
+PR_NewThreadPrivateIndex
+Returns a new index for a per-thread private data table and optionally associates a destructor with the data that will be assigned to the index.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRStatus PR_NewThreadPrivateIndex(
+   PRUintn *newIndex, 
+   PRThreadPrivateDTOR destructor);
+
+
+Parameters
+PR_NewThreadPrivateIndex has the following parameters:
+
+newIndex
+
+	On output, an index that is valid for all threads in the process. You use this index with PR_SetThreadPrivate and PR_GetThreadPrivate.
+
+destructor
+
+	Specifies a destructor function PRThreadPrivateDTOR for the private data associated with the index. This function can be specified as NULL.
+
+
+Returns
+The function returns one of the following values:
+
+    * If successful, PR_SUCCESS.
+
+    * If the total number of indices exceeds 128, PR_FAILURE.
+
+
+Description
+If PR_NewThreadPrivateIndex is successful, every thread in the same process is capable of associating private data with the new index. Until the data for an index is actually set, the value of the private data at that index is NULL. You pass this index to PR_SetThreadPrivate and PR_GetThreadPrivate to set and retrieve data associated with the index.
+
+When you allocate the index, you may also register a destructor function of type PRThreadPrivateDTOR. If a destructor function is registered with a new index, it will be called at one of two times, as long as the private data is not NULL:
+
+    * when replacement private data is set with PR_SetThreadPrivate
+
+    * when a thread exits
+
+The index maintains independent data values for each binding thread. A thread can get access only to its own thread-specific data. There is no way to deallocate a private data index once it is allocated.
+
+PR_SetThreadPrivate
+Sets per-thread private data.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRStatus PR_SetThreadPrivate(PRUintn index, void *priv);
+
+
+Parameters
+PR_SetThreadPrivate has the following parameters:
+
+index
+
+	An index into the per-thread private data table.
+
+priv
+
+	The per-thread private data, or more likely, a pointer to the data.
+
+
+Returns
+The function returns one of the following values:
+
+    * If successful, PR_SUCCESS.
+
+    * If the index is invalid, PR_FAILURE.
+
+
+Description
+If the thread already has non-NULL private data associated with it, and if the destructor function for the index is known (not NULL), NSPR calls the destructor function associated with the index before setting the new data value. The pointer at the index is swapped with NULL. If the swapped out value is not NULL, the destructor function is called. On return, the private data associated with the index is reassigned the new private data's value, even if it is NULL. The runtime provides no protection for the private data. The destructor is called with the runtime holding no locks. Synchronization is the client's responsibility.
+
+The only way to eliminate thread private data at an index prior to the thread's termination is to call PR_SetThreadPrivate with a NULL argument. This causes the index's destructor function to be called, and afterwards assigns a NULL in the table. A client must not delete the referant object of a non-NULL private data without first eliminating it from the table.
+
+PR_GetThreadPrivate
+Recovers the per-thread private data for the current thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+void* PR_GetThreadPrivate(PRUintn index);
+
+
+Parameter
+PR_GetThreadPrivate has the following parameters:
+
+index
+
+	The index into the per-thread private data table.
+
+
+Returns
+NULL if the data has not been set.
+
+
+Description
+PR_GetThreadPrivate may be called at any time during a thread's execution. A thread can get access only to its own per-thread private data. Do not delete the object that the private data refers to without first clearing the thread's value.
+
+Interrupting and Yielding
+
+    * PR_Interrupt requests an interrupt of another thread. Once the target thread has been notified of the request, the request stays with the thread until the notification either has been delivered exactly once or is cleared.
+
+    * PR_ClearInterrupt clears a previous interrupt request.
+
+    * PR_Sleep causes a thread to yield to other threads for a specified number of ticks.
+
+PR_Interrupt
+Sets the interrupt request for a target thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRStatus PR_Interrupt(PRThread *thread);
+
+
+Parameter
+PR_Interrupt has the following parameter:
+
+thread
+
+	The thread whose interrupt request you want to set.
+
+
+Returns
+The function returns one of the following values:
+
+    * If the specified thread is currently blocked, PR_SUCCESS.
+
+    * Otherwise, PR_FAILURE.
+
+
+Description
+The purpose of PR_Interrupt is to request that a thread performing some task stop what it is doing and return to some control point. It is assumed that a control point has been mutually arranged between the thread doing the interrupting and the thread being interrupted. When the interrupted thread reaches the prearranged point, it can communicate with its peer to discover the real reason behind the change in plans.
+
+The interrupt request remains in the thread's state until it is delivered exactly once or explicitly canceled. The interrupted thread returns PR_FAILURE (-1) with an error code (see PR_GetError) for blocking operations that return a PRStatus (such as I/O operations, monitor waits, or waiting on a condition). To check whether the thread was interrupted, compare the result of PR_GetError with PR_PENDING_INTERRUPT_ERROR.
+
+PR_Interrupt may itself fail if the target thread is invalid.
+
+
+Bugs
+PR_Interrupt has the following limitations and known bugs:
+
+    * There can be a delay for a thread to be interrupted from a blocking I/O function. In all NSPR implementations, the maximum delay is at most five seconds. In the pthreads-based implementation on Unix, the maximum delay is 0.1 seconds.
+
+    * File I/O is considered instantaneous, so file I/O functions cannot be interrupted. Unfortunately the standard input, output, and error streams are treated as files by NSPR, so a PR_Read call on PR_STDIN cannot be interrupted even though it may block indefinitely.
+
+    * In the NT implementation, PR_Connect cannot be interrupted.
+
+    * In the NT implementation, a file descriptor is not usable and must be closed after an I/O function on the file descriptor is interrupted. See the memo Using IO Timeout and Interrupt on NT for details.
+
+PR_ClearInterrupt
+Clears the interrupt request for the calling thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+void PR_ClearInterrupt(void);
+
+
+Description
+Interrupting is a cooperative process, so it's possible that the thread passed to PR_Interrupt may never respond to the interrupt request. For example, the target thread may reach the agreed-on control point without providing an opportunity for the runtime to notify the thread of the interrupt request. In this case, the request for interrupt is still pending with the thread and must be explicitly canceled. Therefore it is sometimes necessary to call PR_ClearInterrupt to clear a previous interrupt request.
+
+If no interrupt request is pending, PR_ClearInterrupt is a no-op.
+
+PR_Sleep
+Causes the current thread to yield for a specified amount of time.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRStatus PR_Sleep(PRIntervalTime ticks);
+
+
+Parameter
+PR_Sleep has the following parameter:
+
+ticks
+
+	The number of ticks you want the thread to sleep for (see PRIntervalTime).
+
+
+Returns
+Calling PR_Sleep with a parameter equivalent to PR_INTERVAL_NO_TIMEOUT is an error and results in a PR_FAILURE error.
+
+
+Description
+PR_Sleep simply waits on a condition for the amount of time specified. If you set ticks to PR_INTERVAL_NO_WAIT, the thread yields.
+
+If ticks is not PR_INTERVAL_NO_WAIT, PR_Sleep uses an existing lock, but has to create a new condition for this purpose. If you have already created such structures, it is more efficient to use them directly.
+
+Calling PR_Sleep with the value of ticks set to PR_INTERVAL_NO_WAIT simply surrenders the processor to ready threads of the same priority. All other values of ticks cause PR_Sleep to block the calling thread for the specified interval.
+
+Threads blocked in PR_Sleep are interruptible.
+
+Setting Global Thread Concurrency
+PR_SetConcurrency
+Sets the number of global threads used by NSPR to create local threads.
+
+
+Syntax
+
+#include <prthread.h>
+
+void PR_SetConcurrency(PRUintn numCPUs);
+
+
+Parameter
+PR_SetConcurrency has the following parameter:
+
+numCPUs
+
+	The number of concurrent global threads desired.
+
+
+Description
+NSPR attempts to match the complexion of the thread set to the needs of the application and the capabilities of the host OS and hardware. Global threads are more expensive than local threads, but the latter are unable to take advantage of the scheduling being offered by the host OS. NSPR creates just enough global threads to match the capabilities of the host, for example to match the number of processors available plus one or two. This allows true concurrency in that there are truly multiple execution streams operating simultaneously.
+
+You can use PR_SetConcurrency to exercise similar fine-grained control over the number of global threads that NSPR utilizes. The default value of concurrency is 1. There's no harm in setting the number larger than the number of physical processors available.
+
+Getting a Thread's Scope
+PR_GetThreadScope
+Gets the scoping of the current thread.
+
+
+Syntax
+
+#include <prthread.h>
+
+PRThreadScope PR_GetThreadScope(void);
+
+
+Returns
+A value of type PRThreadScope indicating whether the thread is local or global. 

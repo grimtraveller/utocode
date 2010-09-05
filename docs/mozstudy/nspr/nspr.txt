@@ -1,0 +1,1024 @@
+NSPR Project website
+    https://developer.mozilla.org/en/NSPR
+    http://www.mozilla.org/projects/nspr/
+
+build
+             +------------+
+             |nspr sources|
+             +-----.------+
+                   |                +---------+
+                   +----------------|configure|
+             +-----'-------------+  +---------+
+             |dist directory tree|
+             +------+------------+  +----+
+                    |---------------|make|
+                    |               +----+
+             +------'-------+
+             |Binary object |
+             +--------------+
+
+CreateThread call stack
+      PR_CreateThread in nsprpub/pr/src/threads/combined/pruthr.c
+             |
+      _PR_CreateThread in nsprpub/pr/src/threads/combined/pruthr.c
+             | _PR_CreateThread in nsprpub/pr/src/threads/combined/pruthr.c
+             |
+      _PR_NativeCreateThread in nsprpub/pr/src/threads/combined/pruthr.c
+             |
+      _PR_NativeCreateThread in nsprpub/pr/src/threads/combined/pruthr.c
+             |
+      _PR_MD_CREATE_THREAD in nsprpub/pr/src/threads/combined/pruthr.c
+             |
+      _PR_MD_CREATE_THREAD in nsprpub/pr/src/md/windows/ntthread.c
+             |
+      _beginthreadex in win32 c runtime library
+
+NSPR API Reference
+     https://developer.mozilla.org/en/NSPR_API_Reference
+thread implement
+ implement in different os types, there are three types in nspr.
+ pt type(POSIX), bt type(BeOS), user type(win32, etc)
+ in (linux)posix, implement source file is named by pr/src/pthreads/ptxxx.c
+ in win32, implement source file is named by pr/src/pruxxx.c
+in 
+ Thread Models
+    * user thread model(win32)      - not pthreads or BeOS threads
+    * posix thread model(pthread)   - POSIX pthread
+    * beos thread model(bthread)    - igorne
+ Thread Scope
+    * local threads
+      are handled entirely by NSPR, 
+      in OS that doesn't support threads, 
+      or to emulate a relatively large number of local threads by using a relatively small number of native threads
+    * global threads
+      are scheduled by the OS. Global threads correspond the native threads on OS.
+ Thread type
+    * PR_USER_THREAD
+        PR_CLeanup() blocks until the last thread of type PR_USER_THREAD terminates.
+    * PR_SYSTEM_THREAD
+        NSPR ignores threads of type PR_SYSTEM_THREAD 
+        when determining when a call to PR_Cleanup() should return.
+win32 thread implement
+    * two thread scopes, local and global.
+    * undefined _PR_PTHREAD
+
+
+
+Thread Macro
+    * _PR_PTHREAD
+        in "/configure.in" `set USE_PTHREADS=1` by host OS(linux define USE_PTHREADS, win32 undefine USE_PTHREADS).
+        in "config/config.mk" if define USE_PTHREADS then `-D_PR_PTHREADS`
+        "makefile.in" call "rule.mk" call "config.mk" set `#define _PR_PTHREADS`
+    * PT_NO_SIGTIMEDWAIT
+        in "pr/include/private/primpl.h" `#include "md/prosdep.h"`
+        in "pr/include/md/prosdep.h" `#include "md/_pth.h"`
+        in "pr/include/md/_pth.h" `#ifdef _PR_THREADS #define PT_NO_SIGTIMEDWAIT`
+    * _PR_POLL_WITH_SELECT
+        hpux,osf
+    * declartion `struct MDThread` 
+        "pr/include/md/prosdep.h" `#include "md/_winnt.h"`
+        declartion `struct MDThread` in "pr/include/md/_winnt.h"
+
+? _PR_DCETHREAD
+? _PR_GLOBAL_THREADS_ONLY
+
+MD means 'Platform Dependent'
+
+<<A word aoblut Model Depent function Naming Convention>> in `nspr/pr/include/primpl.h`,
+
+in `nspr/pr/include/primpl.h`,
+declare: NSPR_API void _PR_MD_FUNCTION
+macro: #define _PR_MD_FUNCTION _MD_FUNCTION
+in `nspr/pr/include/md/<platform>/_<platform>.h`
+1. #define _MD_FUNCTION <blank>
+2. #define _MD_FUNCTION <expanded macro>
+3. #define _MD_FUNCTION <os function>
+4. #define _MD_FUNCTION <_MD_Function>
+5. #define _MD_Function _PR_MD_FUNCTION
+
+
+externally visible functions and globals.
+ #if defined(WIN32)
+  #define PR_EXPORT(__type) extern __declspec(dllexport) __type
+  #define PR_EXPORT_DATA(__type) extern __declspec(dllexport) __type
+  #define PR_IMPORT(__type) __declspec(dllimport) __type
+  #define PR_IMPORT_DATA(__type) __declspec(dllimport) __type
+  #define PR_EXTERN(__type) extern __declspec(dllexport) __type
+  #define PR_IMPLEMENT(__type) __declspec(dllexport) __type
+  #define PR_EXTERN_DATA(__type) extern __declspec(dllexport) __type
+  #define PR_IMPLEMENT_DATA(__type) __declspec(dllexport) __type
+  #define PR_CALLBACK
+  #define PR_CALLBACK_DECL
+  #define PR_STATIC_CALLBACK(__x) static __x
+ #elif defined(XP_BEOS)
+  /* no Attention */
+ #elif defined(XP_OS2) && defined(__declspec)
+  /* no Attention */
+ #elif defined(SYMBIAN)
+  /* no Attention */
+ #else /* Unix */
+ /* GCC 3.3 and later support the visibility attribute. */
+  #if (__GNUC__ >= 4) || \
+      (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)
+   #define PR_VISIBILITY_DEFAULT __attribute__((visibility("default")))
+  #else
+   #define PR_VISIBILITY_DEFAULT
+  #endif
+  #define PR_EXPORT(__type) extern PR_VISIBILITY_DEFAULT __type
+  #define PR_EXPORT_DATA(__type) extern PR_VISIBILITY_DEFAULT __type
+  #define PR_IMPORT(__type) extern PR_VISIBILITY_DEFAULT __type
+  #define PR_IMPORT_DATA(__type) extern PR_VISIBILITY_DEFAULT __type
+  #define PR_EXTERN(__type) extern PR_VISIBILITY_DEFAULT __type
+  #define PR_IMPLEMENT(__type) PR_VISIBILITY_DEFAULT __type
+  #define PR_EXTERN_DATA(__type) extern PR_VISIBILITY_DEFAULT __type
+  #define PR_IMPLEMENT_DATA(__type) PR_VISIBILITY_DEFAULT __type
+  #define PR_CALLBACK
+  #define PR_CALLBACK_DECL
+  #define PR_STATIC_CALLBACK(__x) static __x
+ #endif
+Algebraic Types of various lengths are used for integer algebra.
+ 1. in make process
+  nsinstall -m 444 ./_winnt.cfg ../../../dist/include/nspr
+  mv -f ../../../dist/include/nspr/_winnt.cfg ../../../dist/include/nspr/prcpucfg.h
+ 2. in "prcpucfg.h"
+  #define PR_BYTES_PER_XXX X
+ 3. in "prtype.h"
+  #if PR_BYTES_PER_XXX == x
+  typedef XXX PRIntX
+  #endif
+
+
+
+
+How View NSPR Source?
+
+1 interface
+http://www.mozilla.org/projects/nspr/
+2 from total header file `nspr.h'
+3 include file 
+4 the file that is included include file
+5 if not include file then see c file implement
+
+              next
+              include +-----------+
+             +------->|header file|
+             |        +----+------+
+             |             | include
+             |             V
+             |        +----+------+
+             |        |header file+---+
+             |        +----+------+   |
+             |             V         Y|
+             |       ,-----+-----.    |
+             |      (  include    )<--+
+             |       `-----+-----'
+             |             |N
+             |             V
+             |       +-----+-----+
+             +-------|source file|
+                     +-----------+
+
+
+
+
+win32:timeGetTime()
+linux:gettimeofday()
+
+prbit.h
+ * WIN32 API rtol()
+ * WIN32 rtor()
+prerror
+ compile-et.pl make prerr.c prerr.h
+ prerror.h prerror.c prerrortable.c
+
+prcmon
+ address <-> monitor only one
+
+pratom.c
+m memory block uses n lock (m > n) depend with pthead_mutex to implement
+in win32, system api InterLockXXX() there is in winbase.h #define _InterLockXXX InterLockXXX
+*volatile 
+ A variable should be declared volatile whenever its value could change unexpectedly. In practice, only three types of variables could change:
+  1. Memory-mapped peripheral registers
+  2. Global variables modified by an interrupt service routine
+  3. Global variables accessed by multiple tasks within a multi-threaded application
+*#pragma intrinsic
+
+http://blog.21ic.com/user1/2949/archives/2007/35599.html
+
+nspr project files tree
+$/mozilla-central/nsprpub
+©¦  .cvsignore                      cvs ignore file
+©¦  configure                       autoconf(v2.12) configure          
+©¦  configure.in                                        
+©¦  Makefile.in
+©¦  TAG-INFO
+©¦  tree.txt
+©¦  
+©À©¤admin                           *useless*
+©¦      explode.pl                  unpacks the .jar files
+©¦      makeTargetDirs.sh           Create target directories for building NSPR
+©¦      repackage.sh
+©¦      symlinks.sh
+©¦      
+©À©¤build
+©¦  ©¦  cygwin-wrapper
+©¦  ©¦  
+©¦  ©¸©¤autoconf
+©¦          config.guess
+©¦          config.sub
+©¦          install-sh
+©¦          
+©À©¤config
+©¦      .cvsignore
+©¦      autoconf.mk.in
+©¦      config.mk
+©¦      gcc_hidden.h
+©¦      libc_r.h
+©¦      make-system-wrappers.pl
+©¦      Makefile.in
+©¦      nfspwd.pl
+©¦      now.c
+©¦      nsinstall.c
+©¦      nspr-config.in
+©¦      nspr.m4
+©¦      nsprincl.mk.in
+©¦      nsprincl.sh.in
+©¦      pathsub.h
+©¦      prdepend.h
+©¦      rules.mk
+©¦      system-headers
+©¦      
+©À©¤lib
+©¦  ©¦  .cvsignore
+©¦  ©¦  Makefile.in
+©¦  ©¦  
+©¦  ©À©¤ds
+©¦  ©¦      .cvsignore
+©¦  ©¦      Makefile.in
+©¦  ©¦      plarena.c
+©¦  ©¦      plarena.h
+©¦  ©¦      plarenas.h
+©¦  ©¦      plds.def
+©¦  ©¦      plds.rc
+©¦  ©¦      plhash.c
+©¦  ©¦      plhash.h
+©¦  ©¦      plvrsion.c
+©¦  ©¦      
+©¦  ©À©¤libc
+©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  README
+©¦  ©¦  ©¦  
+©¦  ©¦  ©À©¤include
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      plbase64.h
+©¦  ©¦  ©¦      plerror.h
+©¦  ©¦  ©¦      plgetopt.h
+©¦  ©¦  ©¦      plstr.h
+©¦  ©¦  ©¦      README
+©¦  ©¦  ©¦      
+©¦  ©¦  ©¸©¤src
+©¦  ©¦          .cvsignore
+©¦  ©¦          base64.c
+©¦  ©¦          Makefile.in
+©¦  ©¦          plc.def
+©¦  ©¦          plc.rc
+©¦  ©¦          plerror.c
+©¦  ©¦          plgetopt.c
+©¦  ©¦          plvrsion.c
+©¦  ©¦          README
+©¦  ©¦          strcase.c
+©¦  ©¦          strcat.c
+©¦  ©¦          strchr.c
+©¦  ©¦          strcmp.c
+©¦  ©¦          strcpy.c
+©¦  ©¦          strdup.c
+©¦  ©¦          strlen.c
+©¦  ©¦          strpbrk.c
+©¦  ©¦          strstr.c
+©¦  ©¦          strtok.c
+©¦  ©¦          
+©¦  ©À©¤msgc
+©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  
+©¦  ©¦  ©À©¤include
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      gcint.h
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      prgc.h
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤src
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      os2gc.c
+©¦  ©¦  ©¦      prgcapi.c
+©¦  ©¦  ©¦      prmsgc.c
+©¦  ©¦  ©¦      unixgc.c
+©¦  ©¦  ©¦      win32gc.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©¸©¤tests
+©¦  ©¦          .cvsignore
+©¦  ©¦          gc1.c
+©¦  ©¦          Makefile.in
+©¦  ©¦          thrashgc.c
+©¦  ©¦          
+©¦  ©À©¤prstreams
+©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  plvrsion.c
+©¦  ©¦  ©¦  prstrms.cpp
+©¦  ©¦  ©¦  prstrms.h
+©¦  ©¦  ©¦  prstrms.rc
+©¦  ©¦  ©¦  
+©¦  ©¦  ©¸©¤tests
+©¦  ©¦      ©¸©¤testprstrm
+©¦  ©¦              .cvsignore
+©¦  ©¦              Makefile.in
+©¦  ©¦              testprstrm.cpp
+©¦  ©¦              
+©¦  ©¸©¤tests
+©¦          .cvsignore
+©¦          arena.c
+©¦          base64t.c
+©¦          getopt.c
+©¦          Makefile.in
+©¦          string.c
+©¦          
+©À©¤pkg
+©¦  ©¦  Makefile.in
+©¦  ©¦  
+©¦  ©À©¤linux
+©¦  ©¦      Makefile.in
+©¦  ©¦      sun-nspr.spec
+©¦  ©¦      
+©¦  ©¸©¤solaris
+©¦      ©¦  bld_awk_pkginfo.ksh
+©¦      ©¦  Makefile-devl.com
+©¦      ©¦  Makefile-devl.targ
+©¦      ©¦  Makefile.com
+©¦      ©¦  Makefile.in
+©¦      ©¦  Makefile.targ
+©¦      ©¦  proto64.mk
+©¦      ©¦  
+©¦      ©À©¤common_files
+©¦      ©¦      copyright
+©¦      ©¦      
+©¦      ©À©¤SUNWpr
+©¦      ©¦      depend
+©¦      ©¦      Makefile.in
+©¦      ©¦      pkginfo.tmpl
+©¦      ©¦      prototype_com
+©¦      ©¦      prototype_i386
+©¦      ©¦      prototype_sparc
+©¦      ©¦      
+©¦      ©¸©¤SUNWprd
+©¦              depend
+©¦              Makefile.in
+©¦              pkginfo.tmpl
+©¦              prototype
+©¦              
+©À©¤pr
+©¦  ©¦  .cvsignore
+©¦  ©¦  Makefile.in
+©¦  ©¦  
+©¦  ©À©¤include
+©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  gencfg.c
+©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  nspr.h
+©¦  ©¦  ©¦  pratom.h
+©¦  ©¦  ©¦  prbit.h
+©¦  ©¦  ©¦  prclist.h
+©¦  ©¦  ©¦  prcmon.h
+©¦  ©¦  ©¦  prcountr.h
+©¦  ©¦  ©¦  prcvar.h
+©¦  ©¦  ©¦  prdtoa.h
+©¦  ©¦  ©¦  prenv.h
+©¦  ©¦  ©¦  prerr.h
+©¦  ©¦  ©¦  prerror.h
+©¦  ©¦  ©¦  prinet.h
+©¦  ©¦  ©¦  prinit.h
+©¦  ©¦  ©¦  prinrval.h
+©¦  ©¦  ©¦  prio.h
+©¦  ©¦  ©¦  pripcsem.h
+©¦  ©¦  ©¦  prlink.h
+©¦  ©¦  ©¦  prlock.h
+©¦  ©¦  ©¦  prlog.h
+©¦  ©¦  ©¦  prlong.h
+©¦  ©¦  ©¦  prmem.h
+©¦  ©¦  ©¦  prmon.h
+©¦  ©¦  ©¦  prmwait.h
+©¦  ©¦  ©¦  prnetdb.h
+©¦  ©¦  ©¦  prolock.h
+©¦  ©¦  ©¦  prpdce.h
+©¦  ©¦  ©¦  prprf.h
+©¦  ©¦  ©¦  prproces.h
+©¦  ©¦  ©¦  prrng.h
+©¦  ©¦  ©¦  prrwlock.h
+©¦  ©¦  ©¦  prshm.h
+©¦  ©¦  ©¦  prshma.h
+©¦  ©¦  ©¦  prsystem.h
+©¦  ©¦  ©¦  prthread.h
+©¦  ©¦  ©¦  prtime.h
+©¦  ©¦  ©¦  prtpool.h
+©¦  ©¦  ©¦  prtrace.h
+©¦  ©¦  ©¦  prtypes.h
+©¦  ©¦  ©¦  prvrsion.h
+©¦  ©¦  ©¦  prwin16.h
+©¦  ©¦  ©¦  
+©¦  ©¦  ©À©¤md
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      prosdep.h
+©¦  ©¦  ©¦      sunos4.h
+©¦  ©¦  ©¦      _aix.h
+©¦  ©¦  ©¦      _aix32.cfg
+©¦  ©¦  ©¦      _aix64.cfg
+©¦  ©¦  ©¦      _beos.cfg
+©¦  ©¦  ©¦      _beos.h
+©¦  ©¦  ©¦      _bsdi.cfg
+©¦  ©¦  ©¦      _bsdi.h
+©¦  ©¦  ©¦      _darwin.cfg
+©¦  ©¦  ©¦      _darwin.h
+©¦  ©¦  ©¦      _dgux.cfg
+©¦  ©¦  ©¦      _dgux.h
+©¦  ©¦  ©¦      _freebsd.cfg
+©¦  ©¦  ©¦      _freebsd.h
+©¦  ©¦  ©¦      _hpux.h
+©¦  ©¦  ©¦      _hpux32.cfg
+©¦  ©¦  ©¦      _hpux64.cfg
+©¦  ©¦  ©¦      _irix.h
+©¦  ©¦  ©¦      _irix32.cfg
+©¦  ©¦  ©¦      _irix64.cfg
+©¦  ©¦  ©¦      _linux.cfg
+©¦  ©¦  ©¦      _linux.h
+©¦  ©¦  ©¦      _ncr.cfg
+©¦  ©¦  ©¦      _ncr.h
+©¦  ©¦  ©¦      _nec.cfg
+©¦  ©¦  ©¦      _nec.h
+©¦  ©¦  ©¦      _netbsd.cfg
+©¦  ©¦  ©¦      _netbsd.h
+©¦  ©¦  ©¦      _nextstep.cfg
+©¦  ©¦  ©¦      _nextstep.h
+©¦  ©¦  ©¦      _nspr_pthread.h
+©¦  ©¦  ©¦      _nto.cfg
+©¦  ©¦  ©¦      _nto.h
+©¦  ©¦  ©¦      _openbsd.cfg
+©¦  ©¦  ©¦      _openbsd.h
+©¦  ©¦  ©¦      _os2.cfg
+©¦  ©¦  ©¦      _os2.h
+©¦  ©¦  ©¦      _os2_errors.h
+©¦  ©¦  ©¦      _osf1.cfg
+©¦  ©¦  ©¦      _osf1.h
+©¦  ©¦  ©¦      _pcos.h
+©¦  ©¦  ©¦      _pth.h
+©¦  ©¦  ©¦      _qnx.cfg
+©¦  ©¦  ©¦      _qnx.h
+©¦  ©¦  ©¦      _reliantunix.cfg
+©¦  ©¦  ©¦      _reliantunix.h
+©¦  ©¦  ©¦      _riscos.cfg
+©¦  ©¦  ©¦      _riscos.h
+©¦  ©¦  ©¦      _scoos.cfg
+©¦  ©¦  ©¦      _scoos.h
+©¦  ©¦  ©¦      _solaris.cfg
+©¦  ©¦  ©¦      _solaris.h
+©¦  ©¦  ©¦      _sony.cfg
+©¦  ©¦  ©¦      _sony.h
+©¦  ©¦  ©¦      _sunos4.cfg
+©¦  ©¦  ©¦      _sunos4.h
+©¦  ©¦  ©¦      _symbian.cfg
+©¦  ©¦  ©¦      _symbian.h
+©¦  ©¦  ©¦      _unixos.h
+©¦  ©¦  ©¦      _unixware.cfg
+©¦  ©¦  ©¦      _unixware.h
+©¦  ©¦  ©¦      _unixware7.cfg
+©¦  ©¦  ©¦      _unix_errors.h
+©¦  ©¦  ©¦      _win32_errors.h
+©¦  ©¦  ©¦      _win95.cfg
+©¦  ©¦  ©¦      _win95.h
+©¦  ©¦  ©¦      _winnt.cfg
+©¦  ©¦  ©¦      _winnt.h
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤obsolete
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      pralarm.h
+©¦  ©¦  ©¦      probslet.h
+©¦  ©¦  ©¦      protypes.h
+©¦  ©¦  ©¦      prsem.h
+©¦  ©¦  ©¦      
+©¦  ©¦  ©¸©¤private
+©¦  ©¦          .cvsignore
+©¦  ©¦          Makefile.in
+©¦  ©¦          pprio.h
+©¦  ©¦          pprmwait.h
+©¦  ©¦          pprthred.h
+©¦  ©¦          primpl.h
+©¦  ©¦          prpriv.h
+©¦  ©¦          
+©¦  ©À©¤src
+©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  nspr.def
+©¦  ©¦  ©¦  nspr.rc
+©¦  ©¦  ©¦  os2extra.def
+©¦  ©¦  ©¦  prvrsion.c
+©¦  ©¦  ©¦  
+©¦  ©¦  ©À©¤bthreads
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      bsrcs.mk
+©¦  ©¦  ©¦      btcvar.c
+©¦  ©¦  ©¦      btlocks.c
+©¦  ©¦  ©¦      btmisc.c
+©¦  ©¦  ©¦      btmon.c
+©¦  ©¦  ©¦      btsem.c
+©¦  ©¦  ©¦      btthread.c
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      objs.mk
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤cplus
+©¦  ©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  ©¦  rcascii.h
+©¦  ©¦  ©¦  ©¦  rcbase.cpp
+©¦  ©¦  ©¦  ©¦  rcbase.h
+©¦  ©¦  ©¦  ©¦  rccv.cpp
+©¦  ©¦  ©¦  ©¦  rccv.h
+©¦  ©¦  ©¦  ©¦  rcfileio.cpp
+©¦  ©¦  ©¦  ©¦  rcfileio.h
+©¦  ©¦  ©¦  ©¦  rcinrval.cpp
+©¦  ©¦  ©¦  ©¦  rcinrval.h
+©¦  ©¦  ©¦  ©¦  rcio.cpp
+©¦  ©¦  ©¦  ©¦  rcio.h
+©¦  ©¦  ©¦  ©¦  rclock.cpp
+©¦  ©¦  ©¦  ©¦  rclock.h
+©¦  ©¦  ©¦  ©¦  rcmon.h
+©¦  ©¦  ©¦  ©¦  rcnetdb.cpp
+©¦  ©¦  ©¦  ©¦  rcnetdb.h
+©¦  ©¦  ©¦  ©¦  rcnetio.cpp
+©¦  ©¦  ©¦  ©¦  rcnetio.h
+©¦  ©¦  ©¦  ©¦  rcthread.cpp
+©¦  ©¦  ©¦  ©¦  rcthread.h
+©¦  ©¦  ©¦  ©¦  rctime.cpp
+©¦  ©¦  ©¦  ©¦  rctime.h
+©¦  ©¦  ©¦  ©¦  
+©¦  ©¦  ©¦  ©¸©¤tests
+©¦  ©¦  ©¦          .cvsignore
+©¦  ©¦  ©¦          fileio.cpp
+©¦  ©¦  ©¦          interval.cpp
+©¦  ©¦  ©¦          Makefile.in
+©¦  ©¦  ©¦          ranfile.cpp
+©¦  ©¦  ©¦          switch.cpp
+©¦  ©¦  ©¦          thread.cpp
+©¦  ©¦  ©¦          time.cpp
+©¦  ©¦  ©¦          tpd.cpp
+©¦  ©¦  ©¦          
+©¦  ©¦  ©À©¤io
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      prdir.c
+©¦  ©¦  ©¦      prfdcach.c
+©¦  ©¦  ©¦      prfile.c
+©¦  ©¦  ©¦      prio.c
+©¦  ©¦  ©¦      priometh.c
+©¦  ©¦  ©¦      pripv6.c
+©¦  ©¦  ©¦      prlayer.c
+©¦  ©¦  ©¦      prlog.c
+©¦  ©¦  ©¦      prmapopt.c
+©¦  ©¦  ©¦      prmmap.c
+©¦  ©¦  ©¦      prmwait.c
+©¦  ©¦  ©¦      prpolevt.c
+©¦  ©¦  ©¦      prprf.c
+©¦  ©¦  ©¦      prscanf.c
+©¦  ©¦  ©¦      prsocket.c
+©¦  ©¦  ©¦      prstdio.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤linking
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      prlink.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤malloc
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      prmalloc.c
+©¦  ©¦  ©¦      prmem.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤md
+©¦  ©¦  ©¦  ©¦  .cvsignore
+©¦  ©¦  ©¦  ©¦  Makefile.in
+©¦  ©¦  ©¦  ©¦  prosdep.c
+©¦  ©¦  ©¦  ©¦  
+©¦  ©¦  ©¦  ©À©¤beos
+©¦  ©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦  ©¦      bcpu.c
+©¦  ©¦  ©¦  ©¦      beos.c
+©¦  ©¦  ©¦  ©¦      beos_errors.c
+©¦  ©¦  ©¦  ©¦      bfile.c
+©¦  ©¦  ©¦  ©¦      bmemory.c
+©¦  ©¦  ©¦  ©¦      bmisc.c
+©¦  ©¦  ©¦  ©¦      bmmap.c
+©¦  ©¦  ©¦  ©¦      bnet.c
+©¦  ©¦  ©¦  ©¦      bproc.c
+©¦  ©¦  ©¦  ©¦      brng.c
+©¦  ©¦  ©¦  ©¦      bseg.c
+©¦  ©¦  ©¦  ©¦      bsrcs.mk
+©¦  ©¦  ©¦  ©¦      btime.c
+©¦  ©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦  ©¦      objs.mk
+©¦  ©¦  ©¦  ©¦      
+©¦  ©¦  ©¦  ©À©¤os2
+©¦  ©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦  ©¦      objs.mk
+©¦  ©¦  ©¦  ©¦      os2cv.c
+©¦  ©¦  ©¦  ©¦      os2emx.s
+©¦  ©¦  ©¦  ©¦      os2gc.c
+©¦  ©¦  ©¦  ©¦      os2inrval.c
+©¦  ©¦  ©¦  ©¦      os2io.c
+©¦  ©¦  ©¦  ©¦      os2misc.c
+©¦  ©¦  ©¦  ©¦      os2poll.c
+©¦  ©¦  ©¦  ©¦      os2rng.c
+©¦  ©¦  ©¦  ©¦      os2sem.c
+©¦  ©¦  ©¦  ©¦      os2sock.c
+©¦  ©¦  ©¦  ©¦      os2thred.c
+©¦  ©¦  ©¦  ©¦      os2vaclegacy.s
+©¦  ©¦  ©¦  ©¦      os2_errors.c
+©¦  ©¦  ©¦  ©¦      
+©¦  ©¦  ©¦  ©À©¤unix
+©¦  ©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦  ©¦      aix.c
+©¦  ©¦  ©¦  ©¦      aixwrap.c
+©¦  ©¦  ©¦  ©¦      bsdi.c
+©¦  ©¦  ©¦  ©¦      darwin.c
+©¦  ©¦  ©¦  ©¦      dgux.c
+©¦  ©¦  ©¦  ©¦      freebsd.c
+©¦  ©¦  ©¦  ©¦      hpux.c
+©¦  ©¦  ©¦  ©¦      irix.c
+©¦  ©¦  ©¦  ©¦      linux.c
+©¦  ©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦  ©¦      ncr.c
+©¦  ©¦  ©¦  ©¦      nec.c
+©¦  ©¦  ©¦  ©¦      netbsd.c
+©¦  ©¦  ©¦  ©¦      nextstep.c
+©¦  ©¦  ©¦  ©¦      nto.c
+©¦  ©¦  ©¦  ©¦      objs.mk
+©¦  ©¦  ©¦  ©¦      openbsd.c
+©¦  ©¦  ©¦  ©¦      osf1.c
+©¦  ©¦  ©¦  ©¦      os_AIX.s
+©¦  ©¦  ©¦  ©¦      os_BSD_386_2.s
+©¦  ©¦  ©¦  ©¦      os_Darwin.s
+©¦  ©¦  ©¦  ©¦      os_Darwin_ppc.s
+©¦  ©¦  ©¦  ©¦      os_Darwin_x86.s
+©¦  ©¦  ©¦  ©¦      os_Darwin_x86_64.s
+©¦  ©¦  ©¦  ©¦      os_HPUX.s
+©¦  ©¦  ©¦  ©¦      os_HPUX_ia64.s
+©¦  ©¦  ©¦  ©¦      os_Irix.s
+©¦  ©¦  ©¦  ©¦      os_Linux_ia64.s
+©¦  ©¦  ©¦  ©¦      os_Linux_ppc.s
+©¦  ©¦  ©¦  ©¦      os_Linux_x86.s
+©¦  ©¦  ©¦  ©¦      os_Linux_x86_64.s
+©¦  ©¦  ©¦  ©¦      os_ReliantUNIX.s
+©¦  ©¦  ©¦  ©¦      os_SunOS_sparcv9.s
+©¦  ©¦  ©¦  ©¦      os_SunOS_ultrasparc.s
+©¦  ©¦  ©¦  ©¦      os_SunOS_x86.s
+©¦  ©¦  ©¦  ©¦      os_SunOS_x86_64.s
+©¦  ©¦  ©¦  ©¦      pthreads_user.c
+©¦  ©¦  ©¦  ©¦      qnx.c
+©¦  ©¦  ©¦  ©¦      reliantunix.c
+©¦  ©¦  ©¦  ©¦      riscos.c
+©¦  ©¦  ©¦  ©¦      scoos.c
+©¦  ©¦  ©¦  ©¦      solaris.c
+©¦  ©¦  ©¦  ©¦      sony.c
+©¦  ©¦  ©¦  ©¦      sunos4.c
+©¦  ©¦  ©¦  ©¦      symbian.c
+©¦  ©¦  ©¦  ©¦      unix.c
+©¦  ©¦  ©¦  ©¦      unixware.c
+©¦  ©¦  ©¦  ©¦      unix_errors.c
+©¦  ©¦  ©¦  ©¦      uxpoll.c
+©¦  ©¦  ©¦  ©¦      uxproces.c
+©¦  ©¦  ©¦  ©¦      uxrng.c
+©¦  ©¦  ©¦  ©¦      uxshm.c
+©¦  ©¦  ©¦  ©¦      uxwrap.c
+©¦  ©¦  ©¦  ©¦      
+©¦  ©¦  ©¦  ©¸©¤windows
+©¦  ©¦  ©¦          .cvsignore
+©¦  ©¦  ©¦          Makefile.in
+©¦  ©¦  ©¦          ntdllmn.c
+©¦  ©¦  ©¦          ntgc.c
+©¦  ©¦  ©¦          ntinrval.c
+©¦  ©¦  ©¦          ntio.c
+©¦  ©¦  ©¦          ntmisc.c
+©¦  ©¦  ©¦          ntsec.c
+©¦  ©¦  ©¦          ntsem.c
+©¦  ©¦  ©¦          ntthread.c
+©¦  ©¦  ©¦          objs.mk
+©¦  ©¦  ©¦          w32ipcsem.c
+©¦  ©¦  ©¦          w32poll.c
+©¦  ©¦  ©¦          w32rng.c
+©¦  ©¦  ©¦          w32shm.c
+©¦  ©¦  ©¦          w95cv.c
+©¦  ©¦  ©¦          w95dllmain.c
+©¦  ©¦  ©¦          w95io.c
+©¦  ©¦  ©¦          w95sock.c
+©¦  ©¦  ©¦          w95thred.c
+©¦  ©¦  ©¦          win32_errors.c
+©¦  ©¦  ©¦          
+©¦  ©¦  ©À©¤memory
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      prgcleak.c
+©¦  ©¦  ©¦      prseg.c
+©¦  ©¦  ©¦      prshm.c
+©¦  ©¦  ©¦      prshma.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤misc
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      compile-et.pl
+©¦  ©¦  ©¦      dtoa.c
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      pralarm.c
+©¦  ©¦  ©¦      pratom.c
+©¦  ©¦  ©¦      praton.c
+©¦  ©¦  ©¦      prcountr.c
+©¦  ©¦  ©¦      prdtoa.c
+©¦  ©¦  ©¦      prenv.c
+©¦  ©¦  ©¦      prerr.c
+©¦  ©¦  ©¦      prerr.et
+©¦  ©¦  ©¦      prerr.properties
+©¦  ©¦  ©¦      prerror.c
+©¦  ©¦  ©¦      prerrortable.c
+©¦  ©¦  ©¦      prinit.c
+©¦  ©¦  ©¦      prinrval.c
+©¦  ©¦  ©¦      pripc.c
+©¦  ©¦  ©¦      pripcsem.c
+©¦  ©¦  ©¦      prlog2.c
+©¦  ©¦  ©¦      prlong.c
+©¦  ©¦  ©¦      prnetdb.c
+©¦  ©¦  ©¦      prolock.c
+©¦  ©¦  ©¦      prrng.c
+©¦  ©¦  ©¦      prsystem.c
+©¦  ©¦  ©¦      prthinfo.c
+©¦  ©¦  ©¦      prtime.c
+©¦  ©¦  ©¦      prtpool.c
+©¦  ©¦  ©¦      prtrace.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©À©¤pthreads
+©¦  ©¦  ©¦      .cvsignore
+©¦  ©¦  ©¦      Makefile.in
+©¦  ©¦  ©¦      ptio.c
+©¦  ©¦  ©¦      ptmisc.c
+©¦  ©¦  ©¦      ptsynch.c
+©¦  ©¦  ©¦      ptthread.c
+©¦  ©¦  ©¦      
+©¦  ©¦  ©¸©¤threads
+©¦  ©¦      ©¦  .cvsignore
+©¦  ©¦      ©¦  Makefile.in
+©¦  ©¦      ©¦  prcmon.c
+©¦  ©¦      ©¦  prcthr.c
+©¦  ©¦      ©¦  prdump.c
+©¦  ©¦      ©¦  prmon.c
+©¦  ©¦      ©¦  prrwlock.c
+©¦  ©¦      ©¦  prsem.c
+©¦  ©¦      ©¦  prtpd.c
+©¦  ©¦      ©¦  
+©¦  ©¦      ©¸©¤combined
+©¦  ©¦              .cvsignore
+©¦  ©¦              Makefile.in
+©¦  ©¦              prucpu.c
+©¦  ©¦              prucv.c
+©¦  ©¦              prulock.c
+©¦  ©¦              prustack.c
+©¦  ©¦              pruthr.c
+©¦  ©¦              README
+©¦  ©¦              
+©¦  ©¸©¤tests
+©¦      ©¦  .cvsignore
+©¦      ©¦  accept.c
+©¦      ©¦  acceptread.c
+©¦      ©¦  acceptreademu.c
+©¦      ©¦  addrstr.c
+©¦      ©¦  affinity.c
+©¦      ©¦  alarm.c
+©¦      ©¦  anonfm.c
+©¦      ©¦  append.c
+©¦      ©¦  atomic.c
+©¦      ©¦  attach.c
+©¦      ©¦  bigfile.c
+©¦      ©¦  bigfile2.c
+©¦      ©¦  bigfile3.c
+©¦      ©¦  bug1test.c
+©¦      ©¦  cleanup.c
+©¦      ©¦  cltsrv.c
+©¦      ©¦  concur.c
+©¦      ©¦  cvar.c
+©¦      ©¦  cvar2.c
+©¦      ©¦  dbmalloc.c
+©¦      ©¦  dbmalloc1.c
+©¦      ©¦  dceemu.c
+©¦      ©¦  depend.c
+©¦      ©¦  dlltest.c
+©¦      ©¦  dtoa.c
+©¦      ©¦  env.c
+©¦      ©¦  errcodes.c
+©¦      ©¦  errset.c
+©¦      ©¦  exit.c
+©¦      ©¦  fdcach.c
+©¦      ©¦  fileio.c
+©¦      ©¦  foreign.c
+©¦      ©¦  forktest.c
+©¦      ©¦  formattm.c
+©¦      ©¦  freeif.c
+©¦      ©¦  fsync.c
+©¦      ©¦  getai.c
+©¦      ©¦  gethost.c
+©¦      ©¦  getproto.c
+©¦      ©¦  i2l.c
+©¦      ©¦  initclk.c
+©¦      ©¦  inrval.c
+©¦      ©¦  instrumt.c
+©¦      ©¦  intrio.c
+©¦      ©¦  intrupt.c
+©¦      ©¦  ioconthr.c
+©¦      ©¦  io_timeout.c
+©¦      ©¦  io_timeoutk.c
+©¦      ©¦  io_timeoutu.c
+©¦      ©¦  ipv6.c
+©¦      ©¦  join.c
+©¦      ©¦  joinkk.c
+©¦      ©¦  joinku.c
+©¦      ©¦  joinuk.c
+©¦      ©¦  joinuu.c
+©¦      ©¦  layer.c
+©¦      ©¦  lazyinit.c
+©¦      ©¦  libfilename.c
+©¦      ©¦  lltest.c
+©¦      ©¦  lock.c
+©¦      ©¦  lockfile.c
+©¦      ©¦  logfile.c
+©¦      ©¦  logger.c
+©¦      ©¦  makedir.c
+©¦      ©¦  Makefile.in
+©¦      ©¦  many_cv.c
+©¦      ©¦  mbcs.c
+©¦      ©¦  multiacc.c
+©¦      ©¦  multiwait.c
+©¦      ©¦  nameshm1.c
+©¦      ©¦  nbconn.c
+©¦      ©¦  nblayer.c
+©¦      ©¦  nonblock.c
+©¦      ©¦  ntioto.c
+©¦      ©¦  ntoh.c
+©¦      ©¦  obsints.c
+©¦      ©¦  openfile.c
+©¦      ©¦  op_2long.c
+©¦      ©¦  op_excl.c
+©¦      ©¦  op_filnf.c
+©¦      ©¦  op_filok.c
+©¦      ©¦  op_noacc.c
+©¦      ©¦  op_nofil.c
+©¦      ©¦  parent.c
+©¦      ©¦  parsetm.c
+©¦      ©¦  peek.c
+©¦      ©¦  perf.c
+©¦      ©¦  pipeping.c
+©¦      ©¦  pipeping2.c
+©¦      ©¦  pipepong.c
+©¦      ©¦  pipepong2.c
+©¦      ©¦  pipeself.c
+©¦      ©¦  pollable.c
+©¦      ©¦  poll_er.c
+©¦      ©¦  poll_nm.c
+©¦      ©¦  poll_to.c
+©¦      ©¦  prftest.c
+©¦      ©¦  prftest1.c
+©¦      ©¦  prftest2.c
+©¦      ©¦  primblok.c
+©¦      ©¦  priotest.c
+©¦      ©¦  provider.c
+©¦      ©¦  prpoll.c
+©¦      ©¦  prpollml.c
+©¦      ©¦  prselect.c
+©¦      ©¦  prttools.h
+©¦      ©¦  randseed.c
+©¦      ©¦  ranfile.c
+©¦      ©¦  README.TXT
+©¦      ©¦  reinit.c
+©¦      ©¦  rmdir.c
+©¦      ©¦  runtests.pl
+©¦      ©¦  runtests.sh
+©¦      ©¦  runy2ktests.ksh
+©¦      ©¦  rwlocktest.c
+©¦      ©¦  selct_er.c
+©¦      ©¦  selct_nm.c
+©¦      ©¦  selct_to.c
+©¦      ©¦  select2.c
+©¦      ©¦  selintr.c
+©¦      ©¦  sel_spd.c
+©¦      ©¦  sem.c
+©¦      ©¦  sema.c
+©¦      ©¦  semaerr.c
+©¦      ©¦  semaerr1.c
+©¦      ©¦  semaping.c
+©¦      ©¦  semapong.c
+©¦      ©¦  sendzlf.c
+©¦      ©¦  server_test.c
+©¦      ©¦  servr_kk.c
+©¦      ©¦  servr_ku.c
+©¦      ©¦  servr_uk.c
+©¦      ©¦  servr_uu.c
+©¦      ©¦  short_thread.c
+©¦      ©¦  sigpipe.c
+©¦      ©¦  sleep.c
+©¦      ©¦  socket.c
+©¦      ©¦  sockopt.c
+©¦      ©¦  sockping.c
+©¦      ©¦  sockpong.c
+©¦      ©¦  sprintf.c
+©¦      ©¦  sproc_ch.c
+©¦      ©¦  sproc_p.c
+©¦      ©¦  stack.c
+©¦      ©¦  stat.c
+©¦      ©¦  stdio.c
+©¦      ©¦  str2addr.c
+©¦      ©¦  strod.c
+©¦      ©¦  suspend.c
+©¦      ©¦  switch.c
+©¦      ©¦  system.c
+©¦      ©¦  testbit.c
+©¦      ©¦  testfile.c
+©¦      ©¦  threads.c
+©¦      ©¦  thrpool_client.c
+©¦      ©¦  thrpool_server.c
+©¦      ©¦  thruput.c
+©¦      ©¦  time.c
+©¦      ©¦  timemac.c
+©¦      ©¦  timetest.c
+©¦      ©¦  tmoacc.c
+©¦      ©¦  tmocon.c
+©¦      ©¦  tpd.c
+©¦      ©¦  udpsrv.c
+©¦      ©¦  ut_ttools.h
+©¦      ©¦  vercheck.c
+©¦      ©¦  version.c
+©¦      ©¦  writev.c
+©¦      ©¦  xnotify.c
+©¦      ©¦  y2k.c
+©¦      ©¦  y2ktmo.c
+©¦      ©¦  yield.c
+©¦      ©¦  zerolen.c
+©¦      ©¦  
+©¦      ©¸©¤dll
+©¦              .cvsignore
+©¦              Makefile.in
+©¦              my.def
+©¦              mygetval.c
+©¦              mysetval.c
+©¦              
+©¸©¤tools
+        .cvsignore
+        httpget.c
+        Makefile.in
+        tail.c
+
+prtype.h
+#define PR_ROUNDUP(x,y) ((((x)+((y)-1))/(y))*(y))
+PR_ROUNDUP(1,5) ((1+5-1)/5)*5=5
+PR_ROUNDUP(2,5) ((2+5-1)/5)*5=5
+PR_ROUNDUP(3,5) ((3+5-1)/5)*5=5
+PR_ROUNDUP(4,5) ((4+5-1)/5)*5=5
+PR_ROUNDUP(5,5) ((5+5-1)/5)*5=5
+PR_ROUNDUP(6,5) ((6+5-1)/5)*5=10
+PR_ROUNDUP(7,5) ((7+5-1)/5)*5=10
+PR_ROUNDUP(8,5) ((8+5-1)/5)*5=10
+PR_ROUNDUP(9,5) ((9+5-1)/5)*5=10
+PR_ROUNDUP(10,5) ((10+5-1)/5)*5=10
+PR_ROUNDUP(11,5) ((11+5-1)/5)*5=15
+...
+#define PR_UINT32(x) x##U
+
+header file
+_winnt.cfg->prcpucfg.h
+prtype.h
+
+export and import macro for DLL defintions 
+
+many statements define macro
+
+c++ extern macro
+
+1
+10000000/
+11111111
+ 99999999
+
+
+[reference]
+timeGetTime() - http://msdn.microsoft.com/en-us/library/dd757629%28VS.85%29.aspx
+BeOS - http://en.wikipedia.org/wiki/BeOS
+POSIX - http://en.wikipedia.org/wiki/POSIX
+==
+vim:expandtab filetype=c

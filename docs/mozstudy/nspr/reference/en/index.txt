@@ -1,0 +1,809 @@
+Contents
+Chapter 1 Introduction to NSPR
+
+NSPR Naming Conventions
+NSPR Threads
+
+Thread Scheduling
+
+Setting Thread Priorities
+Preempting抢占 Threads 
+Interrupting Threads
+
+NSPR Thread Synchronization
+
+Locks and Monitors
+Condition Variables
+
+NSPR Sample Code
+
+Chapter 2 NSPR Types
+
+Calling Convention公约 Types
+
+PR_EXTERN
+PR_IMPLEMENT
+PR_CALLBACK
+
+Algebraic Types
+
+8-, 16-, and 32-bit Integer Types
+
+Signed Integers
+PRInt8
+PRInt16
+PRInt32
+Unsigned Integers
+PRUint
+PRUint16
+PRUint32
+
+64-bit Integer Types
+
+PRInt64
+PRUint64
+
+Floating-Point Integer Type
+Native OS Integer Types
+
+Miscellaneous杂项 Types
+
+Size Type
+
+PRSize
+
+Pointer Difference Types
+
+PRPtrdiff
+PRUptrdiff
+
+Boolean Types
+
+PRBool
+PRPackedBool
+
+Status Type for Return Values
+
+PRStatus
+
+Chapter 3 Threads
+
+Threading Types and Constants
+
+PRThread
+PRThreadType
+PRThreadScope
+PRThreadState
+PRThreadPriority
+PRThreadPrivateDTOR
+
+Threading Functions
+
+Creating, Joining, and Identifying识别 Threads
+
+PR_CreateThread
+PR_JoinThread
+PR_GetCurrentThread
+PR_AttachThread
+PR_DetachThread
+
+Controlling Thread Priorities
+
+PR_GetThreadPriority
+PR_SetThreadPriority
+
+Controlling Per-Thread Private Data
+
+PR_NewThreadPrivateIndex
+PR_SetThreadPrivate
+PR_GetThreadPrivate
+
+Interrupting and Yielding屈服
+
+PR_Interrupt
+PR_ClearInterrupt
+PR_Sleep
+
+Setting Global Thread Concurrency
+
+PR_SetConcurrency
+
+Getting a Thread's Scope
+
+PR_GetThreadScope
+
+Chapter 4 Process Initialization
+
+Identity and Versioning
+
+Name and Version Constants
+PR_VersionCheck
+
+Initialization and Cleanup
+
+PR_Init
+PR_Initialize
+PR_Initialized
+PR_Cleanup
+PR_DisableClockInterrupts
+PR_BlockClockInterrupts
+PR_UnblockClockInterrupts
+PR_SetConcurrency
+PR_ProcessExit
+PR_Abort
+
+Module Initialization
+
+PRCallOnce
+PRCallOnceFN
+PR_CallOnce
+
+Chapter 5 Locks
+
+Lock Type
+
+PRLock
+
+Lock Functions
+
+PR_NewLock
+PR_DestroyLock
+PR_Lock
+PR_Unlock
+
+Chapter 6 Condition Variables
+
+Condition Variable Type
+
+PRCondVar
+
+Condition Variable Functions
+
+PR_NewCondVar
+PR_DestroyCondVar
+PR_WaitCondVar
+PR_NotifyCondVar
+PR_NotifyAllCondVar
+
+Chapter 7 Monitors
+
+Monitor Type
+
+PRMonitor
+
+Monitor Functions
+
+PR_NewMonitor
+PR_DestroyMonitor
+PR_EnterMonitor
+PR_ExitMonitor
+PR_Wait
+PR_Notify
+PR_NotifyAll
+
+Chapter 8 Cached Monitors
+
+Cached Monitors Functions
+
+PR_CEnterMonitor
+PR_CExitMonitor
+PR_CWait
+PR_CNotify
+PR_CNotifyAll
+
+Chapter 9 I/O Types
+
+Directory Type
+
+PRDir
+
+File Descriptor Types
+
+PRFileDesc
+PRIOMethods
+PRFilePrivate
+PRDescIdentity
+
+File Info Types
+
+PRFileInfo
+PRFileInfo64
+PRFileType
+
+Network Address Types
+
+PRNetAddr
+PRIPv6Addr
+
+Types Used with Socket Options Functions
+
+PRSocketOptionData
+PRSockOption
+PRLinger
+PRMcastRequest
+
+Type Used with Memory-Mapped I/O
+
+PRFileMap
+
+Offset Interpretation for Seek Functions
+
+PRSeekWhence
+
+Chapter 10 I/O Functions
+
+Functions that Operate on Pathnames
+
+PR_Open
+PR_Delete
+PR_GetFileInfo
+PR_GetFileInfo64
+PR_Rename
+PR_Access
+
+Functions that Act on File Descriptors
+
+PR_Close
+PR_Read
+PR_Write
+PR_Writev
+PR_GetOpenFileInfo
+PR_GetOpenFileInfo64
+PR_Seek
+PR_Seek64
+PR_Available
+PR_Available64
+PR_Sync
+PR_GetDescType
+PR_GetSpecialFD
+
+Directory I/O Functions
+
+PR_OpenDir
+PR_ReadDir
+PR_CloseDir
+PR_MkDir
+PR_RmDir
+
+Socket Manipulation操纵 Functions
+
+PR_NewUDPSocket
+PR_NewTCPSocket
+PR_Connect
+PR_Accept
+PR_Bind
+PR_Listen
+PR_Shutdown
+PR_Recv
+PR_Send
+PR_RecvFrom
+PR_SendTo
+PR_TransmitFile
+PR_AcceptRead
+PR_GetSockName
+PR_GetPeerName
+PR_GetSocketOption
+PR_SetSocketOption
+
+Converting Between Host and Network Addresses
+
+PR_ntohs
+PR_ntohl
+PR_htons
+PR_htonl
+PR_FamilyInet
+
+Memory-Mapped I/O Functions
+
+PR_CreateFileMap
+PR_MemMap
+PR_MemUnmap
+PR_CloseFileMap
+
+Anonymous Pipe Function
+
+PR_CreatePipe
+
+Polling Functions
+
+PR_Poll
+PR_GetConnectStatus
+
+Pollable Events
+
+PR_NewPollableEvent
+PR_DestroyPollableEvent
+PR_SetPollableEvent
+PR_WaitForPollableEvent
+
+Manipulating Layers
+
+PR_GetUniqueIdentity
+PR_GetNameForIdentity
+PR_GetLayersIdentity
+PR_GetIdentitiesLayer
+PR_GetDefaultIOMethods
+PR_CreateIOLayerStub
+PR_PushIOLayer
+PR_PopIOLayer
+
+Chapter 11 Network Addresses
+
+Network Address Types and Constants
+
+PRHostEnt
+PRProtoEnt
+PR_NETDB_BUF_SIZE
+
+Network Address Functions
+
+Initializing a Network Address
+
+PR_InitializeNetAddr
+
+Converting Between a String and a Network Address
+
+PR_StringToNetAddr
+PR_NetAddrToString
+
+Getting Host Names and Addresses
+
+PR_GetHostByName
+PR_GetHostByAddr
+PR_EnumerateHostEnt
+
+Getting Protocol Entries
+
+PR_GetProtoByName
+PR_GetProtoByNumber
+
+Chapter 12 Atomic Operations
+
+Atomic Operations Functions
+
+PR_AtomicIncrement
+PR_AtomicDecrement
+PR_AtomicSet
+
+Chapter 13 Interval Timing
+
+Interval Time Type and Constants
+
+PRIntervalTime
+
+Interval Functions
+
+Getting the Current Interval and Ticks Per Second
+
+PR_IntervalNow
+PR_TicksPerSecond
+
+Converting Standard Clock Units to Platform-Dependent Intervals
+
+PR_SecondsToInterval
+PR_MillisecondsToInterval
+PR_MicrosecondsToInterval
+
+Converting Platform-Dependent Intervals to Standard Clock Units
+
+PR_IntervalToSeconds
+PR_IntervalToMilliseconds
+PR_IntervalToMicroseconds
+
+Chapter 14 Date and Time
+
+Types and Constants
+
+Macros for Time Unit Conversion
+PRTime
+PRTimeParameters
+PRExplodedTime
+
+Time Parameter Callback Functions
+
+PRTimeParamFn
+PR_LocalTimeParameters and PR_GMTParameters
+
+Functions
+
+PR_Now
+PR_ExplodeTime
+PR_ImplodeTime
+PR_NormalizeTime
+
+Chapter 15 Memory Management Operations
+
+Memory Allocation Functions
+
+PR_Malloc
+PR_Calloc
+PR_Realloc
+PR_Free
+
+Memory Allocation Macros
+
+PR_MALLOC
+PR_NEW
+PR_REALLOC
+PR_CALLOC
+PR_NEWZAP
+PR_DELETE
+PR_FREEIF
+
+Chapter 16 String Operations
+
+PL_strlen
+PL_strcpy
+PL_strdup
+PL_strfree
+
+Chapter 17 Floating Point Number to String Conversion
+
+PR_strtod
+PR_dtoa
+PR_cnvtf
+
+References
+
+Chapter 18 Long Long (64-bit) Integers
+
+64-Bit Integer Types
+64-Bit Integer Functions
+
+Limits and Initialization
+
+LL_MaxInt
+LL_MinInt
+LL_Zero
+LL_INIT
+
+Relational Operators
+
+LL_IS_ZERO
+LL_EQ
+LL_NE
+LL_GE_ZERO
+LL_CMP
+LL_UCMP
+
+Logical Operators
+
+LL_AND
+LL_OR
+LL_XOR
+LL_OR2
+LL_NOT
+
+Arithmetic Operators
+
+LL_NEG
+LL_ADD
+LL_SUB
+LL_MUL
+LL_DIV
+LL_MOD
+LL_UDIVMOD
+
+Shift Operators
+
+LL_SHL
+LL_SHR
+LL_USHR
+LL_USHL
+
+Conversion Operators
+
+LL_L2I
+LL_L2UI
+LL_L2F
+LL_L2D
+LL_I2L
+LL_UI2L
+LL_F2L
+LL_D2L
+
+Chapter 19 BitMaps
+
+Bitmap Type
+
+prbitmap_t
+
+Bitmap Functions and Macros
+
+PR_TEST_BIT
+PR_SET_BIT
+PR_CLEAR_BIT
+
+Logarithmic对数 Functions and Macros
+
+PR_CeilingLog2
+PR_FloorLog2
+PR_CEILING_LOG2
+PR_FLOOR_LOG2
+
+Chapter 20 Formatted Printing
+
+Formatting Specification
+Output Functions
+
+PR_snprintf
+PR_smprintf
+PR_sprintf_append
+PR_smprintf_free
+PR_sxprintf
+PR_fprintf
+
+va_list Versions of Output Functions
+
+PR_vsnprintf
+PR_vsmprintf
+PR_vsprintf_append
+PR_vsxprintf
+PR_vfprintf
+
+Scanning Function
+
+PR_sscanf
+
+Chapter 21 Linked Lists
+
+Linked List Types
+
+PRCList
+
+Linked List Macros
+
+PR_INIT_CLIST
+PR_INIT_STATIC_CLIST
+PR_APPEND_LINK
+PR_INSERT_LINK
+PR_NEXT_LINK
+PR_PREV_LINK
+PR_REMOVE_LINK
+PR_REMOVE_AND_INIT_LINK
+PR_INSERT_BEFORE
+PR_INSERT_AFTER
+PR_CLIST_IS_EMPTY
+PR_LIST_HEAD
+PR_LIST_TAIL
+
+Chapter 22 Dynamic Library Linking
+
+Library Linking Types
+
+PRLibrary
+PRStaticLinkTable
+
+Library Linking Functions
+
+PR_SetLibraryPath
+PR_GetLibraryPath
+PR_GetLibraryName
+PR_FreeLibraryName
+PR_LoadLibrary
+PR_UnloadLibrary
+PR_FindSymbol
+PR_FindSymbolAndLibrary
+
+Platform Notes
+
+Dynamic Library Search Path
+Exporting Symbols from the Main Executable Program
+
+Chapter 23 Process Management and Interprocess进程间 Communication
+
+Process Management Types and Constants
+
+PRProcess
+PRProcessAttr
+
+Process Management Functions
+
+Setting the Attributes of a New Process
+
+PR_NewProcessAttr
+PR_ResetProcessAttr
+PR_DestroyProcessAttr
+PR_ProcessAttrSetStdioRedirect
+PR_ProcessAttrSetCurrentDirectory
+PR_ProcessAttrSetInheritableFD
+
+Creating and Managing Processes
+
+PR_CreateProcess
+PR_DetachProcess
+PR_WaitProcess
+PR_KillProcess
+PR_GetInheritedFD
+
+Chapter 24 Multiwait Receive
+
+Multiwait Types
+
+PRRecvWait
+PRWaitGroup
+PRMWStatus
+PRMemoryDescriptor
+
+Multiwait Client Functions
+
+PR_CreateWaitGroup
+PR_DestroyWaitGroup
+PR_AddWaitFileDesc
+PR_WaitRecvReady
+PR_CancelWaitFileDesc
+PR_CancelWaitGroup
+
+Chapter 25 System Information and Environment Variables
+
+System Information Types
+
+PRSysInfo
+
+System Information and Environment Variable Functions
+
+PR_GetSystemInfo
+PR_GetPageSize
+PR_GetPageShift
+PR_GetEnv
+
+Chapter 26 Logging
+
+Conditional Compilation and Execution
+Log Types and Variables
+
+PRLogModuleInfo
+PRLogModuleLevel
+NSPR_LOG_MODULES
+NSPR_LOG_FILE
+
+Logging Functions and Macros
+
+PR_NewLogModule
+PR_SetLogFile
+PR_SetLogBuffering
+PR_LogPrint
+PR_LogFlush
+PR_LOG_TEST
+PR_LOG
+PR_Assert
+PR_ASSERT
+PR_NOT_REACHED
+
+Use Example
+
+Chapter 27 Instrumentation Counters
+
+Using Instrumentation Counters
+Instrumentation Counter Type
+
+PRCounterHandle
+
+Instrumentation Counter Functions and Macros
+
+PR_DEFINE_COUNTER
+PR_INIT_COUNTER_HANDLE
+PR_CreateCounter
+PR_DestroyCounter
+PR_GetCounterHandleFromName
+PR_GetCounterNameFromHandle
+PR_IncrementCounter
+PR_DecrementCounter
+PR_AddToCounter
+PR_SubtractFromCounter
+PR_GetCounter
+PR_SetCounter
+PR_FindNextCounterQname
+PR_FindNextCounterRname
+
+Chapter 28 Named Shared Memory
+
+Shared Memory Protocol
+
+Using Named Shared Memory Functions
+Filenames
+Limits on Shared Memory Resources
+Security Considerations
+
+Named Shared Memory Functions
+
+PR_OpenSharedMemory
+PR_AttachSharedMemory
+PR_DetachSharedMemory
+PR_CloseSharedMemory
+PR_DeleteSharedMemory
+
+Chapter 29 Anonymous Shared Memory
+
+Anonymous Memory Protocol
+
+First protocol
+Second Protocol
+
+Anonymous Shared Memory Functions
+
+PR_OpenAnonFileMap
+PR_ProcessAttrSetInheritableFileMap
+PR_GetInheritedFileMap
+PR_ExportFileMapAsString
+PR_ImportFileMapFromString
+
+Chapter 30 IPC Semaphores
+
+IPC Semaphore Functions
+
+PR_OpenSemaphore
+PR_WaitSemaphore
+PR_PostSemaphore
+PR_CloseSemaphore
+PR_DeleteSemaphore
+
+Chapter 31 Thread Pools
+
+Thread Pool Types
+
+PRJobIoDesc
+PRJobFn
+PRThreadPool
+PRJob
+
+Thread Pool Functions
+
+PR_CreateThreadPool
+PR_QueueJob
+PR_QueueJob_Read
+PR_QueueJob_Write
+PR_QueueJobAccept
+PR_QueueJob_Connect
+PR_QueueJob_Timer
+PR_CancelJob
+PR_JoinJob
+PR_ShutdownThreadPool
+PR_JoinThreadPool
+
+Chapter 32 Random Number Generator
+
+Random Number Generator Function
+
+PR_GetRandomNoise
+
+Chapter 33 Hash Tables
+
+Hash Table Types and Constants
+
+PLHashEntry
+PLHashTable
+PLHashNumber
+PLHashFunction
+PLHashComparator
+PLHashEnumerator
+PLHashAllocOps
+
+Hash Table Functions
+
+PL_NewHashTable
+PL_HashTableDestroy
+PL_HashTableAdd
+PL_HashTableRemove
+PL_HashTableLookup
+PL_HashTableEnumerateEntries
+PL_HashString
+PL_CompareStrings
+PL_CompareValues
+
+Chapter 34 NSPR Error Handling
+
+Error Type
+
+PRErrorCode
+
+Error Functions
+
+PR_SetError
+PR_SetErrorText
+PR_GetError
+PR_GetOSError
+PR_GetErrorTextLength
+PR_GetErrorText
+
+Error Codes 

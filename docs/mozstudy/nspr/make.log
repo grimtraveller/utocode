@@ -1,0 +1,414 @@
+make -j1 -C config export
+make[1]: Entering directory `/f/mc/nsprpub__/config'
+cl -Fonow.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG   "/f/mc/nsprpub__/config/now.c"
+now.c
+cl  now.obj -DEBUG  -Fenow.exe
+Microsoft (R) Incremental Linker Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:now.exe 
+now.obj 
+rm -f ../dist/bin/nspr-config
+make[1]: Leaving directory `/f/mc/nsprpub__/config'
+make -j1 -C pr export
+make[1]: Entering directory `/f/mc/nsprpub__/pr'
+make -C include export
+make[2]: Entering directory `/f/mc/nsprpub__/pr/include'
+make -C md export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/include/md'
+nsinstall -m 444 ./_aix32.cfg ./_aix64.cfg ./_beos.cfg ./_bsdi.cfg ./_darwin.cfg ./_dgux.cfg ./_freebsd.cfg ./_hpux32.cfg ./_hpux64.cfg ./_irix32.cfg ./_irix64.cfg ./_linux.cfg ./_ncr.cfg ./_nec.cfg ./_netbsd.cfg ./_nextstep.cfg ./_nto.cfg ./_openbsd.cfg ./_os2.cfg ./_osf1.cfg ./_qnx.cfg ./_reliantunix.cfg ./_riscos.cfg ./_scoos.cfg ./_solaris.cfg ./_sony.cfg ./_sunos4.cfg ./_symbian.cfg ./_unixware.cfg ./_unixware7.cfg ./_win95.cfg ./_winnt.cfg ../../../dist/include/nspr/md
+nsinstall -m 444 ./_winnt.cfg ../../../dist/include/nspr
+mv -f ../../../dist/include/nspr/_winnt.cfg ../../../dist/include/nspr/prcpucfg.h
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/include/md'
+make -C private export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/include/private'
+nsinstall -m 444 ./pprio.h ./pprthred.h ./prpriv.h ../../../dist/include/nspr/private
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/include/private'
+make -C obsolete export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/include/obsolete'
+nsinstall -m 444 ./pralarm.h ./probslet.h ./protypes.h ./prsem.h ../../../dist/include/nspr/obsolete
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/include/obsolete'
+nsinstall -m 444 ./nspr.h ./pratom.h ./prbit.h ./prclist.h ./prcmon.h ./prcountr.h ./prcvar.h ./prdtoa.h ./prenv.h ./prerr.h ./prerror.h ./prinet.h ./prinit.h ./prinrval.h ./prio.h ./pripcsem.h ./prlink.h ./prlock.h ./prlog.h ./prlong.h ./prmem.h ./prmon.h ./prmwait.h ./prnetdb.h ./prolock.h ./prpdce.h ./prprf.h ./prproces.h ./prrng.h ./prrwlock.h ./prshm.h ./prshma.h ./prsystem.h ./prthread.h ./prtime.h ./prtpool.h ./prtrace.h ./prtypes.h ./prvrsion.h ./prwin16.h ../../dist/include/nspr
+make[2]: Leaving directory `/f/mc/nsprpub__/pr/include'
+make -C src export
+make[2]: Entering directory `/f/mc/nsprpub__/pr/src'
+make -C io export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/io'
+cl -Foprfdcach.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prfdcach.c"
+prfdcach.c
+cl -Foprmwait.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prmwait.c"
+prmwait.c
+cl -Fopriometh.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/priometh.c"
+priometh.c
+f:/mc/nsprpub__/pr/src/io/priometh.c(368) : warning C4018: “<”: 有符号/无符号不匹配
+cl -Fopripv6.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/pripv6.c"
+pripv6.c
+cl -Foprmapopt.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prmapopt.c"
+prmapopt.c
+cl -Foprlayer.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prlayer.c"
+prlayer.c
+f:/mc/nsprpub__/pr/src/io/prlayer.c(641) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Foprlog.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prlog.c"
+prlog.c
+f:/mc/nsprpub__/pr/src/io/prlog.c(219) : warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdio.h(324) : 参见“sscanf”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(227) : warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(215) : 参见“stricmp”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(229) : warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(215) : 参见“stricmp”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(233) : warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(215) : 参见“stricmp”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(238) : warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(215) : 参见“stricmp”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(242) : warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(215) : 参见“stricmp”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(250) : warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdio.h(324) : 参见“sscanf”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(340) : warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdio.h(324) : 参见“sscanf”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(351) : warning C4996: 'stricmp': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _stricmp. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(215) : 参见“stricmp”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(356) : warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdio.h(324) : 参见“sscanf”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(371) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+f:/mc/nsprpub__/pr/src/io/prlog.c(393) : warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdio.h(237) : 参见“fopen”的声明
+cl -Foprmmap.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prmmap.c"
+prmmap.c
+cl -Foprpolevt.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prpolevt.c"
+prpolevt.c
+cl -Foprprf.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prprf.c"
+prprf.c
+f:/mc/nsprpub__/pr/src/io/prprf.c(359) : warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdio.h(366) : 参见“sprintf”的声明
+cl -Foprscanf.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prscanf.c"
+prscanf.c
+cl -Foprstdio.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prstdio.c"
+prstdio.c
+cl -Foprdir.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prdir.c"
+prdir.c
+cl -Foprfile.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prfile.c"
+prfile.c
+cl -Foprio.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prio.c"
+prio.c
+cl -Foprsocket.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/io/prsocket.c"
+prsocket.c
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/io'
+make -C linking export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/linking'
+cl -Foprlink.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/linking/prlink.c"
+prlink.c
+f:/mc/nsprpub__/pr/src/linking/prlink.c(186) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(275) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(305) : warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdlib.h(447) : 参见“getenv”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(309) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(352) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(424) : warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strcmpi. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(214) : 参见“strcmpi”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(759) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+f:/mc/nsprpub__/pr/src/linking/prlink.c(1339) : warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(207) : 参见“strdup”的声明
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/linking'
+make -C malloc export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/malloc'
+cl -Foprmalloc.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/malloc/prmalloc.c"
+prmalloc.c
+cl -Foprmem.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/malloc/prmem.c"
+prmem.c
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/malloc'
+make -C md export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/md'
+make -C windows export
+make[4]: Entering directory `/f/mc/nsprpub__/pr/src/md/windows'
+cl -Fontdllmn.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntdllmn.c"
+ntdllmn.c
+cl -Fontmisc.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntmisc.c"
+ntmisc.c
+f:/mc/nsprpub__/pr/src/md/windows/ntmisc.c(49) : warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdlib.h(447) : 参见“getenv”的声明
+f:/mc/nsprpub__/pr/src/md/windows/ntmisc.c(59) : warning C4996: 'putenv': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _putenv. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdlib.h(864) : 参见“putenv”的声明
+cl -Fontsec.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntsec.c"
+ntsec.c
+cl -Fontsem.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntsem.c"
+ntsem.c
+cl -Fontinrval.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntinrval.c"
+ntinrval.c
+cl -Fontgc.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntgc.c"
+ntgc.c
+cl -Fontthread.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntthread.c"
+ntthread.c
+cl -Fontio.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/ntio.c"
+ntio.c
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(323) : warning C4047: “函数”: “volatile LONG *”与“PVOID *”的间接级别不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(323) : warning C4024: “InterlockedCompareExchange”: 形参和实参 1 的类型不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(324) : warning C4047: “函数”: “LONG”与“PVOID”的间接级别不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(324) : warning C4024: “InterlockedCompareExchange”: 形参和实参 2 的类型不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(324) : warning C4047: “函数”: “LONG”与“PVOID”的间接级别不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(324) : warning C4024: “InterlockedCompareExchange”: 形参和实参 3 的类型不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(325) : warning C4047: “==”: “LONG”与“PVOID”的间接级别不同
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(2772) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(2781) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/md/windows/ntio.c(2919) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Fowin32_errors.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/win32_errors.c"
+win32_errors.c
+cl -Fow32ipcsem.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/w32ipcsem.c"
+w32ipcsem.c
+cl -Fow32poll.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/w32poll.c"
+w32poll.c
+cl -Fow32rng.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/w32rng.c"
+w32rng.c
+cl -Fow32shm.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/md/windows/w32shm.c"
+w32shm.c
+f:/mc/nsprpub__/pr/src/md/windows/w32shm.c(105) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+make[4]: Leaving directory `/f/mc/nsprpub__/pr/src/md/windows'
+cl -Foprosdep.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include  "/f/mc/nsprpub__/pr/src/md/prosdep.c"
+prosdep.c
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/md'
+make -C memory export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/memory'
+cl -Foprseg.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/memory/prseg.c"
+prseg.c
+cl -Foprshm.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/memory/prshm.c"
+prshm.c
+cl -Foprshma.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/memory/prshma.c"
+prshma.c
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/memory'
+make -C misc export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/misc'
+cl -Fopralarm.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/pralarm.c"
+pralarm.c
+cl -Fopratom.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/pratom.c"
+pratom.c
+f:/mc/nsprpub__/pr/src/misc/pratom.c(349) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Foprcountr.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prcountr.c"
+prcountr.c
+f:/mc/nsprpub__/pr/src/misc/prcountr.c(194) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/misc/prcountr.c(216) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/misc/prcountr.c(217) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Foprdtoa.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  -fp:precise "/f/mc/nsprpub__/pr/src/misc/prdtoa.c"
+prdtoa.c
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(1278) : warning C4554: “>>”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(1280) : warning C4554: “<<”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(1280) : warning C4554: “>>”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(1285) : warning C4554: “>>”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(1287) : warning C4554: “>>”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(1369) : warning C4554: “<<”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(2013) : warning C4554: “<<”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(2402) : warning C4244: “=”: 从“double”转换到“PRUint32”，可能丢失数据
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(2657) : warning C4018: “<=”: 有符号/无符号不匹配
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(2905) : warning C4554: “<<”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(2906) : warning C4554: “>>”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(2906) : warning C4554: “<<”: 检查运算符优先级可能存在的错误；使用圆括号阐明优先级
+f:/mc/nsprpub__/pr/src/misc/prdtoa.c(3049) : warning C4244: “=”: 从“double”转换到“PRInt32”，可能丢失数据
+cl -Foprenv.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prenv.c"
+prenv.c
+cl -Foprerr.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prerr.c"
+prerr.c
+cl -Foprerror.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prerror.c"
+prerror.c
+cl -Foprerrortable.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prerrortable.c"
+prerrortable.c
+f:/mc/nsprpub__/pr/src/misc/prerrortable.c(151) : warning C4996: 'strerror': This function or variable may be unsafe. Consider using strerror_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(126) : 参见“strerror”的声明
+f:/mc/nsprpub__/pr/src/misc/prerrortable.c(156) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/misc/prerrortable.c(158) : warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(79) : 参见“strcat”的声明
+f:/mc/nsprpub__/pr/src/misc/prerrortable.c(159) : warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(79) : 参见“strcat”的声明
+cl -Foprinit.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prinit.c"
+prinit.c
+f:/mc/nsprpub__/pr/src/misc/prinit.c(160) : warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\stdlib.h(447) : 参见“getenv”的声明
+f:/mc/nsprpub__/pr/src/misc/prinit.c(570) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Foprinrval.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prinrval.c"
+prinrval.c
+cl -Fopripc.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/pripc.c"
+pripc.c
+f:/mc/nsprpub__/pr/src/misc/pripc.c(119) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Foprlog2.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prlog2.c"
+prlog2.c
+cl -Foprlong.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prlong.c"
+prlong.c
+cl -Foprnetdb.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prnetdb.c"
+prnetdb.c
+cl -Fopraton.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/praton.c"
+praton.c
+cl -Foprolock.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prolock.c"
+prolock.c
+cl -Foprrng.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prrng.c"
+prrng.c
+cl -Foprsystem.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prsystem.c"
+prsystem.c
+cl -Foprtime.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prtime.c"
+prtime.c
+f:/mc/nsprpub__/pr/src/misc/prtime.c(561) : warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\time.inl(114) : 参见“localtime”的声明
+cl -Foprthinfo.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prthinfo.c"
+prthinfo.c
+cl -Foprtpool.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prtpool.c"
+prtpool.c
+cl -Foprtrace.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/prtrace.c"
+prtrace.c
+f:/mc/nsprpub__/pr/src/misc/prtrace.c(271) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/misc/prtrace.c(293) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+f:/mc/nsprpub__/pr/src/misc/prtrace.c(294) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Fopripcsem.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/misc/pripcsem.c"
+pripcsem.c
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/misc'
+make -C threads export
+make[3]: Entering directory `/f/mc/nsprpub__/pr/src/threads'
+make -C combined export
+make[4]: Entering directory `/f/mc/nsprpub__/pr/src/threads/combined'
+cl -Foprucpu.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/combined/prucpu.c"
+prucpu.c
+cl -Foprucv.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/combined/prucv.c"
+prucv.c
+cl -Foprulock.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/combined/prulock.c"
+prulock.c
+cl -Fopruthr.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/combined/pruthr.c"
+pruthr.c
+cl -Foprustack.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../../dist/include/nspr -I../../../../pr/include -I../../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/combined/prustack.c"
+prustack.c
+make[4]: Leaving directory `/f/mc/nsprpub__/pr/src/threads/combined'
+cl -Foprcmon.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prcmon.c"
+prcmon.c
+cl -Foprdump.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prdump.c"
+prdump.c
+cl -Foprmon.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prmon.c"
+prmon.c
+cl -Foprsem.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prsem.c"
+prsem.c
+cl -Foprrwlock.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prrwlock.c"
+prrwlock.c
+f:/mc/nsprpub__/pr/src/threads/prrwlock.c(149) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Foprcthr.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prcthr.c"
+prcthr.c
+cl -Foprtpd.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../../dist/include/nspr -I../../../pr/include -I../../../pr/include/private  "/f/mc/nsprpub__/pr/src/threads/prtpd.c"
+prtpd.c
+f:/mc/nsprpub__/pr/src/threads/prtpd.c(178) : warning C4018: “>=”: 有符号/无符号不匹配
+make[3]: Leaving directory `/f/mc/nsprpub__/pr/src/threads'
+cl -Foprvrsion.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../dist/include/nspr -I../../pr/include -I../../pr/include/private  -I. prvrsion.c
+prvrsion.c
+rm -f libnspr4_s.lib
+lib -NOLOGO -OUT:"libnspr4_s.lib"  ./prvrsion.obj io/./prfdcach.obj io/./prmwait.obj io/./prmapopt.obj io/./priometh.obj io/./pripv6.obj io/./prlayer.obj io/./prlog.obj io/./prmmap.obj io/./prpolevt.obj io/./prprf.obj io/./prscanf.obj io/./prstdio.obj threads/./prcmon.obj threads/./prrwlock.obj threads/./prtpd.obj linking/./prlink.obj malloc/./prmalloc.obj malloc/./prmem.obj md/./prosdep.obj memory/./prshm.obj memory/./prshma.obj memory/./prseg.obj misc/./pralarm.obj misc/./pratom.obj misc/./prcountr.obj misc/./prdtoa.obj misc/./prenv.obj misc/./prerr.obj misc/./prerror.obj misc/./prerrortable.obj misc/./prinit.obj misc/./prinrval.obj misc/./pripc.obj misc/./prlog2.obj misc/./prlong.obj misc/./prnetdb.obj misc/./praton.obj misc/./prolock.obj misc/./prrng.obj misc/./prsystem.obj misc/./prthinfo.obj misc/./prtpool.obj misc/./prtrace.obj misc/./prtime.obj io/./prdir.obj io/./prfile.obj io/./prio.obj io/./prsocket.obj misc/./pripcsem.obj threads/./prcthr.obj threads/./prdump.obj threads/./prmon.obj threads/./prsem.obj threads/combined/./prucpu.obj threads/combined/./prucv.obj threads/combined/./prulock.obj threads/combined/./prustack.obj threads/combined/./pruthr.obj md/windows/./ntmisc.obj md/windows/./ntsec.obj md/windows/./ntsem.obj md/windows/./ntinrval.obj md/windows/./ntgc.obj md/windows/./ntio.obj md/windows/./ntthread.obj md/windows/./ntdllmn.obj md/windows/./win32_errors.obj md/windows/./w32ipcsem.obj md/windows/./w32poll.obj md/windows/./w32rng.obj md/windows/./w32shm.obj  
+echo not_ranlib libnspr4_s.lib
+not_ranlib libnspr4_s.lib
+rc.exe  -DDEBUG_zuohaitao -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1 -DFORCE_PR_LOG -D_NSPR_BUILD_ -I../../dist/include/nspr -I../../pr/include -I../../pr/include/private -Fonspr.res nspr.rc
+Microsoft (R) Windows (R) Resource Compiler Version 6.1.6723.1
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+./nspr.res finished
+rm -f libnspr4.dll
+link -nologo -DLL -SUBSYSTEM:WINDOWS -DYNAMICBASE -OUT:"libnspr4.dll" -DEBUG -MAP   advapi32.lib wsock32.lib winmm.lib ./prvrsion.obj io/./prfdcach.obj io/./prmwait.obj io/./prmapopt.obj io/./priometh.obj io/./pripv6.obj io/./prlayer.obj io/./prlog.obj io/./prmmap.obj io/./prpolevt.obj io/./prprf.obj io/./prscanf.obj io/./prstdio.obj threads/./prcmon.obj threads/./prrwlock.obj threads/./prtpd.obj linking/./prlink.obj malloc/./prmalloc.obj malloc/./prmem.obj md/./prosdep.obj memory/./prshm.obj memory/./prshma.obj memory/./prseg.obj misc/./pralarm.obj misc/./pratom.obj misc/./prcountr.obj misc/./prdtoa.obj misc/./prenv.obj misc/./prerr.obj misc/./prerror.obj misc/./prerrortable.obj misc/./prinit.obj misc/./prinrval.obj misc/./pripc.obj misc/./prlog2.obj misc/./prlong.obj misc/./prnetdb.obj misc/./praton.obj misc/./prolock.obj misc/./prrng.obj misc/./prsystem.obj misc/./prthinfo.obj misc/./prtpool.obj misc/./prtrace.obj misc/./prtime.obj io/./prdir.obj io/./prfile.obj io/./prio.obj io/./prsocket.obj misc/./pripcsem.obj threads/./prcthr.obj threads/./prdump.obj threads/./prmon.obj threads/./prsem.obj threads/combined/./prucpu.obj threads/combined/./prucv.obj threads/combined/./prulock.obj threads/combined/./prustack.obj threads/combined/./pruthr.obj md/windows/./ntmisc.obj md/windows/./ntsec.obj md/windows/./ntsem.obj md/windows/./ntinrval.obj md/windows/./ntgc.obj md/windows/./ntio.obj md/windows/./ntthread.obj md/windows/./ntdllmn.obj md/windows/./win32_errors.obj md/windows/./w32ipcsem.obj md/windows/./w32poll.obj md/windows/./w32rng.obj md/windows/./w32shm.obj  ./nspr.res
+   正在创建库 libnspr4.lib 和对象 libnspr4.exp
+nsinstall -m 444 ./libnspr4_s.lib ./libnspr4.dll ./libnspr4.lib ./libnspr4.pdb ../../dist/lib
+nsinstall -m 444 ./libnspr4.dll ../../dist/bin
+make[2]: Leaving directory `/f/mc/nsprpub__/pr/src'
+make[1]: Leaving directory `/f/mc/nsprpub__/pr'
+make -j1 -C lib export
+make[1]: Entering directory `/f/mc/nsprpub__/lib'
+make -C ds export
+make[2]: Entering directory `/f/mc/nsprpub__/lib/ds'
+cl -Foplarena.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../dist/include/nspr -I../../pr/include  "/f/mc/nsprpub__/lib/ds/plarena.c"
+plarena.c
+cl -Foplhash.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../dist/include/nspr -I../../pr/include  "/f/mc/nsprpub__/lib/ds/plhash.c"
+plhash.c
+cl -Foplvrsion.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../dist/include/nspr -I../../pr/include  -I. plvrsion.c
+plvrsion.c
+rm -f libplds4_s.lib
+lib -NOLOGO -OUT:"libplds4_s.lib"  ./plarena.obj ./plhash.obj ./plvrsion.obj  
+echo not_ranlib libplds4_s.lib
+not_ranlib libplds4_s.lib
+rc.exe  -DDEBUG_zuohaitao -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1 -DFORCE_PR_LOG -I../../dist/include/nspr -I../../pr/include -Foplds.res plds.rc
+Microsoft (R) Windows (R) Resource Compiler Version 6.1.6723.1
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+./plds.res finished
+rm -f libplds4.dll
+link -nologo -DLL -SUBSYSTEM:WINDOWS -DYNAMICBASE -OUT:"libplds4.dll" -DEBUG -MAP   ../../dist/lib/libnspr4.lib  ./plarena.obj ./plhash.obj ./plvrsion.obj  ./plds.res
+   正在创建库 libplds4.lib 和对象 libplds4.exp
+nsinstall -m 444 ./plarenas.h ./plarena.h ./plhash.h ../../dist/include/nspr
+nsinstall -m 444 ./libplds4_s.lib ./libplds4.dll ./libplds4.lib ./libplds4.pdb ../../dist/lib
+nsinstall -m 444 ./libplds4.dll ../../dist/bin
+make[2]: Leaving directory `/f/mc/nsprpub__/lib/ds'
+make -C libc export
+make[2]: Entering directory `/f/mc/nsprpub__/lib/libc'
+make -C include export
+make[3]: Entering directory `/f/mc/nsprpub__/lib/libc/include'
+nsinstall -m 444 ./plbase64.h ./plerror.h ./plgetopt.h ./plstr.h ../../../dist/include/nspr
+make[3]: Leaving directory `/f/mc/nsprpub__/lib/libc/include'
+make -C src export
+make[3]: Entering directory `/f/mc/nsprpub__/lib/libc/src'
+cl -Foplvrsion.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  -I. plvrsion.c
+plvrsion.c
+cl -Fostrlen.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strlen.c"
+strlen.c
+cl -Fostrcpy.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strcpy.c"
+strcpy.c
+f:/mc/nsprpub__/lib/libc/src/strcpy.c(46) : warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(74) : 参见“strcpy”的声明
+cl -Fostrdup.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strdup.c"
+strdup.c
+cl -Fostrcase.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strcase.c"
+strcase.c
+cl -Fostrcat.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strcat.c"
+strcat.c
+f:/mc/nsprpub__/lib/libc/src/strcat.c(47) : warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+        D:\Program Files\Microsoft Visual Studio 9.0\VC\INCLUDE\string.h(79) : 参见“strcat”的声明
+cl -Fostrcmp.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strcmp.c"
+strcmp.c
+cl -Fostrchr.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strchr.c"
+strchr.c
+cl -Fostrpbrk.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strpbrk.c"
+strpbrk.c
+cl -Fostrstr.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strstr.c"
+strstr.c
+cl -Fostrtok.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/strtok.c"
+strtok.c
+cl -Fobase64.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/base64.c"
+base64.c
+cl -Foplerror.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/plerror.c"
+plerror.c
+cl -Foplgetopt.obj -c      -W3 -nologo -GF -Gy -Od -MD -GT -Zi   -UNDEBUG -DDEBUG_zuohaitao  -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1  -DFORCE_PR_LOG -I../../../dist/include/nspr  "/f/mc/nsprpub__/lib/libc/src/plgetopt.c"
+plgetopt.c
+rm -f libplc4_s.lib
+lib -NOLOGO -OUT:"libplc4_s.lib"  ./plvrsion.obj ./strlen.obj ./strcpy.obj ./strdup.obj ./strcase.obj ./strcat.obj ./strcmp.obj ./strchr.obj ./strpbrk.obj ./strstr.obj ./strtok.obj ./base64.obj ./plerror.obj ./plgetopt.obj  
+echo not_ranlib libplc4_s.lib
+not_ranlib libplc4_s.lib
+rc.exe  -DDEBUG_zuohaitao -DDEBUG=1 -DXP_PC=1 -DWIN32=1 -D_DEBUG=1 -DWINNT=1 -D_X86_=1 -DFORCE_PR_LOG -I../../../dist/include/nspr -Foplc.res plc.rc
+Microsoft (R) Windows (R) Resource Compiler Version 6.1.6723.1
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+./plc.res finished
+rm -f libplc4.dll
+link -nologo -DLL -SUBSYSTEM:WINDOWS -DYNAMICBASE -OUT:"libplc4.dll" -DEBUG -MAP   ../../../dist/lib/libnspr4.lib  ./plvrsion.obj ./strlen.obj ./strcpy.obj ./strdup.obj ./strcase.obj ./strcat.obj ./strcmp.obj ./strchr.obj ./strpbrk.obj ./strstr.obj ./strtok.obj ./base64.obj ./plerror.obj ./plgetopt.obj  ./plc.res
+   正在创建库 libplc4.lib 和对象 libplc4.exp
+nsinstall -m 444 ./libplc4_s.lib ./libplc4.dll ./libplc4.lib ./libplc4.pdb ../../../dist/lib
+nsinstall -m 444 ./libplc4.dll ../../../dist/bin
+make[3]: Leaving directory `/f/mc/nsprpub__/lib/libc/src'
+make[2]: Leaving directory `/f/mc/nsprpub__/lib/libc'
+make[1]: Leaving directory `/f/mc/nsprpub__/lib'

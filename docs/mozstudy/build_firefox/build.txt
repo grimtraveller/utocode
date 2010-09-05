@@ -1,0 +1,47 @@
+0.envirment
+ OS:windows xp professional sp2
+ IDE:vs2008
+1. mozilla build tool
+ 1.1 download
+  http://ftp.mozilla.org/pub/mozilla.org/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe
+ 1.2 install
+2.1 check out source(about 1 hours)
+ run C:\mozilla-build\start-msvc9.bat
+ hg clone http://hg.mozilla.org/mozilla-central/
+2.2 download ftp://ftp.mozilla.org/pub/firefox/releases/
+3. make and edit mozconfig file
+#===========FILE BEGIN============
+#more:https://developer.mozilla.org/en/Configuring_Build_Options
+mk_add_options MOZ_CO_PROJECT=browser
+ac_add_options --enable-application=browser
+#build result in this directory
+mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/ff_release
+#ac_add_options --disable-installer
+#build test application
+#ac_add_options --disable-tests
+#ac_add_options --disable-mochitest
+#vista sdk
+ac_add_options --with-windows-version=502
+#debug/release
+ac_add_options --disable-static --enable-shared
+#for debug
+ac_add_options --enable-optimize --enable-debug
+# Parallel compilation is a nice speedup.
+# USE THIS ONLY IF NOT ON WINDOWS!  Parallel compilation on Windows is
+# unreliable now due to bug 524149.
+mk_add_options MOZ_MAKE_FLAGS="-j4"
+#============FILE END============
+4. bulid(about 4 hours)
+ make -f client.mk
+5. run and enjoy it!
+ mozilla-central\ff_release\dist\bin
+
+
+MORE
+    https://developer.mozilla.org/en/Simple_Firefox_build
+    https://developer.mozilla.org/en/Build_Documentation
+    https://developer.mozilla.org/en/Configuring_Build_Options
+    
+
+==========================
+vim:expandtab
