@@ -61,6 +61,8 @@ in
 win32 thread implement
     * two thread scopes, local and global.
     * undefined _PR_PTHREAD
+    * define HAVE_CUSTOM_USER_THREADS in "_winnt.h"
+    
 
 
 
