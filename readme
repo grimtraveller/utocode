@@ -26,6 +26,18 @@ initial test
 	modify mysqldemo_t
 	move mysql database to virtual pc,so modify source about connect database
 	add allow_any_ip.sql for all any ip host to access database
+2011 0125
+	zjruler: a pixer ruler
+	todo:
+		color like win7 taskmanager
+		menu
+		skew
+		limit width and length
+		font
+		icon
+
+
+
 
 
 -
