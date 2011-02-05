@@ -1,4 +1,4 @@
 #!/bin/sh
-#./savewyx.sh 10 "http://www.woyouxian.com/b06/b061201/" "axiuluo_cn" "../é˜¿ä¿®ç½—"
-#./savewyx.sh 107 "http://www.woyouxian.com/b07/b0717/" "zg_lihun_cn" "../ä¸­å›½å¼ç¦»å©š"
-./savewyx.sh 15 "http://www.woyouxian.com/b07/b0701/" "zuan_cn" "../ç¥–å®‰"
+#./savewyx.sh 10 "http://www.woyouxian.com/b06/b061201/" "axiuluo_cn" "../°¢ĞŞÂŞ"
+#./savewyx.sh 107 "http://www.woyouxian.com/b07/b0717/" "zg_lihun_cn" "../ÖĞ¹úÊ½Àë»é"
+./savewyx.sh 15 "http://www.woyouxian.com/b07/b0701/" "zuan_cn" "../×æ°²"
