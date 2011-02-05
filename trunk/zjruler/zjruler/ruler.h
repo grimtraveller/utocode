@@ -1,15 +1,15 @@
 #pragma once
 
 
-// CRuler
+// CRulerWnd
 
-class CRuler : public CWnd
+class CRulerWnd : public CWnd
 {
-	DECLARE_DYNAMIC(CRuler)
+	DECLARE_DYNAMIC(CRulerWnd)
 
 public:
-	CRuler();
-	virtual ~CRuler();
+	CRulerWnd();
+	virtual ~CRulerWnd();
 	BOOL CreateWnd(void);
 	int OnCreate(LPCREATESTRUCT lpCreateStruct);
 

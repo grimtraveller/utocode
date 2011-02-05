@@ -7,21 +7,21 @@
 #define TEXTLENGTH 90
 #define TEXTHEIGTH 20
 
-// CRuler
+// CRulerWnd
 
-IMPLEMENT_DYNAMIC(CRuler, CWnd)
+IMPLEMENT_DYNAMIC(CRulerWnd, CWnd)
 
-CRuler::CRuler()
+CRulerWnd::CRulerWnd()
 {
 
 }
 
-CRuler::~CRuler()
+CRulerWnd::~CRulerWnd()
 {
 }
 
 
-BEGIN_MESSAGE_MAP(CRuler, CWnd)
+BEGIN_MESSAGE_MAP(CRulerWnd, CWnd)
 	ON_WM_CREATE()
 	ON_WM_PAINT()
 	ON_WM_MOUSEMOVE()
@@ -32,7 +32,7 @@ ON_WM_SIZE()
 ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
-BOOL CRuler::CreateWnd()
+BOOL CRulerWnd::CreateWnd()
 {
 	if(!CreateEx(0,
 		::AfxRegisterWndClass(0,::LoadCursor(NULL,MAKEINTRESOURCE(IDC_ARROW)),GetSysColorBrush(COLOR_ACTIVEBORDER)),
@@ -47,7 +47,7 @@ BOOL CRuler::CreateWnd()
 	return TRUE;
 }
 
-int CRuler::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int CRulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -59,7 +59,7 @@ int CRuler::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 
-void CRuler::OnPaint()
+void CRulerWnd::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	CRect rc;
@@ -132,7 +132,7 @@ void CRuler::OnPaint()
 }
 
 
-LRESULT CRuler::OnNcHitTest(CPoint point)
+LRESULT CRulerWnd::OnNcHitTest(CPoint point)
 {
 	CRect rect;
 	GetWindowRect(&rect);
@@ -174,7 +174,7 @@ LRESULT CRuler::OnNcHitTest(CPoint point)
 	}
 }
 
-BOOL CRuler::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
+BOOL CRulerWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
 	if(nHitTest == HTCAPTION || nHitTest == HTSYSMENU ||
 		nHitTest == HTMENU || nHitTest == HTCLIENT)
@@ -206,7 +206,7 @@ BOOL CRuler::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 	//return CWnd::OnSetCursor(pWnd, nHitTest, message);
 }
 
-void CRuler::OnNcLButtonDown(UINT nHitTest, CPoint point)
+void CRulerWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
 	if(nHitTest == HTTOP)
 	SendMessage( WM_SYSCOMMAND, SC_SIZE | WMSZ_TOP, MAKELPARAM(point.x, point.y));
@@ -236,7 +236,7 @@ void CRuler::OnNcLButtonDown(UINT nHitTest, CPoint point)
 	//CWnd::OnNcLButtonDown(nHitTest, point);
 }
 
-void CRuler::OnSize(UINT nType, int cx, int cy)
+void CRulerWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CWnd::OnSize(nType, cx, cy);
 	CRect rc;
@@ -244,7 +244,7 @@ void CRuler::OnSize(UINT nType, int cx, int cy)
 	::InvalidateRect(GetSafeHwnd(), &rc, TRUE);
 }
 
-void CRuler::OnMouseMove(UINT nFlags, CPoint point)
+void CRulerWnd::OnMouseMove(UINT nFlags, CPoint point)
 {
 	SetCursor(::LoadCursor(NULL,MAKEINTRESOURCE(IDC_SIZEALL)));
 	if(nFlags&MK_LBUTTON)
@@ -258,9 +258,7 @@ void CRuler::OnMouseMove(UINT nFlags, CPoint point)
 	CWnd::OnMouseMove(nFlags, point);
 }
 
-void CRuler::OnLButtonDown(UINT nFlags, CPoint point)
+void CRulerWnd::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-
 	CWnd::OnLButtonDown(nFlags, point);
 }

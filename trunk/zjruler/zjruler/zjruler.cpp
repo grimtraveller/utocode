@@ -50,7 +50,7 @@ BOOL CzjrulerApp::InitInstance()
 	AfxEnableControlContainer();
 
 
-	CRuler* pRulerWnd = new CRuler;
+	CRulerWnd* pRulerWnd = new CRulerWnd();
 
 	if(!pRulerWnd->CreateWnd())
 	{
