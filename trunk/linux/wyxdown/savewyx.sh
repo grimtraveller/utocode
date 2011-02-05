@@ -10,6 +10,9 @@ do
 	if [ ! -e $urlm$i ]
 	then
 		curl $urlb$urlm$i$urle > $target_dir/$urlm$i
+		echo $urlb$urlm$i$urle 
+		echo ">"
+		echo $target_dir/$urlm$i
 	fi
 	./html2txt.sh $target_dir/$urlm$i
 	i=`expr $i + 1`
