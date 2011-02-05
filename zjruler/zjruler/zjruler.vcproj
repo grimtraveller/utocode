@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ruler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
