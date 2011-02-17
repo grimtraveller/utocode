@@ -18,7 +18,7 @@ OBJS=jzmem.obj	\
 	 jztimer.obj	\
 	 jzerror.obj 	\
 	 jzrand.obj		
-BINS=jzmem_t.exe jzerror_t.exe
+BINS=jzmem_t.exe jzerror_t.exe hamming.exe
 .PHONY:all clean
 
 all:$(BINS)
@@ -30,6 +30,7 @@ jzmem_t.exe:jzmem_t.obj libjzrt0.lib
 	$(CC) $(CFLAGS) $(LDFLAGS) jzmem_t.obj libjzrt0.lib  /Fe$@
 jzerror_t.exe:jzerror_t.obj libjzrt0.lib
 	$(CC) $(CFLAGS) $(LDFLAGS) jzmem_t.obj libjzrt0.lib  /Fe$@
+hamming.exe:hamming.obj libjzrt0.lib
 clean:
 	del *.obj *.pdb *.ilk
 	del libjzrt0.lib
