@@ -59,7 +59,7 @@
 /**
  * @brief overflow error the value of status
  */
-#define	OVERFLOW	-2
+#define	ZJOVERFLOW	-2
 /**
  * @brief logic operation 'and'
  */
