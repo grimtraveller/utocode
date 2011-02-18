@@ -1,4 +1,4 @@
-
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifndef WIN32
@@ -54,14 +54,12 @@ regex(char* r,char* pbuf)
 	regmatch_t pm[1];
 	if (0 != (ret = regcomp(&reg, r, 0)))
 	{
-		printf("1");
 		goto MERR;
 	}
 	if (0 != (ret = regexec(&reg, pbuf, nmatch, pm, 0)))
 	{
 		if (ret != REG_NOMATCH)
 		{
-			printf("2");
 			goto MERR;
 		}
 	}
@@ -77,8 +75,13 @@ MERR:
 #endif //WIN32
 int main(int argc, char* argv[])
 {
+	int i = 0;
+	int size;
 	char* file =  argv[1];
-	int fd;
+	char* file_tmp[TMPSIZE];
+
+	int fdin;
+	int fdout;
 	char* pbuf;
 #ifdef WIN32
 	char begin[] = "<!-- Article Begin -->";
@@ -87,15 +90,22 @@ int main(int argc, char* argv[])
 #endif //WIN32
 	char end[] = "<!-- Article End -->";
 	BOOLEAN b_safe = FALSE;
-	if ((fd = open(file, O_RDONLY)) < 0)
+	strcpy(file_tmp, file);
+	strcat(file_tmp, ".tmp");
+	if ((fdin = open(file, O_RDONLY)) < 0)
 	{
 		perror("");
 		return 1;
 	}
+	if ((fdout = open((const char*)file_tmp, O_WRONLY|O_CREAT)) == 0)
+	{
+		perror("fopen");
+		return 1;
+	}
 	while(1)
 	{
-		
-		if (0 == getline(fd, &pbuf))
+		size = getline(fdin, &pbuf);
+		if (0 == size)
 		{
 			break;
 		}
@@ -120,15 +130,78 @@ int main(int argc, char* argv[])
 			if (0 == regex(begin, pbuf))
 #endif //WIN32
 			{
-				printf("============%s\n", pbuf);
 				b_safe = TRUE;
 			}
 			continue;
 		}
 		//save
-		printf("\n%s\n", pbuf);
+		for (i = 0; i < size; i++)
+		{
+			if (pbuf[i] == '>')
+			{
+				pbuf[i] = '\n';
+			}
+		}
+		//printf("%s", pbuf);
+		write(fdout, pbuf, size);
 		DSfree(pbuf);
 	}
-	close(fd);
+	close(fdin);
+	close(fdout);
+
+
+
+	if ((fdin = open(file_tmp, O_RDONLY)) < 0)
+	{
+		perror("");
+		return 1;
+	}
+	if ((fdout = open(file, O_WRONLY|O_TRUNC)) < 0)
+	{
+		perror("");
+		return 1;
+	}
+
+	while(1)
+	{
+		size = getline(fdin, &pbuf);
+		if (0 == size)
+		{
+			b_safe = FALSE;
+			continue;
+		}
+		
+		//save
+		b_safe = TRUE;
+		for (i = 0; i < size; i++)
+		{
+			if ((pbuf[i] != ' ') && (pbuf[i] != '\t'))
+			{
+				if (pbuf[i] == '<')
+				{
+					b_safe = FALSE;	
+					break;
+				}
+				else
+				{
+					b_safe = TRUE;
+				}
+				break;
+			}
+			else
+			{
+			}
+		}
+		printf("%s=%d\n", pbuf, b_safe);
+		if (b_safe)
+		{
+			//printf("%s\n", pbuf);
+			write(fdout, pbuf, size);
+		}
+
+		DSfree(pbuf);
+	}
+	close(fdin);
+	close(fdout);
 	return 0;
 }
