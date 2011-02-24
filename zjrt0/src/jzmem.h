@@ -1,75 +1,75 @@
 /**
-  @file		jzmem.h
+  @file		zjmem.h
   @brief	declare memory functions
   @details	
 			usage 
-				JZINIT()
-				JZMALLOC()
-				JZREALLOC()
-				JZFREE()
-				JZUNINIT()
+				ZJINIT()
+				ZJMALLOC()
+				ZJREALLOC()
+				ZJFREE()
+				ZJUNINIT()
   @author	zuohaitao
   @date		2010-04-18
   @warning	
   @bug		
   */
-#ifndef JZMEMORY_H
-#define JZMEMORY_H
+#ifndef ZJMEMORY_H
+#define ZJMEMORY_H
 #ifdef __cplusplus
 extern "C"
 {
 #endif //_cplusplus
-//jzrmemory macro
+//zjrmemory macro
 #ifdef WIN32
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 #include "jztype.h"
 #include <stdlib.h>
 #include <string.h> //such as memset
-#ifdef JZDEBUG
-#define JZMEMINIT(p) construct_jzmem(p)
-#define	JZMALLOC(size) jzmalloc(size, __FILE__, __LINE__)
-#define JZREALLOC(p, size) jzrealloc(p, size, __FILE__, __LINE__)
-#define JZFREE(p) jzfree(p)
-#define JZMEMUNINIT destruct_jzmem
-#define JZCHECKLEAK(f)   jzcheck_leak(f) 
+#ifdef ZJDEBUG
+#define ZJMEMINIT(p) construct_zjmem(p)
+#define	ZJMALLOC(size) zjmalloc(size, __FILE__, __LINE__)
+#define ZJREALLOC(p, size) zjrealloc(p, size, __FILE__, __LINE__)
+#define ZJFREE(p) zjfree(p)
+#define ZJMEMUNINIT destruct_zjmem
+#define ZJCHECKLEAK(f)   zjcheck_leak(f) 
 #else
-#define JZMEMINIT(p)
-#define JZMALLOC(size) malloc(size)
-#define JZREALLOC(p, size) realloc(p, size)
-#define JZFREE(p) free(p)
-#define JZMEMUNINIT
-#define JZCHECKLEAK(f)
-#endif	//JZDEBUG
+#define ZJMEMINIT(p)
+#define ZJMALLOC(size) malloc(size)
+#define ZJREALLOC(p, size) realloc(p, size)
+#define ZJFREE(p) free(p)
+#define ZJMEMUNINIT
+#define ZJCHECKLEAK(f)
+#endif	//ZJDEBUG
 typedef struct _mem_tracer_item_st
 {
-	char file[JZ_MAX_PATH];
-	jzuint32 line;
+	char file[ZJ_MAX_PATH];
+	zjuint32 line;
 	void* real_p;
 	size_t len;
 	struct _mem_tracer_item_st* prev;
 	struct _mem_tracer_item_st* next;
-} jzmem_item_st;
+} zjmem_item_st;
 typedef enum
 {
-	JZRT = 0,
+	ZJRT = 0,
 	USER = 1
-} JZMEM_MGR_E;
+} ZJMEM_MGR_E;
 typedef struct _mem_tracer_header_st
 {
 	char mgr;
-	jzuint32 version;
-	jzmem_item_st* next;
-} jzmem_header_st;
-typedef void (*CHECKLEAKCALLBACK)(char* file, jzuint32 line, void* p, size_t len);
+	zjuint32 version;
+	zjmem_item_st* next;
+} zjmem_header_st;
+typedef void (*CHECKLEAKCALLBACK)(char* file, zjuint32 line, void* p, size_t len);
 //memory alloc
-extern status construct_jzmem(jzmem_header_st* pjzmem);
-extern void* jzmalloc(size_t size, const char* file, jzuint32 line);
-extern void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line);
-extern void jzfree(void* ptr);
-extern void destruct_jzmem();
-extern void jzcheck_leak(CHECKLEAKCALLBACK fclbck);
+extern status construct_zjmem(zjmem_header_st* pzjmem);
+extern void* zjmalloc(size_t size, const char* file, zjuint32 line);
+extern void* zjrealloc(void* ptr, size_t size, const char* file, zjuint32 line);
+extern void zjfree(void* ptr);
+extern void destruct_zjmem();
+extern void zjcheck_leak(CHECKLEAKCALLBACK fclbck);
 #ifdef __cplusplus
 }
 #endif //__cplusplus
-#endif //JZMEMORY_H
+#endif //ZJMEMORY_H

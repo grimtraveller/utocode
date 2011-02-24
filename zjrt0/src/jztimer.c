@@ -1,5 +1,5 @@
 /**
- * @file	jztimer.c 
+ * @file	zjtimer.c 
  * @brief	implement timer function
  * @details	
  * @author	zuohaitao
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #endif
 
-void init_jztimer(jztimer_st* ptimer)
+void init_zjtimer(zjtimer_st* ptimer)
 {
 #ifdef WIN32
 	DWORD dwError;
@@ -39,7 +39,7 @@ void init_jztimer(jztimer_st* ptimer)
 	ptimer->rtime = 0;
 }
 
-void start_jztimer(jztimer_st* ptimer)
+void start_zjtimer(zjtimer_st* ptimer)
 {
 #ifdef WIN32
 	LARGE_INTEGER startTime;
@@ -50,20 +50,20 @@ void start_jztimer(jztimer_st* ptimer)
 	if (-1 == gettimeofday(&tv, NULL))
 	{
 		ptimer->bOK = FALSE;
-		perror("start_jztimer");
+		perror("start_zjtimer");
 		exit(errno);
 	}
 	ptimer->start = tv.tv_sec * 1000000 + tv.tv_usec;
 #endif //WIN32
 }
 
-void stop_jztimer(jztimer_st* ptimer)
+void stop_zjtimer(zjtimer_st* ptimer)
 {
 #ifdef WIN32
 	LARGE_INTEGER stopTime;
 	QueryPerformanceCounter(&stopTime);
 	ptimer->stop = stopTime.QuadPart;
-	ptimer->rtime = ((ptimer->stop - ptimer->start) * (jzint64)1000000 )/ ptimer->unit;
+	ptimer->rtime = ((ptimer->stop - ptimer->start) * (zjint64)1000000 )/ ptimer->unit;
 #else
 	struct timeval tv;
 	if (-1 == gettimeofday(&tv, NULL))
