@@ -1,0 +1,161 @@
+mozilla firefox
+http://blog.sina.com.cn/s/blog_4975695f010008by.html
+新年第一天：计划firefox开发。
+入手：firefox插件[chrome](em:type=2-extension扩展(xpinstall package)；4-themes主题；8-locale本地化(chrome\zh-CN.jar|en-US.jar等语言的更换)；16- plugin插件(so|dll等动态库--about:plugins可以显示已经安装的所有插件信息，区别searchplugins目录下的搜索引擎插件－搜索栏中的图标-search.rdf|search.sqlite)).{{说白了chrome URL（XUL|CSS|JavaScript|Image|RDF|Text|Html等）类似openoffice中内部slot URL（help| etc.）代表一个个内部接口的具体实现。--没有看chrome内部结构和代码之前的猜测，可能不正确}}
+/*extensions[also themes] and plugin区别
+Extension（扩展）技术是FireFox和Thunderbird的一大特色，通过编写Extension，开发人员可以在不改变 FireFox主程序代码的前提下改进或添加FireFox的功能，用户也可以根据自身需求下载不同的Extension对FireFox进行DIY。这和Plugin技术有类似之处，不同的是Extension比较侧重于对浏览器本身功能的增加和改进[cada:例如类似os的主题，可以更换不同的主题来改变UI界面显示式样(不同颜色、图标、字体大小--CSS);也利用browser现有xpcom组件接口来扩展(extensions)或完善 browser现有功能：应该是XUL(定义或布局各种UI界面元素，如文本框，工具拦，menu等)+CSS(对UI元素的式样描述)+JavaScript(着重功能点)的结合－－为XULRunner开发平台]，而Plugin主要是扩展了用户浏览Web时可以使用的功能 [cada:例如office plugin|security plugin:在网页中浏览office文档或使用签名等安全功能；最常见的就是对browser无法解析的document mime type:如rm电影;tiff图片;pdf;flash等媒体格式文件的补充(not 修改)]。
+*/
+localstore.rdf中有所有的xul窗口->请再URL addressbar中键入chrome://...等查看；
+已经安装的扩展和主题==>profile folder/extensions.ini(早期为components.ini|defaults.ini)->由 nsExtensionManager 自动生成;extensions.rdf->已安装扩展的信息,可以删除该文件以清除一些卸载后仍在扩展列表中“卸载不掉”的扩展项目，也可以解决其他一些问题;extensions.cache->用于注册将文件夹拖放到已知扩展目录下安装的扩展；
+XUL的DOM diff html DOM；
+-safe-mode安全运行模式，屏蔽default之外的chrome；Firefox的安全模式（safe mode）指以不加载任何扩展（Extensions）、主题（Theme）和插件（Plugins）的情况启动Firefox
+chrome Manager;< reload chrome；
+XUL<--javascript shell access firefox all kinds of windows；
+XULRunner<--基于XUL界面的应用程序开发平台；=>not only web browser；
+
+Safari是目前唯一一款运行于Mac OS X平台的浏览器；
+Opera在和任天堂签署协议在游戏机中绑定浏览器软件；
+user.js ->about:config-pref.js
+xpti.dat--列出已注册的 XPCOM 接口(包括components|extensions|plugins)
+
+http://www.5base.com/firefox/
+Firefox 使用、设置和常见问题的解决方法
+
+编辑 userChrome.css 文件，在这个文件中加入下面的代码，重启 Firefox。
+#bookmarks-menu {
+display: none;
+}
+问：扩展（Extexsions）和插件（Plugins）有什么区别？
+
+答：扩展是为 Firefox 提供一些新功能的小的附加软件。插件是浏览网页时提供显示其中媒体多元素的程序，如Flash,RealPlayer，Java之类的。
+官方网站的说法：
+Extensions are small add-ons that add new functionality to your Mozilla program.
+Plugins are programs that allow websites to provide content to you and have it appear in your browser.
+
+    * about：－ 和点击“Help→About”看到的页面相同
+    * about:blank － 空白页
+    * about:buildconfig － 显示版本配置详细信息
+    * about:credits — 所有 Mozilla 项目贡献者
+    * about:cache － 显示缓存文件
+    * about:config － 修改 Firefox 配置选项的图形化界面
+    * about:license － 显示 Mozilla 和 Netscape 的公共授权许可（仅在基于 Gecko 1.8 的程序中看到）
+    * about:mozilla － 著名的《Mozilla之书》
+    * about:plugins － 列出所有已安装的插件信息
+
+Firefox 的界面由中文变成了英文，如何改回来? about:config
+在 Filter 一栏中输入locale
+找到并用鼠标双击general.userAgent.locale
+将 en-US 改为 zh-CN 。
+userChrome.css:
+*怎样把标签移到下方？#content > tabbox {-moz-box-direction: reverse;}
+*怎样把FIREFOX顶端的菜单栏去掉？#toolbar-menubar { display: none !important; }
+*如何调整搜索栏的长度？#search-container, #searchbar { -moz-box-flex: 400 !important; }
+*标签框太长了……怎么改短一点?在firefox安装目录下的chrome目录中，找到toolkit.jar文件（其实是一个ZIP格式压缩文件），将其解压后，在 content\global\bindings\目录下，找到tabbrowser.xml文件，编辑这个文件，查找“250”（共有两处），改为 100，保存为纯文本文件。然后再将整个文件打包成ZIP文件，重命名为toolkit.jar，覆盖原文件即可。（注意：修改原文件有一定危险，请做好备份！
+
+Firefox 2.0/3.0展望
+构建一个mozilla firefox扩展 - MDC
+
+chrome/browser.jar:browser.xul--浏览器主窗口界面(含状态栏)描述
+mozilla中文社区
+cada_phoebe贡献：chrome.manifest翻译。
+chrome/toolkit.jar:The Mozilla Toolkit is a set of programming interfaces (APIs) built on top of Gecko which provide advanced services to XUL applications. These services include:
+
+    * Profile Management
+    * Chrome Registration
+    * Browsing History
+    * Extension and Theme Management
+    * Application Update Service
+    * Safe Mode
+
+XULRunner tutorial
+http://www.w3schools.com/site/site_glossary.asp(常用web术语解释:binary_byte etc)
+web services:[cada:maybe xpcom|dcom|corba|uno etc component's is accessed by soap for xml-rpc(not language-binding access),but local calls maybe piping and now idl-language-binding.].How to Reconstructor these different components with web services model thinkings. Now I think maybe someone doing it.
+
+W3C once said: "Dynamic HTML is a term used by some vendors to describe the combination of HTML, style sheets and scripts that allows documents to be animated."
+
+插件安装：Using XPInstall to Install plugins-->http://developer.mozilla.org/cn/docs/index.php?title=Using_XPInstall_to_Install_Plugins&action=edit
+
+"电子信息产业发展基金"
+"SOA架构" "浏览器对象模型"(BOM指（Brower Object Model）)("和欣"操作系统的浏览器设计模型)--JS访问
+1.芮祥麟：SOA只不过是一种设计模式而已
+2.SCA开发:服务组件体系结构概述--OpenOffice中早就用到了。see its IDL's "service". Maybe some day office service will be provided!--the convinent online office.
+
+"LDAP"--office(LDAP服务客户端工具)->http://baike.baidu.com/view/159263.htm
+"WebDAV"--office(WebDAV服务客户端工具:直接打开保存http文件)->http://lyj1980.spaces.live.com/blog/cns!e2af9a9c362ad94b!111.entry
+"OPC规范" “浏览器中运行的ActiveX 自动升级功能实现”--"IE Activex控件,also CHtmlView,but all pointer IIWebBrowser2接口"<--"ActiveX控件应用"
+"从这十多年的计算机开发技术历史来看,一门技术只要有很多的书籍来介绍,那么这项技术很快就会普及,否则就难以推广."-- 潘爱民 ATL之深入浅出是啊，有空大家也来写写office办公软件等是如何开发出来的资料以大家广为享用
+“CA认证系统”              
+================
+"Gecko SDK"
+"XPCOM--跨平台的组件开发技术" "用 JavaScript 创建 XPCOM 组件" "利用C++创建XPCOM组件"
+"Mozilla技术架构" "Mozilla开发平台"
+<XPCOM Reference>书中列举了几乎所有的组件和他们的使用方法(also see comreg.dat和xpti.dat):http://xulplanet.com/references/xpcomref/
+Mozilla目录结构剖析
+spket IDE
+Mozilla系列——引子
+※ Mozilla开源项目的由来，Mozilla和firefox的关系
+※ Mozilla的技术架构
+※ 为什么说Mozilla是一个开发平台
+※ Mozilla Firefox安装的过程是怎样的？
+※ Mozilla Firefox安装后的目录文件结构及其功能
+※ 我对mozilla firefox的开发，比如插件、皮肤的开发很感兴趣，
+   但是现在我对它们一无所知，我的学习路线应该是怎样的？
+※ XPCOM简介
+※ XUL简介和简评
+※ MVC模式与Mozilla对界面GUI的四维划分及其趋势
+※ XBL简介
+※ Mozilla里的Javascript和XPConnect
+※ RDF（Resource Description Framework ）简述
+※ XPInstall简述，插件安装和皮肤安装的过程。
+※ 开发常用的文档、网络资源和开发工具有哪些？
+※ 一般的在开发时的编译错误有哪些？怎么区分？怎么定位？怎么调试？
+※ Dom Inspector使用简介
+※ XUL中的界面布局管理控制
+专访Firefox设计师：未来将与GNOME整合
+诺基亚"Minimo" KHTML/Konqueror
+Mozilla系列——Mozilla的前世今生
+"战争与和平——纵观浏览器发展二三语"
+Web UI的SDK(基于JavaScript OOP编程): http://www.bindows.net/
+IEBlog: http://blogs.msdn.com/ie/
+"微软1998备忘录"-->what is internet?
+"web 开发趋势"
+http://blog.csdn.net/absurd
+Mozilla研究—深入理解mozilla所需的背景知识
+Mozilla研究—XPCOM语言无关性的实现原理
+Mozilla研究—传输协议
+Mozilla研究—组件的创建过程
+Mozilla研究—组件加载机制
+Mozilla研究—mozilla中的设计亮点
+Mozilla研究—mozilla能为我们做什么
+FireFox自定义配置文件：firefox -profile "YourProfileDIR"<linux/window都一样>
+跨浏览器Web开发差异：http://blog.csdn.net/sevenzhang/archive/2007/03/09/1525186.aspx
+XULRunner: 编译XULRunner
+如何自己编译firefox
+基于XML的用户界面标记语言-XUL和XAML
+信息技术50年
+集中式计算、分布式计算、协作式计算的区别     嵌入式系统与普适计算  网络计算机（NC）调研报告   瘦客户机、Windows终端和NC的差别  存储与计算的分离
+微软二十五年简史(1975 - 2000)  
+
+微软二十五年(比尔·盖茨) --- 前　言 
+
+微软二十五年(比尔·盖茨) --- 一步一步思考，一步一步创建 
+
+微软二十五年(比尔·盖茨) --- 从灵感到市场
+
+微软二十五年(比尔·盖茨) --- 微软是如何取得成功的？
+
+微软二十五年(比尔·盖茨) --- 我们都在同一个游泳池里游泳
+
+微软二十五年(比尔·盖茨) --- 我们的未来是什么？
+软件厂商开发基于Office软件　Office成平台   .NET技术的进化
+"用于构建集成式桌面应用程序的新指南和新工具"[ cada:] browser AI。
+今天[07.3.19]抽空将FireFTP(linux and window应该是一样的，because of js(cross platform) not so/dll xpcom component)的整个UI界面翻译成中文，比较简单，see fireftp.jar/locale/en-US/*.dtd and strings.properties。其中的dtd中有对应各种UI对话框等中的各种UI Element的英文字符串，第一步简单地采用边翻译边将其结果替换jar中原来的，然后在firefox中查看效果。注意翻译过程中常出现的错误：
+0。统一采用utf8编码；1。""中不能再次出现'"'；2。成对的""位置一定是在首尾，否则调试时非常难以调试－－总也找不到错误的位置，只能那原来的与翻译后的边替换边调试。
+顺便也更改了一下install.rdf文件：请注意其中的多个tag之间的表达不能混合使用，而且注释也不能出现在它们中间，只能最上层，如
+<!--em:id="cada@fireftp.mozdev.org"如果该注释位置在外层在正确-->
+em:optionsURL="chrome://fireftp/content/preferences.xul"
+<!--<em:id>cada@fireftp.mozdev.org</em:id>1.去掉该注释后会发现采用=或<>表示是不能上下混合使用的。2.注释位置错误-->
+em:name="FireFTP(cada_phoebe)"
+em:version="0.94.6"   
+em:description="FTP client for Mozilla Firefox(Changed by cada!)"
+注意：扩展管理器中对应的描述依次由以上name version description构成. today over!

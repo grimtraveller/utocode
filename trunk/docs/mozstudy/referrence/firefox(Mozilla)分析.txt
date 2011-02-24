@@ -1,0 +1,65 @@
+firefox(Mozilla)分析
+http://blog.sina.com.cn/s/blog_4975695f010024j5.html
+1.Firefox(Mozilla) 框架
+层次：
+1.0 最底层:跨平台操作系统实用功能封装，或称为虚拟操作系统(例如OpenOffice)或称为操作系统(平台)适配器。叫什么没有关系，基本意思理解就可以了。我认为对应模块有：
+·NSPR（io,thread,memory等）
+·Gecko(？图形图象显示输出或渲染引擎,GUI模块--平台封装的widget[窗口和控件]+gfx[图形图象处理--每个平台都有其具体实现，包括font,color,image,绘图原语]),类似cairo图形库作用。see NGLayout or layout(依据CSS style layout,but not render html/xml tag contents)|content模块。
+widget:Primitive user interface part (button, menu, radiobutton, etc). There are two kinds of widgets: Native and gfx. Native widgets are implemented differently for each platform, but gfx widgets are implemented using gfx and is thus the same for all platforms.
+·Necko[SSL外都是应用层协议如nntp/ldap/about/res/file/ftp/http/pop3/smtp/Imap等协议],ldap sdk在模块directory中
+1.1 中间核心层：XPCOM,类似UNO,COM,Corba等组件模型。我简单看了看源代码与OpenOffice的UNO组件相关代码封装很类似。
+·常见的XPCOM组件为第三方提供的Add-ons(插件[plug-in,固定实现接口，源码参见modules/plugin等]和(扩展+主题) [extension+theme，无固定接口要求，通常用来构件不同的UI界面及其相关应用,源码参见extension目录])
+toolkit(XUL相关东东)xpfe?区别
+1.2 Chrome(user GUI统称)：对应文件是各种chrome/*.jar及其xpcom组件(动态库or js,模块名称通常在地址栏中可见：chrome://xxx/content/..xul)-->其中实现射击技术有：XUL[负责UI界面总体框架,use xul to specify the static layout of the UI elements.Can use "overlays" to add new(or replace) UI elements to existings.use CSS to specify UI elements's format style],XBl[UI界面框架内的基本UI元素]、JS[glue胶合或连接(通过XPConnect--也就是通常说的桥bridge,桥接两端不同代码--也可以称之为双向解释器或编译器)UI行为响应到内部XPCOM代码--多数为C++代码.use javascript to spcify how each of the elements interacts]、CSS and RDF(dtd)[表达UI显示效果]、DOM[html/xml文档操作接口]等。类似XAML作用,参考MS .NET表现层类库。
+XPConnect：Ability to call C++ implementations of interfaces expressed in IDL from JavaScript and vice versa.
+XPFE：The cross-platform front end(toolkit). The part of Mozilla that implements the user interface of Mozilla. Everything that makes a browser except the rendering of pages is considered xpfe (bookmarks, toolbars, menus etc).
+2.firefox(Mozilla)开发重要术语
+·XP：Cross-Platform。XPCOM：Cross Platform Component Object Model
+·cotent node:内容节点。对应html/xml中元素，可由DOM操纵content tree。
+·ASN.1--Abstract Syntax Notation One PKCS安全相关--是否也可以用在idl中呢?
+·frame--文档底层布局对象(所有这些不同层次的frame就代表了一篇布局好的文档),负责html/xml节点内容或元素的绘制，通常对应一到多个content node[每个元素在CSS中称为box--有元素自身高宽+padding+margin+border，通常这些属性都不显示出来,又多数采用div方式使用]-->CSS Box
+·webshell：A container that knows how to load and render web pages. Frameset pages has a root webshell and one webshell per frame(注意这个是html frame框架,not前面提到的frame) .应该这个webshell中可以访问前面提到的所有frame对象(frame heriarchy),？webPage与document区别？
+·presentation shell：Presentation shells are the controlling object during the presentation of a document. It owns the document, the frame hierarchy, stylesheets and the presentation context. It also controls and initiates the reflow of the document.
+·reflow：The act of laying out the content tree and creating/updating the corresponding frame hierarchy is called reflowing.注意这个update更新--例如DOM写、修改操作。
+·reflow mapped：Reflowing content that already has a frame. reflow unmapped：Reflowing content that doesn't yet have a frame. see layout模块
+·service：A component that is used as a singleton. That means there exist only one instantiation of the Component, and all request for it returns the same object.这个应该与UNO service基本类似.
+·XIF：XML Interchange Format - used internally by NGLayout for all I/O to clipboard, etc. 通用clipboard XML交换格式--封装所有其他格式到不同的tags？
+·XRE:XUL Runtime Engine--init XUL Toolkit?.
+此外还需要看看英文版本的帮助文档--了解基本名词术语等。--例如feed
+3.firefox(Mozilla)源码目录结构简述，另外参见
+·基本结构模式(scheme)：首先是顶层产品目录名如mozilla(TopLevelName--注意下载源码包后千万不要将直接将这个目录下的各种模块解压到某个目录下，否则是无论如何也无法编译的！也就是这些子模块的父目录一定要是这个产品名目录--称为$toplevel);然后是各模块目录；各模块目录下的目录遵循原则是能独立成为子模块的就独立门户，如此迭代下去。每个模块下可能存在如下一些常见的目录名称：
+1.base:该模块基础或核心代码(basic or core source),无法再独立门户，大家享用的.--example:docshell模块。
+2.build:编译特殊模块所包含的特殊makefile and some sources。--example: intl or docshell等模块。
+3.doc:模块相关的文档.example:xpcom|layout模块。
+4.idl+public:基本上是公用头文件(包括idl间接被编译后的头文件)，我想public中还混合有idl文件，莫非以后public下的公用头文件也可能被idl取代之意？example:gfx,editor,dom等模块。
+5.src:cpp,c,h,hxx文件。example:widget模块。
+6.test:该模块测试代码或相关html,xul等文件。example:gfx模块。
+7.tools:编译某些特殊模块用的工具以及自动产生某些代码的perl脚本。example:layout模块
+8.平台相关模块目录：windows/mac/gtk/motif/qt/os2+beOS/photon/rhapdody等
+9.其他你所见到的目录名称基本上都是子模块名称+other。
+·源码目录
+browser--firefox可执行程序入口(app/nsBrowserApp.cpp),base/下内容就包含在著名的browser.jar[XUL]中,其中另外一部分在components中。
+accessible--辅助功能模块。例如MS Control Panel's "辅助功能选项"--帮助文档中也有说明。支持Microsoft Active Accessibility and Sun's ATK accessibility API for Linux.另外请查看该模块下的accessible-docs.html.非核心模块。
+build+config--相当与openOffice的 config_office+solenv两个模块，用来搭建编译环境和提供编译具体模块代码时所需要的信息(如各种通用编译选项等makefile文件等)。都包含n多perl脚本。firefox(mozilla)的这两个模块组织的相对杂乱不容易理解。
+calendar--各种日历应用和扩展。非核心模块。
+caps--webpage安全管理(安全设置和认证)相关模块.
+chrome--chrome://协议、工厂、注册相关代码。--toolkit范畴。模块代码少。
+content+layout--dom所需对象+布局引擎(依据CSS1+2式样单来布置(not render绘制)所有内容(html/xml/xul/xsl/xbl/svg/xtf等文件内容)--对应各自的窗口。即reflow==NGLayout or Gecko)
+db--mdb/mork + sqlite3数据库--邮件+历史+新闻数据的存储与访问。拿来主义--本身跨平台。openoffice使用berkely DB访问帮助文档数据库文件。also see mozilla mail architecture
+directory--ldap C语言SDK及其XPCOM封装。also see file:draft-ietf-ldapext-ldap-c-api-05.txt. openoffice also support ldap.
+docshell->embedding->webshell: 想要将firefox(Mozilla)嵌入在其它应用程序中或定制一个新的浏览器请使用接口nsIWebBrowserChrome，而且该浏览器窗口还可以是模式(Modal)。
+
+·查找服务html_frames[or iframes: attribute nsIDOMWindow currentSearchFrame/rootSearchFrame;] in the content area.
+·JSConsoleService控制台服务: nsIWindowWatcher->OpenWindow(Parent_nsIDOMWindow,console_chrome_url,"_blank",console_window_options,nsnull,getter_AddRefs(consloeWindow_nsIDOMWindow));
+//static const char console_chrome_url[] = "chrome://global/content/console.xul";
+//static const char console_window_options[] = "dialog=no,close,chrome,menubar,toolbar,resizable";
+·TopLevel(通常可以与nsIWebBrowserChrome互相map--!一对!) Gecko/DOM Windows Watcher or keeper[但不保留对这些窗口的引用--no ownership,only weakReference--当这些窗口create or destory时需要主动通知notify该watcher:注意如果别的应用程序内嵌该浏览器时通常该程序不需要做此事]: 有activeWindow属性；必须在浏览器启动时通过setWindowCreator初始化一个nsIWindowCreator,之后就可以通过它来打开或创建新的各种JS window.open.
+::)DOMWindow->ScriptGlobalObject->GetDocShell->items->owner->WebBrowserChrome(Maybe EmbeddingSiteWindow->GetSiteWindow)->BaseWindow->MainWidget->GetNativeData(例如HWND/Window等)
+·print打印：PrintDlg[Ex](windows平台)-LPDEVMODE.
+·chrome://global/content/nsHelperAppDlg.xul--打开一个特殊文档时UI,采用js编写的XPCOM组件nsHelperAppDlg.js.
+·chrome://global/content/nsProgressDialog.xul--自动下载进度控制对话框。nsProgressDialog.js。
+IPC--search"进程间通信"
+modules--各种压缩格式库(Mar--Mozilla Archive,用于更新包，包中文件采用bzip2压缩，其它jar+zlib，九州的压宝今后可以加入近来啊);支持的各种图像库(png,jpg,bmp[含ico],gif,xbm--x-bitmap)+libprOn+libimg目录中。还有：
+·应用程序配置(或偏好)设置修改访问模块preference. about:config即可更改配置文件[*.js文件(一种特殊的javascript脚本文件)，位置在grepref+default/pref 中*.js,用户修改后的单独存储在用户配置目录下的pref.js文件中--分系统和用户两部分独立数据]；配置数据范围很广：not only选项...中的设置。阅读这些js文件即可发现。这些配置(或偏好)数据采用tree层次方式管理，入口点 preferenceService->prefBranch(访问各分枝节点数据)；还可以增加对这些数据的变动进行动态观察以反映到不同的窗口等对象中。观察者和数据访问对象通常都是弱引用对象[避免loop引用无法释放]。
+gfx(gkgfx.dll等)--2d几何图形如矩形 (nsRect、nsRegion)、图象(gfxIImageFrame)、打印设置(PrintSetting)、字体(Font)、设备上下文等对象(此外还包括类似nsColor,nsColorName[s-147个css颜色名称]等相关对象)及其基本操作(如矩形的交集、合集等基本操作-- 好象初中就会过其基本概念)----注意它们与os提供的几何绘图函数一点关系都没有。ooo中所有的基本都在vcl中实现(几何图形+窗口部件)。
+see my mozilla gfx architcture
