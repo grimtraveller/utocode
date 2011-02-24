@@ -1,4 +1,4 @@
-#define JZDEBUG
+#define ZJDEBUG
 #include "jzmem.h"
 #include <stdio.h>
 #include <time.h>
@@ -11,7 +11,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 void easy_test();
 void 
-show_leak(char* file, jzuint32 line, void* p, size_t len)
+show_leak(char* file, zjuint32 line, void* p, size_t len)
 {
 	printf("%s %10d : 0x%08x %10d\n", file, line, (int)p, len);
 } 
@@ -19,65 +19,65 @@ int
 main(int argc, char** argv)
 {
 	//! malloc count
-	jzuint32 malloc_count = 0;
+	zjuint32 malloc_count = 0;
 	//! realloc count
-	jzuint32 realloc_count = 0;
+	zjuint32 realloc_count = 0;
 	//! free count
-	jzuint32 free_count = 0;
+	zjuint32 free_count = 0;
 	//! point array
 	char** pp = NULL;
 	//! malloc length
-	jzsize size = 0;
+	zjsize size = 0;
 	//! index
-	jzuint32 i = 0;
+	zjuint32 i = 0;
 	//BOOLEAN isRealloc = FALSE;
 	//! realloc size
-	jzsize resize = 0;
+	zjsize resize = 0;
 	//! performace time
-	jzint64 rtime = 0;
-	//! jzmem_header point
-	jzmem_header_st* pjzmem_header = NULL;
+	zjint64 rtime = 0;
+	//! zjmem_header point
+	zjmem_header_st* pzjmem_header = NULL;
 	//! test case total time
-	jztimer_st total_timer = {0};
+	zjtimer_st total_timer = {0};
 
-	START_JZTIMER();
-	//test total jztimer	
-	init_jztimer(&total_timer);
-	start_jztimer(&total_timer);
+	START_ZJTIMER();
+	//test total zjtimer	
+	init_zjtimer(&total_timer);
+	start_zjtimer(&total_timer);
 
 	//initial random
 	srand((unsigned)time(NULL));
 	
-	//initial jztimer
-	STOP_JZTIMER(rtime);
+	//initial zjtimer
+	STOP_ZJTIMER(rtime);
 
-	//initial jzmem
+	//initial zjmem
 	//if (make_boolean())
-	if (jzrand_boolean())
+	if (zjrand_boolean())
 	{
-		JZMEMINIT(NULL);
+		ZJMEMINIT(NULL);
 	}
 	else
 	{
-		pjzmem_header = malloc(sizeof(jzmem_header_st));
-		JZMEMINIT(pjzmem_header);
+		pzjmem_header = malloc(sizeof(zjmem_header_st));
+		ZJMEMINIT(pzjmem_header);
 	}
 
-	STOP_JZTIMER(rtime);
-	printf("JZMEMINIT time = %.2f ms \n", ((double)rtime/1000.00));
+	STOP_ZJTIMER(rtime);
+	printf("ZJMEMINIT time = %.2f ms \n", ((double)rtime/1000.00));
 
 	//! malloc test case
 	//malloc_count = make_rand(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
-	malloc_count = jzrand_scope(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
+	malloc_count = zjrand_scope(ALLOC_COUNT_MIN, ALLOC_COUNT_MAX);
 	printf("[malloc test case:] malloc count = %d\n", malloc_count);
-	pp = JZMALLOC(malloc_count * sizeof(char*));
+	pp = ZJMALLOC(malloc_count * sizeof(char*));
 	for (i = 0; i < malloc_count; i++)
 	{
 		//size = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
-		size = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
-		STOP_JZTIMER(rtime);
-		*(pp + i) = JZMALLOC(size);
-		STOP_JZTIMER(rtime);
+		size = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_ZJTIMER(rtime);
+		*(pp + i) = ZJMALLOC(size);
+		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
 		printf("malloc size = %7d ", size);
 		printf("address = 0x%08x", (unsigned int)*(pp + i));
@@ -87,16 +87,16 @@ main(int argc, char** argv)
 
 	//! realloc test case
 	//realloc_count = make_rand(ALLOC_COUNT_MIN, malloc_count);
-	realloc_count = jzrand_scope(ALLOC_COUNT_MIN, malloc_count);
+	realloc_count = zjrand_scope(ALLOC_COUNT_MIN, malloc_count);
 	printf("[realloc test case:] realloc count = %d\n", realloc_count);
 
 	for (i = 0; i < realloc_count; i++)
 	{
 		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
-		resize = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
-		STOP_JZTIMER(rtime);
-		*(pp + i) = JZREALLOC(*(pp+i), resize);
-		STOP_JZTIMER(rtime);
+		resize = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_ZJTIMER(rtime);
+		*(pp + i) = ZJREALLOC(*(pp+i), resize);
+		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
 		printf("realloc size = %7d ", resize);
 		printf("address = 0x%08x", (unsigned int)*(pp + i));
@@ -104,15 +104,15 @@ main(int argc, char** argv)
 		printf("---[ok]\n");
 	}
 
-	//! realloc the first in jzmem test case
+	//! realloc the first in zjmem test case
 	//if (make_boolean())
-	if (jzrand_boolean())
+	if (zjrand_boolean())
 	{
 		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
-		resize = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
-		STOP_JZTIMER(rtime);
-		*(pp) = JZREALLOC(*(pp), resize);
-		STOP_JZTIMER(rtime);
+		resize = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_ZJTIMER(rtime);
+		*(pp) = ZJREALLOC(*(pp), resize);
+		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", 0, ((double)rtime/1000.00));
 		printf("realloc size = %7d ", resize);
 		printf("address = 0x%08x", (unsigned int)*(pp));
@@ -120,15 +120,15 @@ main(int argc, char** argv)
 		printf("---[ok]\n");
 	}
 
-	//! realloc the last in jzmem test case
+	//! realloc the last in zjmem test case
 	//if (make_boolean())
-	if (jzrand_boolean())
+	if (zjrand_boolean())
 	{
 		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
-		resize = jzrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
-		STOP_JZTIMER(rtime);
-		*(pp+malloc_count-1) = JZREALLOC(*(pp+malloc_count-1), resize);
-		STOP_JZTIMER(rtime);
+		resize = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
+		STOP_ZJTIMER(rtime);
+		*(pp+malloc_count-1) = ZJREALLOC(*(pp+malloc_count-1), resize);
+		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", malloc_count-1, ((double)rtime/1000.00));
 		printf("realloc size = %7d ", resize);
 		printf("address = 0x%08x", (unsigned int)*(pp+malloc_count-1));
@@ -138,10 +138,10 @@ main(int argc, char** argv)
 
 	//free test case
 	//if(make_boolean())
-	if(jzrand_boolean())
+	if(zjrand_boolean())
 	{
 		//free_count = make_rand(0, malloc_count);
-		free_count = jzrand_scope(0, malloc_count);
+		free_count = zjrand_scope(0, malloc_count);
 	}
 	else
 	{
@@ -150,14 +150,14 @@ main(int argc, char** argv)
 	printf("[last realloc test case:] free count = %d\n", free_count);
 	for (i = 0; i < free_count; i++)
 	{
-		JZFREE(*(pp+i));
+		ZJFREE(*(pp+i));
 	}
 	printf("\n");
 	printf("memory leak\n");
-	JZCHECKLEAK(show_leak);
-	JZFREE(pp);
-	JZMEMUNINIT();
-	stop_jztimer(&total_timer);
+	ZJCHECKLEAK(show_leak);
+	ZJFREE(pp);
+	ZJMEMUNINIT();
+	stop_zjtimer(&total_timer);
 	printf("time = %.2f ms \n", ((double)total_timer.rtime/1000.00));
 	return 0;
 }

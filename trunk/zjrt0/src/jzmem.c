@@ -1,5 +1,5 @@
 /**
-  @file		jzmem.c	
+  @file		zjmem.c	
   @brief	implement memory functions
   @details	
   @author	zuohaitao
@@ -16,58 +16,58 @@
 #include <errno.h>
 #include <stdio.h>
 #endif
-jzmem_header_st* g_pjzmem = NULL;
+zjmem_header_st* g_pzjmem = NULL;
 ///////////////////////////////////////////////////////////////////////////////
-status construct_jzmem(jzmem_header_st* pjzmem)
+status construct_zjmem(zjmem_header_st* pzjmem)
 {
 
-	if (NULL == pjzmem)
+	if (NULL == pzjmem)
 	{
-		pjzmem = (jzmem_header_st*)malloc(sizeof(jzmem_header_st));
-		if (NULL == pjzmem)
+		pzjmem = (zjmem_header_st*)malloc(sizeof(zjmem_header_st));
+		if (NULL == pzjmem)
 		{
-			jzerror_return(ERROR);
+			zjerror_return(ERROR);
 		}
-		pjzmem->mgr = JZRT;
+		pzjmem->mgr = ZJRT;
 	}
 	else
 	{
-		pjzmem->mgr = USER;
+		pzjmem->mgr = USER;
 	}
-	pjzmem->next = NULL;
-	g_pjzmem = pjzmem;
+	pzjmem->next = NULL;
+	g_pzjmem = pzjmem;
 	return OK;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void destruct_jzmem()
+void destruct_zjmem()
 {
-	if (JZRT == g_pjzmem->mgr)
+	if (ZJRT == g_pzjmem->mgr)
 	{
-		free(g_pjzmem);
+		free(g_pzjmem);
 	}
-	g_pjzmem = NULL;
+	g_pzjmem = NULL;
 	return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void* jzmalloc(size_t size, const char* file, jzuint32 line)
+void* zjmalloc(size_t size, const char* file, zjuint32 line)
 {
-	jzmem_item_st* p;
-	p = malloc(sizeof(jzmem_item_st) + size);
+	zjmem_item_st* p;
+	p = malloc(sizeof(zjmem_item_st) + size);
 	if (NULL == p)
 	{
-		jzerror_exit();
+		zjerror_exit();
 	}
-	strncpy(p->file, file, JZ_MAX_PATH);
+	strncpy(p->file, file, ZJ_MAX_PATH);
 	p->line = line;
-	p->real_p = (char*)p + sizeof(jzmem_item_st);
+	p->real_p = (char*)p + sizeof(zjmem_item_st);
 	
 	p->len = size;
 	p->prev = NULL;
-	p->next = g_pjzmem->next;
+	p->next = g_pzjmem->next;
 	
-	g_pjzmem->next = p;
+	g_pzjmem->next = p;
 
 	if (NULL != p->next)
 	{
@@ -78,15 +78,15 @@ void* jzmalloc(size_t size, const char* file, jzuint32 line)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line)
+void* zjrealloc(void* ptr, size_t size, const char* file, zjuint32 line)
 {
-	jzmem_item_st* p;
-	jzmem_item_st* pitem;
-	pitem = (jzmem_item_st*)((char*)ptr - sizeof(jzmem_item_st));
-	p = realloc(pitem, sizeof(jzmem_item_st) + size);
-	strncpy(p->file, file, JZ_MAX_PATH);
+	zjmem_item_st* p;
+	zjmem_item_st* pitem;
+	pitem = (zjmem_item_st*)((char*)ptr - sizeof(zjmem_item_st));
+	p = realloc(pitem, sizeof(zjmem_item_st) + size);
+	strncpy(p->file, file, ZJ_MAX_PATH);
 	p->line = line;
-	p->real_p = (char*)p + sizeof(jzmem_item_st);
+	p->real_p = (char*)p + sizeof(zjmem_item_st);
 
 	if (p != pitem)
 	{
@@ -100,24 +100,24 @@ void* jzrealloc(void* ptr, size_t size, const char* file, jzuint32 line)
 		}
 		else
 		{
-			g_pjzmem->next = p;
+			g_pzjmem->next = p;
 		}
 	}
 	return p->real_p;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void jzfree(void* ptr)
+void zjfree(void* ptr)
 {
-	jzmem_item_st* p;
-	p = (jzmem_item_st*)((char*)ptr - sizeof(jzmem_item_st));
+	zjmem_item_st* p;
+	p = (zjmem_item_st*)((char*)ptr - sizeof(zjmem_item_st));
 	if (NULL != p->prev)
 	{
 		p->prev->next = p->next;
 	}
 	else
 	{
-		g_pjzmem->next = NULL;
+		g_pzjmem->next = NULL;
 	}
 	if (NULL != p->next)
 	{
@@ -129,10 +129,10 @@ void jzfree(void* ptr)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void jzcheck_leak(CHECKLEAKCALLBACK fclbk)
+void zjcheck_leak(CHECKLEAKCALLBACK fclbk)
 {
-	jzmem_item_st* p;
-	p = g_pjzmem->next;
+	zjmem_item_st* p;
+	p = g_pzjmem->next;
 	while(NULL != p)
 	{
 		fclbk(p->file, p->line, p->real_p, p->len);

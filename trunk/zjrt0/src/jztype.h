@@ -1,5 +1,5 @@
 /**
-  @file		jztype.h
+  @file		zjtype.h
   @brief	define crossplatform c inline types
   @details	interger float etc
   @author	zuohaitao
@@ -8,9 +8,10 @@
   @bug		
 			line 73 64 bit integer in linux 
 			line 48 - 53 test MAX_PATH in linux
+			add type range
   */
-#ifndef JZTYPE_H
-#define JZTYPE_H
+#ifndef ZJTYPE_H
+#define ZJTYPE_H
 #ifdef WIN32
 #include <windows.h>
 #else 
@@ -35,7 +36,7 @@
 /**
  * @brief value only is 0 (FALSE) or 1 (TRUE)
  */
-#define BOOLEAN		long
+#define ZJBOOLEAN		long
 /**
  * @brief true the value of boolean
  */
@@ -73,34 +74,47 @@
  */
 typedef int status;
 #ifdef WIN32
-#define JZ_MAX_PATH	MAX_PATH
+#define ZJ_MAX_PATH	MAX_PATH
 #else
-#define JZ_MAX_PATH PATH_MAX
+#define ZJ_MAX_PATH PATH_MAX
 #endif
 /**
- * @brief jzrt0 types
+ * @brief zjrt0 types
  */
-typedef signed char jzint8;
-typedef unsigned char jzuint8;
+typedef signed char zjint8;
+#define ZJINT8_MIN (-128)
+#define ZJINT8_MAX 127
+typedef unsigned char zjuint8;
+#define ZJUINT8_MAX 0xff
 
-typedef signed short jzint16;
-typedef unsigned short jzuint16;
+typedef signed short zjint16;
+#define ZJINT16_MIN (-32768)
+#define ZJINT16_MAX 32767
+typedef unsigned short zjuint16;
+#define ZJUINT16_MAX 0xffff
 
-typedef int jzint32;
-typedef unsigned int jzuint32;
+typedef int zjint32;
+#define ZJINT32_MIN (-2147483646)
+#define ZJINT32_MAX 2147483647
+typedef unsigned int zjuint32;
+#define ZJUINT32_MAX 0xffffffff
+
 
 #ifdef WIN32
-typedef long long jzint64;
-typedef unsigned long long jzuint64;
+typedef long long zjint64;
+#define ZJINT64_MIN (-9223372036854775806i64)
+#define ZJINT64_MAX 9223372036854775807i64
+typedef unsigned long long zjuint64;
+#define ZJUINT64_MAX 0xffffffffffffffffui64
 #else
-typedef long long jzint64;
-typedef unsigned long long jzuint64;
+typedef long long zjint64;
+typedef unsigned long long zjuint64;
 #endif
-typedef float jzfloat32;
-typedef double jzfloat64;
-typedef size_t jzsize;
-typedef jzuint32 jzoffset32;
-typedef jzuint64 jzoffset64;
-//typedef ptrdiff_t __PRPtrdiff;
+typedef float zjfloat32;
+typedef double zjfloat64;
+typedef size_t zjsize;
+typedef zjuint32 zjoffset32;
+typedef zjuint64 zjoffset64;
+
 #endif
 
