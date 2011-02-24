@@ -1,0 +1,140 @@
+
+
+
+ Mozilla gfx Architecture
+
+序：
+    图形系统(如gnome,通常都是建立在一定的gfx api上的--如cairo or 2D/3D gfx api),其核心是图形处理(now 可以充分利用显卡GPU-not cpu处理器加速处理).
+通常图形处理包括各种2D/3D几何图形处理和图象(图片)处理，不包括os提供的各种窗口(window)及其部件(widgets--also各种表单form or xform等)。
+图形处理核心内容包括2d/3d几何图形(如line,ellips etc.我认为还含vector矢量字体字型(glyph)绘制(render or draw)、填充(fill--颜色color填充、渐变gradient填充、位图bitmap填充、图案Hatch填充等--这些操作通常都要用到lineStyle，pen|brush等os系统图形设备上下文GDC资源)、
+、对这些几何图形的变换transform、旋转rotate、合成(应该含：clip、group、compose等操作)、以及图形图象的各种效果处理：透明transparent、阴影shadow、抗锯齿antilias+其它过滤等效果。此外我想还包括vector shape<->image之间应该可以互相转换convert的一些操作。
+复杂的综合应用处理可能还包括：画布canvas、svg、pdf、flash(含交互处理：通过ActionScript--alike javasrcipt or jscript--All based ECMAScript Standard)等处理。
+
+    本文整体上简单地描述了MOzilla Gecko图形引擎1.8与1.9，及其差异。
+    
+提外话：跨平台抽象方法
+·几乎所有大型应用系统如mozilla or openoffice等跨平台产品都构建了统一的跨平台图形处理引擎(要么自己从头实现，要么基于专门的跨平台图形处理引擎如cairo。不过他们都无一例外地经历了自己从头做到借鉴或拿来主义的过程，为什么要拿来主义呢?专业化而已。不过做法都是一样的：提取各os平台自带的相关图形处理API综合分析他们之间的差异后，统一构建了一个抽象的统一的虚拟os图形处理api接口--可能用idl表达[少，一般都是c or c++的简单封装wrapper--有差异的就想办法模拟实现,why? os的api都是c形式的])。其它类似的窗口处理也采用类似处理方式。但其他通用的如内存管理字符串日期时间的统一封装更多地都是依据设计师自己设计实现跨平台--也部分采用stl以及各os自带的标准c接口等。
+·typedef void* object;//nsPalette|nsNativeDeviceContext
+·类中定义宽平台的纯虚函数 func()=0;
+
+1.8-1.9整体overview
+各png图片also see 参考资料
+[old-legacy--1.8]widget_DC_RC_GDI-QuickDraw-GtkXlib_gfx.png--->now unified gfxContext,not separted context
+[new-Gecko 1.9]Thebes GFX--see Thebes_gfx_new1.9.png-->Switching to Cairo and Thebes-->Thebes_gfx_2_new1.9.png----All see core code:gfx/thebes
+·[what is Thebes]Thebes is a C wrapper around Cairo as well as a cross-platform text rendering toolkit.
+·Thebes is essentially a piece of code that provides an interface between Cairo and the inner workings of Mozilla’s Gecko engine.
+·对比参考cairo_capacities.png;cairo_archi.png;cairo_nativeSupport.png--高级功能多体现在SVG and HTML Canvas和CSS.
+·What you’re looking for will most likely be done in CSS, eventually. Gecko will read the CSS code specifying the rounded corner, figure out its size/placement/color/etc, then send it through the Thebes -> Cairo -> Operating System rendering pipeline to your screen.
+·注意cairo本身不提供任何文本绘制操作(Thebes works with each platform's native complex text handling APIs (Uniscribe on Windows, Pango on Linux, and ATSU on MacOS X) and presents a unified interface to the rest of Gecko.)。
+·hardware accelerated rendering using OpenGL and/or DirectX----Glitz backend
+
+以下简单分析1.8老式gfx图形处理接口<1.9重新设计为统一的GFX::Thebes底比斯架构，部分采用cairo><万变不离其中--图形处理核心内容，差异是设计实现得有好有差有快有慢等>
+old-legacy gfx interface: nsIDeviceContext.h+nsIRenderingContext.h。从这两个文件中分析出如下内容
+一、在设备（输出：打印-twip|屏幕-pixel）上下文中可以：
+·创建绘制上下文
+·获取设置字体(nsFont<-from nsSystemFontID)及其属性nsFontMetrics、判断faceName的字体是否存在、从字体的faceName中获取localName
+·zoom document
+·twip<->pixel间换算==>AppUnit
+·设备nsDepth
+·palette
+·可显示大小--DeviceSufaceDimensions--displayArea
+·内容大小--nsRect表示
+·clientArea--可显示大小减去taskbar[window平台] or menubar[MAC 平台]的大小
+·还可以由平台规范的具体设备上下文中创建新的设备上下文--nsIDeviceContextSpec
+·打印：准备/start-end/abort/打印某一页start-end;打印预览：可能切换新的设备上下文。
+
+二、在绘制(几何图形、图象、文本)上下文中可以：
+·Draw or fill Line/polyLine/Rect/Polygon/Ellipse/Arc--Draw时需要画笔Pen(可能不同相反模式);填充时需要lineStyle+foregroundColor
+局限：non-antialiased 2D.
+·在某个nsRect边界内RenderEPS,数据来源eps文件--not print
+·DrawString--基于baseline绘制,计算单双字符宽度--需要先行设置font及其属性metrics；包括复杂句边界 --BoundMetrics(上下左右边界值)；RTL等文本方向(bidi)+RenderingText时的下划线[单双字符]、删除线、 overline等
+·DrawImage|DrawTile拉伸图象|copyImage|GetGraphicData|clipImage操作[To Rect or Region]|图象透明--Alpha通道实现
+·2D Matric transform/scale--不包括rotation旋转
+·概念感官：RenderingKinds_gfx.png
+?not stroke(线条)，not gradient渐变，not 任意path[dashed and dotted--OpenOffice提供] and fill[任意路线填充]，not任意clip剪切(裁剪)
+
+参考Graphics in Mozilla：
+http://blog.vlad1.com/2007/12/11/graphics-in-mozilla/
+http://www.chineselinuxuniversity.net/articles/8060.shtml
+search "Firefox 3.0/4.0技术特点摘要" "XEN"
+
+此外还附带查找了下字体处理资料，应该与图形的绘制render处理还是有共同之处的。差异在于：例如某个2d图形绘制在其给定的GC下最终调用os的相应api简单或复杂合成后完成的，但os的api是怎么绘制的呢？这更多的内部细节应该就是体现在类似显卡等硬件设备的驱动程序上，那么硬件的驱动又是怎样驱动相关硬件完成相应的操作的呢?首先可阅读一些硬件相关的资料[更多地体现在其名称术语上--软件中好多是直接拿来用的，不了解就很难理解了。例如 screen的"子像素"概念]，其次看看字体的字型glphy是如何被绘制到screen上的[see below]就很有益你理解他们之间的相似处。例如要绘制"我是cada,uof"这个字符串，假设已经由输入法绘制到了screen上，然后我选中他们更改其字体为"宋体"。那么这一过程主要处理什么呢？首先找[找的过程其实也是很辛苦的]到该"宋体"代表的文件--例如simsun.ttf(这里假设为truetype 矢量字体)，然后根据这几个字符所在的编码[一般unicode用它为index索引，在simsun.ttf文件中快速定位查找]，找到其相关 vector Glyph字型描述信息，然后将他们各个convert为bitmap(至于怎么将glyph信息转变为bitmap信息--不太清楚，做字库的厂商应该了解或阅读相关代码也或可知，有点字体文件中干脆就直接提供bitmap描述)，然后传送这些位图bitmap信息(RGBA等描述)作为设备显示驱动信号驱动显卡依据其显示原理显示在screen上。
+X字体基础
+
+序、X字体绘制引擎
+·4种：freetype(开源字体渲染引擎, 并不只为X设计,它的功能就是读取Truetype字体信息, 如大小, 分辨率, 编码等, 然后渲染成所需的位图数据输出.Freetype 现在的版本是 2.x, 与1.0 相比, 最大的差别就是加入了抗锯齿功能. )+xtt，这两个是X内置的freetype1渲染引擎。另外两个是xfs(freetype2，也可以认为是内置)+xft(只有它支持 antialias-抗锯齿.X渲染扩展[Pac01]把访问字体文件和生成字形图像的功能从X服务器移到了X客户一方。X底层的渲染机制基于图像而非字形glyph--依赖XServer<->字形的光栅化技术[XClient Application])。
+·有这么多引擎,到底要用哪个好? 其实我们目前为止, 支持中文最好的还是xtt. 因为小字体的时候, 用函数描述法算出来的中文字体效果不能让人满意, 所以很多中文字体公司就在Truetype字体里嵌入了位图字体. 这些位图字体需要用特殊的方式读出来, 所有的引擎中就只有xtt能做到这一点.
+·X的配置文件是/etc/XF86Config-4 (比较新的显卡) 或者是 XF86Config (比较老的显卡).--xtt
+·xfs : 配置文件是 /etc/X11/fs/config
+·xft : 配置文件是 /etc/X11/Xftconfig
+
+一、XF86Config XFree86[not其它X]字体路径配置文件--/usr/X11/lib/X11/XF86Config 或 /etc/X11/XF86Config等，其内容类似如下：
+FontPath "/usr/X11R6/lib/X11/fonts/misc/:unscaled"
+FontPath "/usr/X11R6/lib/X11/fonts/Type1/"
+FontPath "/usr/X11R6/lib/X11/fonts/Speedo/"
+FontPath "/usr/X11R6/lib/X11/fonts/75dpi/"
+FontPath "/usr/X11R6/lib/X11/fonts/100dpi/"
+FontPath "unix/:7100" #让X调用xfstt使用truetype字体
+评注：
+1.字体服务器 (font server)优先使用已经采用的字体-->FontPath依次查找(在寻找字体时，服务器会进行两次查询，第1次要求准确配合，第2次则寻找可变形的字体。所以，最好把可变形字体放到bitmap字体的前面。)
+2.建议unscaled字体放在前面--尽量使用不缩放字体
+3.如果显卡支持大显示器的话--建议100dpi置75dpi的前面(显示的解析度是每英寸几点)--dpi的调整由X Server的cmdOptions决定
+4.显示已经有的字体路径：$ xset q
+5.临时增加+或删除-字体路径：$ xset +fp /usr/local/fonts/Type1|$ xset fp+ /usr/local/fonts/bitmap|设为缺省值是`xset fp default'
+
+二、调整Xserver
+分辨率的调整(dpi):
+    方法一cmd line：startx -dpi 100也可以更改为startx -dpi 75 or startx -dpi 85等等
+    方法二图形登录：修改/usr/X11/lib/X11/xdm/Xservers文件中类似:0 local /usr/X11R6/bin/X -dpi 100 -gamma 1.6信息
+
+三、TrueType字体
+·XFree86核心点阵字体--Times+Helvetica+Courier--问题缩放时就难看了。--X11的标准（样本实现，SI）带有大量的bitmap字体，包括fixed族，Courier、Times、Helvetica及Lucida族的bitmap版，它们都以ISO 8859-1(ISO Latin Western-European)编码。
+·XFree86支持4种格式的可变形字体：Type 1(.pfa|.pfb), Speedo(.spd)--bitstream speedo fonts, True|OpenType(.ttf|.ttc|.otf|.otc) 和 CIDFont。
+·还支持CID-keyed 字体--Adobe公司为大字符集语言设计的，其中包含了一象形文字，由字符ID（CID）进行索引。
+·但也支持XFree86可以使用bitmap字体(.bdf|.pcf|.snf)，包括跨平台的BDF字体和更有效率的二进制PCF字体。（还支持较老的SNF字体）bitmap字体通常都用BDF格式发布，但在安装之前，可以把它转为PCF格式，可用命令`bdftopcf'：$ bdftopcf courier12.bdf 然后对它进行压缩：$ gzip courier12.pcf转换之后，把这些字体拷贝到任意目录下，如`/usr/local/share/fonts/bitmap/'
+·Windows内含truetyp字体--Times New Roman+Arial+Courier New等[约等价如上，但可缩放]--可以将TrueType字体设为固定宽度或是可变宽度
+·注意XFree86没有内置支持truetype字体的字体服务器，但可以采用一个自由的被广泛使用的truetype字体服务器xfstt(XF86 Server TrueType)来支持它。
+xfstt:
+    1.下载安装tar -zxvf Xfstt-0.9.10.tgz->make->make install;
+    2.copy truetype字体 into /usr/ttfonts目录中
+    3.启动xfstt: xfstt --sync #更新xfstt的字体数据库
+    4.让X使用xfstt：xset +fp unix/:7100或者在上面的XF86Config文件中加入: FontPath "unix/:7100"
+    5.default font size调整：(startx -dpi 75 or xfstt --res 85)
+xfs:(另外一种xsftt)--基于FreeType Font library,提供类似xfstt功能，它可以处理TrueType+Type 1+X字体(核心X11字体系统--支持：单色bitmap字体[不支持反锯齿和子像素平滑等特性]->可变形字体及旋转象形文字-->文件中嵌入的字体[系统中可能无])
+    0.Xft 同核心字体系统不兼容(主要体现在开发接口工具上)；Xft自己没有配置机制，而是依赖于通用fontconfig库来进行配置==> XFree86标准字体目录（缺省是`/usr/X11R6/lib/X11/lib/fonts/*'）+用户主目录下的`.fonts/'。
+    0'.用fc-cache命令(FontConfig)来更新字体目录
+    0''.Xft的行为由一组配置文件控制：全系统的配置文件是`/etc/fonts/fonts.conf'，用户专用的是主目录下的`.fonts.conf'（如果设定了`FONTCONFIG_FILE'全局变量，这个文件可能不起作用。）该文件列举了查找的字体目录。
+    1.字体目录：/usr/share/fonts/ttfonts--区别xfstt的/usr/ttfonts. 注意：*.ttf文件的名字必须小写；?ttmkfdir -o fonts.scale or mkfontscale /usr/local/share/fonts/Type1->mkfontdir /usr/local/share/fonts/bitmap/#生成索引文件`fonts.dir' :区别bitmap字体安装：`mkfontdir'不能自动认出这是可变形字体。因此，必须先建立一个名为`fonts.scale'的文件
+    2.更新编辑加入到1.中字体目录中的xfs字体设定文件/etc/X11/fs/config，其内容类似如下：
+    catalogue = /usr/X11R6/lib/X11/fonts/misc:unscaled,
+    /usr/X11R6/lib/X11/fonts/100dpi:unscaled,
+    /usr/X11R6/lib/X11/fonts/75dpi:unscaled,
+    /usr/X11R6/lib/X11/fonts/misc,
+    /usr/X11R6/lib/X11/fonts/Type1,
+    /usr/X11R6/lib/X11/fonts/Speedo,
+    /usr/share/fonts/default/Type1,
+    /usr/share/fonts/ttfonts,
+    /usr/X11R6/lib/X11/fonts/100dpi,
+    /usr/X11R6/lib/X11/fonts/75dpi
+    也可以用chkfontpath --add <font>命令加入字体,更改您的字体的缺省点数:default-point-size = 140从缺省的12点字变为14点字。    
+    3.修改XF86Config档中的FontPath为FontPath "unix/:-1" <--注意 "unix/:7100" 也可以做到，但是在刚出来时无法使用。
+
+四、设置缺省的字体服务器
+采用
+·ntsysv or chkconfig --add xfs #现在xfs在您每一次开机的时候都会启动
+.重新启动：/etc/rc.d/init.d/xfs restart
+
+五、检查可用字体
+xlsfonts | less or xfontsel or gfontsel
+
+参考：字体基础和底层知识：http://www.linuxsir.org/bbs/thread78155.html
+      LED|LCD的介绍|什么是人机界面 :结合search "子像素"|"抖动方法" 可以找到相关硬件资料
+
+观变->顺变->止变->逆变->控变
+
+
+．╭╮╭╮． ╭═════════════════╯
+╭◆┴┴◆╮．     cada,加油!
+│︵　　︵│＜．    UOF,万岁!~~~~
+│　╰╯　│．╰═════════════════╯
+╰○－－○╯．
