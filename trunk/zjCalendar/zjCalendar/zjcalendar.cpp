@@ -3,8 +3,8 @@
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	: QDialog(parent, flags)
 {
-	 timeid = startTimer(1000*10);  // 1-second timer
-	 createIconGroupBox();
+	 timeid = startTimer(1000/**60*/);  // 60*1-second timer
+	 //createIconGroupBox();
      //createMessageGroupBox();
 
      //iconLabel->setMinimumWidth(durationLabel->sizeHint().width());
@@ -21,10 +21,10 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
      connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
              this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-     QVBoxLayout *mainLayout = new QVBoxLayout;
+ //    QVBoxLayout *mainLayout = new QVBoxLayout;
  //    mainLayout->addWidget(iconGroupBox);
-//     mainLayout->addWidget(messageGroupBox);
-     setLayout(mainLayout);
+//	 mainLayout->addWidget(messageGroupBox);
+//     setLayout(mainLayout);
 
 //     iconComboBox->setCurrentIndex(1);
      trayIcon->show();
@@ -35,11 +35,60 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
      trayIcon->setIcon(icon);
      setWindowIcon(icon);
      resize(400, 300);
+	 events["08:30"] = tr("工作开始了，注意保持坐姿。");
+	 events["09:00:00"] = tr("已经工作一个小时了,站起来活动");
+	 events["10:00:00"] = tr("已经工作两个小时了,打水泡茶。");
+	 events["11:30:00"] = tr("午休时间快到了，提交代码，准备去吃午饭。");
+	 events["12:10:00"] = tr("午休时间，听听音乐，睡一觉，休息一下。");
+	 events["13:10:00"] = tr("下午工作开始了。");
+	 events["14:00:00"] = tr("工作一个小时了，打杯水休息下。");
+	 events["15:00:00"] = tr("工作两个小时了。溜达溜达活动一下。");
+	 events["16:00:00"] = tr("工作三个小时了。去趟卫生间吧。");
+	 events["17:00:00"] = tr("工作四个小时了，提交代码，写周报。");
+	 events["17:20:00"] = tr("还有十分钟就下班了，注意提交代码，写周报。");
+	 events["17:30:00"] = tr("下班时间到。");
+	 events["19:40:00"] = tr("喝茶时间到。");
+	 events["22:00:00"] = tr("哄老婆睡觉时间到。");
+	 events["23:00:00"] = tr("编码时间到");
+	 events["23:10:00"] = tr("已经过去十分钟了，加油。");
+	 events["23:30:00"] = tr("已经过去半小时了");
+	 events["23:50:00"] = tr("提交代码，准备睡觉");
+	 events["00:00:00"] = tr("夜深了，注意睡眠");
+	 events["00:05:00"] = tr("夜深了，注意睡眠");
+	 events["00:10:00"] = tr("夜深了，注意睡眠");
+	 events["00:15:00"] = tr("夜深了，注意睡眠");
+	 events["00:20:00"] = tr("夜深了，注意睡眠");
+	 events["00:25:00"] = tr("夜深了，注意睡眠");
+	 events["00:30:00"] = tr("夜深了，注意睡眠");
+	 events["00:35:00"] = tr("夜深了，注意睡眠");
+	 events["00:40:00"] = tr("夜深了，注意睡眠");
+	 events["00:45:00"] = tr("夜深了，注意睡眠");
+	 events["00:50:00"] = tr("夜深了，注意睡眠");
+	 events["01:00:00"] = tr("夜深了，注意睡眠");
+	 events["01:05:00"] = tr("夜深了，注意睡眠");
+	 events["01:10:00"] = tr("夜深了，注意睡眠");
+	 events["01:15:00"] = tr("夜深了，注意睡眠");
+	 events["01:20:00"] = tr("夜深了，注意睡眠");
+	 events["01:25:00"] = tr("夜深了，注意睡眠");
+	 events["01:30:00"] = tr("夜深了，注意睡眠");
+	 events["01:35:00"] = tr("夜深了，注意睡眠");
+	 events["01:40:00"] = tr("夜深了，注意睡眠");
+	 events["01:45:00"] = tr("夜深了，注意睡眠");
+	 ///
+	 events["23:53:00"] = tr("夜深了，注意睡眠");
+	 events["23:40:00"] = tr("夜深了，注意睡眠");
+	 events["23:43:00"] = tr("夜深了，注意睡眠");
+	 events["23:45:00"] = tr("夜深了，注意睡眠");
+	 events["23:39:00"] = tr("夜深了，注意睡眠");
+	 events["23:46:00"] = tr("夜深了，注意睡眠");
+	 events["23:42:00"] = tr("夜深了，注意睡眠");
+	 events["23:41:00"] = tr("夜深了，注意睡眠");
+	 ///
 }
 
 zjCalendar::~zjCalendar()
 {
-	//killTimer(timeid);
+	killTimer(timeid);
 }
 
  void zjCalendar::setVisible(bool visible)
@@ -53,12 +102,14 @@ zjCalendar::~zjCalendar()
  void zjCalendar::closeEvent(QCloseEvent *event)
  {
      if (trayIcon->isVisible()) {
+		 /*
          QMessageBox::information(this, tr("Systray"),
                                   tr("The program will keep running in the "
                                      "system tray. To terminate the program, "
                                      "choose <b>Quit</b> in the context menu "
                                      "of the system tray entry."));
-         hide();
+         */
+		 hide();
          event->ignore();
      }
  }
@@ -79,8 +130,8 @@ zjCalendar::~zjCalendar()
      switch (reason) {
      case QSystemTrayIcon::Trigger:
      case QSystemTrayIcon::DoubleClick:
-         iconComboBox->setCurrentIndex((iconComboBox->currentIndex() + 1)
-                                       % iconComboBox->count());
+         //iconComboBox->setCurrentIndex((iconComboBox->currentIndex() + 1)
+         //                              % iconComboBox->count());
          break;
      case QSystemTrayIcon::MiddleClick:
          showMessage();
@@ -130,6 +181,7 @@ zjCalendar::~zjCalendar()
 
  void zjCalendar::createMessageGroupBox()
  {
+
      messageGroupBox = new QGroupBox(tr("Balloon Message"));
 
      typeLabel = new QLabel(tr("Type:"));
@@ -185,6 +237,7 @@ zjCalendar::~zjCalendar()
      messageLayout->setColumnStretch(3, 1);
      messageLayout->setRowStretch(4, 1);
      messageGroupBox->setLayout(messageLayout);
+
  }
 
  void zjCalendar::createActions()
@@ -218,11 +271,15 @@ zjCalendar::~zjCalendar()
  void zjCalendar::timerEvent(QTimerEvent *event)
  {
 	 QTime time =  QTime::currentTime();
-	 QString str = time.toString("hh:mm:ss.zzz");
-	 //QMessageBox::information(0, 
-	//							QObject::tr("Systray"),
-	//							str);
-	 
-     trayIcon->showMessage(str, str, QSystemTrayIcon::Information,
-                           1000);
+	 QString t = time.toString("hh:mm:00");
+	 if (events.find(t) != events.end() )
+	 {
+		 //QMessageBox::information(0, 
+		//							QObject::tr("Systray"),
+		//							str);
+		 
+		 trayIcon->showMessage(events[t], t, QSystemTrayIcon::Information,
+							   1000);
+		 show();
+	 }
  }
