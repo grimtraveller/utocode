@@ -6,9 +6,10 @@
   @date		2010-05-28
   @warning	
   @bug		
-			line 73 64 bit integer in linux 
-			line 48 - 53 test MAX_PATH in linux
+			ZTODO line 73 64 bit integer in linux 
+			ZTODO line 48 - 53 test MAX_PATH in linux
 			add type range
+			rename BOOLEAN to ZJBOOL becuase BOOLEAN is used in other frame code
   */
 #ifndef ZJTYPE_H
 #define ZJTYPE_H
@@ -18,6 +19,9 @@
 #include <stdlib.h>	//such as size_t,
 #include <limits.h>	//such as PATH_MAX,
 #endif
+
+#ifndef ZJMACRO_H
+#define ZJMACRO_H
 #ifdef __cplusplus
 #	define EXTERN_C_BEGIN	extern "C" {
 #	define EXTERN_C_END	}
@@ -25,7 +29,7 @@
 #	define EXTERN_C_BEGIN
 #	define EXTERN_C_END
 #endif	/*__cplusplus */
-
+#endif //ZJMACRO_H
 
 /**
  * @brief inalid point
@@ -36,27 +40,31 @@
 /**
  * @brief value only is 0 (FALSE) or 1 (TRUE)
  */
-#define ZJBOOLEAN		long
+#define ZJBOOL		long
 /**
- * @brief true the value of boolean
+ * @brief true the value of ZJBOOL
  */
+#ifndef TRUE
 #define	TRUE		1
+#endif //TRUE
 /**
- * @brief false the value of boolean
+ * @brief false the value of ZJBOOL
  */
+#ifndef FALSE
 #define FALSE		0
+#endif //FALSE
 /**
  * @brief success the value of status
  */
-#define	OK			1
+#define	ZJOK			1
 /**
  * @brief error the value of status
  */
-#define	ERROR		0
+#define	ZJERROR		0
 /**
  * @brief unable error the value of status
  */
-#define	INFEASIBLE	-1
+#define	ZJINFEASIBLE	-1
 /**
  * @brief overflow error the value of status
  */
