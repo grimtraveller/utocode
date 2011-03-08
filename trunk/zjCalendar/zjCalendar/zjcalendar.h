@@ -57,6 +57,8 @@ public:
 private:
 	int timeid;
 	std::map<QString, QString> events;
+	QLabel* msg;
+
 
 };
 
