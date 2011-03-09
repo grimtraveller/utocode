@@ -10,6 +10,7 @@
  * @author	zuohaitao
  * @date	2010-06-29 
  * @warning	
+ *			///todo zjwin32err
  * @bug	
  */
 #ifndef ZJERROR_H

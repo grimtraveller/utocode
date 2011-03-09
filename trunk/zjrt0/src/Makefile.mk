@@ -26,10 +26,11 @@ all:$(BINS)
 	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) /c $(INCDIR)$< -o $(BINDIR)$@
 libzjrt0.lib:$(OBJS)
 	$(AR) $(ARFLAG) $(OBJS) /OUT:$@
-zjmem_t.exe:zjmem_t.obj libzjrt0.lib
-	$(CC) $(CFLAGS) $(LDFLAGS) zjmem_t.obj libzjrt0.lib  /Fe$@
-zjerror_t.exe:zjerror_t.obj libzjrt0.lib
-	$(CC) $(CFLAGS) $(LDFLAGS) zjmem_t.obj libzjrt0.lib  /Fe$@
+t_zjmem.exe:t_zjmem.obj libzjrt0.lib
+	$(CC) $(CFLAGS) $(LDFLAGS) t_zjmem.obj libzjrt0.lib  /Fe$@
+t_zjerror.exe:t_zjerror.obj libzjrt0.lib
+	$(CC) $(CFLAGS) $(LDFLAGS) t_zjmem.obj libzjrt0.lib  /Fe$@
+haming.exe:haming.obj libzjrt0.lib
 clean:
 	del *.obj *.pdb *.ilk
 	del libzjrt0.lib

@@ -1,5 +1,5 @@
-#include "jztype.h"
-#include "jzerror.h"
+#include "zjtype.h"
+#include "zjerror.h"
 #include <stdio.h>
 void showmsg(const char* errmsg)
 {
@@ -13,8 +13,8 @@ main(int argc, char** argv)
 	char* msg = NULL;
 	g_showfn = showmsg;
 	CreateFile(TEXT("C:\\a.txt"), 0, 0, NULL, 0, 0, NULL);
-	printf("0x08x\n", jzerrno);
-	jzerror_return(jzerrno);
+	printf("0x08x\n", zjerrno);
+	jzerror_return(zjerrno);
 	jzerror_exit();
 	free(msg);
 	return 0;

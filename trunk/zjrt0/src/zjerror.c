@@ -1,4 +1,3 @@
-#include "zjrt0.h"
 #include "zjerror.h"
 
 SHOWMSG_FUNC g_showfn = NULL;
