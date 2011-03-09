@@ -22,6 +22,8 @@ BINS=t_zjmem.exe t_zjerror.exe hamming.exe t_zjtype.exe
 .PHONY:all clean
 
 all:$(BINS)
+	copy *.h ..\dist\zjrt0
+	copy libzjrt0.lib ..\dist\zjrt0
 %.o:%.c %.h
 	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) /c $(INCDIR)$< -o $(BINDIR)$@
 libzjrt0.lib:$(OBJS)

@@ -1,0 +1,13 @@
+#ifndef ZJRT0_H
+#define ZJRT0_H
+#ifdef WIN32
+#ifdef _DEBUG
+#define ZJDEBUG
+#endif //_DEBUG
+#endif //WIN32
+#include "zjtype.h"
+#include "zjmem.h"
+#include "zjtimer.h"
+#include "zjrand.h"
+#include "zjerror.h"
+#endif //ZJRT0_H
