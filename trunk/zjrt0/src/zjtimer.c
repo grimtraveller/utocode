@@ -7,8 +7,8 @@
  * @warning	
  * @bug	
  */
-#include "jztimer.h"
-#include "jztype.h"
+#include "zjtimer.h"
+#include "zjtype.h"
 #ifndef WIN32
 #include <sys/time.h>
 #include <time.h>

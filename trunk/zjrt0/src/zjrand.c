@@ -1,6 +1,6 @@
-#include "jzrand.h"
+#include "zjrand.h"
 int
-jzrand_scope(int min, int max)
+zjrand_scope(int min, int max)
 {
 	int n;
 	while(1)
@@ -15,9 +15,9 @@ jzrand_scope(int min, int max)
 	return n;
 }
 
-BOOLEAN jzrand_boolean()
+ZJBOOL zjrand_boolean()
 {
 	int n;
 	n = rand();
-	return (BOOLEAN)(n%2);
+	return (ZJBOOL)(n%2);
 }

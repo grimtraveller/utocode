@@ -18,7 +18,7 @@ extern "C"
 {
 #endif //__cplusplus
 
-#include "jztype.h"
+#include "zjtype.h"
 #define START_ZJTIMER() \
 	zjtimer_st timer;\
 	init_zjtimer(&timer);\
@@ -29,7 +29,7 @@ extern "C"
 
 typedef struct _performance_timer_st
 {
-	BOOLEAN bOK;
+	ZJBOOL bOK;
 	zjint64 unit;
 	zjint64 start;
 	zjint64 stop;

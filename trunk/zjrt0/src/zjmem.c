@@ -7,9 +7,9 @@
   @warning	
   @bug	    
   */
-#include "jzmem.h"
-#include "jztype.h"
-#include "jzerror.h"
+#include "zjmem.h"
+#include "zjtype.h"
+#include "zjerror.h"
 #include <stdlib.h>
 #include <string.h>
 #ifndef WIN32
@@ -26,7 +26,7 @@ status construct_zjmem(zjmem_header_st* pzjmem)
 		pzjmem = (zjmem_header_st*)malloc(sizeof(zjmem_header_st));
 		if (NULL == pzjmem)
 		{
-			zjerror_return(ERROR);
+			return ERROR;
 		}
 		pzjmem->mgr = ZJRT;
 	}
@@ -36,7 +36,7 @@ status construct_zjmem(zjmem_header_st* pzjmem)
 	}
 	pzjmem->next = NULL;
 	g_pzjmem = pzjmem;
-	return OK;
+	return ZJOK;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ void* zjmalloc(size_t size, const char* file, zjuint32 line)
 	p = malloc(sizeof(zjmem_item_st) + size);
 	if (NULL == p)
 	{
-		zjerror_exit();
+		return NULL;
 	}
 	strncpy(p->file, file, ZJ_MAX_PATH);
 	p->line = line;
@@ -111,14 +111,16 @@ void zjfree(void* ptr)
 {
 	zjmem_item_st* p;
 	p = (zjmem_item_st*)((char*)ptr - sizeof(zjmem_item_st));
+
 	if (NULL != p->prev)
 	{
 		p->prev->next = p->next;
 	}
 	else
 	{
-		g_pzjmem->next = NULL;
+		g_pzjmem->next = p->next;
 	}
+	
 	if (NULL != p->next)
 	{
 		p->next->prev = p->prev;
