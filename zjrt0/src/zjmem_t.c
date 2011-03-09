@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <time.h>
 #include "jztimer.h"
-#include "jzrand.h"
 #define MEMSIZE_MAX		(1024*1024*1)
 #define MEMSIZE_MIN		(1)
 #define ALLOC_COUNT_MAX (100)

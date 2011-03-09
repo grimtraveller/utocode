@@ -15,17 +15,17 @@ LDFLAGS=-L.
 AR=ar
 ARFLAG=rcs
 OBJS=
-BINS=jzmem_t
+BINS=zjmem_t
 .PHONY:all clean
 
 all:$(BINS)
 %.o:%.c %.h
 	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) -c $(INCDIR)$< -o $(BINDIR)$@
-libjzrt0.a:jzmem.o jztimer.o
+libzjrt0.a:zjmem.o zjtimer.o
 	$(AR) $(ARFLAG) $@ $^
-jzmem_t:jzmem_t.o libjzrt0.a
-	$(CC) $(CFLAGS) $(LDFLAGS) -ljzrt0 $^ -o $@
+zjmem_t:zjmem_t.o libzjrt0.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -lzjrt0 $^ -o $@
 clean:
 	rm *.o
-	rm libjzrt0.a
+	rm libzjrt0.a
 	rm $(BINS)

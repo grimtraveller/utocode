@@ -14,26 +14,23 @@ INCD=/I.
 LDFLAGS= 
 AR=lib
 ARFLAG=
-OBJS=jzmem.obj	\
-	 jztimer.obj	\
-	 jzerror.obj 	\
-	 jzrand.obj		
-#BINS=jzmem_t.exe jzerror_t.exe hamming.exe t_zjtype.exe
-BINS=t_zjtype.exe
+OBJS=zjmem.obj	\
+	 zjtimer.obj	\
+	 zjerror.obj 	\
+	 zjrand.obj		
+BINS=t_zjmem.exe t_zjerror.exe hamming.exe t_zjtype.exe
 .PHONY:all clean
 
 all:$(BINS)
 %.o:%.c %.h
 	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) /c $(INCDIR)$< -o $(BINDIR)$@
-libjzrt0.lib:$(OBJS)
+libzjrt0.lib:$(OBJS)
 	$(AR) $(ARFLAG) $(OBJS) /OUT:$@
-jzmem_t.exe:jzmem_t.obj libjzrt0.lib
-	$(CC) $(CFLAGS) $(LDFLAGS) jzmem_t.obj libjzrt0.lib  /Fe$@
-jzerror_t.exe:jzerror_t.obj libjzrt0.lib
-	$(CC) $(CFLAGS) $(LDFLAGS) jzmem_t.obj libjzrt0.lib  /Fe$@
-hamming.exe:hamming.obj libjzrt0.lib
-	$(CC) $(CFLAGS) $(LDFLAGS) t_zjtype.obj libjzrt0.lib /Fe$@ 
+zjmem_t.exe:zjmem_t.obj libzjrt0.lib
+	$(CC) $(CFLAGS) $(LDFLAGS) zjmem_t.obj libzjrt0.lib  /Fe$@
+zjerror_t.exe:zjerror_t.obj libzjrt0.lib
+	$(CC) $(CFLAGS) $(LDFLAGS) zjmem_t.obj libzjrt0.lib  /Fe$@
 clean:
 	del *.obj *.pdb *.ilk
-	del libjzrt0.lib
+	del libzjrt0.lib
 	del $(BINS)

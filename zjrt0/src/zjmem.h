@@ -7,6 +7,7 @@
 				ZJMALLOC()
 				ZJREALLOC()
 				ZJFREE()
+				ZJCHECKLEAK()
 				ZJUNINIT()
   @author	zuohaitao
   @date		2010-04-18
@@ -23,7 +24,7 @@ extern "C"
 #ifdef WIN32
 #define _CRT_SECURE_NO_WARNINGS
 #endif
-#include "jztype.h"
+#include "zjtype.h"
 #include <stdlib.h>
 #include <string.h> //such as memset
 #ifdef ZJDEBUG
@@ -31,14 +32,14 @@ extern "C"
 #define	ZJMALLOC(size) zjmalloc(size, __FILE__, __LINE__)
 #define ZJREALLOC(p, size) zjrealloc(p, size, __FILE__, __LINE__)
 #define ZJFREE(p) zjfree(p)
-#define ZJMEMUNINIT destruct_zjmem
+#define ZJMEMUNINIT() destruct_zjmem()
 #define ZJCHECKLEAK(f)   zjcheck_leak(f) 
 #else
 #define ZJMEMINIT(p)
 #define ZJMALLOC(size) malloc(size)
 #define ZJREALLOC(p, size) realloc(p, size)
 #define ZJFREE(p) free(p)
-#define ZJMEMUNINIT
+#define ZJMEMUNINIT()
 #define ZJCHECKLEAK(f)
 #endif	//ZJDEBUG
 typedef struct _mem_tracer_item_st
