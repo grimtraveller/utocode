@@ -1,5 +1,5 @@
-#include "jztype.h"
-#include "jzmem.h"
+#include "zjtype.h"
+#include "zjmem.h"
 #include <math.h>
 #include <assert.h>
 #include <stdlib.h>
@@ -10,10 +10,10 @@
 #endif	// NULL
 
 //计算校验位位数
-jzuint32 GetParityLen(jzuint32 nLen)
+zjuint32 GetParityLen(zjuint32 nLen)
 {
-	jzuint32 nParityLen = 0;
-	jzuint32 i = 0;
+	zjuint32 nParityLen = 0;
+	zjuint32 i = 0;
 	while(1)
 	{
 		if (pow(2, nParityLen) >= nParityLen + nLen)
@@ -26,27 +26,27 @@ jzuint32 GetParityLen(jzuint32 nLen)
 }
 
 //生成海明码
-jzuint32 HammingCode(jzuint8** ppHamming, jzuint8* pData, jzuint32 nDataLen, BOOLEAN flag)
+zjuint32 HammingCode(zjuint8** ppHamming, zjuint8* pData, zjuint32 nDataLen, BOOLEAN flag)
 {
-	jzuint8* pHamming = NULL;
+	zjuint8* pHamming = NULL;
 	//hamming code length
-	jzuint32 nHammingLen = 0;
+	zjuint32 nHammingLen = 0;
 	//parity bit index
-	jzuint32 nParityIdx = 1;  
-	jzuint32 nHammingIdx = 1;  
-	jzuint32 nParityPos = 1;	
-	jzuint32 k = 0;	
-	jzuint32 nDataIdx = 1;
-	jzuint8* pPDtbl = NULL;	//ParityBit DataBit table
-	jzuint32 nTblLen = 0;
-	jzuint32 tempIdx = 0;
-	jzuint32 value = 0;
-	jzuint32 nParityLen = GetParityLen(nDataLen);
+	zjuint32 nParityIdx = 1;  
+	zjuint32 nHammingIdx = 1;  
+	zjuint32 nParityPos = 1;	
+	zjuint32 k = 0;	
+	zjuint32 nDataIdx = 1;
+	zjuint8* pPDtbl = NULL;	//ParityBit DataBit table
+	zjuint32 nTblLen = 0;
+	zjuint32 tempIdx = 0;
+	zjuint32 value = 0;
+	zjuint32 nParityLen = GetParityLen(nDataLen);
 	nHammingLen = nParityLen+nDataLen;
 	nTblLen = nParityLen*nDataLen;
-	pPDtbl = (jzuint8*)JZMALLOC(nTblLen*sizeof(jzuint8));
-	memset(pPDtbl, 0, nTblLen*sizeof(jzuint8));
-	pHamming = (jzuint8*)JZMALLOC(nHammingLen*sizeof(jzuint8));
+	pPDtbl = (zjuint8*)ZJMALLOC(nTblLen*sizeof(zjuint8));
+	memset(pPDtbl, 0, nTblLen*sizeof(zjuint8));
+	pHamming = (zjuint8*)ZJMALLOC(nHammingLen*sizeof(zjuint8));
 	
 	while(nHammingIdx <= nHammingLen)
 	{
@@ -54,7 +54,7 @@ jzuint32 HammingCode(jzuint8** ppHamming, jzuint8* pData, jzuint32 nDataLen, BOO
 		{
 			nHammingIdx++;
 			nParityIdx++;
-			nParityPos  = (jzuint32)pow(2, nParityIdx-1);
+			nParityPos  = (zjuint32)pow(2, nParityIdx-1);
 			continue;
 		}
 
@@ -68,11 +68,11 @@ jzuint32 HammingCode(jzuint8** ppHamming, jzuint8* pData, jzuint32 nDataLen, BOO
 			{
 				break;
 			}
-			tempIdx += (jzuint32)pow(2, k-1);
+			tempIdx += (zjuint32)pow(2, k-1);
 			if (tempIdx > nHammingIdx)
 			{
 				//rollback temp value
-				tempIdx -= (jzuint32)pow(2, k-1);
+				tempIdx -= (zjuint32)pow(2, k-1);
 				k--;
 			}
 			else /*if (tempIdx <= nHammingIdx)*/
@@ -106,13 +106,13 @@ jzuint32 HammingCode(jzuint8** ppHamming, jzuint8* pData, jzuint32 nDataLen, BOO
 		if (0 == flag)
 		{
 			//偶校验
-			*(pHamming+(jzuint32)pow(2, nParityIdx)-1) = value%2;
+			*(pHamming+(zjuint32)pow(2, nParityIdx)-1) = value%2;
 			
 		}
 		else
 		{
 			//奇校验
-			*(pHamming+(jzuint32)pow(2, nParityIdx)-1) = (0 == value%2)?1:0;
+			*(pHamming+(zjuint32)pow(2, nParityIdx)-1) = (0 == value%2)?1:0;
 
 		}
 
@@ -126,12 +126,12 @@ jzuint32 HammingCode(jzuint8** ppHamming, jzuint8* pData, jzuint32 nDataLen, BOO
 int
 main(int argc, char* argv[])
 {
-	jzuint8* pHamming = NULL;
-	jzuint8 test[1024] = "01101001";
-	jzuint8* p;
-	jzuint32 i = 0;
-	jzuint32 len = 0;
-	p = (jzuint8*)malloc(strlen(test)+1);
+	zjuint8* pHamming = NULL;
+	zjuint8 test[1024] = "01101001";
+	zjuint8* p;
+	zjuint32 i = 0;
+	zjuint32 len = 0;
+	p = (zjuint8*)malloc(strlen(test)+1);
 	memset(p, 0, strlen(test)+1);
 	for (i = 0; i < strlen(test); i++)
 	{

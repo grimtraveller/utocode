@@ -1,8 +1,8 @@
 #define ZJDEBUG
-#include "jzmem.h"
+#include "zjmem.h"
 #include <stdio.h>
 #include <time.h>
-#include "jztimer.h"
+#include "zjtimer.h"
 #define MEMSIZE_MAX		(1024*1024*1)
 #define MEMSIZE_MIN		(1)
 #define ALLOC_COUNT_MAX (100)
