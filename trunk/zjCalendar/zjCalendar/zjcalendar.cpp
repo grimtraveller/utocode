@@ -44,6 +44,9 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	QGridLayout *layout = new QGridLayout;
 	layout->addWidget(msg, 0, 0);
 	setLayout(layout);
+	QString filename = QCoreApplication::applicationDirPath() + tr("\\zjCalendar.dat"); 
+	events.getEventsFromFile(filename);
+/*
 	events["08:30:00"] = tr("工作开始了，注意保持坐姿。");
 	events["08:40:00"] = tr("打水泡茶啦。");
 	events["09:00:00"] = tr("老婆早安。");
@@ -87,7 +90,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	events["01:35:00"] = tr("夜深了，注意睡眠");
 	events["01:40:00"] = tr("夜深了，注意睡眠");
 	events["01:45:00"] = tr("夜深了，注意睡眠");
-
+*/
 }
 
 zjCalendar::~zjCalendar()
@@ -282,17 +285,27 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	QString t;
 	QTime time =  QTime::currentTime();
 	t = time.toString("hh:mm:00");
-	
-	if (events.find(t) != events.end() )
-	{
-		//QMessageBox::information(0, 
-		//							QObject::tr("Systray"),
-		//							str);
 
-		trayIcon->showMessage(events[t], d+tr(" ")+t, QSystemTrayIcon::Information,
-			30*1000);
-		msg->setText(d+tr(" ")+t+tr(" <br><b>")+events[t]+tr("</b>"));	 
+	DateTime dt;
+	dt.time = time;
+	int id;
+	dt.time = QTime::fromString(t);
+	if (-1 != (id = events.haveEvent(dt)))
+	//if (events.find(t) != events.end() )
+	{
+	//	QMessageBox::information(0, 
+	//								QObject::tr("Systray"),
+	//				 =				str);
+
+	//	trayIcon->showMessage(events[t], d+tr(" ")+t, QSystemTrayIcon::Information,
+	//		30*1000);
+
+		//msg->setText(d+tr(" ")+t+tr(" <br><b>")+events[t]+tr("</b>"));	 
+	//	show();
+		trayIcon->showMessage(events.eventMap[id].desc, d+tr(" ")+t, QSystemTrayIcon::Information, 30*1000);
+		msg->setText(d+tr(" ")+t+tr(" <br><b>")+events.eventMap[id].desc+tr("</b>"));
 		show();
+
 	}
 	else
 	{
