@@ -81,6 +81,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(SolutionDir)zjCalendar.dat $(SolutionDir)$(ConfigurationName)\zjCalendar.dat"
 			/>
 		</Configuration>
 		<Configuration
@@ -150,6 +151,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy $(SolutionDir)zjCalendar.dat $(SolutionDir)$(ConfigurationName)\zjCalendar.dat"
 			/>
 		</Configuration>
 	</Configurations>
@@ -161,6 +163,14 @@
 			Filter="cpp;cxx;c;def"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\datetime.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\events.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\main.cpp"
 				>
@@ -175,6 +185,14 @@
 			Filter="h"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\datetime.h"
+				>
+			</File>
+			<File
+				RelativePath=".\events.h"
+				>
+			</File>
 			<File
 				RelativePath=".\zjcalendar.h"
 				>

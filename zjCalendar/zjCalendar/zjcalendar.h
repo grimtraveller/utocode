@@ -3,6 +3,7 @@
 
 #include <QtGui>
 #include <map>
+#include <events.h>
 
 class zjCalendar : public QDialog
 {
@@ -56,7 +57,8 @@ public:
      QMenu *trayIconMenu;
 private:
 	int timeid;
-	std::map<QString, QString> events;
+	Events events;
+	//std::map<QString, QString> events;
 	QLabel* msg;
 
 
