@@ -35,17 +35,56 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	trayIcon->setIcon(icon);
 	setWindowIcon(icon);
 	resize(400, 300);
+	QGridLayout *layout = new QGridLayout;
+
 	QString d;
 	QDate date = QDate::currentDate();
 	d = date.toString("yyyy-MM-dd");
 	QTime time =  QTime::currentTime();
 	QString t = time.toString("hh:mm:ss");
 	msg = new QLabel(d+tr(" ")+t);
-	QGridLayout *layout = new QGridLayout;
-	layout->addWidget(msg, 0, 0);
+	msg->resize(100, 300);
+
+	layout->addWidget(msg, 0, 0, 1, 1);
 	setLayout(layout);
+
+
 	QString filename = QCoreApplication::applicationDirPath() + tr("\\zjCalendar.dat"); 
 	events.getEventsFromFile(filename);
+	 model = new QStandardItemModel(0, 3, this);
+	 model->setHeaderData(0, Qt::Horizontal, tr("Id"));
+     model->setHeaderData(1, Qt::Horizontal, tr("Time"));
+     model->setHeaderData(2, Qt::Horizontal, tr("Event"));
+	 QSplitter *splitter = new QSplitter;
+     table = new QTableView;
+     splitter->addWidget(table);
+     splitter->setStretchFactor(0, 0);
+ 
+     table->setModel(model);
+ 
+     //QItemSelectionModel *selectionModel = new QItemSelectionModel(model);
+     //table->setSelectionModel(selectionModel);
+     QHeaderView *headerView = table->horizontalHeader();
+     headerView->setStretchLastSection(true);
+	 //QGridLayout *layoutTbl = new QGridLayout;
+	 layout->addWidget(splitter, 1, 0, 9, 1);
+	 setLayout(layout);
+
+
+	 //model->removeRows(0, model->rowCount(QModelIndex()), QModelIndex());
+
+	 std::map<int, Event>::iterator it;
+	 int row = 0;
+	 QString id;
+	 for (it = events.eventMap.begin(); it != events.eventMap.end(); it++)
+	 {
+		 model->insertRows(row, 1, QModelIndex());
+		 id.setNum((*it).second.id);
+		 model->setData(model->index(row, 0, QModelIndex()), id);
+		 model->setData(model->index(row, 1, QModelIndex()), (*it).second.from.time.toString());
+		 model->setData(model->index(row, 2, QModelIndex()), (*it).second.desc);
+		 row++;
+	 }
 /*
 	events["08:30:00"] = tr("工作开始了，注意保持坐姿。");
 	events["08:40:00"] = tr("打水泡茶啦。");
@@ -301,9 +340,17 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	//		30*1000);
 
 		//msg->setText(d+tr(" ")+t+tr(" <br><b>")+events[t]+tr("</b>"));	 
-	//	show();
+		//show();
 		trayIcon->showMessage(events.eventMap[id].desc, d+tr(" ")+t, QSystemTrayIcon::Information, 30*1000);
 		msg->setText(d+tr(" ")+t+tr(" <br><b>")+events.eventMap[id].desc+tr("</b>"));
+		for (int idx = 0; idx < model->rowCount(); idx++)
+		{
+			if (id == model->data(model->index(idx, 0, QModelIndex()), Qt::DisplayRole))
+			{
+				table->setSelectionBehavior(QAbstractItemView::SelectRows);
+				table->setCurrentIndex(model->index(idx, 0));
+			}
+		 }
 		show();
 
 	}
@@ -312,5 +359,6 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 		time =  QTime::currentTime();
 		t = time.toString("hh:mm:ss");
 		msg->setText(d+tr(" ")+t);
+		table->setSelectionBehavior(QAbstractItemView::SelectItems);
 	}
 }

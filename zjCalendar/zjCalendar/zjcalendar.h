@@ -4,7 +4,8 @@
 #include <QtGui>
 #include <map>
 #include <events.h>
-
+class QAbstractItemModel;
+//class QItemSelectionModel;
 class zjCalendar : public QDialog
 {
 	Q_OBJECT
@@ -60,6 +61,10 @@ private:
 	Events events;
 	//std::map<QString, QString> events;
 	QLabel* msg;
+	QTableView* table;
+	QAbstractItemModel *model;
+	//QItemSelectionModel *selectionModel;
+
 
 
 };
