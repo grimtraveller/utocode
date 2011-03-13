@@ -34,7 +34,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	trayIcon->setIcon(icon);
 	setWindowIcon(icon);
-	resize(400, 300);
+	resize(700, 300);
 	QGridLayout *layout = new QGridLayout;
 
 	QString d;
@@ -82,7 +82,10 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 		 id.setNum((*it).second.id);
 		 model->setData(model->index(row, 0, QModelIndex()), id);
 		 model->setData(model->index(row, 1, QModelIndex()), (*it).second.from.time.toString());
-		 model->setData(model->index(row, 2, QModelIndex()), (*it).second.desc);
+		 QLabel* desclabel = new QLabel(tr("<font size=\"4\">")+(*it).second.desc+tr("</font>"));
+		 table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
+
+		 //model->setData(model->index(row, 2, QModelIndex()), tr("")+(*it).second.desc);
 		 row++;
 	 }
 /*
