@@ -53,8 +53,12 @@ typedef struct _parameter_st
 	int listenfd;
 	int connfd;
 } parameter_st;
+#ifdef WIN32
 unsigned __stdcall client_proc(void* param);
 unsigned __stdcall client_proc(void* param)
+#else 
+unsigned int client_proc(void* param);
+unsigned int client_proc(void* param)
 {
 	parameter_st* pthis = (parameter_st*)param;
 	char str[MAXLINE] = {0};
