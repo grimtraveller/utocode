@@ -40,31 +40,30 @@ if has("unix")
 elseif has("linux")
 	set shell=bash
 elseif has("win32")
-	"I have to run win32 python without cygwin
-	"set shell=D:\bin\cygwin\cygwin.bat
+	set shell=cmd
 endif
 "For All (Linux & Windows)
-set showmode "显示当前模式
-syntax on "语法高亮
-set tabstop=4 shiftwidth=4 sts=4 "tabs数
-set ai "自动对齐
-set noexpandtab "关闭tab自动转换空格
-set nocompatible	"通用设置 使用vim特性
-set hlsearch "高亮显示匹配
-set helplang=cn " 设置帮助语言为中文
-set cindent " C语言缩进
-set backspace=indent,eol,start " 退格键能够删除空行、缩进等
-"set foldmethod=marker " 代码折叠
-"zF 生成折叠标记
-"zc 折叠标记之间的代码
-"zo 展开标记之间的代码
+set showmode "set current mode
+syntax on "syntax highlight
+set tabstop=4 shiftwidth=4 sts=4 "tab=4 byte
+set ai "autoindent
+set noexpandtab "close replace tab to 4 byte blank
+set nocompatible	"set normal ,use vim feature
+set hlsearch "rearch result is highlight
+set helplang=cn " set help file is chinese
+set cindent " C indent format
+set backspace=indent,eol,start " backspace is indent, eol, start
+"set foldmethod=marker " code fold
+"zF make the fold mark
+"zc make the code between the operator
+"zo expand the fold code
 if has("gui_running")
-	colorscheme pablo	"颜色
+	colorscheme pablo	"color style
 endif
 if (has("unix")||has("linux"))
 	set backupdir=~/tmp
 elseif has("win32")
-	set backupdir=c:\tmp "临时文件存放目录
+	set backupdir=c:\tmp "save template directory
 endif
 "Set mapleader
 let mapleader = ","
@@ -72,15 +71,15 @@ let mapleader = ","
 " Tag list (ctags)
 """"""""""""""""""""""""""""""
 map <silent> <leader>tl :TlistToggle<cr>
-if has("win32")                "设定windows系统中ctags程序的位置
+if has("win32")                "set ctags path in windows OS
 	"let Tlist_Ctags_Cmd = 'ctags'
 	let Tlist_Ctags_Cmd='c:\ctags\ctags.exe'
-elseif has("linux")              "设定linux系统中ctags程序的位置
+elseif has("linux")              "set ctags path in linux OS
 	let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 endif
 
-"   let Tlist_Show_One_File = 1	"不同时显示多个文件的tag，只显示当前文件的
-   let Tlist_Exit_OnlyWindow = 1	"如果taglist窗口是最后一个窗口，则退出vim
+"   let Tlist_Show_One_File = 1	"show the current file tag ,not show the other files
+   let Tlist_Exit_OnlyWindow = 1	"if taglist window is the last window exit the vim after the window is close.
 """"""""""""""""""""""""""""""
 " netrw setting
 """"""""""""""""""""""""""""""
@@ -151,6 +150,12 @@ if (has("unix")||has("linux"))
 	"$>cd /usr/include
 	"$>sudo ctags -R .
 	set tags+=/usr/include/tags
+elseif (has("win32"))
+	"ctag -R C:\Program Files\Microsoft Visual Studio 9.0\VC
+	"ctag -R C:\Program Files\Microsoft SDKs
+	set tags+="C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\tags"
+	set tags+="C:\\Program Files\\Microsoft SDKs\\tags"
+
 endif
 
 "auto fill 
@@ -174,4 +179,4 @@ set completeopt=longest,menu
 ":%s/old/new/g
 ":%s/^\/\///g
 "set fileformat=doc set fileformat=unix
-
+""""""""""""""""""""""""""""""""""""""""""""""""""
