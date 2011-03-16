@@ -1,4 +1,5 @@
 #include "zjerror.h"
+#include "zjmem.h"
 
 SHOWMSG_FUNC g_showfn = NULL;
 void zjstrerror(char** errmsg)

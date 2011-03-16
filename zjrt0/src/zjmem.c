@@ -110,6 +110,10 @@ void* zjrealloc(void* ptr, size_t size, const char* file, zjuint32 line)
 void zjfree(void* ptr)
 {
 	zjmem_item_st* p;
+	if (NULL == ptr)
+	{
+		return;
+	}
 	p = (zjmem_item_st*)((char*)ptr - sizeof(zjmem_item_st));
 
 	if (NULL != p->prev)

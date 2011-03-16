@@ -1,3 +1,4 @@
 mem			memory
 init		intial 
 mgr			manager
+lv			level
