@@ -17,8 +17,10 @@ ARFLAG=
 OBJS=zjmem.obj	\
 	 zjtimer.obj	\
 	 zjerror.obj 	\
-	 zjrand.obj		
-BINS=t_zjmem.exe t_zjerror.exe hamming.exe t_zjtype.exe
+	 zjrand.obj		\
+	 zjlog.obj
+BINS=t_zjlog.exe 
+#BINS=t_zjlog.exe t_zjmem.exe t_zjerror.exe hamming.exe t_zjtype.exe
 .PHONY:all clean
 
 all:$(BINS)
@@ -30,9 +32,11 @@ libzjrt0.lib:$(OBJS)
 	$(AR) $(ARFLAG) $(OBJS) /OUT:$@
 t_zjmem.exe:t_zjmem.obj libzjrt0.lib
 	$(CC) $(CFLAGS) $(LDFLAGS) t_zjmem.obj libzjrt0.lib  /Fe$@
-t_zjerror.exe:t_zjerror.obj libzjrt0.lib
-	$(CC) $(CFLAGS) $(LDFLAGS) t_zjmem.obj libzjrt0.lib  /Fe$@
-haming.exe:haming.obj libzjrt0.lib
+#t_zjerror.exe:t_zjerror.obj libzjrt0.lib
+#	$(CC) $(CFLAGS) $(LDFLAGS) t_zjerror.obj libzjrt0.lib  /Fe$@
+#haming.exe:haming.obj libzjrt0.lib
+t_zjlog.exe:t_zjlog.obj libzjrt0.lib
+	$(CC) $(CFLAGS) $(LDFLAGS) t_zjlog.obj libzjrt0.lib  /Fe$@
 clean:
 	del *.obj *.pdb *.ilk
 	del libzjrt0.lib

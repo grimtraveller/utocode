@@ -10,4 +10,5 @@
 #include "zjtimer.h"
 #include "zjrand.h"
 #include "zjerror.h"
+#include "zjlog.h"
 #endif //ZJRT0_H
