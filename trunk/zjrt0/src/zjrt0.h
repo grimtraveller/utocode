@@ -11,4 +11,5 @@
 #include "zjrand.h"
 #include "zjerror.h"
 #include "zjlog.h"
+#include "zjhamming.h"
 #endif //ZJRT0_H
