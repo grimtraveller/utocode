@@ -1,3 +1,12 @@
+/**
+ * @file	datetime.h 
+ * @brief	
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-03-19 
+ * @warning	
+ * @bug	
+ */
 #ifndef DATETIME
 #define DATETIME
 #include <QDate>

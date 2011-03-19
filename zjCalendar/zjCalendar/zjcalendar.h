@@ -1,3 +1,12 @@
+/**
+ * @file	zjcalendar.h 
+ * @brief	
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-03-19 
+ * @warning	
+ * @bug	
+ */
 #ifndef ZJCALENDAR_H
 #define ZJCALENDAR_H
 
@@ -8,7 +17,6 @@ class QAbstractItemModel;
 class zjCalendar : public QDialog
 {
 	Q_OBJECT
-
 public:
 	zjCalendar(QWidget *parent = 0, Qt::WFlags flags = 0);
 	~zjCalendar();
@@ -21,36 +29,17 @@ public:
 	 void changeEvent(QEvent * event); 
 
  private slots:
-     void setIcon(int index);
      void iconActivated(QSystemTrayIcon::ActivationReason reason);
-     void showMessage();
      void messageClicked();
 
  private:
-     void createIconGroupBox();
-     void createMessageGroupBox();
      void createActions();
      void createTrayIcon();
 
-     QGroupBox *iconGroupBox;
-     QLabel *iconLabel;
-     QComboBox *iconComboBox;
-     QCheckBox *showIconCheckBox;
-
-     QGroupBox *messageGroupBox;
-     QLabel *typeLabel;
-     QLabel *durationLabel;
-     QLabel *durationWarningLabel;
-     QLabel *titleLabel;
-     QLabel *bodyLabel;
-     QComboBox *typeComboBox;
-     QSpinBox *durationSpinBox;
-     QLineEdit *titleEdit;
-     QTextEdit *bodyEdit;
-     QPushButton *showMessageButton;
-
-     QAction *minimizeAction;
-     QAction *maximizeAction;
+	 QActionGroup* functionGrp;
+     QAction *eventAction;
+     QAction *jobAction;
+	 QAction *noteAction;
      QAction *restoreAction;
      QAction *quitAction;
 
@@ -59,11 +48,9 @@ public:
 private:
 	int timeid;
 	Events events;
-	//std::map<QString, QString> events;
 	QLabel* msg;
 	QTableView* table;
 	QAbstractItemModel *model;
-	//QItemSelectionModel *selectionModel;
 
 
 
