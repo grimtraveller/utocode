@@ -1,13 +1,23 @@
 #include "zjcalendar.h"
-
+#include "macro.h"
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 : QDialog(parent, flags)
 {
+
 	timeid = startTimer(1000/**60*/);  // 60*1-second timer
 	//createIconGroupBox();
 	//createMessageGroupBox();
 
 	//iconLabel->setMinimumWidth(durationLabel->sizeHint().width());
+
+	//remove [?], add [_].
+	/*Qt::WindowFlags*/flags=Qt::Dialog;
+	flags |=Qt::WindowMinimizeButtonHint;
+	flags |=Qt::WindowMaximizeButtonHint;
+	//flags |=Qt::SplashScreen;
+	//flags |=Qt::Popup;
+	setWindowFlags(flags);
+
 
 	createActions();
 	createTrayIcon();
@@ -51,44 +61,44 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	QString filename = QCoreApplication::applicationDirPath() + tr("\\zjCalendar.dat"); 
 	events.getEventsFromFile(filename);
-	 model = new QStandardItemModel(0, 3, this);
-	 model->setHeaderData(0, Qt::Horizontal, tr("Id"));
-     model->setHeaderData(1, Qt::Horizontal, tr("Time"));
-     model->setHeaderData(2, Qt::Horizontal, tr("Event"));
-	 QSplitter *splitter = new QSplitter;
-     table = new QTableView;
-     splitter->addWidget(table);
-     splitter->setStretchFactor(0, 0);
- 
-     table->setModel(model);
- 
-     //QItemSelectionModel *selectionModel = new QItemSelectionModel(model);
-     //table->setSelectionModel(selectionModel);
-     QHeaderView *headerView = table->horizontalHeader();
-     headerView->setStretchLastSection(true);
-	 //QGridLayout *layoutTbl = new QGridLayout;
-	 layout->addWidget(splitter, 1, 0, 9, 1);
-	 setLayout(layout);
+	model = new QStandardItemModel(0, 3, this);
+	model->setHeaderData(0, Qt::Horizontal, tr("Id"));
+	model->setHeaderData(1, Qt::Horizontal, tr("Time"));
+	model->setHeaderData(2, Qt::Horizontal, tr("Event"));
+	QSplitter *splitter = new QSplitter;
+	table = new QTableView;
+	splitter->addWidget(table);
+	splitter->setStretchFactor(0, 0);
+
+	table->setModel(model);
+
+	//QItemSelectionModel *selectionModel = new QItemSelectionModel(model);
+	//table->setSelectionModel(selectionModel);
+	QHeaderView *headerView = table->horizontalHeader();
+	headerView->setStretchLastSection(true);
+	//QGridLayout *layoutTbl = new QGridLayout;
+	layout->addWidget(splitter, 1, 0, 9, 1);
+	setLayout(layout);
 
 
-	 //model->removeRows(0, model->rowCount(QModelIndex()), QModelIndex());
+	//model->removeRows(0, model->rowCount(QModelIndex()), QModelIndex());
 
-	 std::map<int, Event>::iterator it;
-	 int row = 0;
-	 QString id;
-	 for (it = events.eventMap.begin(); it != events.eventMap.end(); it++)
-	 {
-		 model->insertRows(row, 1, QModelIndex());
-		 id.setNum((*it).second.id);
-		 model->setData(model->index(row, 0, QModelIndex()), id);
-		 model->setData(model->index(row, 1, QModelIndex()), (*it).second.from.time.toString());
-		 QLabel* desclabel = new QLabel(tr("<font size=\"4\">")+(*it).second.desc+tr("</font>"));
-		 table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
+	std::map<int, Event>::iterator it;
+	int row = 0;
+	QString id;
+	for (it = events.eventMap.begin(); it != events.eventMap.end(); it++)
+	{
+		model->insertRows(row, 1, QModelIndex());
+		id.setNum((*it).second.id);
+		model->setData(model->index(row, 0, QModelIndex()), id);
+		model->setData(model->index(row, 1, QModelIndex()), (*it).second.from.time.toString());
+		QLabel* desclabel = new QLabel(tr("<font size=\"4\">")+(*it).second.desc+tr("</font>"));
+		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
 
-		 //model->setData(model->index(row, 2, QModelIndex()), tr("")+(*it).second.desc);
-		 row++;
-	 }
-/*
+		//model->setData(model->index(row, 2, QModelIndex()), tr("")+(*it).second.desc);
+		row++;
+	}
+	/*
 	events["08:30:00"] = tr("工作开始了，注意保持坐姿。");
 	events["08:40:00"] = tr("打水泡茶啦。");
 	events["09:00:00"] = tr("老婆早安。");
@@ -132,7 +142,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	events["01:35:00"] = tr("夜深了，注意睡眠");
 	events["01:40:00"] = tr("夜深了，注意睡眠");
 	events["01:45:00"] = tr("夜深了，注意睡眠");
-*/
+	*/
 }
 
 zjCalendar::~zjCalendar()
@@ -146,20 +156,30 @@ void zjCalendar::setVisible(bool visible)
 	maximizeAction->setEnabled(!isMaximized());
 	restoreAction->setEnabled(isMaximized() || !visible);
 	QDialog::setVisible(visible);
+	if (!isMinimized())
+	{
+		
+		
+	}
+	if (!isMaximized())
+	{
+		resize(700, 300);
+	}
 }
 
 void zjCalendar::closeEvent(QCloseEvent *event)
 {
-	if (trayIcon->isVisible()) {
-		/*
-		QMessageBox::information(this, tr("Systray"),
-		tr("The program will keep running in the "
-		"system tray. To terminate the program, "
-		"choose <b>Quit</b> in the context menu "
-		"of the system tray entry."));
-		*/
-		hide();
-		event->ignore();
+	if (trayIcon->isVisible()) 
+	{
+		int ret = QMessageBox::question(this, 
+			tr(APP_NAME), 
+			tr("Are you sure close?"), 
+			QMessageBox::Yes|QMessageBox::No);
+		if (QMessageBox::No == ret)
+		{
+			hide();
+			event->ignore();
+		}
 	}
 }
 
@@ -299,7 +319,7 @@ void zjCalendar::createActions()
 	connect(maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
 
 	restoreAction = new QAction(tr("&Restore"), this);
-	connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+	connect(restoreAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
 
 	quitAction = new QAction(tr("&Quit"), this);
 	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -333,14 +353,14 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	int id;
 	dt.time = QTime::fromString(t);
 	if (-1 != (id = events.haveEvent(dt)))
-	//if (events.find(t) != events.end() )
+		//if (events.find(t) != events.end() )
 	{
-	//	QMessageBox::information(0, 
-	//								QObject::tr("Systray"),
-	//				 =				str);
+		//	QMessageBox::information(0, 
+		//								QObject::tr("Systray"),
+		//				 =				str);
 
-	//	trayIcon->showMessage(events[t], d+tr(" ")+t, QSystemTrayIcon::Information,
-	//		30*1000);
+		//	trayIcon->showMessage(events[t], d+tr(" ")+t, QSystemTrayIcon::Information,
+		//		30*1000);
 
 		//msg->setText(d+tr(" ")+t+tr(" <br><b>")+events[t]+tr("</b>"));	 
 		//show();
@@ -353,7 +373,7 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 				table->setSelectionBehavior(QAbstractItemView::SelectRows);
 				table->setCurrentIndex(model->index(idx, 0));
 			}
-		 }
+		}
 		show();
 
 	}
@@ -364,4 +384,20 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 		msg->setText(d+tr(" ")+t);
 		table->setSelectionBehavior(QAbstractItemView::SelectItems);
 	}
+}
+
+void zjCalendar::changeEvent(QEvent* event)
+{
+	if(event->type()==QEvent::WindowStateChange)
+	{
+		int stat = windowState();
+		if(stat & Qt::WindowMinimized)
+		{
+			QTimer::singleShot(0, this, SLOT(hide()));
+		}
+
+
+		//QDialog::changeEvent(event);
+	}
+
 }
