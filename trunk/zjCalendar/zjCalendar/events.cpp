@@ -1,3 +1,12 @@
+/**
+ * @file	events.cpp 
+ * @brief	
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-03-19 
+ * @warning	
+ * @bug	
+ */
 #include <events.h>
 #include <QFile>
 #include <QStringList>

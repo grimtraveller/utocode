@@ -1,3 +1,12 @@
+/**
+ * @file	datetime.cpp 
+ * @brief	
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-03-19 
+ * @warning	
+ * @bug	
+ */
 #include "datetime.h"
 
 DateTime::DateTime()

@@ -1,3 +1,12 @@
+/**
+ * @file	main.cpp 
+ * @brief	
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-03-19 
+ * @warning	
+ * @bug	
+ */
 #include "zjcalendar.h"
 #include <QtGui/QApplication>
 #include <QtGui>

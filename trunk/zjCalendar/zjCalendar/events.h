@@ -1,3 +1,12 @@
+/**
+ * @file	events.h 
+ * @brief	
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-03-19 
+ * @warning	
+ * @bug	
+ */
 #ifndef EVENTS_H
 #define EVENTS_H
 #include "datetime.h"
