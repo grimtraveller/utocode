@@ -194,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\macro.h"
+				>
+			</File>
+			<File
 				RelativePath=".\zjcalendar.h"
 				>
 				<FileConfiguration
@@ -338,7 +342,7 @@
 		/>
 		<Global
 			Name="QtVersion Win32"
-			Value="4.7.2"
+			Value="4.7.1"
 		/>
 		<Global
 			Name="RccDir"

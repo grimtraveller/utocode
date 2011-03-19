@@ -5,7 +5,6 @@
 #include <map>
 #include <events.h>
 class QAbstractItemModel;
-//class QItemSelectionModel;
 class zjCalendar : public QDialog
 {
 	Q_OBJECT
@@ -19,6 +18,7 @@ public:
  protected:
      void closeEvent(QCloseEvent *event);
 	 void timerEvent(QTimerEvent *event);
+	 void changeEvent(QEvent * event); 
 
  private slots:
      void setIcon(int index);
