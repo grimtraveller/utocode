@@ -136,11 +136,7 @@ void zjCalendar::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void zjCalendar::messageClicked()
 {
 	///todo show next task message
-	/*
-	QMessageBox::information(0, 
-		tr(APP_NAME),
-		tr("tray icon is clicked"));
-	*/
+	setWindowFlags((Qt::WindowFlags)(~Qt::WindowStaysOnTopHint));
 }
 
 void zjCalendar::createActions()
