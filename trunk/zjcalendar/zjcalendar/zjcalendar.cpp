@@ -30,6 +30,10 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	setWindowIcon(icon);
 	setMinimumSize(700, 300);
 
+	QShortcut* m_CTRL_S_Accel = new QShortcut(QKeySequence(tr("Ctrl+S")), this);
+
+	connect(m_CTRL_S_Accel, SIGNAL(activated()), this, SLOT(saveNoteClicked()));
+
 	//menu
 	createActions();
 	
@@ -139,10 +143,13 @@ void zjCalendar::closeEvent(QCloseEvent *event)
 {
 	if (trayIcon->isVisible()) 
 	{
+		/*
 		int ret = QMessageBox::question(this, 
 			tr(APP_NAME), 
 			tr("Are you sure close?"), 
 			QMessageBox::Yes|QMessageBox::No);
+		*/
+		int ret = QMessageBox::Yes;
 		if (QMessageBox::No == ret)
 		{
 			hide();
