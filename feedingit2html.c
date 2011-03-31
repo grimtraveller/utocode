@@ -24,11 +24,12 @@ int main(int argc, char* argv[])
 		perror(argv[1]);
 		goto ERR;
 	}
-	fputs("<html>");
-	fputs("<head>");
-	fputs("\t<meta http-equiv="content-type" content="text/html";charset="UTF-8">");
-	fputs("</head>");
-	fputs("<body>");
+	fputs("<html>", out);
+	fputs("<head>", out);
+	fputs("\t<meta http-equiv=\"content-type\" content=\"text/html\";charset=\"UTF-8\">", out);
+	fputs("</head>", out);
+	fputs("<body>", out);
+	fflush(out);
 	while (1)
 	{
 		memset(buf, 0, BUF_LEN);
@@ -50,8 +51,9 @@ int main(int argc, char* argv[])
 		fflush(out);
 
 	}
-	fputs("</body>");
-	fputs("</html>");
+	fputs("</body>", out);
+	fputs("</html>", out);
+	fflush(out);
 ERR:
 	if (NULL != infile)
 	{
