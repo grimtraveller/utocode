@@ -14,6 +14,10 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 {
 	timeid = startTimer(1000);  // 1-second timer
 
+	QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+
+	//main dialog gui setting
+	
 	//remove [?], add [_].
 	flags = Qt::Dialog;
 	flags |= Qt::WindowMinimizeButtonHint;
@@ -22,37 +26,45 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	//flags |= Qt::Popup;
 	setWindowFlags(flags);
 
-	createActions();
-	createTrayIcon();
-
-	connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
-	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-		this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
-	trayIcon->show();
-
 	setWindowTitle(tr(APP_NAME));
-	QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
-
-	trayIcon->setIcon(icon);
 	setWindowIcon(icon);
+	setMinimumSize(700, 300);
 
-	QGridLayout *layout = new QGridLayout;
+	//menu
+	createActions();
+	
+	//main dialog
+	mainTab = new QTabWidget(this);
+	connect(mainTab, SIGNAL(selected(QString)), this, SLOT(mainTabSelected(QString)));
+	QGridLayout* layoutMain = new QGridLayout();
+	layoutMain->addWidget(mainTab, 0, 0, 0, 0);
+	setLayout(layoutMain);
 
+	widgetEvent = new QWidget();
+	eventIdx = mainTab->addTab(widgetEvent, QString("Event"));
+	widgetJob = new QWidget();
+	jobIdx = mainTab->addTab(widgetJob, QString("Job"));
+	widgetNote = new QWidget();
+	noteIdx = mainTab->addTab(widgetNote, QString("Note"));
+
+	
+	//event tab
+	QGridLayout* LayoutEvent = new QGridLayout(widgetEvent);
+	
 	msg = new QLabel(tr(""));
 	msg->resize(100, 300);
 
-	layout->addWidget(msg, 0, 0, 1, 1);
-	setLayout(layout);
+	LayoutEvent->addWidget(msg);
 
-	QString filename = QCoreApplication::applicationDirPath() + tr("\\zjCalendar.dat"); 
-	events.getEventsFromFile(filename);
+	QString filenameEvent = QCoreApplication::applicationDirPath() + tr("/") + tr(EVENT_FILE_NAME); 
+	events.getEventsFromFile(filenameEvent);
 	model = new QStandardItemModel(0, 3, this);
 	model->setHeaderData(0, Qt::Horizontal, tr("Id"));
 	model->setHeaderData(1, Qt::Horizontal, tr("Time"));
 	model->setHeaderData(2, Qt::Horizontal, tr("Event"));
 	QSplitter *splitter = new QSplitter;
 	table = new QTableView;
+
 	splitter->addWidget(table);
 	splitter->setStretchFactor(0, 0);
 
@@ -60,8 +72,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	QHeaderView *headerView = table->horizontalHeader();
 	headerView->setStretchLastSection(true);
-	layout->addWidget(splitter, 1, 0, 9, 1);
-	setLayout(layout);
+	LayoutEvent->addWidget(splitter, 1, 0, 9, 1);
 
 	std::map<int, Event>::iterator it;
 	int row = 0;
@@ -76,7 +87,33 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
 		row++;
 	}
-	setMinimumSize(700, 300);
+
+	//note tab
+	QGridLayout* LayoutNote = new QGridLayout(widgetNote);
+	noteEdit = new QTextEdit;
+	LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
+	QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
+	QFile file(fileNameNote);
+	if (file.open(QFile::ReadOnly | QFile::Text))
+	{
+		noteEdit->setPlainText(file.readAll());
+	}
+	file.close();
+	saveNote = new QPushButton;
+	saveNote->setText(tr("&save"));
+	connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
+	LayoutNote->addWidget(saveNote, 9, 8);
+
+
+	//tray setting
+	createTrayIcon();
+
+	connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
+	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+		this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+	trayIcon->setIcon(icon);
+	trayIcon->show();
+
 }
 
 zjCalendar::~zjCalendar()
@@ -194,6 +231,8 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	dt.time = QTime::fromString(t);
 	if (-1 != (id = events.haveEvent(dt)))
 	{
+		mainTab->setCurrentIndex(eventIdx);
+		table->setFocus();
 		trayIcon->showMessage(events.eventMap[id].desc,
 			d+tr(" ")+t, 
 			QSystemTrayIcon::Information, 
@@ -229,4 +268,23 @@ void zjCalendar::changeEvent(QEvent* event)
 		}
 	}
 
+}
+
+void zjCalendar::mainTabSelected(const QString & tabname)
+{
+
+}
+
+void zjCalendar::saveNoteClicked()
+{
+	QString note = noteEdit->toPlainText();
+	QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
+	QFile file(fileNameNote);
+	if (!file.open(QFile::WriteOnly | QFile::Text))
+	{
+		
+	}
+	QTextStream out(&file);
+	out << note;
+	file.close();
 }

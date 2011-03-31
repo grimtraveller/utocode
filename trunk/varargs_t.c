@@ -40,6 +40,7 @@ int hollerC(char* str, ...)
 	printf(str, var[0], var[1], var[2], var[3]);
 	va_end(ap);
 }
+
 int main()
 {
 	char str[100];

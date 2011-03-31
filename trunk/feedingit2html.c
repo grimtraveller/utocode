@@ -24,7 +24,11 @@ int main(int argc, char* argv[])
 		perror(argv[1]);
 		goto ERR;
 	}
-
+	fputs("<html>");
+	fputs("<head>");
+	fputs("\t<meta http-equiv="content-type" content="text/html";charset="UTF-8">");
+	fputs("</head>");
+	fputs("<body>");
 	while (1)
 	{
 		memset(buf, 0, BUF_LEN);
@@ -40,12 +44,14 @@ int main(int argc, char* argv[])
 		s = (char*)strtok(NULL, "|");
 
 		memset(line, 0, BUF_LEN);
-		sprintf(line, "<a href=\"%s\">%s</a><br>", s, title);
+		sprintf(line, "<a href=\"%s\" target=\"_blank\">%s</a><br>", s, title);
 		printf("%s\n",line);
 		fputs(line, out);
 		fflush(out);
 
 	}
+	fputs("</body>");
+	fputs("</html>");
 ERR:
 	if (NULL != infile)
 	{

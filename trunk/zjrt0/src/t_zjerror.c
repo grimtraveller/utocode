@@ -14,8 +14,8 @@ main(int argc, char** argv)
 	g_showfn = showmsg;
 	CreateFile(TEXT("C:\\a.txt"), 0, 0, NULL, 0, 0, NULL);
 	printf("0x08x\n", zjerrno);
-	jzerror_return(zjerrno);
-	jzerror_exit();
+	zjerror_return(zjerrno);
+	zjerror_exit();
 	free(msg);
 	return 0;
 }	
