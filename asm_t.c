@@ -15,13 +15,14 @@ int main()
 #ifdef WIN32
 	__asm
 	{
-		int3
+		int 3
 		nop
 		nop
 	}
 #else /* linux */
 	__asm__
 	(
+	"int 3\n\t"
 	"nop\n\t"
 	"nop\n\t"
 	);

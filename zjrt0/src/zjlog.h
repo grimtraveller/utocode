@@ -20,8 +20,14 @@ typedef struct ZJLOGST
 	ZJLogLvE level;
 	char buffer[ZJ_LOGBUFF_LEN];
 }ZJLogSt;
+#ifdef __cplusplus
+#define extern "C"	{
+#endif //__cplusplus
 int zjInitLog(char* file, int lv);
 void zjSetLogLevel(int lv);
 int zjPrintLog(int lv, char* format, ...);
 void zjCloseLogFile();
+#ifdef __cplusplus
+}
+#endif	//__cplusplus
 #endif //ZJLOG_H

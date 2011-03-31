@@ -26,7 +26,7 @@ initial test
 	modify mysqldemo_t
 	move mysql database to virtual pc,so modify source about connect database
 	add allow_any_ip.sql for all any ip host to access database
-2011 0125
+2011 01 25
 	zjruler: a pixer ruler
 	todo:
 		color like win7 taskmanager
@@ -35,6 +35,11 @@ initial test
 		limit width and length
 		font
 		icon
+2011 03 31
+	zjcalendar add tabpage note function
+	todo:
+	mkdir n900
+	mv feedingit2html.c n900/ 
 
 
 

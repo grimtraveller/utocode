@@ -13,7 +13,11 @@
 #include <QtGui>
 #include <map>
 #include <events.h>
+
+#define EVENT_FILE_NAME "zjCalendar.dat"
+#define NOTE_FILE_NAME	"todo.txt"
 class QAbstractItemModel;
+
 class zjCalendar : public QDialog
 {
 	Q_OBJECT
@@ -31,6 +35,8 @@ public:
  private slots:
      void iconActivated(QSystemTrayIcon::ActivationReason reason);
      void messageClicked();
+	 void mainTabSelected(const QString & tabname);
+	 void saveNoteClicked();
 
  private:
      void createActions();
@@ -51,8 +57,15 @@ private:
 	QLabel* msg;
 	QTableView* table;
 	QAbstractItemModel *model;
-
-
+	QTabWidget* mainTab;
+	QWidget* widgetEvent;
+	QWidget* widgetJob;
+	QWidget* widgetNote;
+	int eventIdx;
+	int jobIdx;
+	int noteIdx;
+	QTextEdit* noteEdit;
+	QPushButton* saveNote;
 
 };
 

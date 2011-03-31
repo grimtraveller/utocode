@@ -33,7 +33,7 @@ main()
 		perror("creat");
 		return 1;
 	}
-	printf("creat succes\n");
+	printf("creat success\n");
 	close(fd);
 
 	fd = open("ABC", O_WRONLY|O_CREAT|O_TRUNC, OPEN_MODE);
@@ -42,7 +42,7 @@ main()
 		perror("open");
 		return 1;
 	}
-	printf("open succes\n");
+	printf("open success\n");
 	close(fd);
 	return 0;
 }
