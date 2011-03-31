@@ -39,7 +39,10 @@ initial test
 	zjcalendar add tabpage note function
 	todo:
 	mkdir n900
-	mv feedingit2html.c n900/ 
+	mv feedingit2html.c n900/
+	SetWindowLong(m_hWnd, GWL_EXSTYLE, GetWindowLong(m_hWnd, GWL_EXSTYLE)^0x80000);	//0x80000:WS_EX_LAYERED 
+	SetLayeredWindowAttributes(0, 128, 2);
+	
 
 
 
