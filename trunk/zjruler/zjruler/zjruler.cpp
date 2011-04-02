@@ -13,7 +13,6 @@
 // CzjrulerApp
 
 BEGIN_MESSAGE_MAP(CzjrulerApp, CWinApp)
-	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
@@ -50,7 +49,7 @@ BOOL CzjrulerApp::InitInstance()
 	AfxEnableControlContainer();
 
 
-	CRulerWnd* pRulerWnd = new CRulerWnd();
+	CRulerWnd* pRulerWnd = new CRulerWnd;
 
 	if(!pRulerWnd->CreateWnd())
 	{
@@ -59,6 +58,12 @@ BOOL CzjrulerApp::InitInstance()
 	pRulerWnd->ShowWindow(SW_SHOW);
 	pRulerWnd->UpdateWindow();
 	m_pMainWnd = pRulerWnd;
-
-	return TRUE;
+	MSG Msg;
+	while(0 != ::GetMessage(&Msg, m_pMainWnd->GetSafeHwnd(), 0, 0))
+	{
+		::TranslateMessage(&Msg);
+		::DispatchMessage(&Msg);
+	}
+	delete pRulerWnd;
+	return FALSE;
 }

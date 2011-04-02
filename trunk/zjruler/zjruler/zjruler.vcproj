@@ -186,6 +186,14 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\aboutdlg.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\convertdlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ruler.cpp"
 				>
 			</File>
@@ -220,6 +228,14 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\aboutdlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\convertdlg.h"
+				>
+			</File>
+			<File
 				RelativePath=".\resource.h"
 				>
 			</File>
@@ -246,7 +262,7 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\res\zjruler.ico"
+				RelativePath=".\zjruler.ico"
 				>
 			</File>
 			<File
