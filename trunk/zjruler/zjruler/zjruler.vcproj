@@ -194,7 +194,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ruler.cpp"
+				RelativePath=".\rulerwnd.cpp"
 				>
 			</File>
 			<File
@@ -240,7 +240,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ruler.h"
+				RelativePath=".\rulerwnd.h"
 				>
 			</File>
 			<File
