@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "zjruler.h"
-#include "Ruler.h"
+#include "rulerwnd.h"
 #include "aboutdlg.h"
 #include "convertdlg.h"
 
@@ -738,7 +738,7 @@ void CRulerWnd::OnTimer(UINT_PTR nIDEvent)
 void CRulerWnd::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	if (nID == SC_SIZE | WMSZ_TOP)
+	if (nID == (SC_SIZE | WMSZ_TOP))
 	{
 		CRect rc;
 		GetClientRect(&rc);

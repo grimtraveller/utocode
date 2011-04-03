@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "zjruler.h"
-#include "ruler.h"
+#include "rulerwnd.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
