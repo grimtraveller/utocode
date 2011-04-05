@@ -149,7 +149,7 @@ void zjCalendar::closeEvent(QCloseEvent *event)
 			tr("Are you sure close?"), 
 			QMessageBox::Yes|QMessageBox::No);
 		*/
-		int ret = QMessageBox::Yes;
+		int ret = QMessageBox::No;
 		if (QMessageBox::No == ret)
 		{
 			hide();
