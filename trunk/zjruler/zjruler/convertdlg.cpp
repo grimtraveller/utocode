@@ -5,7 +5,7 @@
 #include "zjruler.h"
 #include "convertdlg.h"
 
-
+#define MM_PER_INCH	(25.4)
 // CConvertDlg ¶Ô»°¿ò
 
 IMPLEMENT_DYNAMIC(CConvertDlg, CDialog)
@@ -77,7 +77,7 @@ void CConvertDlg::OnBnClickedConvert()
 		else if (2 == des)
 		{
 			//pix - mm
-			m_des = (m_src/m_dpi)*2.54;
+			m_des = (m_src/m_dpi)*MM_PER_INCH;
 		}
 	}
 	else if (1 == src)
@@ -96,7 +96,7 @@ void CConvertDlg::OnBnClickedConvert()
 		else if (2 == des)
 		{
 			//inch - mm
-			m_des = m_src*2.54;
+			m_des = m_src*MM_PER_INCH;
 		}
 	}
 	else if (2 == src)
@@ -104,13 +104,13 @@ void CConvertDlg::OnBnClickedConvert()
 		if (0 == des)
 		{
 			//mm - pix
-			m_des = (m_src/2.54)*m_dpi;
+			m_des = (m_src/MM_PER_INCH)*m_dpi;
 			
 		}
 		else if (1 == des)
 		{
 			//mm - inch
-			m_des = m_src/2.54;
+			m_des = m_src/MM_PER_INCH;
 			
 		}
 		else if (2 == des)

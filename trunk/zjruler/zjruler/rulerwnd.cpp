@@ -175,14 +175,14 @@ void CRulerWnd::OnPaint()
 		CRect rcColorArea;
 		rcColorArea.top = rc.bottom - HTEXTHEIGHT;
 		rcColorArea.bottom = rcColorArea.top + COLORAREAHEIGTH + 1;
-		rcColorArea.left = rc.right - COLORAREALENGTH - SPACE;
+		rcColorArea.left = COLORAREALENGTH - SPACE;
 		rcColorArea.right = rcColorArea.left + COLORAREALENGTH;
 		SelectObject(hmdc, hSelColor);
 		::Rectangle(hmdc, rcColorArea.left, rcColorArea.top, rcColorArea.right, rcColorArea.bottom);
 		//text
 		rcText.top = rc.bottom - HTEXTHEIGHT;
 		rcText.bottom = rcText.top + HTEXTWIDTH;
-		rcText.left = rc.right - HTEXTWIDTH - COLORAREALENGTH - SPACE;
+		rcText.left = rc.left + COLORAREALENGTH + SPACE + SPACE;
 		rcText.right = rcText.left + HTEXTWIDTH;
 		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%d",
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
@@ -216,20 +216,20 @@ void CRulerWnd::OnPaint()
 		}
 		//color area
 		CRect rcColorArea(0, 0, 0, 0);
-		rcColorArea.top = rc.bottom - COLORAREAHEIGTH - SPACE - VTEXTHEIGHT;
+		rcColorArea.top = rc.top + SPACE;
 		rcColorArea.bottom = rcColorArea.top + COLORAREAHEIGTH + 1;
 		rcColorArea.left = 20;//rc.right - COLORAREALENGTH - SPACE;
 		rcColorArea.right = rcColorArea.left + COLORAREALENGTH;
 		SelectObject(hmdc, hSelColor);
 		::Rectangle(hmdc, rcColorArea.left, rcColorArea.top, rcColorArea.right, rcColorArea.bottom);
 		//text
-		rcText.top = rc.bottom - VTEXTHEIGHT;
+		rcText.top = rc.top + COLORAREAHEIGTH + SPACE;
 		rcText.bottom = rcText.top + VTEXTHEIGHT;
 		rcText.left = 20;//rc.right - SPACE;
 		rcText.right = rcText.left + VTEXTWIDTH;
 		str.Format("R=%03d\nG=%03d\nB=%d\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
-			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr)); 
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr),
+			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
 		::DrawText(hmdc, str, str.GetLength(), &rcText, 0);
@@ -261,14 +261,14 @@ void CRulerWnd::OnPaint()
 		CRect rcColorArea;
 		rcColorArea.top = rc.top + HTEXTHEIGHT;
 		rcColorArea.bottom = rcColorArea.top + COLORAREAHEIGTH + 1;
-		rcColorArea.left = rc.right - COLORAREALENGTH - SPACE;
+		rcColorArea.left = rc.left + SPACE;
 		rcColorArea.right = rcColorArea.left + COLORAREALENGTH;
 		SelectObject(hmdc, hSelColor);
 		::Rectangle(hmdc, rcColorArea.left, rcColorArea.top, rcColorArea.right, rcColorArea.bottom);
 		//text
 		rcText.top = rc.top + HTEXTHEIGHT;
 		rcText.bottom = rcText.top + HTEXTWIDTH;
-		rcText.left = rc.right - HTEXTWIDTH - COLORAREALENGTH - SPACE;
+		rcText.left = rc.left + COLORAREALENGTH + SPACE + SPACE;
 		rcText.right = rcText.left + HTEXTWIDTH;
 		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%d",
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
@@ -302,20 +302,20 @@ void CRulerWnd::OnPaint()
 		}
 		//color area
 		CRect rcColorArea(0, 0, 0, 0);
-		rcColorArea.top = rc.bottom - COLORAREAHEIGTH - SPACE - VTEXTHEIGHT;
+		rcColorArea.top = rc.left + SPACE;
 		rcColorArea.bottom = rcColorArea.top + COLORAREAHEIGTH + 1;
 		rcColorArea.left = rc.left + SPACE;
 		rcColorArea.right = rcColorArea.left + COLORAREALENGTH;
 		SelectObject(hmdc, hSelColor);
 		::Rectangle(hmdc, rcColorArea.left, rcColorArea.top, rcColorArea.right, rcColorArea.bottom);
 		//text
-		rcText.top = rc.bottom - VTEXTHEIGHT;
+		rcText.top = rc.left + COLORAREAHEIGTH + SPACE;
 		rcText.bottom = rcText.top + VTEXTHEIGHT;
 		rcText.left = rc.left + SPACE;
 		rcText.right = rcText.left + VTEXTWIDTH;
 		str.Format("R=%03d\nG=%03d\nB=%d\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
-			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr)); 
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
+			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
 		::DrawText(hmdc, str, str.GetLength(), &rcText, 0);
