@@ -28,7 +28,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	setWindowTitle(tr(APP_NAME));
 	setWindowIcon(icon);
-	setMinimumSize(700, 300);
+	setMinimumSize(MIN_WIDTH, MIN_HEIGHT);
 
 	QShortcut* m_CTRL_S_Accel = new QShortcut(QKeySequence(tr("Ctrl+S")), this);
 
@@ -53,12 +53,23 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	
 	//event tab
-	QGridLayout* LayoutEvent = new QGridLayout(widgetEvent);
-	
-	msg = new QLabel(tr(""));
-	msg->resize(100, 300);
 
-	LayoutEvent->addWidget(msg);
+	QGridLayout* LayoutEvent = new QGridLayout(widgetEvent);
+
+	msg = new EventMsg(widgetEvent);
+	LayoutEvent->addWidget(msg, 0, 0);
+	digiflip = new DigiFlip();
+	digiflip->resize(100, 300);
+	LayoutEvent->addWidget(digiflip, 1, 0, 8, 0);
+
+	//job tab
+	QGridLayout* LayoutJob = new QGridLayout(widgetJob);
+
+
+	msgold = new QLabel(tr(""));
+	msgold->resize(100, 300);
+
+	LayoutJob->addWidget(msgold);
 
 	QString filenameEvent = QCoreApplication::applicationDirPath() + tr("/") + tr(EVENT_FILE_NAME); 
 	events.getEventsFromFile(filenameEvent);
@@ -76,7 +87,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	QHeaderView *headerView = table->horizontalHeader();
 	headerView->setStretchLastSection(true);
-	LayoutEvent->addWidget(splitter, 1, 0, 9, 1);
+	LayoutJob->addWidget(splitter, 1, 0, 9, 1);
 
 	std::map<int, Event>::iterator it;
 	int row = 0;
@@ -91,7 +102,6 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
 		row++;
 	}
-
 	//note tab
 	QGridLayout* LayoutNote = new QGridLayout(widgetNote);
 	noteEdit = new QTextEdit;
@@ -133,7 +143,7 @@ void zjCalendar::setVisible(bool visible)
 	{
 
 		QSize s = QApplication::desktop()->size();
-		resize(700, 300);
+		resize(MIN_WIDTH, MIN_HEIGHT);
 		move(s.width()/2-350, s.height()/2-150);
 		
 	}
@@ -244,7 +254,8 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 			d+tr(" ")+t, 
 			QSystemTrayIcon::Information, 
 			30*1000);
-		msg->setText(d+tr(" ")+t+tr(" <br><b>")+events.eventMap[id].desc+tr("</b>"));
+		msgold->setText(d+tr(" ")+t+tr(" <br><b>")+events.eventMap[id].desc+tr("</b>"));
+		msg->setEventMsg(events.eventMap[id].desc);
 		for (int idx = 0; idx < model->rowCount(); idx++)
 		{
 			if (id == model->data(model->index(idx, 0, QModelIndex()), Qt::DisplayRole))
@@ -259,7 +270,8 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	{
 		time =  QTime::currentTime();
 		t = time.toString("hh:mm:ss");
-		msg->setText(d+tr(" ")+t);
+		msgold->setText(d+tr(" ")+t);
+		//msg->setEventMsg(d+tr(" ")+t);
 		table->setSelectionBehavior(QAbstractItemView::SelectItems);
 	}
 }
