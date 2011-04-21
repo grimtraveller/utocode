@@ -13,7 +13,10 @@ IMPLEMENT_DYNAMIC(CAboutDlg, CDialog)
 CAboutDlg::CAboutDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CAboutDlg::IDD, pParent)
 {
-
+	m_strVerInfo = _T("version 1.2 2011-04-19 \r\n"
+					"\t add version info edit. \r\n"
+					"\t fix x,y value. \r\n"
+					"\t change ruler information position. \r\n");
 }
 
 CAboutDlg::~CAboutDlg()
@@ -23,6 +26,7 @@ CAboutDlg::~CAboutDlg()
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_VERSIONINFO, m_strVerInfo);
 }
 
 
