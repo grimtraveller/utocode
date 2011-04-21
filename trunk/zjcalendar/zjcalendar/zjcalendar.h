@@ -13,9 +13,13 @@
 #include <QtGui>
 #include <map>
 #include <events.h>
+#include "digiflip.h"
+#include "eventmsg.h"
 
 #define EVENT_FILE_NAME "zjCalendar.dat"
 #define NOTE_FILE_NAME	"todo.txt"
+#define MIN_WIDTH	700
+#define MIN_HEIGHT	400
 class QAbstractItemModel;
 
 class zjCalendar : public QDialog
@@ -54,12 +58,14 @@ public:
 private:
 	int timeid;
 	Events events;
-	QLabel* msg;
+	EventMsg* msg;
+	QLabel* msgold;
 	QTableView* table;
 	QAbstractItemModel *model;
 	QTabWidget* mainTab;
 	QWidget* widgetEvent;
 	QWidget* widgetJob;
+	DigiFlip* digiflip;
 	QWidget* widgetNote;
 	int eventIdx;
 	int jobIdx;
