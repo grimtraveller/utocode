@@ -198,6 +198,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\setdlg.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -241,6 +245,10 @@
 			</File>
 			<File
 				RelativePath=".\rulerwnd.h"
+				>
+			</File>
+			<File
+				RelativePath=".\setdlg.h"
 				>
 			</File>
 			<File
