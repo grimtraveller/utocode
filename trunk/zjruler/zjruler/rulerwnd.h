@@ -52,6 +52,7 @@ public:
 	afx_msg void OnUpdateMenuColor(CCmdUI *pCmdUI);
 	afx_msg void OnMenuAbout();
 	afx_msg void OnMenuConvert();
+	afx_msg void OnMenuSetting();
 };
 
 

@@ -6,6 +6,7 @@
 #include "rulerwnd.h"
 #include "aboutdlg.h"
 #include "convertdlg.h"
+#include "setdlg.h"
 
 #define TEXTLENGTH 230
 #define TEXTHEIGTH 20
@@ -59,6 +60,7 @@ BEGIN_MESSAGE_MAP(CRulerWnd, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_MENU_GETCOLOR, &CRulerWnd::OnUpdateMenuColor)
 	ON_COMMAND(ID_MENU_ABOUT, &CRulerWnd::OnMenuAbout)
 	ON_COMMAND(ID_MENU_CONVERT, &CRulerWnd::OnMenuConvert)
+	ON_COMMAND(ID_MENU_SETTING, &CRulerWnd::OnMenuSetting)
 END_MESSAGE_MAP()
 
 BOOL CRulerWnd::CreateWnd()
@@ -73,6 +75,8 @@ BOOL CRulerWnd::CreateWnd()
 	{
 		return FALSE;
 	}
+	SetWindowLong(m_hWnd, GWL_EXSTYLE, GetWindowLong(m_hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), 255, LWA_ALPHA);
 	return TRUE;
 }
 
@@ -784,4 +788,11 @@ void CRulerWnd::OnMenuConvert()
 {
 	CConvertDlg convert;
 	convert.DoModal();
+}
+
+void CRulerWnd::OnMenuSetting()
+{
+	CSetDlg dlg;
+	dlg.DoModal();
+	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), dlg.m_nAlpha+100, LWA_ALPHA);
 }
