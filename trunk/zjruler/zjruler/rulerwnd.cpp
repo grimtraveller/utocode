@@ -17,7 +17,7 @@
 #define MINWIDTH	500
 #define MINHEIGHT 60
 #define SPACE	5
-#define HTEXTWIDTH	260
+#define HTEXTWIDTH	400
 #define HTEXTHEIGHT	15
 #define VTEXTWIDTH  45
 #define VTEXTHEIGHT	(20*5)
@@ -188,8 +188,9 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + HTEXTWIDTH;
 		rcText.left = rc.left + COLORAREALENGTH + SPACE + SPACE;
 		rcText.right = rcText.left + HTEXTWIDTH;
-		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%d",
+		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%03d RGB=%02X%02X%02X",
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
 			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr)); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
@@ -231,8 +232,9 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + VTEXTHEIGHT;
 		rcText.left = 20;//rc.right - SPACE;
 		rcText.right = rcText.left + VTEXTWIDTH;
-		str.Format("R=%03d\nG=%03d\nB=%d\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr),
+		str.Format("R=%03d\nG=%03d\nB=%03d\nRGB=0x%02X0x%02X0x%02X\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
@@ -274,8 +276,9 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + HTEXTWIDTH;
 		rcText.left = rc.left + COLORAREALENGTH + SPACE + SPACE;
 		rcText.right = rcText.left + HTEXTWIDTH;
-		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%d",
+		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%03d  RGB=%02X%02X%02X",
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
 			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr)); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
@@ -317,7 +320,8 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + VTEXTHEIGHT;
 		rcText.left = rc.left + SPACE;
 		rcText.right = rcText.left + VTEXTWIDTH;
-		str.Format("R=%03d\nG=%03d\nB=%d\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
+		str.Format("R=%03d\nG=%03d\nB=%03d\nRGB=0x%02X0x%02X0x%02X\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
+			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
 			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
