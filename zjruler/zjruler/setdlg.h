@@ -1,4 +1,5 @@
 #pragma once
+#include "afxcmn.h"
 
 
 // CSetDlg ¶Ô»°¿ò
@@ -19,6 +20,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	int m_nAlpha;
 	afx_msg void OnNMCustomdrawAlpha(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedOk();
+	virtual BOOL OnInitDialog();
+	CSliderCtrl m_alpha;
+	int m_nAlpha;
+	UINT GetAlpha();
 };

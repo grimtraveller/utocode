@@ -22,6 +22,7 @@ public:
 		
 	}StyleE;
 	StyleE m_style;
+	int m_nAlpha;
 protected:
 	DECLARE_MESSAGE_MAP()
 public:

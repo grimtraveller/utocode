@@ -20,7 +20,7 @@
 #define HTEXTWIDTH	400
 #define HTEXTHEIGHT	15
 #define VTEXTWIDTH  45
-#define VTEXTHEIGHT	(20*5)
+#define VTEXTHEIGHT	(20*7)
 
 // CRulerWnd
 
@@ -32,6 +32,7 @@ CRulerWnd::CRulerWnd()
 	m_mouse.y = 0;
 	m_style = TOP;
 	m_clr = 0xffffff;
+	m_nAlpha = 15;
 }
 
 CRulerWnd::~CRulerWnd()
@@ -102,7 +103,6 @@ void CRulerWnd::OnPaint()
 	hBitmap = CreateCompatibleBitmap(dc.GetSafeHdc(),rc.Width(),rc.Height());
 	HGDIOBJ hOldBitmap = SelectObject(hmdc, (HGDIOBJ)hBitmap);
 	BitBlt(hmdc, 0, 0,rc.Width(), rc.Height(), dc.GetSafeHdc(), 0, 0, SRCCOPY);
-	TRACE1("OnPaint %d\n", m_clr);
 	//background
 	HBRUSH hBK = CreateSolidBrush(RGB(228, 236, 247));
 	HGDIOBJ hOldBK= SelectObject(hmdc, hBK);
@@ -188,10 +188,11 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + HTEXTWIDTH;
 		rcText.left = rc.left + COLORAREALENGTH + SPACE + SPACE;
 		rcText.right = rcText.left + HTEXTWIDTH;
-		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%03d RGB=%02X%02X%02X",
+		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d R=0x%02X G=%03d G=0x%02X B=%03d B=0x%02X",
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr)); 
+			GetRValue(m_clr), GetRValue(m_clr), 
+			GetGValue(m_clr), GetGValue(m_clr),
+			GetBValue(m_clr), GetBValue(m_clr)); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
 		::DrawText(hmdc, str, str.GetLength(), &rcText, 0);
@@ -232,9 +233,10 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + VTEXTHEIGHT;
 		rcText.left = 20;//rc.right - SPACE;
 		rcText.right = rcText.left + VTEXTWIDTH;
-		str.Format("R=%03d\nG=%03d\nB=%03d\nRGB=0x%02X0x%02X0x%02X\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
+		str.Format("R=%03d\nR=0x%02X\nG=%03d\nG=0x%02X\nB=%03d\nB=0x%02X\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
+			GetRValue(m_clr), GetRValue(m_clr), 
+			GetGValue(m_clr), GetGValue(m_clr), 
+			GetBValue(m_clr), GetBValue(m_clr), 
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
@@ -276,10 +278,11 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + HTEXTWIDTH;
 		rcText.left = rc.left + COLORAREALENGTH + SPACE + SPACE;
 		rcText.right = rcText.left + HTEXTWIDTH;
-		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d G=%03d B=%03d  RGB=%02X%02X%02X",
+		str.Format("W:%04d H:%04d X:%04d Y:%04d R=%03d R=0x%02X G=%03d G=0x%02X B=%03d B=0x%02X",
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y,
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr)); 
+			GetRValue(m_clr), GetRValue(m_clr), 
+			GetGValue(m_clr), GetGValue(m_clr),
+			GetBValue(m_clr), GetBValue(m_clr)); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
 		::DrawText(hmdc, str, str.GetLength(), &rcText, 0);
@@ -320,9 +323,10 @@ void CRulerWnd::OnPaint()
 		rcText.bottom = rcText.top + VTEXTHEIGHT;
 		rcText.left = rc.left + SPACE;
 		rcText.right = rcText.left + VTEXTWIDTH;
-		str.Format("R=%03d\nG=%03d\nB=%03d\nRGB=0x%02X0x%02X0x%02X\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
-			GetRValue(m_clr), GetGValue(m_clr), GetBValue(m_clr), 
+		str.Format("R=%03d\nR=0x%02X\nG=%03d\nG=0x%02X\nB=%03d\nB=0x%02X\nW:%04d\nH:%04d\nX:%04d\nY:%04d\n",
+			GetRValue(m_clr), GetRValue(m_clr), 
+			GetGValue(m_clr), GetGValue(m_clr), 
+			GetBValue(m_clr), GetBValue(m_clr), 
 			rc.Width(), rc.Height(), m_mouse.x, m_mouse.y); 
 		int nPrvMode = ::SetBkMode(hmdc, TRANSPARENT);
 		COLORREF prevClr = SetTextColor(hmdc, RGB(39, 65, 62));
@@ -500,10 +504,6 @@ void CRulerWnd::OnPaint()
 
 LRESULT CRulerWnd::OnNcHitTest(CPoint point)
 {
-	CString str;
-	str.Format("x = %d y = %d\n", point.x, point.y);
-	OutputDebugString(str);
-
 	CRect rect;
 	GetWindowRect(&rect);
 
@@ -606,9 +606,6 @@ BOOL CRulerWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CRulerWnd::OnNcLButtonDown(UINT nHitTest, CPoint point)
 {
-	CString str;
-	str.Format("x = %d y = %d\n", point.x, point.y);
-	OutputDebugString(str);
 	GetClientRect(&m_rc);
 	ClientToScreen(&m_rc);
 	if(nHitTest == HTTOP)
@@ -670,9 +667,6 @@ void CRulerWnd::OnSize(UINT nType, int cx, int cy)
 
 void CRulerWnd::OnMouseMove(UINT nFlags, CPoint point)
 {
-	CString str;
-	str.Format("x = %d y = %d\n", point.x, point.y);
-	OutputDebugString(str);
 	if(nFlags&MK_LBUTTON)
 	{
 		POINT pt;
@@ -735,7 +729,6 @@ void CRulerWnd::OnTimer(UINT_PTR nIDEvent)
 	GetCursorPos(&pt);
 	HDC hdc = ::GetDC(NULL);
 	m_clr = ::GetPixel(hdc, pt.x, pt.y);
-	TRACE1("Timer %d\n", m_clr);
 	::ReleaseDC(NULL, hdc);
 	//OnPaint();
 	//OnPaint();
@@ -797,6 +790,10 @@ void CRulerWnd::OnMenuConvert()
 void CRulerWnd::OnMenuSetting()
 {
 	CSetDlg dlg;
-	dlg.DoModal();
-	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), dlg.m_nAlpha+100, LWA_ALPHA);
+	dlg.m_nAlpha = m_nAlpha;
+	if (IDOK == dlg.DoModal())
+	{
+		m_nAlpha = dlg.GetAlpha();
+		::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), m_nAlpha*10+105, LWA_ALPHA);
+	}
 }
