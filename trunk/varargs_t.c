@@ -1,3 +1,12 @@
+/**
+ * @file	varargs_t.c 
+ * @brief	variable-argument lists
+ * @details	macro like va_start va_end and so on
+ * @author	zuohaitao
+ * @date	2011-04-23 
+ * @warning	
+ * @bug	
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -41,6 +50,14 @@ int hollerC(char* str, ...)
 	va_end(ap);
 }
 
+void myprintf(const char* fmt, ...)
+{
+	va_list args;
+	va_start(args, fmt);
+	vprintf(fmt, args);
+	va_end(args);
+}
+
 int main()
 {
 	char str[100];
@@ -59,5 +76,6 @@ int main()
 	printf("hollerC:");
 	strcpy(str, "%c %c %c %c\n");
 	hollerC(str, a,b,c,'d');
+	myprintf("%s%d", "string", 1);
 	return 0;
 }

@@ -1,3 +1,12 @@
+/**
+ * @file	strtok_t.c 
+ * @brief	test strtok function
+ * @details	
+ * @author	zuohaitao
+ * @date	2011-04-24 
+ * @warning	
+ * @bug	
+ */
 #include <string.h>
 int main()
 {
