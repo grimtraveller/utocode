@@ -54,6 +54,7 @@ public:
 	afx_msg void OnMenuAbout();
 	afx_msg void OnMenuConvert();
 	afx_msg void OnMenuSetting();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 
