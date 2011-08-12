@@ -62,6 +62,7 @@ BEGIN_MESSAGE_MAP(CRulerWnd, CWnd)
 	ON_COMMAND(ID_MENU_ABOUT, &CRulerWnd::OnMenuAbout)
 	ON_COMMAND(ID_MENU_CONVERT, &CRulerWnd::OnMenuConvert)
 	ON_COMMAND(ID_MENU_SETTING, &CRulerWnd::OnMenuSetting)
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 BOOL CRulerWnd::CreateWnd()
@@ -797,3 +798,36 @@ void CRulerWnd::OnMenuSetting()
 		::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), m_nAlpha*10+105, LWA_ALPHA);
 	}
 }
+
+void CRulerWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	if ((VK_LEFT <= nChar) && (nChar <= VK_DOWN))
+	{
+		CRect rc;
+		GetClientRect(&rc);
+		ClientToScreen(&rc);
+		switch(nChar)
+		{
+		case VK_LEFT:
+			rc.left -= 1;
+			rc.right -= 1;
+			break;
+		case VK_UP:
+			rc.top -= 1;
+			rc.bottom -= 1;
+			break;
+		case VK_RIGHT:
+			rc.left += 1;
+			rc.right += 1;
+			break;
+		case VK_DOWN:
+			rc.top += 1;
+			rc.bottom += 1;
+		default:
+			break;
+		}
+		MoveWindow(rc.left, rc.top, rc.Width(), rc.Height());
+	}
+	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
