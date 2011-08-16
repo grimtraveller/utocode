@@ -2,8 +2,8 @@
 "@file			zuohaitao.vim
 "@brief			gvim config file
 "@author		zuohaitao
-"@date			2010-03-28
-"@version		1.3
+"@date			2011-08-16
+"@version		2.0
 "@details
 "	Windows OS
 "		1. Windows copy this file to $VIM
@@ -13,6 +13,12 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2011/08/12
+"					change for mac os X
+"					reconstruction
+"					for support python IDE
+"					fix problem show unicode file in win32 is not well
+"					reconstruction map keyboard
 "		2010/06/05 modify _fl porting in win32
 "		2010/03/28 map _fn for function comment
 "					map _fl for file header comment
@@ -27,22 +33,38 @@
 "		map _fl using variant to optimize
 "
 ""			
-"Set character in linux
-if (has("unix")||has("linux"))
+"Set character set
+function! z:QfMakeConv()
+    let qflist = getqflist()
+    for i in qflist
+        let i.text = iconv(i.text, "cp936", "utf-8")
+    endfor
+    call setqflist(qflist)
+endfunction
+"set encoding=utf-8
+"set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+function! z:win32_unicode_file()
+	echo "z:win32_unicode_file"
 	set encoding=utf-8
-	"set encoding=gbk
-	set fileencodings=ucs-bom,utf-8,chinese,gb2312,default
+	set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+	e %
+	au QuickfixCmdPost make call z:QfMakeConv()
+endfunction
+if (has("linux")||has("mac"))
+	set encoding=utf-8
+	set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 	set ambiwidth=double
+elseif has("win32")
+au BufNewFile,BufRead *.reg	call z:win32_unicode_file()
 endif
+
 "Set shell to be bash
-if has("unix")
-	set shell=bash
-elseif has("linux")
+if (has("unix")||has("mac"))
 	set shell=bash
 elseif has("win32")
 	set shell=cmd
 endif
-"For All (Linux & Windows)
+"set For All (Linux & Windows & mac)
 set showmode "set current mode
 syntax on "syntax highlight
 set tabstop=4 shiftwidth=4 sts=4 "tab=4 byte
@@ -53,41 +75,56 @@ set hlsearch "rearch result is highlight
 set helplang=cn " set help file is chinese
 set cindent " C indent format
 set backspace=indent,eol,start " backspace is indent, eol, start
-"set foldmethod=marker " code fold
-"zF make the fold mark
-"zc make the code between the operator
-"zo expand the fold code
+set linespace=5	"linespace
+set number	"line number
+set imcmdline	"the Input Method is always	
+set laststatus=2 "always a status line
+
+"color style
 if has("gui_running")
-	colorscheme pablo	"color style
+	colorscheme pablo	
 endif
-if (has("unix")||has("linux"))
-	set backupdir=~/tmp
+"backup
+if (has("mac")||has("linux"))
+	set backupdir=/tmp
 elseif has("win32")
 	set backupdir=c:\tmp "save template directory
 endif
-"Set mapleader
+"undo
+if (version >= 703)
+	set undofile
+	if (has("mac")||has("linux"))
+		set undodir=~/.undo
+	elseif has("win32")
+		set undodir=C:\undo
+	endif
+	set cryptmethod=blowfish
+endif
+"Set mapleader repleace \xx to ,xx
 let mapleader = ","
+
+
+
 """"""""""""""""""""""""""""""
+"Plugin Setting 
+""""""""""""""""""""""""""""""
+
 " Tag list (ctags)
-""""""""""""""""""""""""""""""
-map <silent> <leader>tl :TlistToggle<cr>
 if has("win32")                "set ctags path in windows OS
 	"let Tlist_Ctags_Cmd = 'ctags'
-	let Tlist_Ctags_Cmd='c:\ctags\ctags.exe'
+	let Tlist_Ctags_Cmd='ctags.exe'
 elseif has("linux")              "set ctags path in linux OS
 	let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+elseif has("mac")
+	let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 endif
-
 "   let Tlist_Show_One_File = 1	"show the current file tag ,not show the other files
-   let Tlist_Exit_OnlyWindow = 1	"if taglist window is the last window exit the vim after the window is close.
-""""""""""""""""""""""""""""""
+let Tlist_Exit_OnlyWindow = 1	"if taglist window is the last window exit the vim after the window is close.
+let  Tlist_Compact_Format = 1	"In compact display mode, do not display help
 " netrw setting
-""""""""""""""""""""""""""""""
 nmap <silent> <leader>fe :Sexplore!<cr>
 let g:netrw_winsize = 30
-""""""""""""""""""""""""""""""
 " BufExplorer
-""""""""""""""""""""""""""""""
 let g:bufExplorerDefaultHelp=0       " Do not show default help.
 let g:bufExplorerShowRelativePath=1  " Show relative paths.
 let g:bufExplorerSortBy='mru'        " Sort by most recently used.
@@ -95,58 +132,40 @@ let g:bufExplorerSplitRight=0        " Split left.
 let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = 30  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-""""""""""""""""""""""""""""""
 " winManager setting
-""""""""""""""""""""""""""""""
 let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
 let g:winManagerWidth = 30
 let g:defaultExplorer = 1 
-nmap <C-W><C-F> :FirstExplorerWindow<cr>
-nmap <C-W><C-B> :BottomExplorerWindow<cr>
-nmap <silent> <leader>wm :WMToggle<cr>
-""""""""""""""""""""""""""""""""
 "cscope
-""""""""""""""""""""""""""""""""
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-"book & blog
-" blog book
-au BufNewFile,BufRead *.blog,*.book		call z:book_blog()
-func! z:book_blog()
-	highlight mytitle	guifg=#1291A9	gui=bold
-	highlight mysection	guifg=#72cfdc
-	highlight Normal	guifg=#ffffff
-	highlight myhide	guifg=#000000
-	highlight mycomment	guifg=#808080
-	highlight myimportant	guifg=#4499ee
-	syntax clear
-	syntax match mytitle /¡¶ .* ¡·/
-	syntax match mysection /[.*]/
-	syntax match comment /#\-.*/	
-	syntax match myhide /*</ contained
-	syntax match myhide />\*/ contained
-	syntax match myimportant /*<.*>\*/ contains=myhide
-endfunc
-"template
-au BufNewFile,BufRead *.template	call z:template()
-func! z:template()
-	highlight replace guifg=#808080
-	syntax clear
-	syntax match replace /$.*\$/
-	syntax match replace /¡¶.*¡·/
-endfunc
-"map <F2> <ESC>^i//<ESC>
-map <F12> <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
+"set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-map _fnb ^i/*{{{*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////<ESC>o<ESC>o<ESC>^i/*}}}*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-map _fn <ESC>^i/**<ESC>o<ESC>a @name<TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O]  - <ESC>o@return   - <ESC>o/<ESC>4k6la
+
+"keyboard map
+nmap <silent><F2> :WMToggle<cr><C-W><C-F>
+function! z:comment(cflg)
+	if (g:cmflg="")
+		return
+	let s=line("v")
+	let c=getline(s)
+	let n=substitute(c, "^", cflg, "")
+	echo n
+endfunction
+let g:cmflg=""
+au BufNewFile,BufRead *.py	let g:cmflg="#"
+au BufNewFile,BufRead *.c,*.cpp,*.h	let g:cmflg="//"
+vmap <silent><F3>	:cal z:comment(g:cmflg)<CR>
 if (has("unix")||has("linux"))
-	map _fl <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
+	map <silent><leader>fh <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
 elseif (has("win32"))
-	map _fl <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<ESC>i<ESC>:r !date /T<ESC>k<s-j>xi<TAB><ESC>11l4xo@warning<TAB><ESC>o@bug<TAB><ESC>o/<ESC>7k6l<ESC>:r !echo %:t<ESC>k<s-j>j$a
-	
+	map <silent><leader>fh <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<ESC>i<ESC>:r !date /T<ESC>k<s-j>xi<TAB><ESC>11l4xo@warning<TAB><ESC>o@bug<TAB><ESC>o/<ESC>7k6l<ESC>:r !echo %:t<ESC>k<s-j>j$a
 endif
+map <silent><leader>fl <ESC>^i/**<ESC>o<ESC>a @name<TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O]  - <ESC>o@return   - <ESC>o/<ESC>4k6la
+map <silent><leader>2h <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
 
-if (has("unix")||has("linux"))
+
+
+"set tags
+if (has("mac")|| has("linux"))
 	"$>cd /usr/include
 	"$>sudo ctags -R .
 	set tags+=/usr/include/tags
@@ -155,13 +174,20 @@ elseif (has("win32"))
 	"ctag -R C:\Program Files\Microsoft SDKs
 	set tags+="C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\tags"
 	set tags+="C:\\Program Files\\Microsoft SDKs\\tags"
-
 endif
 
 "auto fill 
 filetype plugin indent on
 set completeopt=longest,menu
 "ctrl+x ctrl+o
+
+"set python ide
+au BufNewFile,BufRead *.py	call py:setting()
+function! py:setting()
+	set expandtab
+	map <F5> <ESC>:exe "!python3 %"<cr>
+endfunction
+
 "
 "
 """""""""""""""""""
@@ -179,4 +205,9 @@ set completeopt=longest,menu
 ":%s/old/new/g
 ":%s/^\/\///g
 "set fileformat=doc set fileformat=unix
-""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+"set foldmethod=marker " code fold
+"zF make the fold mark
+"zc make the code between the operator
+"zo expand the fold code
+
