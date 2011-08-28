@@ -7,6 +7,7 @@ if has("mac")
 	call writefile(s:zuohaitao, $HOME."/.zuohaitao.vim")
 	let s:vimrc_f = $HOME."/.vimrc"
 	let s:vimrc = readfile(s:vimrc_f)
+	call add(s:vimrc, "source $VIMRUNTIME/vimrc_example.vim")
 	call add(s:vimrc, "source ~/.zuohaitao.vim")
 	call writefile(s:vimrc, s:vimrc_f)
 	if (!isdirectory("/tmp"))
