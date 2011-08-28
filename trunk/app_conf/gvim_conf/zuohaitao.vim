@@ -2,7 +2,7 @@
 "@file			zuohaitao.vim
 "@brief			gvim config file
 "@author		zuohaitao
-"@date			2011-08-16
+"@date			2011-08-28
 "@version		2.0
 "@details
 "	Windows OS
@@ -13,6 +13,14 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2011/08/28 
+"					fix comment function in macvim
+"		2011/08/18
+"					fix tags path support jump win32 API
+"					fix comment
+"					recode make file header comment
+"					recode make function comment
+"
 "		2011/08/12
 "					change for mac os X
 "					reconstruction
@@ -29,40 +37,43 @@
 "		2008/12/06 set tags 
 "
 "Todo:
-"		test _fl in linux
-"		map _fl using variant to optimize
+"		add function to <F2> <C-F2> mark (getpos() setpos() may be useful) 
+"		test all in vim in linux 
+"		test all in macvim 
 "
 ""			
 "Set character set
 function! z:QfMakeConv()
-    let qflist = getqflist()
-    for i in qflist
-        let i.text = iconv(i.text, "cp936", "utf-8")
-    endfor
-    call setqflist(qflist)
+	let qflist = getqflist()
+	for i in qflist
+		let i.text = iconv(i.text, "cp936", "utf-8")
+	endfor
+	call setqflist(qflist)
 endfunction
-"set encoding=utf-8
-"set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 function! z:win32_unicode_file()
-	echo "z:win32_unicode_file"
-	set encoding=utf-8
-	set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
-	e %
-	au QuickfixCmdPost make call z:QfMakeConv()
+	let fn = bufname("%") 
+	if (".reg" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
 endfunction
+
 if (has("linux")||has("mac"))
 	set encoding=utf-8
 	set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 	set ambiwidth=double
 elseif has("win32")
-au BufNewFile,BufRead *.reg	call z:win32_unicode_file()
+	call z:win32_unicode_file()
 endif
 
 "Set shell to be bash
 if (has("unix")||has("mac"))
 	set shell=bash
 elseif has("win32")
-	set shell=cmd
+	"use default shell because set shell=cmd will be cause confilict with taglist 
+	"more than see taglist.vim in line 2268
+	"set shell=cmd
 endif
 "set For All (Linux & Windows & mac)
 set showmode "set current mode
@@ -109,10 +120,9 @@ let mapleader = ","
 "Plugin Setting 
 """"""""""""""""""""""""""""""
 
-" Tag list (ctags)
+" Tag list
 if has("win32")                "set ctags path in windows OS
-	"let Tlist_Ctags_Cmd = 'ctags'
-	let Tlist_Ctags_Cmd='ctags.exe'
+	let Tlist_Ctags_Cmd="\"".$VIM."\\ctags.exe\""
 elseif has("linux")              "set ctags path in linux OS
 	let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 elseif has("mac")
@@ -136,44 +146,110 @@ let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
 let g:winManagerWidth = 30
 let g:defaultExplorer = 1 
-"cscope
-"set cscopequickfix=s-,c-,d-,i-,t-,e-
 
-
-"keyboard map
-nmap <silent><F2> :WMToggle<cr><C-W><C-F>
-function! z:comment(cflg)
-	if (g:cmflg="")
+"""""""""""""keyboard map
+"IDE keyboard map
+nmap <silent><F1> :WMToggle<CR>
+function! z:comment()
+	if (s:cmfmt == "")
+		echo "file type dose not support comment."
 		return
-	let s=line("v")
-	let c=getline(s)
-	let n=substitute(c, "^", cflg, "")
-	echo n
+	endif
+	let l = getline(".")
+	let l = substitute(l, "^", s:cmfmt, "")
+	call setline(".", l)
 endfunction
-let g:cmflg=""
-au BufNewFile,BufRead *.py	let g:cmflg="#"
-au BufNewFile,BufRead *.c,*.cpp,*.h	let g:cmflg="//"
-vmap <silent><F3>	:cal z:comment(g:cmflg)<CR>
-if (has("unix")||has("linux"))
-	map <silent><leader>fh <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<TAB><TAB><ESC>:r !date +\%F<ESC>k<s-j><ESC>o@warning<TAB><ESC>o@bug<TAB><TAB><ESC>o*/<ESC>3k5x4k^$a
-elseif (has("win32"))
-	map <silent><leader>fh <ESC>i/**<ESC>o<ESC>a @file<TAB><ESC>o@brief<TAB><ESC>o@details<TAB><ESC>o@author<TAB>zuohaitao<ESC>o@date<ESC>i<ESC>:r !date /T<ESC>k<s-j>xi<TAB><ESC>11l4xo@warning<TAB><ESC>o@bug<TAB><ESC>o/<ESC>7k6l<ESC>:r !echo %:t<ESC>k<s-j>j$a
+function! z:uncomment()
+	let l = getline(".")
+	let i = 0
+	while ( i < strlen(l))
+		let c = strpart(l, i, 1)
+		if ((" " == c) || ("\t" == c))
+			let i = i + 1
+			continue
+		else
+			let c = strpart(l, i, strlen(s:cmfmt))
+			if (s:cmfmt == c)
+				let l = substitute(l, s:cmfmt, "", "")
+				call setline(".", l)
+			endif
+			break
+		endif
+	endwhile
+endfunction
+let s:cmfmt=""
+au BufNewFile,BufRead, *.py	let s:cmfmt="#"
+au BufNewFile,BufRead, *.py call py:setting()
+au BufNewFile,BufRead, *.c,*.cpp,*.h	let s:cmfmt="//"
+au BufNewFile,BufRead, *.vim let s:cmfmt="\""
+"comment keyboard map
+if has("win32")
+	map <silent><C-K><C-C>	:call z:comment()<CR>
+	map <silent><C-K><C-U>	:call z:uncomment()<CR>
+elseif has("mac")
+	map <silent><D-k><D-c> :call z:comment()<CR>
 endif
-map <silent><leader>fl <ESC>^i/**<ESC>o<ESC>a @name<TAB><ESC>o@brief<TAB><ESC>o@param<TAB> [I/O]  - <ESC>o@return   - <ESC>o/<ESC>4k6la
+function! z:cfh()
+"comment file header ONLY support for C filetype!
+	let c = "/**"
+	call append(0, c)
+	let c = " @file\t\t".bufname("%")
+	call append(1, c)
+	let c = " @brief\t\t"
+	call append(2, c)
+	let c = " @details\t"
+	call append(3, c)
+	let c = " @author\tzuohaitao"
+	call append(4, c)
+	let c = " @date\t\t".strftime("%Y-%m-%d")
+	call append(5, c)
+	let c = " warning\t"
+	call append(6, c)
+	let c = " bug\t\t"
+	call append(7, c)
+	let c = "**/"
+	call append(8, c)
+	let p = [0, 0, 0, -1]
+	call setpos(".", p)
+	let p = [0, 3, 13, -1]
+	call setpos(".", p)
+endfunction
+map <silent><leader>fh :call z:cfh()<CR>a
+function! z:cfc()
+"comment function ONLY support for C filetype!
+	let p = line(".") - 1
+	let c = "/**"
+	call append(p, c)
+	let c = " @name\t".bufname("%")
+	call append(p+1, c)
+	let c = " @brief\t"
+	call append(p+2, c)
+	let c = " @param\t [I/O] -"
+	call append(p+3, c)
+	let c = " return\t"
+	call append(p+4, c)
+	let c = "**/"
+	call append(p+5, c)
+	let cp = [0, p, 0, -1]
+	call setpos(".", p)
+	let cp = [0, p+3, 8, -1]
+	call setpos(".", cp)
+endfunction
+map <silent><leader>fc :call z:cfc()<CR>a
 map <silent><leader>2h <ESC>:runtime syntax/2html.vim<ESC>:%s/\(<body.*\)/\1\r<br>\r<table width=100% bgcolor="#000000" border=1>\r<tr>\r<td><font color="#ffffff">\r<ESC>:%s/\(.*\)\(<\/body>\)/\1<\/font><\/td>\r<\/tr>\r<\/table>\r\2/<ESC>:wq<ESC>
-
-
-
-"set tags
+"set ctags
 if (has("mac")|| has("linux"))
 	"$>cd /usr/include
 	"$>sudo ctags -R .
 	set tags+=/usr/include/tags
 elseif (has("win32"))
+	"cd $VIM
 	"ctag -R C:\Program Files\Microsoft Visual Studio 9.0\VC
 	"ctag -R C:\Program Files\Microsoft SDKs
-	set tags+="C:\\Program Files\\Microsoft Visual Studio 9.0\\VC\\tags"
-	set tags+="C:\\Program Files\\Microsoft SDKs\\tags"
+	let $T = $VIM
+	let $T = substitute($T, " ", "\\\\\\\\\\\\ ", "")
+	let $T = $VIM."\\tags"
+	set tags+=$T
 endif
 
 "auto fill 
@@ -182,14 +258,17 @@ set completeopt=longest,menu
 "ctrl+x ctrl+o
 
 "set python ide
-au BufNewFile,BufRead *.py	call py:setting()
 function! py:setting()
 	set expandtab
-	map <F5> <ESC>:exe "!python3 %"<cr>
+	if has("mac")
+		map <F5> <ESC>:exe "!python3 %"<cr>
+	elseif has("win32")
+		map <F5> <ESC>:exe "!C:\\Python32\\python.exe %"<cr>
+	endif
 endfunction
 
-"
-"
+"cd the dir where current file is in
+cd %:h
 """""""""""""""""""
 """""some useful command"""""
 "read unicode in vim set encoding=utf-8
@@ -205,9 +284,8 @@ endfunction
 ":%s/old/new/g
 ":%s/^\/\///g
 "set fileformat=doc set fileformat=unix
-"
+"fold
 "set foldmethod=marker " code fold
 "zF make the fold mark
 "zc make the code between the operator
 "zo expand the fold code
-
