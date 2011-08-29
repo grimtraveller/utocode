@@ -1,4 +1,5 @@
 #include "zjrt0.h"
+#include <string.h>
 int
 main(int argc, char* argv[])
 {
@@ -7,13 +8,13 @@ main(int argc, char* argv[])
 	zjuint8* p;
 	zjuint32 i = 0;
 	zjuint32 len = 0;
-	p = (zjuint8*)malloc(strlen(test)+1);
-	memset(p, 0, strlen(test)+1);
-	for (i = 0; i < strlen(test); i++)
+	p = (zjuint8*)malloc(strlen((const char*)test)+1);
+	memset(p, 0, strlen((const char*)test)+1);
+	for (i = 0; i < strlen((const char*)test); i++)
 	{
-		*(p+i) = test[strlen(test)-i-1];
+		*(p+i) = test[strlen((const char*)test)-i-1];
 	}
-	strcpy(test, p);
+	strcpy((char*)test, (const char*)p);
 	i = 0;
 	while(test[i] != '\0')
 	{

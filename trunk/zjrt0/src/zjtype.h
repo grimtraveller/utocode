@@ -110,13 +110,16 @@ typedef unsigned int zjuint32;
 
 #ifdef WIN32
 typedef long long zjint64;
-#define ZJINT64_MIN (-9223372036854775806i64)
-#define ZJINT64_MAX 9223372036854775807i64
 typedef unsigned long long zjuint64;
 #define ZJUINT64_MAX 0xffffffffffffffffui64
+#define ZJINT64_MIN (-9223372036854775806i64)
+#define ZJINT64_MAX 9223372036854775807i64
 #else
 typedef long long zjint64;
 typedef unsigned long long zjuint64;
+#define ZJUINT64_MAX 0xffffffffffffffff
+#define ZJINT64_MIN (-9223372036854775806)
+#define ZJINT64_MAX 9223372036854775807
 #endif
 typedef float zjfloat32;
 typedef double zjfloat64;

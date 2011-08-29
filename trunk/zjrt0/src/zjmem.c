@@ -26,7 +26,7 @@ status construct_zjmem(zjmem_header_st* pzjmem)
 		pzjmem = (zjmem_header_st*)malloc(sizeof(zjmem_header_st));
 		if (NULL == pzjmem)
 		{
-			return ERROR;
+			return ZJERROR;
 		}
 		pzjmem->mgr = ZJRT;
 	}
