@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 #include "zjtimer.h"
+#include "zjrand.h"
 #define MEMSIZE_MAX		(1024*1024*1)
 #define MEMSIZE_MIN		(1)
 #define ALLOC_COUNT_MAX (100)
@@ -12,7 +13,11 @@ void easy_test();
 void 
 show_leak(char* file, zjuint32 line, void* p, size_t len)
 {
-	printf("%s %10d : 0x%08x %10d\n", file, line, (int)p, len);
+#if defined(MAC64)
+	printf("%s %10d : 0x%08lx %10d\n", file, line, (long)p, (int)len);
+#elif defined(MAC64)
+	printf("%s %10d : 0x%08x %10d\n", file, line, (int)p, (int)len);
+#endif 
 } 
 int
 main(int argc, char** argv)
@@ -78,8 +83,16 @@ main(int argc, char** argv)
 		*(pp + i) = ZJMALLOC(size);
 		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
+#if defined(MAC64)
+		printf("malloc size = %7ld ", size);
+#else
 		printf("malloc size = %7d ", size);
+#endif
+#if defined(MAC64)
+		printf("address = 0x%08lx", (long)*(pp + i));
+#else
 		printf("address = 0x%08x", (unsigned int)*(pp + i));
+#endif
 		memset(*(pp+i), 0x20, size);
 		printf("---[ok]\n");
 	}
@@ -91,14 +104,21 @@ main(int argc, char** argv)
 
 	for (i = 0; i < realloc_count; i++)
 	{
-		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
 		resize = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_ZJTIMER(rtime);
 		*(pp + i) = ZJREALLOC(*(pp+i), resize);
 		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", i, ((double)rtime/1000.00));
+#if defined(MAC64)
+		printf("realloc size = %16ld ", resize);
+#else
 		printf("realloc size = %7d ", resize);
+#endif
+#if defined(MAC64)
+		printf("address = 0x%16lx", (unsigned long)*(pp + i));
+#else
 		printf("address = 0x%08x", (unsigned int)*(pp + i));
+#endif
 		memset(*(pp+i), 0x20, resize);
 		printf("---[ok]\n");
 	}
@@ -107,14 +127,21 @@ main(int argc, char** argv)
 	//if (make_boolean())
 	if (zjrand_boolean())
 	{
-		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
 		resize = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_ZJTIMER(rtime);
 		*(pp) = ZJREALLOC(*(pp), resize);
 		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", 0, ((double)rtime/1000.00));
+#if defined(MAC64)
+		printf("realloc size = %16lu ", resize);
+#else
 		printf("realloc size = %7d ", resize);
+#endif
+#if defined(MAC64)
+		printf("address = 0x%16lx", (unsigned long)*(pp));
+#else
 		printf("address = 0x%08x", (unsigned int)*(pp));
+#endif 
 		memset(*(pp), 0x20, resize);
 		printf("---[ok]\n");
 	}
@@ -123,14 +150,21 @@ main(int argc, char** argv)
 	//if (make_boolean())
 	if (zjrand_boolean())
 	{
-		//resize = make_rand(MEMSIZE_MIN, MEMSIZE_MAX);
 		resize = zjrand_scope(MEMSIZE_MIN, MEMSIZE_MAX);
 		STOP_ZJTIMER(rtime);
 		*(pp+malloc_count-1) = ZJREALLOC(*(pp+malloc_count-1), resize);
 		STOP_ZJTIMER(rtime);
 		printf("[%2d] time = %.2f ms ", malloc_count-1, ((double)rtime/1000.00));
+#if defined(MAC64)
+		printf("realloc size = %16ld ", resize);
+#else
 		printf("realloc size = %7d ", resize);
+#endif
+#if defined(MAC64)
+		printf("address = 0x%16lx", (unsigned long)*(pp+malloc_count-1));
+#else
 		printf("address = 0x%08x", (unsigned int)*(pp+malloc_count-1));
+#endif
 		memset(*(pp+malloc_count-1), 0x20, resize);
 		printf("---[ok]\n");
 	}

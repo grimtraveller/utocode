@@ -16,6 +16,9 @@
 #ifndef ZJERROR_H
 #define ZJERROR_H
 #include "zjtype.h"
+#ifndef WIN32
+#include <errno.h>
+#endif //WIN32
 EXTERN_C_BEGIN
 #ifdef WIN32
 #define zjerrno GetLastError()

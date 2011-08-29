@@ -1,5 +1,7 @@
 #include "zjlog.h"
 #include "zjtype.h"
+#include <stdio.h>
+#include <stdarg.h>
 static ZJLogSt gLog = {0};
 
 int zjInitLog(char* file, int level)

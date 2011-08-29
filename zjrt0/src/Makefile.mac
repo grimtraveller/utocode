@@ -1,0 +1,38 @@
+#
+# /*!@file	Makefile.mac
+#  *@brief	Make DataStruct project in Mac X OS 1.06
+#  *
+#  *usage	$>make all -f Makefile.mac
+#  			$>make clean -f Makefile.mac
+#  *@author	zuohaitao
+#  *@date	2011-08-29
+#  */
+#
+CC=gcc
+CFLAGS=-ggdb -Wall -O -DDEBUG -DMAC64
+INCD=-I.
+LDFLAGS=-L. 
+AR=ar
+ARFLAG=rcs
+OBJS=
+BINS=t_zjtype t_zjmem t_zjerror t_zjhamming t_zjlog
+.PHONY:all clean
+
+all:$(BINS)
+%.o:%.c %.h
+	$(CC) $(CFLAGS) $(INCD) $(LDFLAGS) -c $(INCDIR)$< -o $(BINDIR)$@
+libzjrt0.a:zjmem.o zjtimer.o zjrand.o zjerror.o zjhamming.o zjlog.o
+	$(AR) $(ARFLAG) $@ $^
+t_zjmem:t_zjmem.o libzjrt0.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -lzjrt0 $^ -o $@
+t_zjtype:t_zjtype.o libzjrt0.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -lzjrt0 $^ -o $@
+t_zjhamming:t_zjhamming.o libzjrt0.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -lzjrt0 $^ -o $@
+t_zjlog:t_zjlog.o libzjrt0.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -lzjrt0 $^ -o $@
+clean:
+	rm *.o
+	rm libzjrt0.a
+	rm $(BINS)
+	rm log.txt
