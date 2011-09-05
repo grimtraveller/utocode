@@ -33,6 +33,7 @@ CRulerWnd::CRulerWnd()
 	m_style = TOP;
 	m_clr = 0xffffff;
 	m_nAlpha = 15;
+	m_bGetColor = FALSE;
 }
 
 CRulerWnd::~CRulerWnd()
@@ -77,7 +78,7 @@ BOOL CRulerWnd::CreateWnd()
 	{
 		return FALSE;
 	}
-	SetWindowLong(m_hWnd, GWL_EXSTYLE, GetWindowLong(m_hWnd, GWL_EXSTYLE) | WS_EX_LAYERED);
+	SetWindowLong(m_hWnd, GWL_EXSTYLE, GetWindowLong(m_hWnd, GWL_EXSTYLE) | WS_EX_LAYERED/*|WS_EX_TOOLWINDOW*/);
 	::SetLayeredWindowAttributes(m_hWnd, RGB(0, 0, 0), 255, LWA_ALPHA);
 	return TRUE;
 }
@@ -89,6 +90,7 @@ int CRulerWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CenterWindow(NULL);
 	m_menu.LoadMenu(IDR_MENU);
+	SetWindowText(_T("Ruler"));
 	return 0;
 }
 
@@ -507,7 +509,10 @@ LRESULT CRulerWnd::OnNcHitTest(CPoint point)
 {
 	CRect rect;
 	GetWindowRect(&rect);
-
+	if( ::GetKeyState(VK_SHIFT) < 0)
+	{
+		return CWnd::OnNcHitTest(point);
+	}
 	if (LEFT == m_style || RIGHT == m_style)
 	{
 
@@ -575,6 +580,7 @@ LRESULT CRulerWnd::OnNcHitTest(CPoint point)
 
 BOOL CRulerWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
+
 	if(nHitTest == HTCAPTION || nHitTest == HTSYSMENU ||
 		nHitTest == HTMENU || nHitTest == HTCLIENT)
 	{
@@ -739,19 +745,20 @@ void CRulerWnd::OnTimer(UINT_PTR nIDEvent)
 
 void CRulerWnd::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	if (nID == (SC_SIZE | WMSZ_TOP))
+	if ((nID & SC_SIZE) != 0) 
 	{
-		CRect rc;
-		GetClientRect(&rc);
-		ClientToScreen(&rc);
-		if (rc.Height() < MINHEIGHT)
+		if (nID == (SC_SIZE | WMSZ_TOP))
 		{
-			return;
+			CRect rc;
+			GetClientRect(&rc);
+			ClientToScreen(&rc);
+			if (rc.Height() < MINHEIGHT)
+			{
+				return;
+			}
+
 		}
-
 	}
-
 	CWnd::OnSysCommand(nID, lParam);
 }
 
@@ -806,25 +813,59 @@ void CRulerWnd::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		CRect rc;
 		GetClientRect(&rc);
 		ClientToScreen(&rc);
-		switch(nChar)
+		if(::GetKeyState(VK_SHIFT) < 0)
 		{
-		case VK_LEFT:
-			rc.left -= 1;
-			rc.right -= 1;
-			break;
-		case VK_UP:
-			rc.top -= 1;
-			rc.bottom -= 1;
-			break;
-		case VK_RIGHT:
-			rc.left += 1;
-			rc.right += 1;
-			break;
-		case VK_DOWN:
-			rc.top += 1;
-			rc.bottom += 1;
-		default:
-			break;
+			if ((TOP == m_style) || (BOTTOM == m_style))
+			{
+				switch(nChar)
+				{
+				case VK_LEFT:
+					rc.right -= 1;
+					break;
+				case VK_RIGHT:
+					rc.right += 1;
+					break;
+				default:
+					break;
+				}
+			}
+			else if ((LEFT == m_style) || (RIGHT == m_style))
+			{
+				switch(nChar)
+				{
+				case VK_UP:
+					rc.bottom -= 1;
+					break;
+				case VK_DOWN:
+					rc.bottom += 1;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		else
+		{
+			switch(nChar)
+			{
+			case VK_LEFT:
+				rc.left -= 1;
+				rc.right -= 1;
+				break;
+			case VK_UP:
+				rc.top -= 1;
+				rc.bottom -= 1;
+				break;
+			case VK_RIGHT:
+				rc.left += 1;
+				rc.right += 1;
+				break;
+			case VK_DOWN:
+				rc.top += 1;
+				rc.bottom += 1;
+			default:
+				break;
+			}
 		}
 		MoveWindow(rc.left, rc.top, rc.Width(), rc.Height());
 	}

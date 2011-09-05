@@ -9,6 +9,7 @@
  */
 #include "zjcalendar.h"
 #include "macro.h"
+
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 : QDialog(parent, flags)
 {
@@ -77,9 +78,9 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	model->setHeaderData(0, Qt::Horizontal, tr("Id"));
 	model->setHeaderData(1, Qt::Horizontal, tr("Time"));
 	model->setHeaderData(2, Qt::Horizontal, tr("Event"));
+	
 	QSplitter *splitter = new QSplitter;
 	table = new QTableView;
-
 	splitter->addWidget(table);
 	splitter->setStretchFactor(0, 0);
 
@@ -102,6 +103,9 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
 		row++;
 	}
+
+	connect(model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(itemChanged(QStandardItem*)));
+
 	//note tab
 	QGridLayout* LayoutNote = new QGridLayout(widgetNote);
 	noteEdit = new QTextEdit;
@@ -306,4 +310,13 @@ void zjCalendar::saveNoteClicked()
 	QTextStream out(&file);
 	out << note;
 	file.close();
+}
+
+void zjCalendar::itemChanged(QStandardItem * item)
+{
+	//QString id;
+	//id.setNum(events.eventMap[item->row()].id);
+	//model->setData(model->index(item->row(), 0, QModelIndex()), id);
+	//model->setData(model->index(item->row(), 1, QModelIndex()), events.eventMap[item->row()].from.time.toString());
+
 }

@@ -15,6 +15,7 @@
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
+	//a.setWindowIcon(a.style()->standardIcon(QStyle::SP_MessageBoxInformation));
 	//get system  character set codec
 	QTextCodec *codec = QTextCodec::codecForName("System");
 	QTextCodec::setCodecForLocale(codec);

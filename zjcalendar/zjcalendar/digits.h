@@ -73,7 +73,8 @@ protected:
         QLinearGradient gradient(rect.topLeft(), rect.bottomLeft());
         //Set linear gradient area
 
-        gradient.setColorAt(0.00, QColor(245, 245, 245));
+		gradient.setColorAt(0.00, palette().color(QPalette::Background));
+        gradient.setColorAt(0.20, QColor(245, 245, 245));
         gradient.setColorAt(0.49, QColor(192, 192, 192));
         gradient.setColorAt(0.51, QColor(245, 245, 245));
         gradient.setColorAt(1.00, QColor(192, 192, 192));
@@ -178,7 +179,9 @@ protected:
     /*Paint the static state*/
     void paintStatic() {
         QPainter p(this);
-        p.fillRect(rect(), Qt::white);
+		//p.fillRect(rect(), Qt::white);
+		p.fillRect(rect(), palette().color(QPalette::Background));
+
         //Fill the widget rec with black color
 
         int pad = width() / 10;
@@ -189,7 +192,8 @@ protected:
     /*Paint the slide state*/
     void paintSlide() {
         QPainter p(this);
-        p.fillRect(rect(), Qt::white);
+        //p.fillRect(rect(), Qt::white);
+        p.fillRect(rect(), palette().color(QPalette::Background));
 
         int pad = width() / 10;
         QRect fr = rect().adjusted(pad, pad, -pad, -pad);
@@ -212,7 +216,8 @@ protected:
         p.setRenderHint(QPainter::SmoothPixmapTransform, true);
         p.setRenderHint(QPainter::Antialiasing, true);
 #endif
-        p.fillRect(rect(), Qt::white);
+        //p.fillRect(rect(), Qt::white);
+        p.fillRect(rect(), palette().color(QPalette::Background));
 
         int hw = width() / 2;
         int hh = height() / 2;
