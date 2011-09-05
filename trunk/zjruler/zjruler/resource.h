@@ -4,7 +4,6 @@
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
-#define IDS_ABOUTBOX                    101
 #define IDR_MAINFRAME                   128
 #define IDR_MENU                        130
 #define IDR_ACCELERATOR                 131

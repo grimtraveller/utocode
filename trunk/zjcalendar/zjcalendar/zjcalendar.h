@@ -41,6 +41,7 @@ public:
      void messageClicked();
 	 void mainTabSelected(const QString & tabname);
 	 void saveNoteClicked();
+	 void itemChanged(QStandardItem * item);
 
  private:
      void createActions();
@@ -61,7 +62,7 @@ private:
 	EventMsg* msg;
 	QLabel* msgold;
 	QTableView* table;
-	QAbstractItemModel *model;
+	QStandardItemModel *model;
 	QTabWidget* mainTab;
 	QWidget* widgetEvent;
 	QWidget* widgetJob;

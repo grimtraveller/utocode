@@ -140,7 +140,7 @@ protected:
     /*Paint the static state*/
     void paintStatic() {
         QPainter p(this);
-        p.fillRect(rect(), Qt::white);
+        p.fillRect(rect(), palette().color(QPalette::Background));
         p.drawPixmap(0, 0, m_pixmap);
     }
 

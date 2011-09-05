@@ -22,7 +22,7 @@ public:
 		m_sec->show();
 
         QPalette pal = palette();
-        pal.setColor(QPalette::Window, Qt::white);
+        //pal.setColor(QPalette::Window, Qt::white);
         //Sets the color used for the given color role, in all color groups, to the specified solid color.
 
         setPalette(pal);
