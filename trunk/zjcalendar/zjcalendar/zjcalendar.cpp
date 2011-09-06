@@ -9,6 +9,7 @@
  */
 #include "zjcalendar.h"
 #include "macro.h"
+#include "jobmgr.h"
 
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 : QDialog(parent, flags)
@@ -66,14 +67,14 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	//job tab
 	QGridLayout* LayoutJob = new QGridLayout(widgetJob);
 
-
 	msgold = new QLabel(tr(""));
-	msgold->resize(100, 300);
+	msgold->resize(100, 10);
+	LayoutJob->addWidget(msgold, 0, 0, 1, 9);
 
-	LayoutJob->addWidget(msgold);
+	editjob = new QPushButton(tr("&Edit Job"));
+	connect(editjob, SIGNAL(clicked()), this, SLOT(editjobClicked()));
+	LayoutJob->addWidget(editjob, 0, 9, 1, 1);
 
-	QString filenameEvent = QCoreApplication::applicationDirPath() + tr("/") + tr(EVENT_FILE_NAME); 
-	events.getEventsFromFile(filenameEvent);
 	model = new QStandardItemModel(0, 3, this);
 	model->setHeaderData(0, Qt::Horizontal, tr("Id"));
 	model->setHeaderData(1, Qt::Horizontal, tr("Time"));
@@ -88,21 +89,9 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	QHeaderView *headerView = table->horizontalHeader();
 	headerView->setStretchLastSection(true);
-	LayoutJob->addWidget(splitter, 1, 0, 9, 1);
+	LayoutJob->addWidget(splitter, 1, 0, 9, 10);
 
-	std::map<int, Event>::iterator it;
-	int row = 0;
-	QString id;
-	for (it = events.eventMap.begin(); it != events.eventMap.end(); it++)
-	{
-		model->insertRows(row, 1, QModelIndex());
-		id.setNum((*it).second.id);
-		model->setData(model->index(row, 0, QModelIndex()), id);
-		model->setData(model->index(row, 1, QModelIndex()), (*it).second.from.time.toString());
-		QLabel* desclabel = new QLabel(tr("<font size=\"4\">")+(*it).second.desc+tr("</font>"));
-		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
-		row++;
-	}
+	loadEvents();
 
 	connect(model, SIGNAL(itemChanged(QStandardItem*)), this, SLOT(itemChanged(QStandardItem*)));
 
@@ -319,4 +308,34 @@ void zjCalendar::itemChanged(QStandardItem * item)
 	//model->setData(model->index(item->row(), 0, QModelIndex()), id);
 	//model->setData(model->index(item->row(), 1, QModelIndex()), events.eventMap[item->row()].from.time.toString());
 
+}
+
+void zjCalendar::editjobClicked()
+{
+	JobMgr job_mgr;
+	job_mgr.resize(730, 300);
+	job_mgr.exec();
+	loadEvents();
+}
+
+void zjCalendar::loadEvents()
+{
+	model->removeRows(0, model->rowCount());
+	QString filenameEvent = QCoreApplication::applicationDirPath() + tr("/") + tr(EVENT_FILE_NAME); 
+	events.getEventsFromFile(filenameEvent);
+	std::map<int, Event>::iterator it;
+	int row = 0;
+	QString id;
+	for (it = events.eventMap.begin(); it != events.eventMap.end(); it++)
+	{
+		model->insertRows(row, 1, QModelIndex());
+		id.setNum((*it).second.id);
+		model->setData(model->index(row, 0, QModelIndex()), id);
+		model->setData(model->index(row, 1, QModelIndex()), (*it).second.from.time.toString());
+		model->item(row, 0)->setEditable(false);
+		model->item(row, 1)->setEditable(false);
+		QLabel* desclabel = new QLabel(tr("<font size=\"4\">")+(*it).second.desc+tr("</font>"));
+		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
+		row++;
+	}
 }
