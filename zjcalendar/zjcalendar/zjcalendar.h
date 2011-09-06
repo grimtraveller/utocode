@@ -42,8 +42,10 @@ public:
 	 void mainTabSelected(const QString & tabname);
 	 void saveNoteClicked();
 	 void itemChanged(QStandardItem * item);
+	 void editjobClicked();
 
  private:
+	 void loadEvents();
      void createActions();
      void createTrayIcon();
 
@@ -73,6 +75,7 @@ private:
 	int noteIdx;
 	QTextEdit* noteEdit;
 	QPushButton* saveNote;
+	QPushButton* editjob;
 
 };
 

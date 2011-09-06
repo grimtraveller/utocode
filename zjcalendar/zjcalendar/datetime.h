@@ -7,8 +7,8 @@
  * @warning	
  * @bug	
  */
-#ifndef DATETIME
-#define DATETIME
+#ifndef DATETIME_H
+#define DATETIME_H
 #include <QDate>
 #include <QTime>
 class DateTime
@@ -24,4 +24,4 @@ public:
 	QTime time;
 private:
 };
-#endif //DATETIME
+#endif //DATETIME_H
