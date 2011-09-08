@@ -39,11 +39,12 @@ class zjdictmod():
                 self._values += value + '\n'
         return self._values
     def save(self, fname):
+        print(self._key, self._values)
         if ('' != self._key) and ('' != self._values):
-            f = open(f, 'a+')
-            f.write(self._last_key)
-            f.write(self._last_values)
+            print(fname)
+            f = open(fname, 'a+')
+            f.write(self._key)
+            f.write(self._values)
             f.close()
 if '__main__' == __name__:
     pass
-

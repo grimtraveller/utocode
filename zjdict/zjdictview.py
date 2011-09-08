@@ -1,8 +1,5 @@
 import zjdict
 import sys
-def input_word(mode):
-    source = raw_input('>>>>')
-    return translate(source)
 def translate(source):
     if 'win32' == sys.platform:
         return mode.translate(source.decode('gbk').encode('utf-8'))
@@ -24,11 +21,18 @@ def show_record(destination):
         print(destination)
 
 if '__main__' == __name__:
+    fname = 'newword.txt'
     mode = zjdict.zjdictmod()
     if 1 == len(sys.argv):
         while True:
-           show_record(input_word(mode))
+            source = raw_input('>>>>')
+            if ',' == source[0]:
+                if ',quit' == source or ',exit' == source:
+                    break
+                elif ',save' == source:
+                    mode.save(fname)
+            else:
+                destination = translate(source)
+                show_record(destination)
     else:
         show_record(translate(sys.argv[1]))
-
-
