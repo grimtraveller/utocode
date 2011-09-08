@@ -18,14 +18,15 @@ class zjdictmod():
                 pystardict.Dictionary(os.path.join(self._dicts_dir, \
                         'stardict-kdic-computer-gb-2.4.2', \
                         'kdic-computer-gb')))
-        self._dicts.append(
-                pystardict.Dictionary(os.path.join(self._dicts_dir, \
-                        'stardict-langdao-ce-gb-2.4.2', \
-                        'langdao-ce-gb')))
-        self._dicts.append(\
-                pystardict.Dictionary(os.path.join(self._dicts_dir, \
-                        'stardict-langdao-ec-gb-2.4.2', \
-                        'langdao-ec-gb')))
+        if 'linux2' != sys.platform:
+            self._dicts.append(
+                    pystardict.Dictionary(os.path.join(self._dicts_dir, \
+                            'stardict-langdao-ce-gb-2.4.2', \
+                            'langdao-ce-gb')))
+            self._dicts.append(\
+                    pystardict.Dictionary(os.path.join(self._dicts_dir, \
+                            'stardict-langdao-ec-gb-2.4.2', \
+                            'langdao-ec-gb')))
     def lsdict(self):
         pass
     def words(self):
