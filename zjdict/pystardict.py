@@ -23,6 +23,7 @@ import gzip
 import hashlib
 import re
 from struct import unpack
+import datetime
 
 class _StarDictIfo(object):
     """
@@ -143,31 +144,41 @@ class _StarDictIdx(object):
             raise Exception('.idx file does not exists')
         
         """ check file size """
+        m1 = datetime.datetime.today()
         self._file = file.read()
+        m2 = datetime.datetime.today()
+        #print('file.read():', m2 - m1)
         if file.tell() != container.ifo.idxfilesize:
             raise Exception('size of the .idx file is incorrect')
-        
         """ prepare main dict and parsing parameters """
         self._idx = {}
         idx_offset_bytes_size = int(container.ifo.idxoffsetbits / 8)
-        idx_offset_format = {4: 'L', 8: 'Q',}[idx_offset_bytes_size]
+        self._idx_offset_format = {4: 'L', 8: 'Q',}[idx_offset_bytes_size]
         idx_cords_bytes_size = idx_offset_bytes_size + 4
         
         """ parse data via regex """
         record_pattern = r'([\d\D]+?\x00[\d\D]{%s})' % idx_cords_bytes_size
+        m1 = datetime.datetime.today()
         matched_records = re.findall(record_pattern, self._file)
+        m2 = datetime.datetime.today()
+        #print('re.findall():', m2 - m1)
         
         """ check records count """
         if len(matched_records) != container.ifo.wordcount:
             raise Exception('words count is incorrect')
         
         """ unpack parsed records """
+        m1 = datetime.datetime.today()
         for matched_record in matched_records:
+            pass
             c = matched_record.find('\x00') + 1
-            record_tuple = unpack('!%sc%sL' % (c, idx_offset_format),
-                matched_record)
-            word, cords = record_tuple[:c-1], record_tuple[c:]
+            #record_tuple = unpack('!%sc%sL' % (c, idx_offset_format),
+            #    matched_record)
+            #word, cords = record_tuple[:c-1], record_tuple[c:]
+            word, cords = matched_record[:c-1], matched_record
             self._idx[word] = cords        
+        m2 = datetime.datetime.today()
+        #print('for matched_record in matched_records:', m2 - m1)
     
     def __getitem__(self, word):
         """
@@ -175,12 +186,17 @@ class _StarDictIdx(object):
         
         @note: here may be placed flexible search realization
         """
-        return self._idx[tuple(word)]
+        matched_record = self._idx[word]
+        c = matched_record.find('\x00') + 1
+        record_tuple = unpack('!%sc%sL' % (c, self._idx_offset_format), 
+                matched_record)
+        return record_tuple[c:]
     
     def __contains__(self, k):
         """
         returns True if index has a word k, else False
         """
+        return k in self._idx
         return tuple(k) in self._idx
     
     def __eq__(self, y):
@@ -396,16 +412,14 @@ class Dictionary(dict):
         initializes new StarDictDict instance from stardict dictionary files
         provided by filename_prefix
         """
-        
         # reading somedict.ifo
         self.ifo = _StarDictIfo(dict_prefix=filename_prefix, container=self)
-        
+
         # reading somedict.idx or somedict.idx.gz
         self.idx = _StarDictIdx(dict_prefix=filename_prefix, container=self)
         
         # reading somedict.dict or somedict.dict.dz
         self.dict = _StarDictDict(dict_prefix=filename_prefix, container=self)
-        
         # reading somedict.syn (optional)
         self.syn = _StarDictSyn(dict_prefix=filename_prefix, container=self)
         
