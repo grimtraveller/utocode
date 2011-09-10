@@ -1,5 +1,30 @@
 import zjdict
 import sys
+import threading
+import time
+def loadDicts(mode):
+    mode.appendDicts()
+def loading(target, args):
+    interval = 0.1
+    t = threading.Thread(target=target, args=args)
+    t.start()
+    while True:
+        sys.stdout.write('\b-')
+        sys.stdout.flush()
+        time.sleep(interval)
+        sys.stdout.write('\b\\')
+        sys.stdout.flush()
+        time.sleep(interval)
+        sys.stdout.write('\b|')
+        sys.stdout.flush()
+        time.sleep(interval)
+        sys.stdout.write('\b/')
+        sys.stdout.flush()
+        if t.isAlive():
+            t.join(interval)
+        else:
+            break;
+    return 
 def translate(source):
     if 'win32' == sys.platform:
         return mode.translate(source.decode('gbk').encode('utf-8'))
@@ -23,9 +48,10 @@ def show_record(destination):
 if '__main__' == __name__:
     fname = 'newword.txt'
     mode = zjdict.zjdictmod()
+    loading(loadDicts, (mode,))
     if 1 == len(sys.argv):
         while True:
-            source = raw_input('>>>>')
+            source = raw_input('\b>>>>')
             if ',' == source[0]:
                 if ',quit' == source or ',exit' == source:
                     break

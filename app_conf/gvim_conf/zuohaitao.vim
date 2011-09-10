@@ -128,7 +128,7 @@ elseif has("linux")              "set ctags path in linux OS
 elseif has("mac")
 	let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 endif
-"   let Tlist_Show_One_File = 1	"show the current file tag ,not show the other files
+let Tlist_Show_One_File = 1	"show the current file tag ,not show the other files
 let Tlist_Exit_OnlyWindow = 1	"if taglist window is the last window exit the vim after the window is close.
 let  Tlist_Compact_Format = 1	"In compact display mode, do not display help
 " netrw setting
@@ -143,9 +143,9 @@ let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = 30  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 " winManager setting
-let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
+let g:winManagerWindowLayout = "TagList,BufExplorer,FileExplorer"
 let g:winManagerWidth = 30
-let g:defaultExplorer = 1 
+let g:defaultExplorer = 0
 
 """""""""""""keyboard map
 "IDE keyboard map

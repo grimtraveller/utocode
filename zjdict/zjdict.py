@@ -3,13 +3,14 @@
 import os
 import pystardict
 import sys
-class zjdictmod():
+class zjdictmod(object):
     def __init__(self):
         self._key = ''
         self._values = ''
         self._dicts_dir = os.path.join(os.path.dirname(__file__))
         self._dicts_dir += os.sep + 'dictionary' + os.sep
         self._dicts = list()
+    def appendDicts(self):
         self._dicts.append(\
                 pystardict.Dictionary(os.path.join(self._dicts_dir, \
                     'stardict-cedict-gb-2.4.2', \
