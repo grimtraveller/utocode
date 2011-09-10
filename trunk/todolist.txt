@@ -1,0 +1,8 @@
+<format>[ ] projectname:something
+[o] means ok
+[x] means abort
+[ ] means do in future
+TODO:
+	[] zjdict:a word list 
+	[] zjdict:tk GUI in win32 and mac os
+	[] zjdict:with GTK GUI in maemo

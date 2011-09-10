@@ -51,9 +51,8 @@ if has("mac")
 "drawit
 	e DrawIt.vba
 	source %
-	e _init_vim.vim
-
-	
+	e init_vim.vim
+	helptags $VIMRUNTIME/doc
 elseif has("win32")
 	"copy zuohaitao.vim $VIM/_zuohaitao.vim
 	let w = getcwd()
@@ -82,12 +81,11 @@ elseif has("win32")
 	call writefile(s:ctags_exe, $VIM . "/ctags.exe", "b")
 
 	"extract archive
-	!"C:\\Program Files\\7-Zip\\7z.exe" e bufexplorer.zip
-	!"C:\\Program Files\\7-Zip\\7z.exe" e taglist_45.zip
-	!"C:\\Program Files\\7-Zip\\7z.exe" e txtbrowser-1.3.5.zip
-	!"C:\\Program Files\\7-Zip\\7z.exe" e winmanager.zip
-	!"C:\\Program Files\\7-Zip\\7z.exe" e DrawItvba.gz
-	!"C:\\Program Files\\7-Zip\\7z.exe" e bufexplorer.zip
+	!"C:\\Program Files\\7-Zip\\7z.exe" e bufexplorer.zip -y
+	!"C:\\Program Files\\7-Zip\\7z.exe" e taglist_45.zip -y
+	!"C:\\Program Files\\7-Zip\\7z.exe" e txtbrowser-1.3.5.zip -y
+	!"C:\\Program Files\\7-Zip\\7z.exe" e winmanager.zip -y
+	!"C:\\Program Files\\7-Zip\\7z.exe" e DrawItvba.gz -y
 	"install taglist
 	let s:taglist = readfile("taglist.vim")
 	call writefile(s:taglist, $VIM . "/vimfiles/plugin/taglist.vim")
@@ -100,7 +98,6 @@ elseif has("win32")
 	call writefile(s:bufexplorer, $VIM . "/vimfiles/doc/bufexplorer.txt")
 
 	"winManager
-	
 	let s:winmanager = readfile("winfileexplorer.vim")
 	call writefile(s:winmanager, $VIM . "/vimfiles/plugin/winfileexplorer.vim")
 	let s:winmanager = readfile("winmanager.vim")
@@ -121,9 +118,10 @@ elseif has("win32")
 	call writefile(s:txtbrowser, $VIM . "/vimfiles/doc/txtbrowser.txt")
 	let s:txtbrowser = readfile("txt.vim")
 	call writefile(s:txtbrowser, $VIM . "/vimfiles/syntax/txt.vim")
-"drawit
+	"drawit
 	e DrawIt.vba
 	source %
-	e _init_vim.vim
+	e init_vim.vim
+	helptags $VIMRUNTIME/doc
 endif "win32
 set noreadonly
