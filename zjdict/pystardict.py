@@ -560,10 +560,7 @@ class Dictionary(dict):
         raise NotImplementedError()
     
     def keys(self):
-        """
-        raises NotImplemented exception
-        """
-        raise NotImplementedError()
+		return self.idx._idx.keys()
     
     def pop(self, k, d):
         """

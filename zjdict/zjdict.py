@@ -3,13 +3,16 @@
 import os
 import pystardict
 import sys
+import re
 class zjdictmod(object):
     def __init__(self):
         self._key = ''
         self._values = ''
         self._dicts_dir = os.path.join(os.path.dirname(__file__))
         self._dicts_dir += os.sep + 'dictionary' + os.sep
+        print(self._dicts_dir)
         self._dicts = list()
+        self.cache = list()
     def appendDicts(self):
         self._dicts.append(\
                 pystardict.Dictionary(os.path.join(self._dicts_dir, \
@@ -47,5 +50,13 @@ class zjdictmod(object):
             f.write(self._key)
             f.write(self._values)
             f.close()
+    def search(self, grep):
+        cache = list()
+        for d in self._dicts:
+            for key in d.keys():
+                m = re.match(grep, key)
+                if m is not None:
+                    cache.append(str(key))
+        return cache
 if '__main__' == __name__:
-    pass
+	pass
