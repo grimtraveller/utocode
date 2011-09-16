@@ -10,7 +10,6 @@ class zjdictmod(object):
         self._values = ''
         self._dicts_dir = os.path.join(os.path.dirname(__file__))
         self._dicts_dir += os.sep + 'dictionary' + os.sep
-        print(self._dicts_dir)
         self._dicts = list()
         self.cache = list()
     def appendDicts(self):
@@ -43,12 +42,13 @@ class zjdictmod(object):
                 self._values += value + '\n'
         return self._values
     def save(self, fname):
-        print(self._key, self._values)
         if ('' != self._key) and ('' != self._values):
-            print(fname)
             f = open(fname, 'a+')
+            f.write('\n')
             f.write(self._key)
+            f.write('\n')
             f.write(self._values)
+            f.write('\n')
             f.close()
     def search(self, grep):
         cache = list()
