@@ -90,6 +90,8 @@ set linespace=5	"linespace
 set number	"line number
 set imcmdline	"the Input Method is always	
 set laststatus=2 "always a status line
+if has("mac")
+	set macmeta
 
 "color style
 if has("gui_running")
@@ -187,8 +189,9 @@ if has("win32")
 	map <silent><C-K><C-C>	:call z:comment()<CR>
 	map <silent><C-K><C-U>	:call z:uncomment()<CR>
 elseif has("mac")
-	map <silent><D-k><D-c> :call z:comment()<CR>
-endif
+	map <M-k><M-c> :call z:comment()<CR>
+	map <M-k><M-u> :call z:uncomment()<CR>
+"endif
 function! z:cfh()
 "comment file header ONLY support for C filetype!
 	let c = "/**"
