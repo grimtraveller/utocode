@@ -50,12 +50,15 @@ def show_record(destination):
         print(destination)
 
 if '__main__' == __name__:
+    print('')
     fname = 'newword.txt'
     mod = zjdict.zjdictmod()
     loading(loadDicts, (mod,))
     if 1 == len(sys.argv):
         while True:
             source = raw_input('\b>>>>')
+            if 0 == len(source):
+				continue
             if ',' == source[0]:
                 if ',quit' == source or ',exit' == source:
                     break
