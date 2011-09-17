@@ -4,7 +4,7 @@ import threading
 import time
 import getch
 class CUIView:
-	pass
+    pass
 
 def loadDicts(mod):
     mod.appendDicts()
@@ -58,7 +58,7 @@ if '__main__' == __name__:
         while True:
             source = raw_input('\b>>>>')
             if 0 == len(source):
-				continue
+                continue
             if ',' == source[0]:
                 if ',quit' == source or ',exit' == source:
                     break
