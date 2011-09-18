@@ -2,11 +2,13 @@ import Tkinter as Tk
 import zjdict as zjdict
 import re
 import sys
+import threading
+import zjtkload as zjtkload
 class TkCtrl(object):
     def __init__(self):
-        self.mode = zjdict.zjdictmod()
-        self.mode.appendDicts()
         self.view = TkView(self.tip)
+        self.mod = zjdict.zjdictmod()
+        self.view.loading(self.mod.appendDicts)
     def mainloop(self):
         Tk.mainloop()
     def tip(self, event=None):
@@ -42,6 +44,15 @@ class TkView(object):
             clean_button = Tk.Button(self.top, text='clear',pady=15, command=self.clean)
         clean_button.pack()
         self.top.geometry('400x255+150+150')
+    def loading(self, fun):
+        fun()
+        pass
+#        t = threading.Thread(target=loadThread, args=(self,))
+#        t.start()
+#        zjtkload.Load.run()
+    def loadThread(loading=None):
+        if loading is not None:
+            laoding.run()
     def clean(self, event=None):
         self.word.set('')
     def addTips(self, matched_keys):
