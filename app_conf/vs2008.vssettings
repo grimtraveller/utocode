@@ -27,7 +27,7 @@
 				<PropertyValue name="Animations">true</PropertyValue>
 				<PropertyValue name="AutohidePinActiveTabOnly">false</PropertyValue>
 				<PropertyValue name="ShowStatusBar">true</PropertyValue>
-				<PropertyValue name="MRUListContainsNItems">1</PropertyValue>
+				<PropertyValue name="MRUListContainsNItems">6</PropertyValue>
 			</ToolsOptionsSubCategory>
 			<ToolsOptionsSubCategory name="Import and Export Settings" RegisteredName="Import and Export Settings" PackageName="Visual Studio Environment Package">
 				<PropertyValue name="TrackTeamSettings">false</PropertyValue>
