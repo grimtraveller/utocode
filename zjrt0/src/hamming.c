@@ -27,7 +27,7 @@ main(int argc, char* argv[])
 		}
 		i++;
 	}
-	len = HammingCode(&pHamming, test, i, FALSE);
+	len = zjHammingCode(&pHamming, test, i, FALSE);
 	for (i = 0; i < len; i++)
 	{
 		printf("%d", pHamming[len-i-1]);
