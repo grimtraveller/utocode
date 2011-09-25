@@ -1,9 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jzrt0", "jzrt0\jzrt0.vcproj", "{3C27D604-796F-43CB-9F18-03BFB6F743AD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jzrt0", "jzrt0.vcproj", "{3C27D604-796F-43CB-9F18-03BFB6F743AD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jzmem_t", "jzmem_t\jzmem_t.vcproj", "{E1B8C99A-0CC1-4DD8-A0E5-72412F7753A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjerror", "tzjerror.vcproj", "{B1D84152-4864-49AF-B6D7-B9B495C6B7EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjhamming", "tzjhamming.vcproj", "{956D96AE-A9E7-4DED-8C03-6DFA5087A1C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjlog", "tzjlog.vcproj", "{C582DD38-DA84-4D58-8BBA-B0DE25042F46}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjmem", "tzjmem.vcproj", "{5200F243-6ECF-46CB-B625-04F2CE962ACD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjtype", "tzjtype.vcproj", "{8C44E941-EB13-4415-93A2-6A03EA925821}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
 	EndProjectSection
@@ -18,10 +38,26 @@ Global
 		{3C27D604-796F-43CB-9F18-03BFB6F743AD}.Debug|Win32.Build.0 = Debug|Win32
 		{3C27D604-796F-43CB-9F18-03BFB6F743AD}.Release|Win32.ActiveCfg = Release|Win32
 		{3C27D604-796F-43CB-9F18-03BFB6F743AD}.Release|Win32.Build.0 = Release|Win32
-		{E1B8C99A-0CC1-4DD8-A0E5-72412F7753A4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E1B8C99A-0CC1-4DD8-A0E5-72412F7753A4}.Debug|Win32.Build.0 = Debug|Win32
-		{E1B8C99A-0CC1-4DD8-A0E5-72412F7753A4}.Release|Win32.ActiveCfg = Release|Win32
-		{E1B8C99A-0CC1-4DD8-A0E5-72412F7753A4}.Release|Win32.Build.0 = Release|Win32
+		{B1D84152-4864-49AF-B6D7-B9B495C6B7EE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B1D84152-4864-49AF-B6D7-B9B495C6B7EE}.Debug|Win32.Build.0 = Debug|Win32
+		{B1D84152-4864-49AF-B6D7-B9B495C6B7EE}.Release|Win32.ActiveCfg = Release|Win32
+		{B1D84152-4864-49AF-B6D7-B9B495C6B7EE}.Release|Win32.Build.0 = Release|Win32
+		{956D96AE-A9E7-4DED-8C03-6DFA5087A1C5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{956D96AE-A9E7-4DED-8C03-6DFA5087A1C5}.Debug|Win32.Build.0 = Debug|Win32
+		{956D96AE-A9E7-4DED-8C03-6DFA5087A1C5}.Release|Win32.ActiveCfg = Release|Win32
+		{956D96AE-A9E7-4DED-8C03-6DFA5087A1C5}.Release|Win32.Build.0 = Release|Win32
+		{C582DD38-DA84-4D58-8BBA-B0DE25042F46}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C582DD38-DA84-4D58-8BBA-B0DE25042F46}.Debug|Win32.Build.0 = Debug|Win32
+		{C582DD38-DA84-4D58-8BBA-B0DE25042F46}.Release|Win32.ActiveCfg = Release|Win32
+		{C582DD38-DA84-4D58-8BBA-B0DE25042F46}.Release|Win32.Build.0 = Release|Win32
+		{5200F243-6ECF-46CB-B625-04F2CE962ACD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5200F243-6ECF-46CB-B625-04F2CE962ACD}.Debug|Win32.Build.0 = Debug|Win32
+		{5200F243-6ECF-46CB-B625-04F2CE962ACD}.Release|Win32.ActiveCfg = Release|Win32
+		{5200F243-6ECF-46CB-B625-04F2CE962ACD}.Release|Win32.Build.0 = Release|Win32
+		{8C44E941-EB13-4415-93A2-6A03EA925821}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8C44E941-EB13-4415-93A2-6A03EA925821}.Debug|Win32.Build.0 = Debug|Win32
+		{8C44E941-EB13-4415-93A2-6A03EA925821}.Release|Win32.ActiveCfg = Release|Win32
+		{8C44E941-EB13-4415-93A2-6A03EA925821}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
