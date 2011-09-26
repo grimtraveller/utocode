@@ -26,11 +26,13 @@ class Load():
         self._finish = finish
     def run(self):
         self._parent.lower(self._top)
-        ps = self._parent.winfo_geometry()
-        ps = ps.replace(str(self._parent.winfo_width()), str(self._canvas_width))
-        ps = ps.replace(str(self._parent.winfo_height()), str(self._canvas_height))
-        a = list(ps)
-        self._top.geometry(ps)
+        x = self._parent.winfo_x()
+        y = self._parent.winfo_y()
+        x += (self._parent.winfo_width()-self._canvas_width)//2
+        y += (self._parent.winfo_height()-self._canvas_height)//2
+        self._top.geometry(str(self._canvas_width)+'x'+str(self._canvas_height)+'+'+str(x)+'+'+str(y))
+        print(str(self._canvas_width)+'x'+str(self._canvas_height)+'+'+str(x)+'+'+str(y))
+
         pi = Tk.PhotoImage(file=self._images[self._k%len(self._images)][2])
         width = self._images[self._k%len(self._images)][0]/2.0
         height = self._images[self._k%len(self._images)][1]/2.0
@@ -38,17 +40,23 @@ class Load():
         self._canvas.update()
         self._k += 1
         if self._finish:
-            self._top.quit()
+            self._top.destroy()
             return
         else:
             self._top.after(self._interval, self.run)
         time.sleep(0.1)
+def workThread(mod):
+    time.sleep(10)
+    mod.finish()
 
 if '__main__' == __name__:
     import zjtkload
+    import threading
     top = Tk.Tk()
     images = ['loading (1).gif', 'loading (2).gif', 'loading (3).gif', 'loading (4).gif', 'loading (5).gif', 'loading (6).gif']
     load = zjtkload.Load(top, images)
+    t = threading.Thread(target=workThread, args=(load,))
+    t.start()
     load.run()
     Tk.mainloop()
 
