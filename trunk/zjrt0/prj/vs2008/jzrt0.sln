@@ -28,6 +28,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjtype", "tzjtype.vcproj",
 		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tzjvalarray", "tzjvalarray.vcproj", "{4CF4E0DC-70D8-459A-B44B-4D9B8D03DEE3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3C27D604-796F-43CB-9F18-03BFB6F743AD} = {3C27D604-796F-43CB-9F18-03BFB6F743AD}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +63,10 @@ Global
 		{8C44E941-EB13-4415-93A2-6A03EA925821}.Debug|Win32.Build.0 = Debug|Win32
 		{8C44E941-EB13-4415-93A2-6A03EA925821}.Release|Win32.ActiveCfg = Release|Win32
 		{8C44E941-EB13-4415-93A2-6A03EA925821}.Release|Win32.Build.0 = Release|Win32
+		{4CF4E0DC-70D8-459A-B44B-4D9B8D03DEE3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4CF4E0DC-70D8-459A-B44B-4D9B8D03DEE3}.Debug|Win32.Build.0 = Debug|Win32
+		{4CF4E0DC-70D8-459A-B44B-4D9B8D03DEE3}.Release|Win32.ActiveCfg = Release|Win32
+		{4CF4E0DC-70D8-459A-B44B-4D9B8D03DEE3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

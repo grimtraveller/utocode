@@ -95,6 +95,9 @@ typedef signed char zjint8;
 typedef unsigned char zjuint8;
 #define ZJUINT8_MAX 0xff
 
+typedef zjuint8 zjbyte;
+#define ZJBYTE_MAX 0xff
+
 typedef signed short zjint16;
 #define ZJINT16_MIN (-32768)
 #define ZJINT16_MAX 32767

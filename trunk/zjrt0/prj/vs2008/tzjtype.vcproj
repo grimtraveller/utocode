@@ -60,6 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="../../src/libzjrt0.lib"
 				OutputFile="../../src/t_zjtype.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"

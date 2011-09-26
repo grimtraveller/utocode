@@ -54,6 +54,11 @@ void destruct_zjmem()
 void* zjmalloc(size_t size, const char* file, zjuint32 line)
 {
 	zjmem_item_st* p;
+
+	if (NULL == g_pzjmem)
+	{
+		construct_zjmem(NULL);
+	}
 	p = malloc(sizeof(zjmem_item_st) + size);
 	if (NULL == p)
 	{
