@@ -173,6 +173,10 @@
 				RelativePath="..\..\src\zjtimer.c"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\zjvalarray.c"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="header"
@@ -209,6 +213,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\zjtype.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\zjvalarray.h"
 				>
 			</File>
 		</Filter>

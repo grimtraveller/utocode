@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="tzjtype"
-	ProjectGUID="{8C44E941-EB13-4415-93A2-6A03EA925821}"
-	RootNamespace="tzjtype"
+	Name="tzjvalarray"
+	ProjectGUID="{4CF4E0DC-70D8-459A-B44B-4D9B8D03DEE3}"
+	RootNamespace="tzjvalarray"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,7 +61,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="../../src/libzjrt0.lib"
-				OutputFile="../../src/t_zjtype.exe"
+				OutputFile="../../src/t_zjvalarray.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -134,10 +134,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../src/t_zjtype.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -169,12 +168,12 @@
 	</References>
 	<Files>
 		<Filter
-			Name="source"
+			Name="srouce"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\src\t_zjtype.c"
+				RelativePath="..\..\src\t_zjvalarray.c"
 				>
 			</File>
 		</Filter>

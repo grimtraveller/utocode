@@ -12,4 +12,5 @@
 #include "zjerror.h"
 #include "zjlog.h"
 #include "zjhamming.h"
+#include "zjvalarray.h"
 #endif //ZJRT0_H
