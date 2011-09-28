@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
 import Tkinter as Tk
 import zjdict as zjdict
 import re
 import sys
 import threading
 import zjtkload as zjtkload
+images = ['loading (1).gif', 'loading (2).gif', 'loading (3).gif', 'loading (4).gif', 'loading (5).gif', 'loading (6).gif']
+
 class TkCtrl(object):
     def __init__(self):
         self.view = TkView()
@@ -30,40 +33,57 @@ class TkView(object):
         main_menu.add_command(label='Save')
         main_menu.add_command(label='Quit', command=self._top.quit)
 
-        self._word = Tk.StringVar(self._top)
+        self._key = Tk.StringVar()
         frame = Tk.Frame(self._top)
         frame.pack(fill='both')
-        edit = Tk.Entry(frame, textvariable=self._word)
+        edit = Tk.Entry(frame, textvariable=self._key)
         edit.pack(side='left', fill='x', expand=1)
-        edit.bind('<KeyRelease>',self.showTip)
-        if 'win32' == sys.platform:
-            clean_button = Tk.Button(frame, text='clear', command=self.clean)
-        else:
-            clean_button = Tk.Button(frame, text='clear', command=self.clean)
-        clean_button.pack()
-        self.tiplist = Tk.Listbox(self._top,borderwidth=0)
-        self.tiplist.pack(fill='both', pady=15, expand=1)
-        self._top.geometry('400x255+150+150')
-    def loading(self, fun):
-        t = threading.Thread(target=loadThread, args=(self,))
-        t.start()
-        zjtkload.Load.run()
-    def loadThread(loading=None):
-        if loading is not None:
-            laoding.run()
-    def clean(self, event=None):
-        self.word.set('')
-    def addTips(self, matched_keys):
-        self.tiplist.delete(0, Tk.END)
-        for key in matched_keys:
-            self.tiplist.insert(Tk.END, key)
-    def showTip(self):
-        pass
+        translate_button = Tk.Button(frame, text='translate', command=self.translate)
+        translate_button.pack(side='left')
+        search_button = Tk.Button(frame, text='search', command=self.search)
+        search_button.pack(side='right')
+        vscrollbar = Tk.Scrollbar(self._top)
+        vscrollbar.pack(side=Tk.RIGHT, pady=15, fill=Tk.Y)
+        
+        font_style = "ËÎÌו"
+        self._valuelist = Tk.Listbox(self._top,yscrollcommand=vscrollbar.set, font=(font_style, 9))
+        self._valuelist.pack(fill='both', pady=15, expand=1)
+        vscrollbar.config(command=self._valuelist.yview)
+        self._top.geometry('500x255+150+150')
+    def loadThread(self, mod):
+        self._mod = mod
+        mod.appendDicts()
+        self._load.finish()
 
+    def loading(self, mod):
+        self._load = zjtkload.Load(self._top, images)
+        t = threading.Thread(target=self.loadThread, args=(mod,))
+        t.start()
+        self._load.run()
+    def translate(self, event=None):
+        value = self._mod.translate(self._key.get())
+        lines = value.split('\x0a')
+        self._valuelist.delete(0, Tk.END)
+        for line in lines:
+            self._valuelist.insert(Tk.END, line)
+    def searching(self):
+        self._load = zjtkload.Load(self._top, images)
+        t = threading.Thread(target=self.searchThread)
+        t.start()
+        self._load.run()
+    def search(self):
+        self.searching()
+    def searchThread(self):
+        print self._mod.translate(self._key.get())
+        values = self._mod.search(self._key.get())
+        self._valuelist.delete(0, Tk.END)
+        for value in values:
+            self._valuelist.insert(Tk.END, value)
+        self._load.finish()
 if '__main__' == __name__:
     view = TkView()
     mod = zjdict.zjdictmod()
-    view.loading(self.mod.appendDicts)
+    view.loading(mod)
     Tk.mainloop()
 
 #    tkctrl = TkCtrl()
