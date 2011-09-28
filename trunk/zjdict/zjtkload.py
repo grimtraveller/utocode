@@ -31,8 +31,6 @@ class Load():
         x += (self._parent.winfo_width()-self._canvas_width)//2
         y += (self._parent.winfo_height()-self._canvas_height)//2
         self._top.geometry(str(self._canvas_width)+'x'+str(self._canvas_height)+'+'+str(x)+'+'+str(y))
-        print(str(self._canvas_width)+'x'+str(self._canvas_height)+'+'+str(x)+'+'+str(y))
-
         pi = Tk.PhotoImage(file=self._images[self._k%len(self._images)][2])
         width = self._images[self._k%len(self._images)][0]/2.0
         height = self._images[self._k%len(self._images)][1]/2.0
