@@ -93,6 +93,7 @@ set laststatus=2 "always a status line
 if has("mac")
 	set macmeta
 endif
+
 "color style
 if has("gui_running")
 	colorscheme pablo	
@@ -271,7 +272,10 @@ function! py:setting()
 endfunction
 
 "cd the dir where current file is in
-cd %:h
+if "" !=bufname("%")
+	cd %:h
+endif
+
 """""""""""""""""""
 """""some useful command"""""
 "read unicode in vim set encoding=utf-8
