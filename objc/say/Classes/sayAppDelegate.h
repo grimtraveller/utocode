@@ -8,15 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class sayViewController;
-
+@class rootViewController;
 @interface sayAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    sayViewController *viewController;
+	rootViewController *viewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet sayViewController *viewController;
+@property (nonatomic, retain) IBOutlet rootViewController *viewController;
 
 @end
 

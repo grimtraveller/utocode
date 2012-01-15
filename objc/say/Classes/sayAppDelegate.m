@@ -7,7 +7,7 @@
 //
 
 #import "sayAppDelegate.h"
-#import "sayViewController.h"
+#import "rootViewController.h"
 
 @implementation sayAppDelegate
 
@@ -19,12 +19,11 @@
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
-    
+    NSLog(@"%s", __FUNCTION__);
     // Override point for customization after application launch.
 
 	// Set the view controller as the window's root view controller and display.
 	[self.window addSubview:self.viewController.view]; 
-    //self.window.rootViewController = self.viewController;
 	
     [self.window makeKeyAndVisible];
 
@@ -45,8 +44,25 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+	NSLog(@"%s", __FUNCTION__);
+	UILocalNotification *notification=[[UILocalNotification alloc] init]; 
+	if (notification!=nil) { 
+		NSLog(@">> support local notification"); 
+		NSDate *now=[NSDate new]; 
+		notification.fireDate=[now dateByAddingTimeInterval:10/*60*60*/];
+		notification.timeZone=[NSTimeZone defaultTimeZone]; 
+		notification.alertBody=@"小胖子，我爱你";
+		notification.alertAction = @"老公";
+		notification.applicationIconBadgeNumber = 100;
+		notification.soundName = @"ping.caf";
+		[[UIApplication sharedApplication]   scheduleLocalNotification:notification];
+	}
 }
 
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification {
+	NSLog(@"%s", __FUNCTION__);
+	notification.applicationIconBadgeNumber = notification.applicationIconBadgeNumber-1;
+}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     /*
@@ -67,6 +83,8 @@
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
+	NSLog(@"%s", __FUNCTION__);
+	
 }
 
 
