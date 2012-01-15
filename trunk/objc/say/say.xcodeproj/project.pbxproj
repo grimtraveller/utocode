@@ -17,6 +17,12 @@
 		28D7ACF80DDB3853001CB0EB /* sayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* sayViewController.m */; };
 		FA4CE2761493B26E00C4100D /* zhuhuotui.png in Resources */ = {isa = PBXBuildFile; fileRef = FA4CE2741493B26E00C4100D /* zhuhuotui.png */; };
 		FA4CE2771493B26E00C4100D /* dialog_border_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FA4CE2751493B26E00C4100D /* dialog_border_bg.png */; };
+		FAA6E01814BB3018003862C4 /* rootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E01714BB3018003862C4 /* rootViewController.m */; };
+		FAA6E06114BB35EC003862C4 /* birthdayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E06014BB35EC003862C4 /* birthdayViewController.m */; };
+		FAA6E06414BB35FD003862C4 /* noteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA6E06314BB35FD003862C4 /* noteViewController.m */; };
+		FAD971C214C2022D00004B9E /* rootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD971C114C2022D00004B9E /* rootViewController.xib */; };
+		FAD971EA14C2047300004B9E /* birthdayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD971E914C2047300004B9E /* birthdayViewController.xib */; };
+		FAD971EC14C2048A00004B9E /* noteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD971EB14C2048A00004B9E /* noteViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +41,15 @@
 		8D1107310486CEB800E47090 /* say-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "say-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		FA4CE2741493B26E00C4100D /* zhuhuotui.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhuhuotui.png; sourceTree = "<group>"; };
 		FA4CE2751493B26E00C4100D /* dialog_border_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dialog_border_bg.png; sourceTree = "<group>"; };
+		FAA6E01614BB3018003862C4 /* rootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rootViewController.h; sourceTree = "<group>"; };
+		FAA6E01714BB3018003862C4 /* rootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rootViewController.m; sourceTree = "<group>"; };
+		FAA6E05F14BB35EC003862C4 /* birthdayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = birthdayViewController.h; sourceTree = "<group>"; };
+		FAA6E06014BB35EC003862C4 /* birthdayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = birthdayViewController.m; sourceTree = "<group>"; };
+		FAA6E06214BB35FD003862C4 /* noteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteViewController.h; sourceTree = "<group>"; };
+		FAA6E06314BB35FD003862C4 /* noteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteViewController.m; sourceTree = "<group>"; };
+		FAD971C114C2022D00004B9E /* rootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = rootViewController.xib; sourceTree = "<group>"; };
+		FAD971E914C2047300004B9E /* birthdayViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = birthdayViewController.xib; sourceTree = "<group>"; };
+		FAD971EB14C2048A00004B9E /* noteViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = noteViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,10 +69,16 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FAA6E01614BB3018003862C4 /* rootViewController.h */,
+				FAA6E01714BB3018003862C4 /* rootViewController.m */,
 				1D3623240D0F684500981E51 /* sayAppDelegate.h */,
 				1D3623250D0F684500981E51 /* sayAppDelegate.m */,
 				28D7ACF60DDB3853001CB0EB /* sayViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* sayViewController.m */,
+				FAA6E05F14BB35EC003862C4 /* birthdayViewController.h */,
+				FAA6E06014BB35EC003862C4 /* birthdayViewController.m */,
+				FAA6E06214BB35FD003862C4 /* noteViewController.h */,
+				FAA6E06314BB35FD003862C4 /* noteViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -94,11 +115,14 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FAD971E914C2047300004B9E /* birthdayViewController.xib */,
 				FA4CE2741493B26E00C4100D /* zhuhuotui.png */,
 				FA4CE2751493B26E00C4100D /* dialog_border_bg.png */,
 				2899E5210DE3E06400AC0155 /* sayViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* say-Info.plist */,
+				FAD971C114C2022D00004B9E /* rootViewController.xib */,
+				FAD971EB14C2048A00004B9E /* noteViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -166,6 +190,9 @@
 				2899E5220DE3E06400AC0155 /* sayViewController.xib in Resources */,
 				FA4CE2761493B26E00C4100D /* zhuhuotui.png in Resources */,
 				FA4CE2771493B26E00C4100D /* dialog_border_bg.png in Resources */,
+				FAD971C214C2022D00004B9E /* rootViewController.xib in Resources */,
+				FAD971EA14C2047300004B9E /* birthdayViewController.xib in Resources */,
+				FAD971EC14C2048A00004B9E /* noteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +206,9 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* sayAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* sayViewController.m in Sources */,
+				FAA6E01814BB3018003862C4 /* rootViewController.m in Sources */,
+				FAA6E06114BB35EC003862C4 /* birthdayViewController.m in Sources */,
+				FAA6E06414BB35FD003862C4 /* noteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +254,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -241,7 +271,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
