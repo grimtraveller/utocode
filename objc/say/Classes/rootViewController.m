@@ -87,6 +87,11 @@
 - (IBAction)switchViews:(id)sender
 {
 	NSLog(@"%s", __FUNCTION__);
+	
+	[UIView beginAnimations:@"View Flip" context:nil];
+	[UIView setAnimationDuration:1.25];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	
 	if (self.say.view.superview != nil) {
 		if (self.birthday == nil) {
 			birthdayViewController* birthdayController = [[birthdayViewController alloc]
@@ -94,8 +99,19 @@
 			self.birthday = birthdayController;
 			[birthdayController release];
 		}
+		
+		[UIView setAnimationTransition:
+		 UIViewAnimationTransitionFlipFromRight forView:self.view cache:YES];
+		[birthday viewWillAppear:YES];
+		[say viewWillDisappear:YES];
+		
 		[say.view removeFromSuperview];
 		[self.view insertSubview:birthday.view atIndex:0];
+		
+		[say viewWillAppear:YES];
+		[birthday viewWillDisappear:YES];
+		[UIView commitAnimations];
+		
 		
 	}
 	else if (self.birthday.view.superview != nil) {
@@ -118,7 +134,6 @@
 		}
 		[note.view removeFromSuperview];
 		[self.view insertSubview:say.view atIndex:0];
-		
 	}
 	else {
 	}
