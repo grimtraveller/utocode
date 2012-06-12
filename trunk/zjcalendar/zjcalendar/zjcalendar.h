@@ -41,10 +41,17 @@ public:
      void messageClicked();
 	 void mainTabSelected(const QString & tabname);
 	 void saveNoteClicked();
+	 void editNoteClicked();
 	 void itemChanged(QStandardItem * item);
 	 void editjobClicked();
+	 void resetStartWorkTimeClicked();
+	 void menuSelected(QAction* action);
+
+	 void noteEditTextChanged();
+	 void about();
 
  private:
+	 void addClosingTimeEvent();
 	 void loadEvents();
      void createActions();
      void createTrayIcon();
@@ -55,6 +62,7 @@ public:
 	 QAction *noteAction;
      QAction *restoreAction;
      QAction *quitAction;
+	 QAction *aboutAction;
 
      QSystemTrayIcon *trayIcon;
      QMenu *trayIconMenu;
@@ -75,7 +83,13 @@ private:
 	int noteIdx;
 	QTextEdit* noteEdit;
 	QPushButton* saveNote;
+	QPushButton* editNote;
 	QPushButton* editjob;
+	QPushButton* resetStartTime;
+	QTimeEdit* startTime;
+
+	int _id; //current Event ID 
+	bool _prompt; //show dialog to prompt or not
 
 };
 
