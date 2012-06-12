@@ -118,3 +118,8 @@ unsigned int Events::haveEvent(DateTime dt)
 	}
 	return -1;
 }
+
+unsigned int Events::size()
+{
+	return eventMap.size();
+}

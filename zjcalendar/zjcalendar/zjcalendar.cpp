@@ -10,10 +10,14 @@
 #include "zjcalendar.h"
 #include "macro.h"
 #include "jobmgr.h"
+#include <QProcess>
+#include "about.h"
 
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 : QDialog(parent, flags)
 {
+	_id = -1;
+	_prompt = true;
 	timeid = startTimer(1000);  // 1-second timer
 
 	QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
@@ -69,7 +73,14 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	msgold = new QLabel(tr(""));
 	msgold->resize(100, 10);
-	LayoutJob->addWidget(msgold, 0, 0, 1, 9);
+	LayoutJob->addWidget(msgold, 0, 0, 1, 6);
+	QTime t = QTime::currentTime();
+	startTime = new QTimeEdit(t);
+	LayoutJob->addWidget(startTime, 0, 7, 1, 1);
+
+	resetStartTime = new QPushButton(tr("&I Am Here"));
+	connect(resetStartTime, SIGNAL(clicked()), this, SLOT(resetStartWorkTimeClicked()));
+	LayoutJob->addWidget(resetStartTime, 0, 8, 1, 1);
 
 	editjob = new QPushButton(tr("&Edit Job"));
 	connect(editjob, SIGNAL(clicked()), this, SLOT(editjobClicked()));
@@ -97,20 +108,27 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	//note tab
 	QGridLayout* LayoutNote = new QGridLayout(widgetNote);
-	noteEdit = new QTextEdit;
-	LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
-	QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
-	QFile file(fileNameNote);
-	if (file.open(QFile::ReadOnly | QFile::Text))
-	{
-		noteEdit->setPlainText(file.readAll());
-	}
-	file.close();
-	saveNote = new QPushButton;
-	saveNote->setText(tr("&save"));
-	connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
-	LayoutNote->addWidget(saveNote, 9, 8);
+	//noteEdit = new QTextEdit(this);
+	//connect(noteEdit, SIGNAL(cursorPositionChanged()), this, SLOT(noteEditTextChanged()));
 
+	//LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
+	//QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
+	//QFile file(fileNameNote);
+	//if (file.open(QFile::ReadOnly | QFile::Text))
+	//{
+	//	noteEdit->setPlainText(file.readAll());
+	//}
+	//file.close();
+	//saveNote = new QPushButton;
+	//saveNote->setText(tr("&save"));
+	//connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
+	//LayoutNote->addWidget(saveNote, 9, 8);
+
+
+	editNote = new QPushButton;
+	editNote->setText(tr("&edit with gVim"));
+	connect(editNote, SIGNAL(clicked()), this, SLOT(editNoteClicked()));
+	LayoutNote->addWidget(editNote, 9, 7);
 
 	//tray setting
 	createTrayIcon();
@@ -123,6 +141,12 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 }
 
+void zjCalendar::noteEditTextChanged()
+{
+	QTextCursor tc = noteEdit->textCursor();
+	tc.setVisualNavigation(true);
+	noteEdit->setTextCursor(noteEdit->textCursor());	
+}
 zjCalendar::~zjCalendar()
 {
 	killTimer(timeid);
@@ -182,8 +206,9 @@ void zjCalendar::iconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void zjCalendar::messageClicked()
 {
-	///todo show next task message
+	// show next task message
 	setWindowFlags((Qt::WindowFlags)(~Qt::WindowStaysOnTopHint));
+	_prompt = false;
 }
 
 void zjCalendar::createActions()
@@ -207,14 +232,40 @@ void zjCalendar::createActions()
 	connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 	quitAction = new QAction(tr("&Quit"), this);
 	connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+	aboutAction = new QAction(tr("&About"), this);
+	connect(aboutAction, SIGNAL(triggered()), this, SLOT(about()));
+
+	connect(functionGrp, SIGNAL(triggered(QAction*)), this, SLOT(menuSelected(QAction*)));
+}
+
+void zjCalendar::menuSelected(QAction* action)
+{
+	if (eventAction == action)
+	{
+		mainTab->setCurrentIndex(eventIdx);
+	}
+	else if (jobAction == action)
+	{
+		mainTab->setCurrentIndex(jobIdx);
+	}
+	else if (noteAction == action)
+	{
+		mainTab->setCurrentIndex(noteIdx);
+	}
+	else
+	{
+		//NEVER DO THIS!
+	}
+	
 }
 
 void zjCalendar::createTrayIcon()
 {
 	///to do add event, joblist, note 
 	trayIconMenu = new QMenu(this);
+	trayIconMenu->addAction(aboutAction);
 	trayIconMenu->addAction(eventAction);
-	  
 	trayIconMenu->addAction(jobAction);
 	trayIconMenu->addAction(noteAction);
 	trayIconMenu->addSeparator();
@@ -241,6 +292,7 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	dt.time = QTime::fromString(t);
 	if (-1 != (id = events.haveEvent(dt)))
 	{
+		
 		mainTab->setCurrentIndex(eventIdx);
 		table->setFocus();
 		trayIcon->showMessage(events.eventMap[id].desc,
@@ -257,7 +309,17 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 				table->setCurrentIndex(model->index(idx, 0));
 			}
 		}
-		showNormal();
+		if ((_id != id)) ///event changed
+		{
+			//save event id and reset prompt flag
+			_id = id; 
+			_prompt = true;
+			
+		}
+		if (_prompt)
+		{
+			showNormal();
+		}
 	}
 	else
 	{
@@ -301,6 +363,13 @@ void zjCalendar::saveNoteClicked()
 	file.close();
 }
 
+void zjCalendar::editNoteClicked()
+{
+	QStringList args;
+	args << QDir::currentPath() + tr("\\todo.txt");
+	QProcess::startDetached(tr("C:\\Program Files\\Vim\\vim73\\gvim.exe"),args);
+}
+
 void zjCalendar::itemChanged(QStandardItem * item)
 {
 	//QString id;
@@ -318,11 +387,44 @@ void zjCalendar::editjobClicked()
 	loadEvents();
 }
 
+void zjCalendar::addClosingTimeEvent()
+{
+	int new_event_id = events.addEvent();
+	QString d;
+	QDate date = QDate::currentDate();
+	d = date.toString("yyyy-MM-dd");
+
+	QTime time = startTime->time();
+	int h = time.hour()+1+8;
+	if (h > 24)
+	{
+		h -= 24;
+	}
+	time.setHMS(h, time.minute(), 0);
+	QString t = time.toString("hh:mm:00");
+	DateTime date_time;
+	date_time.time = QTime::fromString(t, "hh:mm:ss");
+	events.editEvent(new_event_id, date_time, date_time, tr("下班时间到！！"));
+}
+
+void zjCalendar::resetStartWorkTimeClicked()
+{
+	events.delEvent(events.size()-1);
+	loadEvents();
+}
+
 void zjCalendar::loadEvents()
 {
 	model->removeRows(0, model->rowCount());
 	QString filenameEvent = QCoreApplication::applicationDirPath() + tr("/") + tr(EVENT_FILE_NAME); 
 	events.getEventsFromFile(filenameEvent);
+
+	addClosingTimeEvent();
+	
+	DateTime dt;
+	//dt.time = time;
+	//int id;
+	//dt.time = QTime::fromString(t);
 	std::map<int, Event>::iterator it;
 	int row = 0;
 	QString id;
@@ -338,4 +440,11 @@ void zjCalendar::loadEvents()
 		table->setIndexWidget(model->index(row, 2, QModelIndex()), desclabel); 
 		row++;
 	}
+}
+
+void zjCalendar::about()
+{
+	About about;
+	//about.resize(730, 300);
+	about.exec();
 }

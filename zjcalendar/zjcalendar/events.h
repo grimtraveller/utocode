@@ -40,6 +40,7 @@ public:
 	bool getEventsFromFile(QString file);
 	bool flushEventsToFile();
 	unsigned int haveEvent(DateTime dt);
+	unsigned int size();
 /*private:*/
 	bool exist(int id);
 	void line2event(QString line, Event& e);

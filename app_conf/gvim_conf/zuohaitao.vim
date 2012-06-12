@@ -57,6 +57,16 @@ function! z:win32_unicode_file()
 		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 		au QuickfixCmdPost make call z:QfMakeConv()
 	endif
+	if (".xml" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
+	if (".sln" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
 endfunction
 
 if (has("linux")||has("mac"))
@@ -296,3 +306,4 @@ endif
 "zF make the fold mark
 "zc make the code between the operator
 "zo expand the fold code
+"tabnew tabn<PageNumber>
