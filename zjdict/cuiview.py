@@ -65,21 +65,24 @@ if '__main__' == __name__:
                 elif ',save' == source:
                     mod.save(fname)
                 elif ',search' == source:
-                    grep = raw_input('?>')
-                    tips = mod.search(grep)
-                    count = 0
-                    for tip in tips:
-                        if 'win32' == sys.platform:
-                            print(tip.decode('utf-8').encode('gbk'))
-                        else:
-                            print(tip)
-                        count += 1
-                        if count > 10:
-                            k = getch.getch()
-                            if '\x1b' == k:
-                                if 0 == len(raw_input('ESC')):
-                                    break
-                            count = 0
+                    while True:
+                        grep = raw_input('?>')
+                        if ',quit' == grep or ',exit' == grep:
+                            break
+                        tips = mod.search(grep)
+                        count = 0
+                        for tip in tips:
+                            if 'win32' == sys.platform:
+                                print(tip.decode('utf-8').encode('gbk'))
+                            else:
+                                print(tip)
+                            count += 1
+                            if count > 10:
+                                k = getch.getch()
+                                if '\x1b' == k:
+                                    if 0 == len(raw_input('ESC')):
+                                        break
+                                count = 0
             else:
                 destination = translate(source)
                 show_record(destination)

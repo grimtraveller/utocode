@@ -32,6 +32,7 @@ class TkView(object):
         main_menu = Menu(bar)
         bar.add_cascade(label='Menu',menu=main_menu)
         main_menu.add_command(label='Save', command=self.save)
+        main_menu.add_command(label='Search', command=self.search)
         main_menu.add_command(label='Quit', command=self._top.quit)
 
         self._key = StringVar()
