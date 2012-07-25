@@ -16,6 +16,7 @@ HRESULT CShellExt::Initialize(LPCITEMIDLIST pidlFolder, LPDATAOBJECT pDataObj, H
 
 
 	GetModuleFileNameA(g_hInstance, inifile, MAX_PATH);
+	//MessageBoxA(NULL, inifile, "", MB_OK);
 
 	errno_t err;
 	err = _splitpath_s(inifile, 
@@ -28,6 +29,7 @@ HRESULT CShellExt::Initialize(LPCITEMIDLIST pidlFolder, LPDATAOBJECT pDataObj, H
 	err = _makepath_s(inifile, _MAX_PATH, drive, dir, "zShellExt", "ini");
 
 	GetPrivateProfileStringA("VS2008", "path", "", _vc_path, MAX_PATH*2, inifile);
+	//MessageBoxA(NULL, _vc_path, "", MB_OK);
 	return S_OK;
 }
 
@@ -134,12 +136,15 @@ HRESULT CShellExt::InvokeCommand ( LPCMINVOKECOMMANDINFO pInfo )
 	if ( 0 != HIWORD( pInfo->lpVerb ) )
 		return E_INVALIDARG;
 
+	if (NULL == pInfo->lpDirectory)
+	{
+		return S_OK;
+	}
 	// Check that lpVerb is one of our commands (0 or 1)
 	switch ( LOWORD(pInfo->lpVerb) )
 	{
 	case 0:
-		//strncat_s(par, MAX_PATH*2, "CMD.EXE ", MAX_PATH*2);
-		strncat_s(par, MAX_PATH*2, "/k cd /d \"", MAX_PATH*2);
+		strncat_s(par, MAX_PATH*2, "/k cd /d \"", MAX_PATH*2);		
 		strncat_s(par, MAX_PATH*2, pInfo->lpDirectory, MAX_PATH*2);
 		strncat_s(par, MAX_PATH*2, "\"", MAX_PATH*2);
 		ShellExecuteA(NULL, "open", "CMD.EXE", par/*_T("/k \"cd %L\"")*/, NULL, SW_SHOWNORMAL);
