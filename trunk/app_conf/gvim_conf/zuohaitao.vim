@@ -13,6 +13,8 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2012/07/31 
+"					objc(.m) file is supported
 "		2011/08/28 
 "					fix comment function in macvim
 "		2011/08/18
@@ -58,6 +60,11 @@ function! z:win32_unicode_file()
 		au QuickfixCmdPost make call z:QfMakeConv()
 	endif
 	if (".xml" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
+	if (".m" == strpart(fn,len(fn)-4, 4))
 		set encoding=utf-8
 		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 		au QuickfixCmdPost make call z:QfMakeConv()
@@ -193,8 +200,11 @@ endfunction
 let s:cmfmt=""
 au BufNewFile,BufRead, *.py	let s:cmfmt="#"
 au BufNewFile,BufRead, *.py call py:setting()
-au BufNewFile,BufRead, *.c,*.cpp,*.h	let s:cmfmt="//"
+au BufNewFile,BufRead, *.c,*.cpp,*.h,*.m	let s:cmfmt="//"
 au BufNewFile,BufRead, *.vim let s:cmfmt="\""
+au BufNewFile,BufRead, *.bat let s:cmfmt="REM "
+au BufNewFile,BufRead, *.sh let s:cmfmt="#"
+au BufNewFile,BufRead, *.m set filetype=objc
 "comment keyboard map
 if has("win32")
 	map <silent><C-K><C-C>	:call z:comment()<CR>

@@ -13,7 +13,7 @@ def snatchFromBJBLQ(page_idx, food_type):
                 'PriceType':str(food_type),
             }
     )
-    req = urllib2.Request(url, post_data)
+    req = urllib2.Request(url+'?'+post_data)
     try:
         conn = urllib2.urlopen(req)
     except urllib2.URLError,e: 
@@ -27,6 +27,7 @@ def getFoodInfo(l):
     """parse html to find the begin line of food information, food page number and food count."""
     key = '最新发布时间：'
     count_key = '共有'
+    date_end_key = '</font>'
     prefix_of_count = '<font color=\'red\'>'
     suffix_of_count = '</font>'
     count_per_page = 40
@@ -37,17 +38,24 @@ def getFoodInfo(l):
     find_count = False
     date = False
     for i in xrange(size):
-        pos =  l[i].find(key)
+        if sys.platform == 'win32':
+            pos = l[i].find(key.decode('gbk').encode('utf8'))
+        else:
+            pos =  l[i].find(key)
         if pos != -1:
-            date = l[i][pos+len(key):pos+len(key)+9]
+            date_end_pos = l[i].find(date_end_key) 
+            date = l[i][date_end_pos-9:date_end_pos]
             find_count = True
             cur = i + 21
-            print l[cur]
             continue
         if find_count == False:
             continue
         else:
-            if l[i].find(count_key) != -1:
+            if sys.platform == 'win32':
+                pos = l[i].find(count_key.decode('gbk').encode('utf8'))
+            else:
+                pos = l[i].find(count_key)
+            if pos != -1:
                 s = l[i].strip()
                 s = s[s.find(prefix_of_count)+len(prefix_of_count):s.find(suffix_of_count)]
                 count = int(s)
@@ -81,19 +89,14 @@ def parseItems(l, cur, count):
         pos = s.find('>')
         s = s[pos+1:]
         key = s[:s.find('<')]
-        print key
-        if sys.platform == 'darwin':
-            key = key.decode('gbk').encode('utf-8')
         cur += 4
-        print l[cur]
         s = l[cur].strip()
         s = l[cur].strip()
         pos = s.find('>')
-        s = s[pos+1:]
-        value = s[:s.find('<')]
-        print value
+        s = s[pos+len('&nbsp;')+1:]
+        value = s[:s.find('<')-len('&nbsp;')]
         d[key] = float(value)
-        cur += 5
+        cur += 4
     return d
 
 def main():
@@ -105,17 +108,17 @@ def main():
     food_type['水产'] = 8 
     food_type['粮油饲料'] = 16
     for k in food_type.keys():
-        print '蔬菜'
         print '=====', k, '====='
         html = snatchFromBJBLQ(1, food_type[k])
         cur, page, count, date = getFoodInfo(html)
-        print cur, page, count, date
         d = saveFood(html, cur, page, count, food_type[k])
         sorted_d = sorted(d.iteritems(), key=operator.itemgetter(1), reverse=False)
-        food_type[k] = sorted_d 
-#        for i in xrange(len(food_type[k])):
-        for i in xrange(10):
-            print food_type[k][i][0], ':', food_type[k][i][1]
+        food_type[k] = sorted_d
+        for i in xrange(len(food_type[k])):
+            if sys.platform == 'win32':
+                print food_type[k][i][0].decode('utf8'), ':', food_type[k][i][1]
+            else:
+                print food_type[k][i][0], ':', food_type[k][i][1]
     print '+++++++++++'+ date + '+++++++++++++++'
 if '__main__' == __name__:
     main()

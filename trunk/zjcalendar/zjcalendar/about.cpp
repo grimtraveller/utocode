@@ -16,6 +16,7 @@
 <b>update</b><br />	\
 2012.06.08 Add \"Edit With Vim\" button<br />	\
 2012.06.08 Add \"About\" dialog For show update information and todo list<br />	\
+2012.06.11 Play sound when event happens.<br />	\
 <b>todo</b><br />	\
 <font color=\"red\">	\
 Add Configure dialog<br />	\

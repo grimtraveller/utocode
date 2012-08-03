@@ -16,6 +16,7 @@
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 : QDialog(parent, flags)
 {
+	_sound = new QSound("sound.wav");
 	_id = -1;
 	_prompt = true;
 	timeid = startTimer(1000);  // 1-second timer
@@ -292,7 +293,10 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	dt.time = QTime::fromString(t);
 	if (-1 != (id = events.haveEvent(dt)))
 	{
-		
+		if (_sound->isFinished())
+		{
+			_sound->play();
+		}
 		mainTab->setCurrentIndex(eventIdx);
 		table->setFocus();
 		trayIcon->showMessage(events.eventMap[id].desc,
