@@ -91,6 +91,9 @@ private:
 	int _id; //current Event ID 
 	bool _prompt; //show dialog to prompt or not
 
+	QSound* _sound;
+
+
 };
 
 #endif // ZJCALENDAR_H

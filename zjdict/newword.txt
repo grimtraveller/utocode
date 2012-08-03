@@ -58,7 +58,6 @@ vt. 如锁链般连接, 使连锁, 连结
 a. 连锁的, 连结的
 【医】 链状结合的, 连结的
 
-
 factor
 因子
 *['fæktә]
@@ -122,4 +121,99 @@ a. 虚设的, 假的, 名义上的
 【经】 (橱窗中陈列的)假人, 样本, 名义上的所有人
 相关词组:
   dummy up
+
+>>>>>>> .r216
+
+relevant
+有关联的
+*['relivәnt]
+a. 有关联的, 有关系的, 适当的, 相应的
+【法】 有关的, 相关的
+相关词组:
+  be relevant to
+
+
+interactive
+交互式的
+a. 相互作用的, 相互影响的
+【计】 交互, 人机对话的
+
+
+meta
+元
+【计】 元的
+
+
+reflection
+反映
+*[ri'flekʃәn]
+n. 反映, 沉思, 映像, 想法, 责难
+【计】 反射
+【化】 反射; 反映
+【医】 反射[作用], 反折
+相关词组:
+  be lost in reflection
+
+
+bound
+受约束的
+*[baund]
+n. 跃, 回跳, 范围, 边界
+a. 受约束的, 装有封面的, 有义务的, 关联的, 被束缚的, 准备去...的, 便秘的
+vi. 跳跃, 弹起
+vt. 使跳, 限制, 形成...的疆界
+bind过去式和过去分词
+【计】 装订的
+【医】 结合的
+相关词组:
+  be bound up in...
+  be bound up with...
+  be bound for...
+
+
+inexplicable
+费解的
+*[in'eksplikәbl]
+a. 不能说明的, 不能解释的, 费解的
+
+
+organization
+组织
+*[,ɒ:gәnai'zeiʃәn]
+n. 组织, 结构, 团体, 体制
+【医】 组织, 机构, 机化(血栓或坏死组织)
+【经】 组织, 团体
+
+
+instance
+例子
+*['instәns]
+n. 建议, 情况, 例子, 场合
+vt. 引以为例, 举例说明
+【医】 优势(精神分析用词), 例证
+相关词组:
+  at the instance of
+  for instance
+  in the first instance
+  in your instance
+
+
+comparative
+*[kәm'pærәtiv]
+a. 比较的, 相对的
+n. 对手
+【经】 比较的, 相当的
+
+
+politics
+*['pɒlitiks]
+n. 政治, 政治学, 政见, 政治活动
+【法】 政治, 政治学, 政纲
+
+
+mutability
+*[,mju:tә'biliti]
+n. 易变性, 性情不定
+【医】 突变性
+
 
