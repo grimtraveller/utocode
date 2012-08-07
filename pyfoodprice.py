@@ -39,12 +39,18 @@ def getFoodInfo(l):
     date = False
     for i in xrange(size):
         if sys.platform == 'win32':
-            pos = l[i].find(key.decode('gbk').encode('utf8'))
+            pos = l[i].find(key)
         else:
-            pos =  l[i].find(key)
+            pos = l[i].find(key)
         if pos != -1:
-            date_end_pos = l[i].find(date_end_key) 
-            date = l[i][date_end_pos-9:date_end_pos]
+            date_end_pos = l[i].find(date_end_key)
+            date = l[i][date_end_pos-10:date_end_pos]
+            year = int(date[date.find('-')-4:date.find('-')])
+            date = date[date.find('-')+1:]
+            month = int(date[0:date.find('-')])
+            date = date[date.find('-')+1:]
+            day = int(date)
+            date = str(year)+'-'+str(month)+'-'+str(day)
             find_count = True
             cur = i + 21
             continue
@@ -52,7 +58,7 @@ def getFoodInfo(l):
             continue
         else:
             if sys.platform == 'win32':
-                pos = l[i].find(count_key.decode('gbk').encode('utf8'))
+                pos = l[i].find(count_key)
             else:
                 pos = l[i].find(count_key)
             if pos != -1:
@@ -108,7 +114,10 @@ def main():
     food_type['水产'] = 8 
     food_type['粮油饲料'] = 16
     for k in food_type.keys():
-        print '=====', k, '====='
+        if sys.platform == 'win32':
+            print '=====', k.decode('utf8'), '====='
+        else:
+            print '=====', k, '====='
         html = snatchFromBJBLQ(1, food_type[k])
         cur, page, count, date = getFoodInfo(html)
         d = saveFood(html, cur, page, count, food_type[k])
