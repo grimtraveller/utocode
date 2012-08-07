@@ -25,8 +25,8 @@ def snatchFromBJBLQ(page_idx, food_type):
 
 def getFoodInfo(l):
     """parse html to find the begin line of food information, food page number and food count."""
-    key = '最新发布时间：'
-    count_key = '共有'
+    key = '鏈�鏂板彂甯冩椂闂达細'
+    count_key = '鍏辨湁'
     date_end_key = '</font>'
     prefix_of_count = '<font color=\'red\'>'
     suffix_of_count = '</font>'
@@ -102,11 +102,11 @@ def parseItems(l, cur, count):
 def main():
     """main function"""
     food_type = {}
-    food_type['蔬菜'] = 1
-    food_type['果品'] = 2
-    food_type['畜禽蛋品'] = 4
-    food_type['水产'] = 8 
-    food_type['粮油饲料'] = 16
+    food_type['钄彍'] = 1
+    food_type['鏋滃搧'] = 2
+    food_type['鐣滅铔嬪搧'] = 4
+    food_type['姘翠骇'] = 8 
+    food_type['绮补楗叉枡'] = 16
     for k in food_type.keys():
         print '=====', k, '====='
         html = snatchFromBJBLQ(1, food_type[k])
