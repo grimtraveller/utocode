@@ -222,17 +222,28 @@ def getDays_with_lunar(year, month, day):
                     days.append((y, m, d))
         y += 1
     return days
+
+def printBirthList(name, birthday):
+    print u"===", name, u"==="
+    (lyear, lmonth, lday) = get_ludar_date(datetime(birthday[0], birthday[1], birthday[2]))
+    print(str(birthday[0]) + '-' + str(birthday[1]) + '-' + str(birthday[2]) + ':' + y_lunar(lyear) + m_lunar(lmonth) + d_lunar(lday))
+    getDays_with_lunar(birthday[0], birthday[1], birthday[2])
     
 if __name__ == "__main__":
-    print u"===妹夫==="
-    birthday = (1982, 7, 8)
-    (lyear, lmonth, lday) = get_ludar_date(datetime(birthday[0], birthday[1], birthday[2]))
-    print(str(birthday[0]) + '-' + str(birthday[1]) + '-' + str(birthday[2]) + ':' + y_lunar(lyear) + m_lunar(lmonth) + d_lunar(lday))
-    print getDays_with_lunar(birthday[0], birthday[1], birthday[2])
-
-    print u"===姐夫==="
-    birthday = (1976, 6, 14)
-    (lyear, lmonth, lday) = get_ludar_date(datetime(birthday[0], birthday[1], birthday[2]))
-    print(str(birthday[0]) + '-' + str(birthday[1]) + '-' + str(birthday[2]) + ':' + y_lunar(lyear) + m_lunar(lmonth) + d_lunar(lday))
-    print getDays_with_lunar(birthday[0], birthday[1], birthday[2])
-
+#    printBirthList('杨晓东', (1982,  7,  8))
+    printBirthList('史延坤', (1976,  6, 14))
+#    printBirthList('史博谦', (2010, 10, 17))
+#    printBirthList('孙睿思', (2010,  8, 19))
+    show_month(datetime(1976,1,1))
+    show_month(datetime(1975,2,1))
+    show_month(datetime(1975,3,1))
+    show_month(datetime(1975,4,1))
+    show_month(datetime(1975,5,1))
+    show_month(datetime(1975,6,1))
+    show_month(datetime(1975,7,1))
+    show_month(datetime(1975,8,1))
+    show_month(datetime(1975,9,1))
+    show_month(datetime(1975,10,1))
+    show_month(datetime(1975,11,1))
+    show_month(datetime(1975,12,1))
+    exit(0)
