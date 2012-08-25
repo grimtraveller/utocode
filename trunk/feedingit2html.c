@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #define BUF_LEN 1024*2
 #ifndef NULL
 #define NULL 0

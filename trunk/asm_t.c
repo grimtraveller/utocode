@@ -10,22 +10,32 @@
  * Date:	2009-07-02
  */
 
-int main()
+#include <stdio.h>
+int main(int argc, char* argv[])
 {
-#ifdef WIN32
+#if defined(WIN32)
 	__asm
 	{
 		int 3
 		nop
 		nop
 	}
-#else /* linux */
+#elif defined(LINUX)
 	__asm__
 	(
 	"int 3\n\t"
 	"nop\n\t"
 	"nop\n\t"
 	);
-#endif //WIN32
+#elif defined(MACOSX)
+	__asm__
+	(
+	"NOP\n\t"
+	"NOP\n\t"
+	);
+
+#else 
+
+#endif
 	return 1;
 }
