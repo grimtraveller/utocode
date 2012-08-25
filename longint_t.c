@@ -12,10 +12,16 @@
 int main()
 {
 	long int a;
-#ifndef WIN32
+#if defined(MACOSX)
+	printf("sizeof(ssize_t)=%ld", sizeof(ssize_t));
+	printf("sizeof(long int)=%ld", sizeof(long int));
+#else 
+#	ifndef WIN32
 	ssize_t b;
 	printf("sizeof(ssize_t)=%d", sizeof(ssize_t));
-#endif
+#	endif
 	printf("sizeof(long int)=%d", sizeof(long int));
+#endif
+#
 	return 0;
 }
