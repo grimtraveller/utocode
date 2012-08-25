@@ -16,15 +16,21 @@
 			ctrl+break to kill
  * Author:	zuohaitao
  * Date:	2008/12/28
+ *			2012/08/24 test it in mac os x 10.6.8
  * Todo:	test linux
  */
 #ifdef WIN32
 #include <Windows.h>
 #else
 #include <signal.h>
+#include <unistd.h>
 #endif	//WIN32
 #include <stdio.h>
+#ifdef WIN32
 #define TIMER_ELAPSE	5000
+#else
+#define TIMER_ELAPSE	5
+#endif
 void do_alarm();
 void undo_alarm();
 #ifdef WIN32
@@ -48,6 +54,7 @@ typedef enum _operator_e
 //void do_alarm(int signalno);
 //void undo_alarm();
 operator_e how = DOALARM;
+const char* str_sleep = "Sleep...\n";
 int main()
 {
 	unsigned int i = 0;
@@ -77,8 +84,7 @@ int main()
 #else
 		sleep(1);
 #endif //WIN32
-		//[NOTE]printf is not safe!!!
-		printf("Sleep...%d\n", i++);
+		write(STDOUT_FILENO, "Sleep...\n", sizeof("Sleep...\n"));
 		if (DOALARM == how)
 		{
 			do_alarm();
@@ -118,6 +124,7 @@ void do_sigint(int signo)
 	if (ALARM == how)
 	{
 		how = UNDOALARM;
+	}
 	else if (NOALARM == how)
 	{
 		how = DOALARM;
@@ -169,6 +176,11 @@ void CALLBACK alarmproc(HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime)
 void alarmproc(int nSec)
 {
 	printf("alarm\n");
+	if (0 != alarm(TIMER_ELAPSE))
+	{
+		perror("alarm was already set!");
+		return;
+	}
 }
 #endif //WIN32
 
