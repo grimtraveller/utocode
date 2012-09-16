@@ -17,6 +17,8 @@
 2012.06.08 Add \"Edit With Vim\" button<br />	\
 2012.06.08 Add \"About\" dialog For show update information and todo list<br />	\
 2012.06.11 Play sound when event happens.<br />	\
+2012.09.16 Add win+left win+right win+up win+down gloable hot key for move window<br />	\
+2012.09.16 minize and message clicked to hide() and no show dialog until next tip <br />\
 <b>todo</b><br />	\
 <font color=\"red\">	\
 Add Configure dialog<br />	\

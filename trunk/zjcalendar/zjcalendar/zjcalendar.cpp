@@ -1,17 +1,18 @@
 /**
- * @file	zjcalendar.cpp 
- * @brief	
- * @details	
- * @author	zuohaitao
- * @date	2011-03-19 
- * @warning	
- * @bug	
- */
+* @file	zjcalendar.cpp 
+* @brief	
+* @details	
+* @author	zuohaitao
+* @date	2011-03-19 
+* @warning	
+* @bug	
+*/
 #include "zjcalendar.h"
 #include "macro.h"
 #include "jobmgr.h"
 #include <QProcess>
 #include "about.h"
+#include <windows.h>
 
 zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 : QDialog(parent, flags)
@@ -24,7 +25,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
 
 	//main dialog gui setting
-	
+
 	//remove [?], add [_].
 	flags = Qt::Dialog;
 	flags |= Qt::WindowMinimizeButtonHint;
@@ -43,7 +44,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	//menu
 	createActions();
-	
+
 	//main dialog
 	mainTab = new QTabWidget(this);
 	connect(mainTab, SIGNAL(selected(QString)), this, SLOT(mainTabSelected(QString)));
@@ -58,7 +59,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	widgetNote = new QWidget();
 	noteIdx = mainTab->addTab(widgetNote, QString("Note"));
 
-	
+
 	//event tab
 
 	QGridLayout* LayoutEvent = new QGridLayout(widgetEvent);
@@ -91,7 +92,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	model->setHeaderData(0, Qt::Horizontal, tr("Id"));
 	model->setHeaderData(1, Qt::Horizontal, tr("Time"));
 	model->setHeaderData(2, Qt::Horizontal, tr("Event"));
-	
+
 	QSplitter *splitter = new QSplitter;
 	table = new QTableView;
 	splitter->addWidget(table);
@@ -163,56 +164,49 @@ void zjCalendar::setVisible(bool visible)
 		QSize s = QApplication::desktop()->size();
 		resize(MIN_WIDTH, MIN_HEIGHT);
 		move(s.width()/2-350, s.height()/2-150);
-		
+
 	}
+}
+
+void zjCalendar::hideEvent(QHideEvent *event)
+{
+	_prompt = false;
+	event->accept();
 }
 
 void zjCalendar::closeEvent(QCloseEvent *event)
 {
-	if (trayIcon->isVisible()) 
-	{
-		/*
-		int ret = QMessageBox::question(this, 
-			tr(APP_NAME), 
-			tr("Are you sure close?"), 
-			QMessageBox::Yes|QMessageBox::No);
-		*/
-		int ret = QMessageBox::No;
-		if (QMessageBox::No == ret)
-		{
-			hide();
-			event->ignore();
-		}
-	}
+	hide();
+	event->ignore();
 }
 
 void zjCalendar::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 	switch (reason) 
 	{
-	 case QSystemTrayIcon::Trigger:
-		 break;
-	 case QSystemTrayIcon::DoubleClick:
-		 hide();
-		 setWindowFlags(Qt::WindowStaysOnTopHint);
-		 showNormal();
-		 break;
-	 case QSystemTrayIcon::MiddleClick:
-		 show();
-		 break;
-	 default:
-		 break;
+	case QSystemTrayIcon::Context:
+		break;
+	case QSystemTrayIcon::Trigger:
+		break;
+	case QSystemTrayIcon::DoubleClick:
+		_prompt = true;
+		showNormal();
+		break;
+	case QSystemTrayIcon::MiddleClick:
+		show();
+		break;
+	default:
+		break;
 	}
 }
 
 void zjCalendar::messageClicked()
 {
 	// show next task message
-	setWindowFlags((Qt::WindowFlags)(~Qt::WindowStaysOnTopHint));
-	_prompt = false;
+	hide();
 }
 
-void zjCalendar::createActions()
+void zjCalendar::createActions()     
 {
 	///to do add event, joblist, note
 	eventAction = new QAction(tr("&Event"), this);
@@ -224,11 +218,11 @@ void zjCalendar::createActions()
 	//create a group for mutex each in croup
 	functionGrp = new QActionGroup(this);
 	//add menu to group
-    functionGrp->addAction(eventAction);         
-    functionGrp->addAction(jobAction);
-    functionGrp->addAction(noteAction);
+	functionGrp->addAction(eventAction);         
+	functionGrp->addAction(jobAction);
+	functionGrp->addAction(noteAction);
 	//set default selected menu
-    eventAction->setChecked(true);
+	eventAction->setChecked(true);
 	restoreAction = new QAction(tr("&Restore"), this);
 	connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 	quitAction = new QAction(tr("&Quit"), this);
@@ -258,7 +252,7 @@ void zjCalendar::menuSelected(QAction* action)
 	{
 		//NEVER DO THIS!
 	}
-	
+
 }
 
 void zjCalendar::createTrayIcon()
@@ -318,11 +312,12 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 			//save event id and reset prompt flag
 			_id = id; 
 			_prompt = true;
-			
+
 		}
 		if (_prompt)
 		{
 			showNormal();
+			SetWindowPos(winId(), HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE );
 		}
 	}
 	else
@@ -360,7 +355,7 @@ void zjCalendar::saveNoteClicked()
 	QFile file(fileNameNote);
 	if (!file.open(QFile::WriteOnly | QFile::Text))
 	{
-		
+
 	}
 	QTextStream out(&file);
 	out << note;
@@ -408,7 +403,21 @@ void zjCalendar::addClosingTimeEvent()
 	QString t = time.toString("hh:mm:00");
 	DateTime date_time;
 	date_time.time = QTime::fromString(t, "hh:mm:ss");
-	events.editEvent(new_event_id, date_time, date_time, tr("下班时间到！！"));
+	events.editEvent(new_event_id, date_time, date_time, tr("下班时间到！"));
+#if 0
+	time = startTime->time();
+	new_event_id = events.addEvent();
+	time.setHMS(time.hour(), time.minute(), 0);
+	t = time.toString("hh:mm:00");
+	date_time.time = QTime::fromString(t, "hh:mm:ss");
+	events.editEvent(new_event_id, date_time, date_time, tr("test 1"));
+
+	new_event_id = events.addEvent();
+	time.setHMS(time.hour(), time.minute()+1, 0);
+	t = time.toString("hh:mm:00");
+	date_time.time = QTime::fromString(t, "hh:mm:ss");
+	events.editEvent(new_event_id, date_time, date_time, tr("test 2"));
+#endif
 }
 
 void zjCalendar::resetStartWorkTimeClicked()
@@ -424,7 +433,7 @@ void zjCalendar::loadEvents()
 	events.getEventsFromFile(filenameEvent);
 
 	addClosingTimeEvent();
-	
+
 	DateTime dt;
 	//dt.time = time;
 	//int id;
