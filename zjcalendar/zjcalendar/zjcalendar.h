@@ -33,6 +33,7 @@ public:
 
  protected:
      void closeEvent(QCloseEvent *event);
+	 void hideEvent(QHideEvent *event);
 	 void timerEvent(QTimerEvent *event);
 	 void changeEvent(QEvent * event); 
 

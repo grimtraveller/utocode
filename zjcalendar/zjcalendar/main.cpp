@@ -11,10 +11,11 @@
 #include <QtGui/QApplication>
 #include <QtGui>
 #include "macro.h"
+#include "app.h"
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
+	App a(argc, argv);
 	//a.setWindowIcon(a.style()->standardIcon(QStyle::SP_MessageBoxInformation));
 	//get system  character set codec
 	QTextCodec *codec = QTextCodec::codecForName("System");
@@ -30,6 +31,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	zjCalendar w;
+	a.registerHotKey(w.winId());
 	w.show();
 	return a.exec();
 }
