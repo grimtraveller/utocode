@@ -1,0 +1,159 @@
+<html>
+	<head>
+		<title>Form表单的检查</title>
+		<style type="text/css">
+<!--
+.msg
+{
+	color: #FF0000;
+	font-weight: bolder;
+}
+.money
+{
+	text-align: right;
+}
+-->
+        </style>
+		<script type="text/javascript" src="livevalidation_standalone.js"></script>
+		<script language="javascript">
+<!--
+function IsDigit(c)
+{
+	if ((c >= '0') && (c <= '9'))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function CheckFraction(fraction)
+{
+	if (fraction.length > 2)
+	{
+		return false;
+	}
+	for (var i=0; i < fraction.length; i++)
+	{
+		if (!IsDigit(fraction.charAt(i)))
+		{
+			return false;
+		}
+	}
+	return true;	
+}
+
+function CheckInteger(integer)
+{
+	for (var i = 0; i < integer.length; i++)
+	{
+		var c = integer.charAt(i);
+		if ((!IsDigit(c))&&(',' != c))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+function IsFormat(integer)
+{
+	if (-1 == integer.indexOf(","))
+	{
+		return false;
+	}
+	if (!IsDigit(integer.charAt(integer.length-1)))
+	{
+		return false;
+	}
+	for (var i=integer.length-2; i >= 0; i--)
+	{
+		var c = integer.charAt(i);
+		index = integer.length - 1 - i;
+		if (0 == (index%4))
+		{
+			if (c != ',')
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if (!IsDigit(c))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+function Format(integer)
+{
+	var formated;
+	integer = integer.replace(/,/g, "");
+	formated = integer.charAt(integer.length-1);
+	for (var i=integer.length-2; i >= 0; i--)
+	{
+		var c = integer.charAt(i);
+		where = integer.length - 1 - i;
+		if (0 == (where%3))
+		{
+			formated = "," + formated;
+		}
+		formated=c+formated;
+	}
+	return formated;
+}
+function CheckAndFormat(ID)
+{
+	oElem = document.getElementById(ID);
+	if (-1 == oElem.value.indexOf("."))
+	{
+		var integer = oElem.value;
+		fraction = "";
+		if (!CheckInteger(integer))
+		{
+			return false;
+		}
+		if (IsFormat(integer))
+		{
+			return true;
+		}
+		oElem.value = Format(integer);
+		return true;
+	}
+	else
+	{
+		var tmparray = oElem.value.split(".");
+		integer = tmparray[0];
+		fraction = tmparray[1];
+		if (!CheckFraction(fraction))
+		{
+			return false;
+		}
+		if (!CheckInteger(integer))
+		{
+			return false;	
+		}
+		if (IsFormat(integer))
+		{
+			return true;
+		}
+		oElem.value = Format(integer) + "." + fraction;
+		return true;
+	}
+}
+-->
+		</script>
+	</head>
+	<body>
+    <p>Input Money$_$: 
+			  <input type="text" class="money" id="num" size="100"
+			  onfocusout="if (!CheckAndFormat('num')){document.getElementById('message').innerText='格式错误！';}else{document.getElementById('message').innerText='';}"
+			  />
+			  <span class="msg" id=message></span>	  </p>
+	</body>
+
+</html>
