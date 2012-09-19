@@ -10,8 +10,8 @@ DEFFILE=zjrt0.def
 LIBFILE=libzjrt0.lib
 DLLFILE=zjrt0.dll
 DLLOBJ=zjdllmain.obj
-OBJS=zjtuxlist.obj zjtype.obj zjsleep.obj zjlock.obj
-BINS=tzjtype tzjlock tzjsleep tzjlock
+OBJS=zjtuxlist.obj zjtype.obj zjsleep.obj zjlock.obj zjperformance.obj zjfuncunittest.obj
+BINS=tzjtype tzjlock tzjsleep tzjlock tzjperformance tzjunittest
 .PHONY:all clean $(BINS)
 
 all:$(DLLFILE) $(LIBFILE) $(BINS)
@@ -26,6 +26,10 @@ tzjtype:$(LIBFILE)
 tzjlock:$(LIBFILE)
 	$(CC) $(CFLAGS) $? $@.c /Fe$@.exe
 tzjsleep:$(LIBFILE)
+	$(CC) $(CFLAGS) $? $@.c /Fe$@.exe
+tzjperformance:$(LIBFILE)
+	$(CC) $(CFLAGS) $? $@.c /Fe$@.exe
+tzjunittest:$(LIBFILE)
 	$(CC) $(CFLAGS) $? $@.c /Fe$@.exe
 
 clean:
