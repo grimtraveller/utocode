@@ -1,5 +1,7 @@
+""""":source %""""""""""""""""
 "protected if want to modify 'set noreadonly'"
 "set readonly
+
 if has("mac")
 	let w = getcwd()
 	cd %:h
