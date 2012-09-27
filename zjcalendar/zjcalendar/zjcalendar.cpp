@@ -110,27 +110,21 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	//note tab
 	QGridLayout* LayoutNote = new QGridLayout(widgetNote);
-	//noteEdit = new QTextEdit(this);
-	//connect(noteEdit, SIGNAL(cursorPositionChanged()), this, SLOT(noteEditTextChanged()));
+	noteEdit = new zjTextEdit(this);
+	connect(noteEdit, SIGNAL(cursorPositionChanged()), this, SLOT(noteEditTextChanged()));
 
-	//LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
-	//QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
-	//QFile file(fileNameNote);
-	//if (file.open(QFile::ReadOnly | QFile::Text))
-	//{
-	//	noteEdit->setPlainText(file.readAll());
-	//}
-	//file.close();
-	//saveNote = new QPushButton;
-	//saveNote->setText(tr("&save"));
-	//connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
-	//LayoutNote->addWidget(saveNote, 9, 8);
-
-
-	editNote = new QPushButton;
-	editNote->setText(tr("&edit with gVim"));
-	connect(editNote, SIGNAL(clicked()), this, SLOT(editNoteClicked()));
-	LayoutNote->addWidget(editNote, 9, 7);
+	LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
+	QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
+	QFile file(fileNameNote);
+	if (file.open(QFile::ReadOnly | QFile::Text))
+	{
+		noteEdit->setPlainText(file.readAll());
+	}
+	file.close();
+	saveNote = new QPushButton;
+	saveNote->setText(tr("&save"));
+	connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
+	LayoutNote->addWidget(saveNote, 9, 8);
 
 	//tray setting
 	createTrayIcon();
@@ -146,9 +140,13 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 void zjCalendar::noteEditTextChanged()
 {
 	QTextCursor tc = noteEdit->textCursor();
-	tc.setVisualNavigation(true);
-	noteEdit->setTextCursor(noteEdit->textCursor());	
+	tc.setPosition(-1);
+	//tc.setVisualNavigation(true);
+	//noteEdit->setTextCursor(noteEdit->textCursor());
+	//tc.selectionEnd();
 }
+
+
 zjCalendar::~zjCalendar()
 {
 	killTimer(timeid);
@@ -360,13 +358,6 @@ void zjCalendar::saveNoteClicked()
 	QTextStream out(&file);
 	out << note;
 	file.close();
-}
-
-void zjCalendar::editNoteClicked()
-{
-	QStringList args;
-	args << QDir::currentPath() + tr("\\todo.txt");
-	QProcess::startDetached(tr("C:\\Program Files\\Vim\\vim73\\gvim.exe"),args);
 }
 
 void zjCalendar::itemChanged(QStandardItem * item)

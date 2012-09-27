@@ -15,7 +15,7 @@
 #include <events.h>
 #include "digiflip.h"
 #include "eventmsg.h"
-
+#include "zjtextedit.h"
 #define EVENT_FILE_NAME "zjCalendar.dat"
 #define NOTE_FILE_NAME	"todo.txt"
 #define MIN_WIDTH	700
@@ -42,7 +42,6 @@ public:
      void messageClicked();
 	 void mainTabSelected(const QString & tabname);
 	 void saveNoteClicked();
-	 void editNoteClicked();
 	 void itemChanged(QStandardItem * item);
 	 void editjobClicked();
 	 void resetStartWorkTimeClicked();
@@ -82,9 +81,8 @@ private:
 	int eventIdx;
 	int jobIdx;
 	int noteIdx;
-	QTextEdit* noteEdit;
+	zjTextEdit* noteEdit;
 	QPushButton* saveNote;
-	QPushButton* editNote;
 	QPushButton* editjob;
 	QPushButton* resetStartTime;
 	QTimeEdit* startTime;
