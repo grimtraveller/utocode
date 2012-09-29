@@ -93,8 +93,6 @@ elseif has("win32")
 	!"C:\\Program Files\\7-Zip\\7z.exe" e txtbrowser-1.3.5.zip -y
 	!"C:\\Program Files\\7-Zip\\7z.exe" e winmanager.zip -y
 	!"C:\\Program Files\\7-Zip\\7z.exe" e DrawItvba.gz -y
-	!"C:\\Program Files\\7-Zip\\7z.exe" e indent-guides-1.6.tar.gz -y
-	!"C:\\Program Files\\7-Zip\\7z.exe" e indent-guides-1.6.tar -y
 	"install taglist
 	let s:taglist = readfile("taglist.vim")
 	call writefile(s:taglist, $VIM . "/vimfiles/plugin/taglist.vim")
