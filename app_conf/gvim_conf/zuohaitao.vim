@@ -13,6 +13,14 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2012/09/29
+"					<F2> <C-F2> mark (use visualmark.vim) 
+"					add ruller
+"					add auto columns=100
+"					add indent_guides configure
+"					add python(.py) file is supported
+"		2012/08/24
+"					add comment to explain how to convert 'tab' to 'space'
 "		2012/07/31 
 "					objc(.m) file is supported
 "		2011/08/28 
@@ -39,7 +47,6 @@
 "		2008/12/06 set tags 
 "
 "Todo:
-"		add function to <F2> <C-F2> mark (getpos() setpos() may be useful) 
 "		test all in vim in linux 
 "		test all in macvim 
 "
@@ -70,6 +77,11 @@ function! z:win32_unicode_file()
 		au QuickfixCmdPost make call z:QfMakeConv()
 	endif
 	if (".sln" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
+	if (".py" == strpart(fn,len(fn)-3, 3))
 		set encoding=utf-8
 		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 		au QuickfixCmdPost make call z:QfMakeConv()
@@ -107,6 +119,8 @@ set linespace=5	"linespace
 set number	"line number
 set imcmdline	"the Input Method is always	
 set laststatus=2 "always a status line
+set cc=80 "ruller
+set columns=100
 if has("mac")
 	set macmeta
 endif
@@ -133,8 +147,6 @@ if (version >= 703)
 endif
 "Set mapleader repleace \xx to ,xx
 let mapleader = ","
-
-
 
 """"""""""""""""""""""""""""""
 "Plugin Setting 
@@ -317,3 +329,9 @@ endif
 "zc make the code between the operator
 "zo expand the fold code
 "tabnew tabn<PageNumber>
+"tab <-> space
+":set expandtab
+":retab!
+":set noexpandtab
+",fh add c file header comment
+",fc add c file function comment
