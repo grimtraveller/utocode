@@ -50,6 +50,11 @@ if has("mac")
 	call writefile(s:txtbrowser, $HOME . "/.vim/doc/txtbrowser.txt")
 	let s:txtbrowser = readfile("txt.vim")
 	call writefile(s:txtbrowser, $HOME . "/.vim/syntax/txt.vim")
+	"visualmark
+	let s:visualmark = readfile("visualmark.vim")
+	call writefile(s:visualmark, $HOME . "/.vim/plugin/visualmark.vim")
+	
+	
 "drawit
 	e DrawIt.vba
 	source %
@@ -88,6 +93,8 @@ elseif has("win32")
 	!"C:\\Program Files\\7-Zip\\7z.exe" e txtbrowser-1.3.5.zip -y
 	!"C:\\Program Files\\7-Zip\\7z.exe" e winmanager.zip -y
 	!"C:\\Program Files\\7-Zip\\7z.exe" e DrawItvba.gz -y
+	!"C:\\Program Files\\7-Zip\\7z.exe" e indent-guides-1.6.tar.gz -y
+	!"C:\\Program Files\\7-Zip\\7z.exe" e indent-guides-1.6.tar -y
 	"install taglist
 	let s:taglist = readfile("taglist.vim")
 	call writefile(s:taglist, $VIM . "/vimfiles/plugin/taglist.vim")
@@ -120,6 +127,11 @@ elseif has("win32")
 	call writefile(s:txtbrowser, $VIM . "/vimfiles/doc/txtbrowser.txt")
 	let s:txtbrowser = readfile("txt.vim")
 	call writefile(s:txtbrowser, $VIM . "/vimfiles/syntax/txt.vim")
+	"visualmark
+	let s:visualmark = readfile("visualmark.vim")
+	call writefile(s:visualmark, $VIM . "/vimfiles/plugin/visualmark.vim")
+
+
 	"drawit
 	e DrawIt.vba
 	source %
