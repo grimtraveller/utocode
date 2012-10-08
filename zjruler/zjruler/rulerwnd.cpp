@@ -719,15 +719,18 @@ void CRulerWnd::OnMenuQuit()
 
 void CRulerWnd::OnMenuColor()
 {
+	m_bGetColor = m_bGetColor ? FALSE:TRUE;
+
 	if (m_bGetColor)
 	{
 		SetTimer(IDT_TIMER, MONITOR_TIMER, NULL);
+		m_menu.GetSubMenu(0)->CheckMenuItem(ID_MENU_GETCOLOR, MF_CHECKED);
 	}
 	else
 	{
 		KillTimer(IDT_TIMER);
+		m_menu.GetSubMenu(0)->CheckMenuItem(ID_MENU_GETCOLOR, MF_UNCHECKED);
 	}
-	m_bGetColor = m_bGetColor ? FALSE:TRUE;
 }
 
 void CRulerWnd::OnTimer(UINT_PTR nIDEvent)
