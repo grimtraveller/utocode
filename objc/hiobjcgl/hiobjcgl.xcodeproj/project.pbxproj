@@ -1,0 +1,224 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA08BF6616271AB4001D1A73 /* appcontroller.h in Sources */ = {isa = PBXBuildFile; fileRef = FA08BF31162719B1001D1A73 /* appcontroller.h */; };
+		FA08BF6716271AB4001D1A73 /* appcontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = FA08BF32162719B1001D1A73 /* appcontroller.m */; };
+		FA08BF6816271AB4001D1A73 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA08BF33162719B1001D1A73 /* main.m */; };
+		FA08BF6916271AB4001D1A73 /* zglview.h in Sources */ = {isa = PBXBuildFile; fileRef = FA08BF34162719B1001D1A73 /* zglview.h */; };
+		FA08BF6A16271AB4001D1A73 /* zglview.m in Sources */ = {isa = PBXBuildFile; fileRef = FA08BF35162719B1001D1A73 /* zglview.m */; };
+		FA08BF9016271AC5001D1A73 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA08BF5316271A4E001D1A73 /* OpenGL.framework */; };
+		FA08BF9116271AC5001D1A73 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA08BF5616271A61001D1A73 /* GLUT.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA08BF31162719B1001D1A73 /* appcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appcontroller.h; sourceTree = "<group>"; };
+		FA08BF32162719B1001D1A73 /* appcontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = appcontroller.m; sourceTree = "<group>"; };
+		FA08BF33162719B1001D1A73 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FA08BF34162719B1001D1A73 /* zglview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zglview.h; sourceTree = "<group>"; };
+		FA08BF35162719B1001D1A73 /* zglview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = zglview.m; sourceTree = "<group>"; };
+		FA08BF4216271A0A001D1A73 /* hiobjcgl-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "hiobjcgl-Info.plist"; sourceTree = "<group>"; };
+		FA08BF5316271A4E001D1A73 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		FA08BF5616271A61001D1A73 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = /System/Library/Frameworks/GLUT.framework; sourceTree = "<absolute>"; };
+		FA08BF5D16271A7F001D1A73 /* hiobjcgl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hiobjcgl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA08BF5B16271A7F001D1A73 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA08BF9016271AC5001D1A73 /* OpenGL.framework in Frameworks */,
+				FA08BF9116271AC5001D1A73 /* GLUT.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA08BF2416271957001D1A73 = {
+			isa = PBXGroup;
+			children = (
+				FA08BF31162719B1001D1A73 /* appcontroller.h */,
+				FA08BF32162719B1001D1A73 /* appcontroller.m */,
+				FA08BF33162719B1001D1A73 /* main.m */,
+				FA08BF34162719B1001D1A73 /* zglview.h */,
+				FA08BF35162719B1001D1A73 /* zglview.m */,
+				FA08BF4016271A09001D1A73 /* Products */,
+				FA08BF4216271A0A001D1A73 /* hiobjcgl-Info.plist */,
+				FA08BF5316271A4E001D1A73 /* OpenGL.framework */,
+				FA08BF5616271A61001D1A73 /* GLUT.framework */,
+			);
+			sourceTree = "<group>";
+		};
+		FA08BF4016271A09001D1A73 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA08BF5D16271A7F001D1A73 /* hiobjcgl.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA08BF5C16271A7F001D1A73 /* hiobjcgl */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA08BF6516271A9E001D1A73 /* Build configuration list for PBXNativeTarget "hiobjcgl" */;
+			buildPhases = (
+				FA08BF5916271A7F001D1A73 /* Resources */,
+				FA08BF5A16271A7F001D1A73 /* Sources */,
+				FA08BF5B16271A7F001D1A73 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = hiobjcgl;
+			productName = hiobjcgl;
+			productReference = FA08BF5D16271A7F001D1A73 /* hiobjcgl.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA08BF2616271957001D1A73 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = FA08BF2916271957001D1A73 /* Build configuration list for PBXProject "hiobjcgl" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = FA08BF2416271957001D1A73;
+			productRefGroup = FA08BF4016271A09001D1A73 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA08BF5C16271A7F001D1A73 /* hiobjcgl */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA08BF5916271A7F001D1A73 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA08BF5A16271A7F001D1A73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA08BF6616271AB4001D1A73 /* appcontroller.h in Sources */,
+				FA08BF6716271AB4001D1A73 /* appcontroller.m in Sources */,
+				FA08BF6816271AB4001D1A73 /* main.m in Sources */,
+				FA08BF6916271AB4001D1A73 /* zglview.h in Sources */,
+				FA08BF6A16271AB4001D1A73 /* zglview.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FA08BF2716271957001D1A73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		FA08BF2816271957001D1A73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		FA08BF5F16271A80001D1A73 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "hiobjcgl-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = hiobjcgl;
+			};
+			name = Debug;
+		};
+		FA08BF6016271A80001D1A73 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "hiobjcgl-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = hiobjcgl;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA08BF2916271957001D1A73 /* Build configuration list for PBXProject "hiobjcgl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA08BF2716271957001D1A73 /* Debug */,
+				FA08BF2816271957001D1A73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA08BF6516271A9E001D1A73 /* Build configuration list for PBXNativeTarget "hiobjcgl" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA08BF5F16271A80001D1A73 /* Debug */,
+				FA08BF6016271A80001D1A73 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA08BF2616271957001D1A73 /* Project object */;
+}
