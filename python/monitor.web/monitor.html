@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Monitor Memory</title>
+    <link href="layout.css" rel="stylesheet" type="text/css">
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../flot/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="../flot/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../flot/jquery.flot.js"></script>
+ </head>
+    <body>
+    <h1>Monitor Memory</h1>
+
+    <div id="placeholder" style="width:600px;height:300px;"></div>
+
+    <p>
+      <input class="stop" type="button" value="stop">
+      <input class="update" type="button" value="Monitor">
+      <span></span>
+    </p>
+
+<script type="text/javascript">
+$(function () {
+    var is_stop = true;
+    var timeout = 1000;
+    var point_count = 60;
+    var options = {
+        lines: { show: true, color: "rgba(255, 0, 0, 0.8)" },
+        points: { show: false },
+        yaxis: { min: 0, max: 100 },
+        xaxis: { show:false}
+    };
+    var data = [];
+    
+    while (data.length < point_count) {
+        data.push(0);
+    }
+    var res = [];
+    for (var i =0; i < data.length; ++i)
+    {
+        res.push([i, data[i]]);
+    }
+    var plot = $.plot($("#placeholder"), [res], options);
+    plot.draw();
+    
+    $("input.stop").click(function () {
+        is_stop = true;
+    })        
+    $("input.update").click(function () {
+        is_stop = false;
+
+        function update() {
+            function recv(value_json) {
+                y = value_json.data;
+                data = data.slice(1);
+                if (y < 0)
+                    y = 0;
+                if (y > 100)
+                    y = 100;
+                data.push(y);
+        
+                var res = [];
+                for (var i =0; i < data.length; ++i)
+                {
+                    res.push([i, data[i]]);
+                }
+                plot.setData([res]);
+                plot.draw();
+            }
+            $.ajax({
+                url: "data.json" ,
+				cache:false,
+                method: 'GET',
+                dataType: 'json',
+                success: recv,
+				error:function(request, status, error) {alert(error);}
+            });
+            //if (!is_stop)
+                setTimeout(update, timeout);
+        }
+        //if (!is_stop)
+            setTimeout(update, timeout);
+    });
+});
+</script>
+
+ </body>
+</html>
