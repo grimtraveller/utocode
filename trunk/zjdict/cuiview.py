@@ -64,11 +64,17 @@ if '__main__' == __name__:
                     break
                 elif ',save' == source:
                     mod.save(fname)
-                elif ',search' == source:
+                elif ',search' == source[:len(',search')]:
+                    search_once = False
+                    if len(source) > len(',search'):
+                        search_once = True
+                        grep = source.replace(',search ', '')
+                  
                     while True:
-                        grep = raw_input('?>')
-                        if ',quit' == grep or ',exit' == grep:
-                            break
+                        if not search_once:
+                            grep = raw_input('?>')
+                            if ',quit' == grep or ',exit' == grep:
+                                break
                         tips = mod.search(grep)
                         count = 0
                         for tip in tips:
@@ -83,8 +89,16 @@ if '__main__' == __name__:
                                     if 0 == len(raw_input('ESC')):
                                         break
                                 count = 0
+                        if search_once:
+                            break
             else:
                 destination = translate(source)
-                show_record(destination)
+                if destination != '':
+                    show_record(destination)
+                else:
+                    print 'translate by internet...'
+                    import baidudict
+                    print baidudict.translateByBaiDu(source).decode('utf-8')
+
     else:
         show_record(translate(sys.argv[1]))

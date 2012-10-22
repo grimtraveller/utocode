@@ -217,3 +217,316 @@ n. 易变性, 性情不定
 【医】 突变性
 
 
+
+finite
+有限的
+*['fainait]
+a. 有限的, 有穷的, 限定的
+n. 有限物
+【电】 有限的
+
+
+retain
+保持
+*[ri'tein]
+vt. 保持, 保有, 留住, 记得, 付定金聘请
+【经】 保留, 留存
+
+
+convenience
+方便
+*[kә'vi:njәns]
+n. 方便, 便利的事物, 方便的时候
+相关词组:
+  at one's convenience
+  for convenience
+  make a convenience of sb
+
+
+block
+块
+*[blɒk]
+n. 街区, 木块, 石块, 块
+vt. 阻塞, 封锁, 使成块状
+【计】 块, 数据块
+【化】 滑块; 滑车; 滑轮; 闭塞; 嵌段(共聚)
+【医】 阻滞, 阻塞, 阻断, 传导阻滞, 块, 区组
+【经】 区段, 集团, 大宗股票; 阻隔
+相关词组:
+  block up...
+
+
+reshape
+整形
+*[ri:'ʃeip]
+vt. 改造, 使成新的形状, 打开新局面
+vt. 整形
+vi. 整形
+【计】 整形
+
+
+comfortable
+舒服的
+*['kʌmfәtәbl]
+a. 舒服的, 轻松的
+n. 盖被
+
+
+wheel
+轮
+*[hwi:l]
+n. 轮子, 车轮, 轮, 方向盘, 旋转, 机构, 重要人物
+vt. 使旋转, 转动, 使转向
+vi. 旋转, 转弯, 盘旋
+【医】 轮
+
+
+chunk
+大块
+*[tʃʌŋk]
+n. 大块, 矮胖的人(或物)
+【经】 定样
+
+
+conveniently
+a. 方便, 合宜
+
+
+obscure
+难解的
+*[әb'skjuә]
+a. 模糊的, 昏暗的, 难解的, 晦涩的, 偏僻的, 微贱的, 无名的
+vt. 使变暗, 隐藏, 使变模糊, 使难解
+
+
+evaluation
+评价
+*[i,vælju'eiʃәn]
+n. 评估, 估价, 求值
+【计】 鉴定; 评价; 求值
+【化】 评估
+【医】 评价, 估价
+【经】 评价, 估价
+
+
+convenient
+方便的
+*[kәn'vi:njәnt]
+a. 方便的, 合宜的
+【法】 适当的, 合理而可行的, 方便的
+相关词组:
+  be convenient to
+
+
+designate
+指定
+*['dezigneit]
+vt. 指定, 指明, 称呼
+a. 已选出而未上任的
+【法】 委任, 指定
+
+
+initializer
+【计】 初始化程序
+
+
+shrinking
+收缩
+【医】 皱缩
+
+
+cycle
+循环
+*['saikl]
+n. 周期, 循环, 自行车, 一段时间, 整套
+vi. 循环, 轮转, 骑自行车
+vt. 使循环, 使轮转
+【计】 环路; 周期; 循环
+【医】 周期, 环, 循环; 周波数
+【经】 周期, 循环
+
+
+synthesize
+综合
+*['sinθisaiz]
+vt. 综合, 合成
+vi. 综合, 合成
+【医】 合成, 综合, 接合
+
+
+category
+分类
+*['kætigәri]
+n. 种类, 类项
+【计】 分类
+【经】 类目, 种类
+
+
+convenience
+方便
+*[kә'vi:njәns]
+n. 方便, 便利的事物, 方便的时候
+相关词组:
+  at one's convenience
+  for convenience
+  make a convenience of sb
+
+
+informal
+*[in'fɒ:mәl]
+a. 非正式的, 不拘礼的, 通俗的
+【经】 非正式的, 日常使用的
+
+
+complain
+*[kәm'plein]
+vt. 抱怨, 抗议, 控诉
+vi. 抱怨, 抗议, 控诉
+【法】 申诉, 控诉, 控告
+相关词组:
+  complain to sb of sth
+  complain of
+
+
+usable
+可用的
+*['ju:zәbl]
+a. 可用的, 方便使用的, 能用的
+
+
+fuss
+*[fʌs]
+n. 大惊小怪, 小题大作, 忙乱
+vi. 无事自扰, 焦急, 焦燥, 忙乱
+vt. 使激动, 使烦燥
+相关词组:
+  fuss up and down
+  make a fuss
+  kick up a fuss
+
+
+formal
+形式的
+*['fɒ:mәl]
+a. 正式的, 形式的, 礼仪的, 拘于礼节的, 拘谨的
+n. 正式的社交活动
+【化】 甲缩醛; 甲醛缩二甲醇
+【医】 福马尔, 甲缩醛, 甲醛缩二甲醇
+【经】 正式的
+
+
+adopt
+采用
+*[ә'dɒpt]
+vt. 采用, 正式通过, 收养, 接受
+【医】 采取
+
+
+burden
+负担
+*['bә:dn]
+n. 负担, 重载, 担子, 责任
+vt. 装货于, 烦扰, 使负担
+【经】 制造费用, 负嗬, 载货量
+
+
+refer
+提到
+*[ri'fә:]
+vt. 提交, 归诸于, 把...提交, 使求助于
+vi. 提到, 涉及, 查阅, 查询, 咨询
+【经】 交付, 委托
+相关词组:
+  refer oneself to
+  refer to A as B
+  refer to sth
+  refer to sb for information
+
+
+duplicate
+复制
+*['dju:plikeit]
+n. 副本, 复本, 复制品
+a. 复制的, 二重的
+vt. 复制, 使加倍
+【计】 复制
+【化】 双份
+【经】 抄件, 副本, 一式两份
+
+
+interactive
+交互式的
+a. 相互作用的, 相互影响的
+【计】 交互, 人机对话的
+
+
+invasive
+*[in'veisiv]
+a. 侵入的, 侵略性的, 攻击性的
+
+
+urgent
+*['ә:dʒәnt]
+a. 紧急的, 急迫的, 催逼的
+【经】 紧急的, 急迫的
+相关词组:
+  be in urgent need
+
+
+noninvasive
+a. 非侵害的, 无损伤的, 非侵袭的
+
+
+suspend
+中止
+*[sә'spend]
+vt. 悬, 吊, 使悬浮, 暂停, 中止, 推迟
+vi. 暂停, 中止, 悬浮, 停止偿付债务
+【计】 暂停
+【经】 暂停, 中止
+
+
+tutorial
+指南
+*[tju:'tɒ:riәl]
+n. 个别指导, 论文, 学习指南, 指导手册
+a. 个别指导的, 家庭教师的, 辅导的
+【计】 教程
+
+
+
+===<The C Programming Language(2nd Edition)===
+
+
+convey
+*[kәn'vei]
+vt. 传达, 运输, 转让
+【经】 转让(财产等), 搬运
+
+
+essential
+必需的
+*[i'senʃәl]
+n. 要素, 要点, 本质
+a. 必要的, 重要的, 本质的
+【计】 本质冒险
+【医】 必需的, 自发的, 特发的
+
+
+comprehension
+*[,kɒmpri'henʃәn]
+n. 理解, 包含
+
+
+feature
+特征
+*['fi:tʃә]
+n. 面孔的一部分(如眼、口等), 特征, 容貌, 特色, 特写
+vt. 是...的特色, 特写, 放映
+vi. 起重要作用
+【计】 特性
+【医】 容貌, 特征, 式
+【经】 特色证券; 突显
+相关词组:
+  make a feature of...
+
