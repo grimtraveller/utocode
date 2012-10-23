@@ -98,7 +98,11 @@ if '__main__' == __name__:
                 else:
                     print 'translate by internet...'
                     import baidudict
-                    print baidudict.translateByBaiDu(source).decode('utf-8')
+                    t = baidudict.translateByBaiDu(source)
+                    if t:
+                        print t.decode('utf-8')
+                    import youdaodict
+                    print youdaodict.translateByYouDao(source)
 
     else:
         show_record(translate(sys.argv[1]))

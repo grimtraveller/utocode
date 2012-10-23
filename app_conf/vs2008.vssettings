@@ -1096,6 +1096,13 @@
 							<Item Name="Identifier" Foreground="0x02000000" Background="0x02000000" BoldFont="No"/>
 							<Item Name="Comment" Foreground="0x00C0C0C0" Background="0x02000000" BoldFont="No"/>
 							<Item Name="Preprocessor Keyword" Foreground="0x0000FF00" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Attribute" Foreground="0x0000FF00" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Attribute Quotes" Foreground="0x00FFFF00" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Attribute Value" Foreground="0x00FFFF00" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Delimiter" Foreground="0x00FFFF00" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Doc Comment" Foreground="0x00808080" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Name" Foreground="0x00FFFF00" Background="0x02000000" BoldFont="No"/>
+							<Item Name="XML Text" Foreground="0x00FFFFFF" Background="0x02000000" BoldFont="No"/>
 						</Items>
 					</Category>
 					<Category GUID="{A7EE6BEE-D0AA-4B2F-AD9D-748276A725F6}" FontIsDefault="Yes">
