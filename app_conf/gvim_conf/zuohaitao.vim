@@ -96,6 +96,11 @@ function! z:win32_unicode_file()
 		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 		au QuickfixCmdPost make call z:QfMakeConv()
 	endif
+	if ("blog" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
 endfunction
 
 if (has("linux")||has("mac"))
@@ -129,7 +134,9 @@ set linespace=5	"linespace
 set number	"line number
 set imcmdline	"the Input Method is always	
 set laststatus=2 "always a status line
-set cc=80 "ruller
+if has("gui_running")
+	set cc=80 "ruller
+endif
 set columns=100
 if has("mac")
 	set macmeta
