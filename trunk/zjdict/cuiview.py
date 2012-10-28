@@ -97,12 +97,14 @@ if '__main__' == __name__:
                     show_record(destination)
                 else:
                     print 'translate by internet...'
-                    import baidudict
-                    t = baidudict.translateByBaiDu(source)
-                    if t:
-                        print t.decode('utf-8')
-                    import youdaodict
-                    print youdaodict.translateByYouDao(source)
-
+                    try:
+                        import baidudict
+                        t = baidudict.translateByBaiDu(source)
+                        if t:
+                            print t.decode('utf-8')
+                        import youdaodict
+                        print youdaodict.translateByYouDao(source)
+                    except:
+                        print '[exception happens]'
     else:
         show_record(translate(sys.argv[1]))

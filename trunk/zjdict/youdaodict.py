@@ -8,11 +8,13 @@ def translateByYouDao(w):
     result = ''
     url = 'http://fanyi.youdao.com/openapi.do?keyfrom=zjdict&key=701234458&type=data&doctype=json&version=1.1&q=' + w
     f = urllib.urlopen(url)
-    d = json.loads(f.read())
-    if 'errorCode' in d.keys() and d['errorCode'] == 0:
-        if 'translation' in d.keys():
-            for i in d['translation']:
-                result += i
+    c = f.read()
+    if c != 'no query':
+        d = json.loads(c)
+        if 'errorCode' in d.keys() and d['errorCode'] == 0:
+            if 'translation' in d.keys():
+                for i in d['translation']:
+                    result += i
     return result
 
 if __name__ == '__main__':
