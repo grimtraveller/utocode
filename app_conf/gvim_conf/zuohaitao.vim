@@ -13,6 +13,12 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2012/12/12	
+"					suport markdown format file(*.md,*.markdown)
+"		2012/12/04
+"					map <silent><leader>fh add c/c++ file header comment
+"					map <silent><leader>fc add c/c++ function comment
+"
 "		2012/09/29
 "					<F2> <C-F2> mark (use visualmark.vim) 
 "					add ruller
@@ -97,6 +103,16 @@ function! z:win32_unicode_file()
 		au QuickfixCmdPost make call z:QfMakeConv()
 	endif
 	if ("blog" == strpart(fn,len(fn)-4, 4))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
+	if (".md" == strpart(fn, len(fn)-3, 3))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
+	if (".markdown" == strpart(fn, len(fn)-9, 9))
 		set encoding=utf-8
 		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 		au QuickfixCmdPost make call z:QfMakeConv()
@@ -227,6 +243,7 @@ function! z:uncomment()
 	endwhile
 endfunction
 let s:cmfmt=""
+au BufNewFile,BufRead, *.md set filetype=markdown
 au BufNewFile,BufRead, *.py	let s:cmfmt="#"
 au BufNewFile,BufRead, *.py call py:setting()
 au BufNewFile,BufRead, *.c,*.cpp,*.h,*.m	let s:cmfmt="//"
