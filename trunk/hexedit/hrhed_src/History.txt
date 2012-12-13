@@ -1,0 +1,181 @@
+version 1.0.155 beta 3: March 21st, 2000
+- Replace can also delete found data now ("replace with empty").
+  Problem: the first occurance is NOT replaced.
+- Uses pabs's MessageCopyBox in file properties and read-float command.
+- Give a warning if character keys are pressed in read-only mode.
+- Added pabs's copy button in the comparison results window.
+
+version 1.0.155 beta 2: March 9th, 2000
+- Modified View Options dialogue by placing the "automatically adjust bytes per line"
+  checkbox nearer to the edit box for bytes per line and added some clarifying text.
+- Modified fill_with with Pabs' patch because it would crash when compiled
+  with MS VC++ 4.0.
+- Added a "dummy = 0;" in SimpleArray<T>::Replace because there used to be a warning
+  about uninitialized data.
+- Deselected data after loading a new file.
+- View status is updated after using "Insert file" command, used to cause trouble
+  with scrolling.
+- Can't choose file being edited for "Insert file".
+
+version 1.0.155 beta 1
+- Added Replace command.
+- Added rest of Pabs' improvements.
+- Added Pabs' bit display to status window.
+- Fixed bug in cut command: "Cut up to and including offset" would show value
+  too large by one.
+- When dragging the vertical scrollbar button to the bottom the data displayed
+  does not consist of only the last line at the top of the window anymore.
+- Now two separator lines in front of the characters.
+- Automatically make selected data the data to search for for the find command. Also works
+  with the find-next and find-previous commands. (Problem: find-previous finds the actual previous
+  occurance only after *two* calls)
+- In the save-as command: asks if a file should be overwritten if it already existed.
+- Fixed Cut bug: using "cut up to offset" would always return 1 byte to cut.
+- Fixed bug in find function: searching would find values at end
+  of file position.
+- Improved procedure for inserting of hex values with keyboard.
+- Added typecasts in filedrop-handler for compatibility with newer VC compilers.
+- Fixed open from command line problem in Win2000 (patch sent in by Bo Wannerberg).
+- Changed some menu captions in Edit menu.
+- Cursor changes to text i-beam when selecting.
+- Added command to add frhed to the Windows Explorer context menu.
+
+Following notes were copied from Pabs' history file.
+---------------------------------------------------------------------
+31st January 2000:version 1.0.155 - pabs patch
+- The fill selection with command allows you to |=, &= or ^= the current byte of
+  your expression with that of the file
+
+25th-27th January 2000:version 1.0.155 - pabs patch
+- Added save selection as, insert file, delete file & close file (same as new in fact IS new(same id therefore is the same))
+- can specify the number of bytes to skip between pastes
+
+20th&21st January 2000:version 1.0.155 - pabs patch
+- fill with dlg box displays hex versions of sizes and only uses 
+  the symbol font for the infinity character-not for nums as well
+- odd numbers of hex digits entered result in the buf being a char
+  version of concatenation of two of the hex versions
+  not the last byte being 0X where X is the last (odd numbered) hex digit
+  eg "ffa"->"ffaffa"->"ÿ¯ú"
+      odd    even      char
+- the char box was pissing me off so I got rid of it
+- status bar also shows the bits of the current byte in order MSB to LSB
+- can now revert to saved version of file
+
+21st December 1999:version 1.0.155 - pabs patch
+- "Fill selection with" added (no preference data)
+---------------------------------------------------------------------
+
+8th August 1999: version 1.0.154
+- A separate set of preference data is saved for every
+  instance of frhed.
+
+5th August 1999:
+- all settings are now stored in the registry
+
+21st July 1999: version 1.0.153
+- Display wait-cursor when opening and saving.
+- Set nibble position to 0 on New command.
+- Added button that opens homepage in About box.
+- Configurable Browser name.
+- Added WaitCursor class.
+- frhed would crash when arrow-up was pressed on empty file:
+  now print_line does nothing if not even the index after the
+  last valid byte is in the line to print.
+
+9th July 1999: version 1.0.152
+- Added operator+ to SimpleString
+- Changed About-box (homepage URL added).
+- Paste insert/overwrite mode depends on global mode.
+- Added "Open in text editor" command.
+- Added SimpleString class.
+
+7th July 1999: version 1.0.151
+- ToggleInsertmode only calls setwindowtitle.
+
+6th July 1999:
+- Added "Find next/previous" commands.
+- Fixed display bug: when resizing, the current byte was centered in the
+  view even if there was a selection.
+- Fixed mouse selection bug: now selecting is only possible if button was
+  down on a valid position.
+
+23rd June 1999: version 1.0.150
+- Fixed hexdump bug: If end of selection was lesser than start
+  of selection program would crash.
+
+17th June 1999: version 1.0.149
+- Fixed paste bug: frhed would not insert correctly from Paste
+  and Paste with dialogue commands.
+- Changed dropfiles(): if link files are dropped into window
+  user can choose between opening target file or link file itself.
+
+3rd June 1999: version 1.0.148
+- Bit manipulation dialog reports current value of
+  byte being manipulated on changes.
+- Selected data and bookmarks displayed in customizable colors.
+- Added typecasts to SelectObject calls (Newer compilers
+  require explicit cast).
+- initmenupopup changed.
+- Added character set tables to helpfile.
+- Linebuffer only reallocated if too small.
+
+10th March 1999: version 1.0.147
+- Added code for handling link files.
+- Open window in same state as closed last.
+- Added "Primer" in help file.
+- Removed double default value for SimpleArray::SetSize.
+  VC++ 4.0 did not report that error!
+
+7th February 1999: version 1.0.146
+- Now possible to open partially relative to file end.
+- Added relative go-to.
+
+6th February 1999: version 1.0.146
+- In hexdump export: more OEM chars are printed out, if there is selection
+  then those lines will be initialised for exporting.
+- Added read-only mode.
+
+21st January 1999: version 1.0.145
+- Fixed cut&paste-bug: Single backslash would be copied just as such,
+  resulting in wrong data being pasted if backslash was followed by a
+  "<" ("\<" is special code for a "<" without bytecode translation).
+  Now backslash is copied as double backslash ("\\").
+
+14th January 1999: version 1.0.144
+- Fixed bug in lbuttonup: could not set caret to END position
+  with mouse click.
+- Fixed bug in lbuttondown: invalid selection ranges if selection
+  started at END position.
+- Added some missing key shortcuts for the main menu.
+
+24th December 1998: version 1.0.143
+- Fixed bug on scrolling down with arrow down key: print_line
+  would write outside buffer when last line on bottom of window.
+
+23rd December 1998: version 1.0.142
+- Changed sequence of info in window title: now
+  filename first, then "frhed" (easier to tell what file open
+  when several instances of program are open).
+- Added template feature.
+
+17th November 1998: version 1.0.141
+- Corrected bug: when scrolling down with Arrow-Down-key there
+  would not be marking of corresponding byte/char.
+
+13th November 1998: version 1.0.141
+- Corrected bug on opening empty files.
+
+12th November 1998: version 1.0.141
+- Accepts dragged files.
+- Improved print_line, should be much faster now.
+- Removed bookmark bug: maximum number of bookmarks must be
+  limited to 9.
+- Increased max. number of MRU files to 9.
+
+6th November 1998: version 1.0.138
+- Fixed Paste bug: could not paste very large blocks of data
+  because edit-box can only hold limited amounts of text.
+  Edit-box in "Paste with dialogue" changed to multiline.
+- Byte-values of 10 and 13 not copied as coded values, so there
+  are line breaks.
