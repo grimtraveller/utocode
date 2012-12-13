@@ -1,0 +1,733 @@
+{\rtf\ansi
+
+{
+\fonttbl
+\f0\froman Times New Roman;
+\f1\fdecor Courier New;
+\f2\fswiss Arial;
+}
+\deff0
+{
+\colortbl
+\red0\green0\blue0;
+\red255\green0\blue0;
+\red0\green128\blue0;
+\red0\green0\blue255;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#{\footnote Index}
+${\footnote The Index}
+K{\footnote Index}
+\par
+\qc
+\{bmc logo.bmp\}\par
+\ql
+\brdrb
+{\f0\fs40\b Free Hex Editor Help File}\par
+\pard
+This help file contains information for Free Hex Editor 1.0.155.\par\par
+
+{\uldb Introduction to frhed}{\v Introduction}.\par
+Information about frhed's features, the disclaimer, distribution notes 
+and how to contact the author.\par\par
+
+{\uldb Installation and deinstallation}{\v Installation}.\par
+How to get frhed running and how to remove frhed from your computer.\par\par
+
+{\uldb Binary file primer}{\v Primer}.\par
+Information about binary files for beginners.\par\par
+
+{\uldb File operations}{\v FileOperations}.\par
+How to open and save files.\par\par
+
+{\uldb The main window}{\v MainWindow}.\par
+Explains the various features of the main window.\par\par
+
+{\uldb Moving in the file}{\v Moving}.\par
+How to move the caret in the file.\par\par
+
+{\uldb Editing the file}{\v Editing}.\par
+Changing the contents of the file.\par\par
+
+{\uldb Other functions}{\v Other}.\par
+Obtaining information, comparing files, setting options.\par\par
+
+{\uldb Using the special syntax.}{\v SpecialSyntax}\par
+Description of the special syntax and the data sizes in the program.\par\par
+
+{\uldb Character tables.}{\v CharTables}\par
+Tables of the ANSI and OEM character sets.\par
+
+\par
+\qc
+{\b Free Hex Editor is Copyright ©Raihan Kibria 2000}\par
+{\fs18 Fill with by Pabs (pabs3@hotmail.com)}
+\ql
+\page
+
+
+
+
+#{\footnote Other}
+${\footnote Other functions}
+K{\footnote Other functions;Comparing files;Menu: Edit/Compare from current offset;Menu: Edit/Get floating point value;Menu: Edit/File properties;Menu: Edit/Apply template;Menu: Edit/Open in text editor;Menu: Options/View settings;Menu: Options/Color settings/Text color;Menu: Options/Color settings/Background color;Menu: Options/Color settings/Separator color;Menu: Options/Character set;Menu: Options/Binary mode;Menu: Bookmarks/Add bookmark;Menu: Bookmarks/Remove bookmark;Menu: Bookmarks/Clear all bookmarks}
+\brdrb
+\qc {\f0\fs30\b Other functions} \par \ql
+\pard
+
+\par The \plain\f3\fs24\b\ul Edit/Compare from current offset\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par If you need to compare two files then load one into frhed and choose this command. 
+You will first be prompted to choose the file to compare with. Choose a file and then 
+the OK button. Comparison will occur from the current caret offset.
+\par If the chosen file matches the data in the loaded file from the 
+current offset, you will be prompted so. Otherwise you will get a list of 
+areas of difference to choose from. Areas of difference are ranges of bytes 
+which are different in the files. For example:
+\par \plain\f4\fs24 File 1: 00 01 02 03 04 (loaded file)
+\par File 2: 00 \plain\f4\fs24\ul ff ff\plain\f4\fs24  03 04
+\par \plain\f3\fs24 In this case you will  get one area of difference 
+2 bytes in size from offset 1 to 2. These offsets are measured relative 
+to the current caret position. When you choose an area of difference 
+then it will be selected and displayed in the main window.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Get floating point value\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This will show you the floating point values starting at the current caret position.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/File properties\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par Choose this to get the filename, path and size of the current file, and also 
+the total number of lines of the hexdump.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Apply template\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par
+\deflang1031\pard\plain\f3\fs24 Use this command to apply a binary template on the 
+file. A binary template consists of a text file with the extension "tpl" that 
+contains a number of variable type+name combinations, such as this:
+\par 
+\par \plain\f4\fs20 BYTE filetype
+\par WORD version
+\par DWORD filelength
+\par \plain\f3\fs24 
+\par This sample template file named "sample.tpl" is included in the frhed directory. 
+When the command is chosen from the menu you will be prompted to choose the 
+template file you want to apply. Frhed will then load that file and use 
+the code in it to give you a structured "interpretation" of the data in the currently loaded file, starting at the current byte. The result will be displayed in the edit-box of a dialogue, from where you can copy the result to the clipboard if necessary. The result looks like this:
+\par \plain\f4\fs20 
+\par File: C:\\Data\\test.dat
+\par Template file: C:\\frhed\\sample.tpl
+\par Applied at offset: 15
+\par 
+\par BYTE filetype = 66 (signed) = 66 (unsigned) = 0x42 = 'B'
+\par WORD version = 30285 (signed) = 30285 (unsigned) = 0x764d
+\par DWORD filelength = 8 (signed) = 8 (unsigned) = 0x8
+\par 
+\par -> Length of template = 7 bytes.
+\par \plain\f3\fs20 
+\par \pard\plain\f3\fs24 Following variable types are recognized: (recognition is case-sensitive, so "byte" is not recognized as type "BYTE")
+\par - a byte-size value: "BYTE", "char".
+\par - a word-size value: "WORD", "short".
+\par - a longword-size value: "DWORD", "int", "long", "LONG".
+\par - a float value: "float".
+\par - a double value: "double".
+\par \pard\plain\f3\fs20 
+
+The \plain\f3\fs24\b\ul Edit/Open in text editor\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This function attempts to call an external text editing program with the
+ current file as argument. Default editor is the Windows Notepad. You can choose
+ the editor in the Options/View Settings dialogue.
+\par
+\par The \plain\f3\fs24\b\ul Options/View settings\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par Here you can choose:
+\par - the number of bytes to display per line of hexdump (only applies 
+if "Automatically adjust number of bytes per line" is disabled)
+\par - the number of digits for the offset length
+\par - how to display the values at the caret position, either as signed or as unsigned integer values
+\par - if read-only mode should be automatically set after opening files
+\par If the "Automatically adjust number of bytes per line"-checkbox is checked, then the 
+number of bytes displayed per hexdump line is adjusted in such a way that the whole 
+window width is used at all times.
+\par - the name of the text editor that will be called by the Edit/Open in text editor command.
+\par - the name of the Internet browser that will be called in the About dialogue.
+
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Options/Color settings/Text color\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par Choose what color the text in the main window should have.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Options/Color settings/Background color\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par Choose what color the background in the main window should have.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Options/Color settings/Separator color\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par Choose what color the separators in the main window should have.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Options/Character set\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par Here you can choose the character set for displaying and writing characters, either ANSI (the Windows character set) or OEM (the DOS character set). The font size in points can also be chosen.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Options/Binary mode\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par What kind of byte order to use: Either Little-endian, as used in Intel-computers or Big-endian, used for example in computers with a Motorola processor.
+\par The difference between these modes is thus: Consider a longword, which is 4 bytes (named A to D) long.
+\par \plain\f3\fs24\i Longword in processor register = ABCD.\plain\f3\fs24 
+\par The least significant bit, which has the value 1, is found in byte "D". In a processor register the longword is ordered in this way. If this value is written to a position in memory, then by Intel convention the longword is written in this way, with the growing offsets to the right:
+\par \plain\f3\fs24\i Longword in memory = DCBA.
+\par \plain\f3\fs24 That is, the bytes making up the longword are written in reverse order as they are found in a processor register.
+\par This means that a file written by a Big-endian machine will contain wrong longword and word values if read by a Little-endian machine without conversion.
+\par 
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Bookmarks/Add bookmark\plain\f3\fs24\ul  command:
+\par \plain\f3\fs24 Choose this to add a bookmark to the bookmark list. The offset of the bookmark will be set to the current position initially. You can also add a description for the bookmark that will also appear in the menu.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Bookmarks/Remove bookmark\plain\f3\fs24\ul  command:
+\par \plain\f3\fs24 Choose this to remove a bookmark from the bookmark list. You will be presented with a list of the bookmarks and have to choose the one to remove.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Bookmarks/Clear all bookmarks\plain\f3\fs24\ul  command:
+\par \plain\f3\fs24 Deletes all bookmarks.
+\par \plain\f3\fs20 
+\par
+
+\page
+
+
+
+
+
+#{\footnote FileOperations}
+${\footnote File operations}
+K{\footnote File operations;Menu: File/New;Menu: File/Open;Menu: File/Open partially;Menu: File/Save;Menu: File/Save as;Menu: File/Export as hexdump}
+\brdrb
+\qc {\f0\fs30\b File operations} \par \ql
+\pard
+
+\par \plain\f3\fs24\b\ul Creating new files (command File/New)
+\par \plain\f3\fs24 If frhed is started without parameters or with a nonexistant filename as parameter, then it starts with a new, empty file that is untitled. If a file is already loaded, then choose \plain\f3\fs24\ul File/New\plain\f3\fs24  from the menu. If a file is already loaded and it has been changed, then you will be prompted if you want to lose the changes.
+\par \plain\f3\fs20 
+\par \plain\f3\fs24\b\ul Opening files (command File/Open)
+\par \plain\f3\fs24 If frhed is started with command line parameters, then the whole string following the program name is considered to be the name of the file to open.
+\par \plain\f3\fs24\b Examples:
+\par \plain\f3\fs24\i frhed filename.dat\plain\f3\fs24  opens the file called "filename.dat"
+\par \plain\f3\fs24\i frhed a file-name.dat\plain\f3\fs24  opens the file called "a file-name.dat"
+\par \plain\f3\fs24\b Note:\plain\f3\fs24  If you put a link to frhed.exe into the "SendTo"-Folder in your Windows main directory then you can open any file from the Explorer with frhed by choosing frhed from the "Send To"-item in the file's context menu.
+\par You can also choose \plain\f3\fs24\ul File/Open\plain\f3\fs24  from the menu. If a file is already loaded and it has been changed, then you will be prompted if you want to lose the changes.
+\par 
+A file can also be dragged (for instance from the Windows Explorer window) into frhed's window to open it. If several files were dragged, then only the first one will be opened.
+\par 
+
+\par \plain\f3\fs24\b\ul Opening files partially (command File/Open partially)
+\par \plain\f3\fs24 If you want to edit a very large file and it's not necessary to 
+load all of it into memory, choose this command. First you will have to choose the 
+file you want to open in a File-Open-dialogue. Then you must enter the offset from which 
+the file will be loaded and how many bytes to load, or you can check the "Open partially 
+from end of file"-radiobutton if you want to load data from the end of the file. 
+Frhed will now be in 
+partially-opened-mode, which means that whenever you choose the "Save"-command, 
+the data will be written back to the position they were loaded from. This mode is 
+indicated by a letter "P" in the window title after the file name.
+\par 
+\par \plain\f3\fs24\b\ul Saving files (command File/Save and File/Save as)
+\par \plain\f3\fs24 To save the current file choose \plain\f3\fs24\ul File/Save\plain\f3\fs24  from the menu. If the file has never been saved before, then you have choose \plain\f3\fs24\ul File Save as\plain\f3\fs24  to name the file.
+\par \plain\f3\fs20 
+
+\par }{\b\fs24\ul\lang1031 Saving selections (command File/Save selection as)
+\par }{\fs24\lang1031 To save the current selection choose }{\fs24\ul\lang1031 File/Save selection as}{\fs24\lang1031  from the menu.
+\par (also by pabs3@hotmail.com)
+\par 
+\par }{\b\fs24\ul\lang1031 Reverting to the saved file (command File/Revert)
+\par }{\fs24\lang1031 When you have made changes to a file, want to change it back and cannot remember the exact bytes in the file then this command will do it for you. (also by pabs3@hotmail.com)
+\par 
+\par }{\b\fs24\ul\lang1031 Deleting the current file (command File/Delete File)}{\fs24\lang1031 
+\par This deletes the file currently opened in the editor and closes it. This requires a double confirmation because it could be disastrous. (also by pabs3@hotmail.com)
+\par
+
+\par \plain\f3\fs24\b\ul Exporting the file as a hexdump text (command File/Export as hexdump)
+\par \plain\f3\fs24 This command is used if you need the hexdump of the file 
+in plain text form, for example if you need to insert it in a word 
+processor document. You can either put the hexdump into the clipboard 
+or into a file, which you will have to choose. The start line of the 
+hexdump has to be specified (in hexadecimal notation without prefix), 
+which you can find on the left side of the window, for example 23c or 134. 
+You must also specify the end line. The values in the dialogue will be 
+initialized so that the whole file will be dumped, if there is nothing 
+selected, or they will be such that the current selection will be dumped.
+\par 
+
+
+\page
+
+
+
+
+#{\footnote Editing}
+${\footnote Editing the file}
+K{\footnote Editing the file;Menu: Edit/Read-only mode;Menu: Edit/Cut;Menu: Edit/Copy;Menu: Edit/Paste;Menu: Edit/Paste with dialogue;Menu: Edit/Append;Menu: Edit/Delete;Menu: Edit/Enter decimal value;Menu: Edit/Manipulate bits;Menu:Edit/Toggle entering mode;Menu: Edit/Select block}
+\brdrb
+\qc {\f0\fs30\b Editing the file} \par \ql
+\pard
+\par There are several ways to edit the data in the file. But you will only be able be 
+to change the file in any way if the \b read-only mode \plain is disabled. To enable or 
+disable the read-only mode choose 
+the \plain\f3\fs24\b\ul Edit/Read-only mode\plain\f3\fs24  command. If the read-only mode is enabled, there will be "READ" written in the status bar 
+and the menu item will be checked.
+\par 
+\par \plain\f3\fs28\b Using the keyboard\plain\f3\fs24 
+\par For overwriting data the overwriting entering mode must be enabled, that means, 
+the status bar must show "OVR" somewhere. Toggle the entering mode with the Insert-key 
+on the keyboard or choosing \plain\f3\fs24\b\ul Edit/Toggle entering mode\plain\f3\fs24 . 
+You can overwrite the data in the bytes section by moving the cursor to the appropriate 
+position and pressing any of the hexadecimal digits 0-9 and a-f on the keyboard. The 
+nibble the caret is marking currently will be set to that value and the caret will 
+then go on to the next nibble. If the caret is in the bytes section, pressing any 
+alphanumeric key will set the current byte (that wich the caret is marking) to 
+that value, and the caret will go on to the next byte.
+\par For inserting data the status bar must show "INS" somewhere. Entering data now 
+will insert a byte at the current position.
+\par \plain\f3\fs28\b 
+\par Using menu commands\plain\f3\fs24\b 
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Cut\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This command is used to remove bytes from the file. These bytes can either be copied to the clipboard (as text with special syntax for non-character bytes) or just deleted. In the dialogue you can choose the start offset where the cutting begins (the byte at that offset is the first to be cut), how many bytes to cut (specify either the offset of the last byte to cut or the number of bytes including the first byte to be cut, and check the appropriate radio button). If the data should be cut to the clipboard, check the checkbox on the bottom of the dialogue box.
+\par If the command is chosen without a selection, then the values in the dialogue will be set so that the byte at the current offset will be cut.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Copy\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This command is used to copy bytes from the file to the clipboard. It is similar to the Edit/Cut command, only the data will only be copied, not removed.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Paste\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This either inserts or overwrites data from the clipboard starting at the current offset. Choose a radio button for the writing mode wished for. You can also choose how many times the current data is written.
+\par If "Paste coded binary values as text" is unchecked, all data in the clipboard is considered to contain special syntax, so <ld:150> will not be written as the text "<ld:150>" but as a longword value of 150. Check the checkbox if you want to paste as text. The binary mode (Little or Big-endian) and character set (ANSI or OEM) is used as set in the options.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Paste with dialogue\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This either inserts or overwrites data starting at the current offset. Choose a radio button for the writing mode wished for. The big edit-box is initialised with the current text content of the clipboard. \ul Since Edit-boxes can not hold very large amounts of data (ca. 64K), please use Edit/Paste to paste such large blocks of memory.\plain You can also choose how many times the current data is written.
+\par If "Paste coded binary values as text" is unchecked, all data in the edit-box is considered to contain special syntax, so <ld:150> will not be written as the text "<ld:150>" but as a longword value of 150. Check the checkbox if you want to paste as text. The binary mode (Little or Big-endian) and character set (ANSI or OEM) is used as set in the options.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Append\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This command appends a number of zero-bytes to the file.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Delete\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par This command calls the same dialogue as the Edit/Cut command, only with the "cut to clipboard" checkbox already disabled.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Select block\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par With this you can explicitely choose what block of data is to be selected, by specifying start and end offset of the block.
+
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Enter decimal value\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par With this you can overwrite data with an integer value of either byte, word or longword size. The start offset is initialized with the current offset, in hexadecimal notation. Note that if you change the start offset, use hexadecimal notation and prefix with "x". You can also choose the number of times to overwrite or insert and the size of the value. The values are initialised with the current offset, the value of the current offset, byte size and 1 time.
+\par \plain\f3\fs24\ul The \plain\f3\fs24\b\ul Edit/Manipulate bits\plain\f3\fs24\ul  command:\plain\f3\fs24 
+\par If you need to manipulate individual bits in a byte, then go to this byte with the caret and choose the command. Check the appropriate checkboxes for the bits and select OK. The boxes are initialised with the current value.
+\par 
+\par }{\fs24\ul\lang1031 The }{\b\fs24\ul\lang1031 Edit/Fill selection with}{\fs24\ul\lang1031  command:
+\par }{\fs24\lang1031 First select some of the bytes in a file then open the Fill selection with dialog from the edit menu or using Ctrl + Shift + F.
+\par First decide if you want to enter the bytes in yourself - this is usefull for small numbers of bytes and if so select Input from the combo box and enter the bytes below it.
+\par Otherwise you may want to fill the selection with a file by selecting File from the combo box and browsing to a file (It MUST exist - this is why only browsing is allowed).
+\par Note that if the selection is larger than the file or the hex string you entered the selection will be filled with multiple copies of your string/file and if it is smaller only a part of the string will be entered into the selection.
+\par Note also that an odd number of hex digits will result in the first nibble of the last byte being the last hex digit entered.
+\par e.g. "ffa" \emdash }{\f1\fs24\lang1031 >}{\fs24\lang1031  "ff af fa \'85" \emdash }{\f1\fs24\lang1031 >}{\fs24\lang1031  "\'ff\'af\'fa\'85"
+\par (This doesn\rquote t apply to files as partial bytes cannot be present in files)
+\par Then select the type of assignment operator you want to use - 
+\par = - regular assign
+\par |= - perform a bitwise or with the current byte and then assign
+\par &= - perform a bitwise and with the current byte and then assign
+\par ^= - perform a bitwise xor with the current byte and then assign
+\par Below are the 
+\par }\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw15 \trbrdrl\brdrs\brdrw15 \trbrdrb\brdrs\brdrw15 \trbrdrr\brdrs\brdrw15 \trbrdrh\brdrs\brdrw15 \trbrdrv\brdrs\brdrw15 \clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr
+\brdrs\brdrw15 \cellx993\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx1985\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx2616\clbrdrt\brdrs\brdrw15 
+\clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx3413\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx4135 \pard \qc\nowidctlpar\intbl {\fs24\lang1031 File\\ Input Bit\cell 
+Open File Bit\cell |=\cell &=\cell ^=\cell }\pard \widctlpar\intbl {\fs24\lang1031 \row }\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw15 \trbrdrl\brdrs\brdrw15 \trbrdrb\brdrs\brdrw15 \trbrdrr\brdrs\brdrw15 \trbrdrh\brdrs\brdrw15 \trbrdrv\brdrs\brdrw15 
+\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx993\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx1985\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 
+\clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx2616\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx3413\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 
+\cellx4135 \pard \qc\nowidctlpar\intbl {\fs24\lang1031 0\cell 0\cell 0\cell 0\cell 0\cell }\pard \widctlpar\intbl {\fs24\lang1031 \row }\pard \qc\nowidctlpar\intbl {\fs24\lang1031 0\cell 1\cell 1\cell 0\cell 1\cell }\pard \widctlpar\intbl {\fs24\lang1031 
+\row }\pard \qc\nowidctlpar\intbl {\fs24\lang1031 1\cell 0\cell 1\cell 0\cell 1\cell }\pard \widctlpar\intbl {\fs24\lang1031 \row }\trowd \trgaph108\trleft-108\trbrdrt\brdrs\brdrw15 \trbrdrl\brdrs\brdrw15 \trbrdrb\brdrs\brdrw15 \trbrdrr\brdrs\brdrw15 
+\trbrdrh\brdrs\brdrw15 \trbrdrv\brdrs\brdrw15 \clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx993\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx1985
+\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx2616\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 \clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx3413\clbrdrt\brdrs\brdrw15 \clbrdrl\brdrs\brdrw15 
+\clbrdrb\brdrs\brdrw15 \clbrdrr\brdrs\brdrw15 \cellx4135 \pard \qc\nowidctlpar\intbl {\fs24\lang1031 1\cell 1\cell 1\cell 1\cell 0\cell }\pard \widctlpar\intbl {\fs24\lang1031 \row }\pard \nowidctlpar {\fs24\lang1031 also by pabs3@hotmail.com)
+\par 
+\par }{\fs24\ul\lang1031 The }{\b\fs24\ul\lang1031 File/Insert file}{\fs24\ul\lang1031  command:
+\par }{\fs24\lang1031 This inserts the requested file between the current byte and previous one.
+\par (also by pabs3@hotmail.com)
+
+\page
+
+
+
+
+
+
+
+
+#{\footnote Moving}
+${\footnote Moving in the file}
+K{\footnote Moving the caret in the file;Menu: Edit/Find;Menu: Edit/Find next;Menu: Edit/Find previous;Menu: Edit/Go to}
+\brdrb
+\qc {\f0\fs30\b Moving the caret in the file} \par \ql
+\pard
+\par You can move the caret with the arrow keys. Press TAB to toggle the editing mode 
+between byte and character editing.
+You can also jump to any position by 
+choosing the \plain\f3\fs24\b\ul Edit/Go To\plain\f3\fs24  command and entering 
+an offset, like "125", which will set the caret position to offset 125 decimal. 
+For relative jumps in the file, for example if you want to go to an offset 
+150 bytes after the current one, you have to start with "+" as the first character 
+and follow this with either a decimal number or a hex number starting with "x". 
+So to jump 150 bytes forward you have to enter "+150" or "+x96" in hex notation. 
+For backward relative jumps start with "-" (minus) as the first character. 
+To jump directly to the end of the file press Ctrl+End, for the beginning Ctrl+Home.
+\par 
+\par Frhed can find text and binary values in a file. Choose \plain\f3\fs24\b\ul Edit/Find\plain\f3\fs24  to 
+do this. In the dialog you can choose if the case of the text parts of the find 
+string are to be ignored and the find direction. To encode binary values, frhed 
+uses a special syntax. Example:
+\par \plain\f3\fs24\b Here is the findstring.<bd:0>FloatValue<fl:-14.56>
+\par \plain\f3\fs24 This will cause frhed to search for a string "Here is 
+the findstring." followed by a zero-byte, then the text "FloatValue" and 
+a 4-byte float with the value -14.56.\par
+Note that coded binary values will also be transformed by the "match case" 
+option of the Find command, so if you search for a byte with the hex value of 
+0x41 (this is the upper-case letter "A") with the match-case option disabled, 
+then frhed will also find bytes with the hex value 0x61 (the lower-case letter 
+"a"). Therefore you should always search for discrete binary values with 
+case-matching enabled or you might not get correct results.
+\par
+Please see {\uldb Using the special syntax}{\v SpecialSyntax} for further information.\par
+
+The \plain\f3\fs24\b\ul Edit/Find next\plain\f3\fs24  and \plain\f3\fs24\b\ul Edit/Find previous\plain\f3\fs24  
+commands find the next or previous occurance of the findstring last entered 
+in the Find-dialogue, with the match-case option enabled or disabled as chosen in it.
+\par
+
+By positioning the mouse cursor on a byte or a character and pressing 
+the left mouse button you can also set the caret position.\par
+You can also move in the file by choosing one of the bookmarks in 
+the "Bookmarks" menu section. The caret will be set to that 
+offset immediately.\par
+\page
+
+
+
+
+
+#{\footnote MainWindow}
+${\footnote The main window}
+K{\footnote Main window features}
+\brdrb
+\qc {\f0\fs30\b The main window} \par \ql
+\pard
+\par \plain\f3\fs24 The window's title shows the name of the currently loaded file in square brackets, with an asterisk on it's right side if the file has been changed. If a file is loaded, you will find something like this in the window's client area:
+\par \plain\f1\fs18\b 000000  23 42 34 53 56 45 76 45  #B4SVEvE
+\par 000008  64 56 0a bc 0a 35 c0 08  dV...5..
+\par 000010  06 be 09 07 bb 07 00 00  ........
+\par 000018  00 00 00 00 00 00 07 __  .......
+\par \plain\f3\fs24 On the far left are the offsets of the first byte in the line in hexadecimal notation. You can choose the offset length with the \plain\f3\fs24\b Options/View Settings\plain\f3\fs24  command. Then come the actual byte values, with vertical separating lines after every fourth byte in the line. You can choose the number of bytes to display per line with the \plain\f3\fs24\b Options/View Settings\plain\f3\fs24 , and also, if it should be automatically adjusted to the window width. To the far right are the character representations of these values, with dotted lines on the left and right of this section. You can choose the character set for these representations as well as the font size with the \plain\f3\fs24\b Options/Character set\plain\f3\fs24  command. As you can see, the first byte of the second line of the sample hexdump has the hexadecimal value 64 and the corresponding character is a lower case "d". The position after the last byte of the file is marked with a double underscore "__" in the byte section.
+\par Blinking in the window somewhere is a rectangular caret, if the window is enabled. If it is in the byte section, then it stands on either of the two nibbles (half-bytes). If it is in the character section, then it stands on one character corresponding with one byte. In either case the corresponding other representation is shown inverted in the other section.
+\par On the bottom of the window is the status bar, which displays additional information. In the first section of the status bar you can find the current offset of the byte which the caret is marking in hexadecimal and decimal notation.
+ After that come the bits of the current byte.
+ Also in this section, on the right side, is something like this:
+\par \plain\f3\fs24\b Unsigned: B:35,W:16931,L:1395933731
+\par \plain\f3\fs24 These are the values of the byte (B:), the word (W:) and the longword (L:) value starting at this offset in decimal notation. These are computed depending on the setting for signed or unsigned values (Choose with command \plain\f3\fs24\b Options/View Settings\plain\f3\fs24 ) and on the binary mode setting, either Little-endian (Intel format) or Big-endian (Motorola format). Choose with command \plain\f3\fs24\b Options/Binary mode\plain\f3\fs24 .
+\par In the second section of the status bar are indicators for:
+\par - character set: "ANSI" or "OEM".
+\par - entering mode: "OVR" for overwriting or "INS" for inserting on keyboard input. 
+If frhed is in read-only mode, then there will be a "READ" here.
+\par - binary mode: "L" for Little-endian or "B" for Big-endian.
+\par In the third section the file size in bytes is displayed.
+\par The window also has a vertical and a horizontal scrollbar, which can be used to scroll the view. They don't change the caret position.
+\par 
+\page
+
+
+
+
+
+
+#{\footnote Introduction}
+${\footnote Introduction to frhed}
+K{\footnote Introduction to frhed;Disclaimer;Contacting the Author;Distributing frhed;Updates;Homepage}
+\brdrb
+\qc {\f0\fs30\b Introduction to frhed 1.0} \par \ql
+\pard
+\deflang1031\pard\qc\plain\f3\fs24\b What is frhed?\plain\f3\fs24 
+\par \pard\plain\f3\fs24 Welcome to the "Free Hex Editor", abbreviated as "frhed". 
+Frhed is a binary file editor for 32-Bit Windows platforms, like Windows 95, 
+Windows 98 and Windows NT.
+\par \plain\f3\fs24\b Features include:
+\par \plain\f3\fs24 - Native 32 bit Windows application: long filenames supported, editable file size limited only by available system memory.
+\par - small program size (ca. 100K), loads fast.
+\par - Cut, copy & paste binary values. Syntax for describing byte, word, longword, float and double binary values in text form to use with find and paste functions.
+\par - Directly enter hex values or text in main window (overwrite or insert).
+\par - Compare files.
+\par - Search for any combination of text and binary values.
+\par - Bit manipulation.
+\par - Export as hexdump to file or clipboard.
+\par - Automatically adjust bytes displayed per hexdump line to window width, or set bytes per line manually.
+\par - Choose font size, character set (ANSI or OEM), colors of text and background.
+\par - Intel or Motorola binary format.
+\par - Can be used as "Send to"-Target.
+\par - Set bookmarks to easily access offsets in the file.
+\par - Load files partially.
+\par - Load files by dragging them into the window.
+\par - Apply binary templates for structured information.
+\par - Source code is included. (Written with Microsoft Visual C++ 4.0. Does not use MFC, only Win32 API calls and C library calls, uses C++ classes).
+\par - \plain\f3\fs24\ul No registration fee required!\plain\f3\fs24 
+\par 
+\par \pard\qc\plain\f3\fs24\b Disclaimer\plain\f3\fs24 
+\par \pard\plain\f3\fs24 Frhed is supplied on an as-is basis. The author offers no warranty of its fitness for any purpose whatsoever, and accepts no liability whatsoever for any loss or damage incurred by its use. Frhed is not a supported product. The author accepts no commitment or liability to address any problems that may be encountered in using it; however, frhed is continually being developed and improved, so he is always interested to hear about any bugs or deficiencies.
+\par 
+\par \pard\qc\plain\f3\fs24\b Using And Distributing frhed\plain\f3\fs24 
+\par \pard\plain\f3\fs24 Frhed may be freely used for any purpose. You may use it privately or in the course of your work; there is no fee, and no registration is required. You may distribute it to anyone, and you may place it on any archive or bulletin board system. You may not charge anyone for it other than a reasonable fee to cover your distribution costs. Normally, you should distribute frhed in the form as supplied by the author; however, you may repackage it to suit the conventions and needs of an archive or bulletin board system. Frhed may be distributed as part of any commercial product without a prior licence agreement, although no extra cost should be charged for inclusion of frhed. Frhed may be reviewed for any publication, whether in hard copy or electronic form, without the author's prior permission.
+\par 
+\par \pard\qc\plain\f3\fs24\b Acknowledgements\plain\f3\fs24 
+\par \pard\plain\f3\fs24 Thanks to: Dario Bagnoli (bug reports and beta testing), 
+Tom Foth (suggestions), Bo Wannerberg (Win2000 opening bugfix) and Pabs (pabs3@hotmail.com) for the "Fill selection with" command and other features!
+
+\par 
+\par \pard\qc\plain\f3\fs24\b Contacting the Author
+\par \pard\plain\f3\fs24 If you have comments or suggestions please send eMail to:
+\par rkibria@hrz1.hrz.tu-darmstadt.de
+\par 
+\par \pard\qc\plain\f3\fs24\b Update homepage
+\par \pard\plain\f3\fs24 Please check for the newest updates of frhed on this webpage:
+\par http://hotfiles.zdnet.com/cgi-bin/texis/swlib/hotfiles/info.html?fcode=000VOX&b=
+\par
+\par \pard\qc\plain\f3\fs24\b Personal homepage
+\par \pard\plain\f3\fs24 You can also find frhed (including the newest beta version) on my personal homepage:
+\par http://www.tu-darmstadt.de/~rkibria
+\par
+\par
+Raihan Kibria\par
+\par
+\page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#{\footnote SpecialSyntax}
+${\footnote Special Syntax}
+K{\footnote Special Syntax}
+
+\brdrb
+\qc {\f0\fs30\b Special syntax} \par \ql
+\pard
+
+\deflang1033\pard\plain\f3\fs24 Byte-, word- and longword data can be encoded as follows:
+\par 
+\par \plain\f3\fs24\i \tab <\{Size\}\{Numeral system\}:\{Value\}>\plain\f3\fs24 
+\par \plain\f3\fs24\b \tab Size:\plain\f3\fs24 
+\par \tab b for byte-size (8 bit) value.
+\par \tab w for word-size (16 bit) value.
+\par \tab l for longword-size (32 bit) value.
+\par 
+\par \plain\f3\fs24\b \tab Numeral System:\plain\f3\fs24 
+\par \tab d for decimal system.
+\par \tab h for hexadecimal system.
+\par 
+\par \tab \plain\f3\fs24\b For floating point values set Size and Numeral system to:
+\par \plain\f3\fs24 \tab "fl"\plain\lang1031\f3\fs24  is for float values.
+\par \tab "do" is for double values.\plain\f3\fs24 
+\par 
+\par \plain\f3\fs24\b \tab Value:\plain\f3\fs24 
+\par \tab Enter the value of the datum after the colon.
+\par 
+\par 
+\par \plain\f3\fs24\b Examples:
+\par \plain\f3\fs24 <bd:-15>\tab \tab means byte-size datum with decimal value -15.
+\par <wh:23f0>\tab \tab means word-size datum with hexadecimal value 23f0.
+\par <ld:1234567890>\tab means longword-size datum with decimal value 1234567890.
+\par <fl:2.5>\tab \tab means float-size datum with value 2.5.
+\par <do:1.8e7>\tab \tab means double-size datum with value 1.8 * 10^7.
+\par 
+\par \plain\f3\fs24\b Note:\plain\f3\fs24  If you want to find or paste a valid special syntax string like <bd:0> as text, then prefix a \\ to <. This will turn < into a normal character. Copying a < in the file will insert the \\ automatically.
+\par Backslashes ("\\") in the file are copied and encoded as double backslashes ("\\\\").
+\par \plain\f5\fs24\b 
+\par Data ranges and sizes:
+\par \plain\f5\fs24\ul Integers:\plain\f5\fs24 
+\par Byte:
+\par \tab signed from \endash 128 to 127
+\par \tab unsigned from 0 to 255
+\par 
+\par Word (2 bytes):
+\par \tab signed from \endash 32,768 to 32,767
+\par \tab unsigned from 0 to 65,535
+\par 
+\par Longword (4 bytes):
+\par \tab signed from \endash 2,147,483,648 to 2,147,483,647
+\par \tab unsigned from 0 to 4,294,967,295
+\par 
+\par \plain\f5\fs24\ul Floating point types:\plain\f5\fs24 
+\par Float (4 bytes):
+\par \tab range 3.4E +/- 38 (7 digits)
+\par Double (8 bytes):
+\par \tab range 1.7E +/- 308 (15 digits)
+\par 
+\page
+
+
+
+
+
+
+
+#{\footnote Primer}
+${\footnote Binary file primer}
+K{\footnote Primer}
+\brdrb
+\qc {\f0\fs30\b Binary file primer} \par \ql
+\pard
+\b What are binary files? \plain\par
+
+All the files on your computer, programs as well as documents, are really large 
+"lists" of numbers. Imagine a numbered list like this one:\par
+0) 24\par
+1) 33\par
+2) 9\par
+3) 0\par
+4) 115\par
+
+The numbering starts at zero. At each list index there is a number, for 
+example the number 9 is at index "2". The index is usually called "offset". 
+frhed displays the current offset in the lower left corner of it's window. 
+Large files contain many numbers, small files not so many. The numbers in 
+the list can have a value between 0 and 255, for a special reason: Each 
+number is a "byte".\par
+\par
+\b What are bits and bytes? \plain\par
+
+"Bit" is an abbreviation for "BInary digiT". It can have a value of either 0 
+or 1. One bit alone is not very useful, because already the number 2 can not 
+be described with it. So you take many bits to describe large numbers. This 
+is how it works:\par
+The normal decimal system you know, with digits from 0 to 9, describes 
+numbers larger than 9 by arranging several digits in such a way that each 
+position in the number means something different.\par 
+For example the number "245" means really "2 times 100 + 4 times 10 + 5 
+times 1". The further left a digit's position in the number, the higher a 
+value it contributes to the number. Every time you go one step left in the 
+number, you multiply the digit there with 1, 10, 100, 1000 and so on and add 
+that value to what you already have. The values you have to multiply the 
+digit *with* can be obtained if you start out with 1 on the far right, then 
+multiply with 10 every time you go left. So you get to multiply with 1, then 
+with 1*10=10, then with 10*10=100, then 10*100=1000 and so on. This is our 
+"base 10" number system.\par
+
+Now the *binary system* is a "base 2"-system. A binary number might looks 
+like this: 1011\par
+
+This is not "one thousand and eleven", as it would be in the decimal system. 
+In the decimal system we multiplied the digits at the various positions with 
+a 1, 10, 10*10=100, 10*100=1000 and so on, but this time, in the binary 
+system (also known as "dual system"), we multiply with 1, 2, 2*2=4, 2*4=8, 
+2*8=16 and so on, starting at the right and doing with a "2" what we did 
+with a "10" before. So the value of the binary number above is "1 times 1 +1 
+times 2 + 0 times 4 + 1 times 8", giving us the number "11" in our decimal 
+system.\par
+
+Computers use bits to calculate everything, because they can be modeled as 
+"current on" or "current off" easily. With a packet of 4 bits (called a 
+"nibble") you can describe the numbers from 0 to 15. A packet of 8 bits is 
+called a "byte", and *these* are what the file contains. Each byte can 
+describe a number from 0 to 255.\par
+
+So, a file is a list (or "array") of "bytes", with each byte at a certain 
+index or "offset". These bytes are what frhed displays in the middle of the 
+screen, but in yet another different number system: the "hexadecimal" 
+system, which is a system with the base 16. So there are 16 digits, the 
+normal ones from 0 to 9, and additionally the letters "a" through "f" with 
+following values:\par
+a = 10\par
+b = 11\par
+c = 12\par
+d = 13\par
+e = 14\par
+f = 15\par
+So the "hex" (short for "hexadecimal") number "f14a" means: 
+"10 times 1 + 4 times 16 + 1 time 16*16(=256) + 15 times 16*256(=4096)", 
+giving a value of 61770 in decimal. The point of using hex numbers is that 
+values of up to 255 (maximum value of a byte) can be described by employing 
+up to 2 hexadecimal digits, which gives a neat and ordered output on hex 
+editors such as frhed.\par
+
+On the right side of the frhed window there are "normal" letters, 
+punctuation symbols and so on. This is because each byte can be seen as an 
+index to a symbol in a "character set". This means that the computer stores 
+for example the letter "a" as a number with the value 97 ("61" in hex 
+notation), the comma "," as a number 44 and so on. So if you write a text on 
+the computer and save it to disk, then the file will contain a number of 
+bytes, each byte signifying a letter, other symbol, or a special code number 
+for "End of line" or "Tabulator" and such. But there are several character 
+sets in use (for example Windows uses either the ANSI or the OEM character 
+set): In one character set the number 97 might mean the letter "a", but in 
+another it could be used for the apostrophe.\par
+
+\page
+
+
+
+
+
+
+
+#{\footnote CharTables}
+${\footnote Character tables}
+K{\footnote Character tables}
+\brdrb
+\qc {\f0\fs30\b Character tables} \par \ql
+\pard
+\par
+The ANSI character set:\par
+\{bmc ansimap.bmp\}\par
+\par
+The OEM character set:\par
+\{bmc oemmap.bmp\}\par
+\par
+
+\page
+
+
+
+
+
+
+
+#{\footnote Installation}
+${\footnote Installation}
+K{\footnote Installation}
+\brdrb
+\qc {\f0\fs30\b Installation} \par \ql
+\pard
+\par
+Extract the contents of the Zip-file to a directory. Nothing else is 
+required, you can start frhed by creating a shortcut to frhed.exe 
+in the start menu or putting the shortcut in the "Send to"-folder 
+and then sending files to it.
+\par
+If you don't need the source code, delete the directory "Source".
+\par
+To deinstall just delete the directory that contains frhed. Frhed saves all 
+preference data (colors, MRU list etc.) in the registry under 
+"HKEY_CURRENT_USER\\Software\\frhed\\v1.0.xxx\\n", where xxx is the current 
+version and n is the instance number. If you start frhed 2 or more times, then 
+the frhed windows ("instances") have completely separate preference sets, that is 
+different color settings, MRU lists and so on. 
+You can delete the key "HKEY_CURRENT_USER\\Software\\frhed" with the "Regedit" 
+program that comes with Microsoft Windows.
+
+\page
+
+
+
+
+
+}
+
