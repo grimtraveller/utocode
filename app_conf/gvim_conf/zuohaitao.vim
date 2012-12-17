@@ -13,6 +13,8 @@
 "		2. Edit ~/.vimrc, add "source ~/.zuohaitao.vim"
 "	enjoy it
 " history
+"		2012/12/17
+"					the file that the name of is blog is a python file  
 "		2012/12/12	
 "					suport markdown format file(*.md,*.markdown)
 "		2012/12/04
@@ -88,6 +90,11 @@ function! z:win32_unicode_file()
 		au QuickfixCmdPost make call z:QfMakeConv()
 	endif
 	if (".py" == strpart(fn,len(fn)-3, 3))
+		set encoding=utf-8
+		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
+		au QuickfixCmdPost make call z:QfMakeConv()
+	endif
+	if ("blog" == strpart(fn,len(fn)-3, 3))
 		set encoding=utf-8
 		set fileencodings=ucs-bom,utf-8,cp936,big5,latin1
 		au QuickfixCmdPost make call z:QfMakeConv()
@@ -246,6 +253,8 @@ let s:cmfmt=""
 au BufNewFile,BufRead, *.md set filetype=markdown
 au BufNewFile,BufRead, *.py	let s:cmfmt="#"
 au BufNewFile,BufRead, *.py call py:setting()
+au BufNewFile,BufRead, blog	let s:cmfmt="#"
+au BufNewFile,BufRead, blog call py:setting()
 au BufNewFile,BufRead, *.c,*.cpp,*.h,*.m	let s:cmfmt="//"
 au BufNewFile,BufRead, *.vim let s:cmfmt="\""
 au BufNewFile,BufRead, *.bat let s:cmfmt="REM "
