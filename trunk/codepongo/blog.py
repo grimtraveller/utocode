@@ -1310,6 +1310,13 @@ def renderResumeCheck():
     renderHtmlFooter()
     return
 
+def renderWhatsMyUserAgent():
+    renderHtmlHeader("what's my user-agent?")
+    if os.environ.has_key('HTTP_USER_AGENT'):
+        print '<div id="content3">'
+        print os.environ['HTTP_USER_AGENT']
+        print '</div>' # content3
+    renderHtmlFooter()
 def renderAboutMe():
     renderHtmlHeader('about me')
     print "<div id=\"content3\">"
@@ -1545,6 +1552,8 @@ def main():
         print 'Location: %s/%s#comments\n' % (baseurl, name)
     elif len(path) == 1 and path[0] == 'aboutme':
         return renderAboutMe()
+    elif len(path) == 1 and path[0] == 'whatsmyuseragent':
+        return renderWhatsMyUserAgent()
     elif len(path) == 1 and path[0] == 'resume':
         if querystr[0] == 'check':
             return renderResumeCheck()
