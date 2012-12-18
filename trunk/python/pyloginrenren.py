@@ -3,6 +3,7 @@ import urllib2
 import cookielib
 import urllib
 import re
+import sys
 cj = cookielib.CookieJar()
 print cj
 print '---------------visit-------------------'
@@ -26,8 +27,8 @@ lbskey_value = regMatch.group('lbskey')
 c_value = regMatch.group('c')
 pq_value = regMatch.group('pq')
 ref_value = regMatch.group('ref')
-email_value = ''
-password_value = ''
+email_value = sys.argv[1]
+password_value = sys.argv[2]
 login_value = regMatch.group('login')
 print cj
 
@@ -41,7 +42,6 @@ post_data += 'email=' + email_value + '&'
 post_data += 'password=' + password_value + '&'
 post_data += 'login=' + login_value + '&'
 req = urllib2.Request(url, post_data)
-
 html = opener.open(req)
 print html.read().decode('utf8')
 print cj
