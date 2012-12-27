@@ -41,11 +41,20 @@ def login(opener, post):
         print 'login request is failed [errorno = %s]' % e.code
         exit(0)
     html = opener.open(req).read()
-    if html.find('退出') != -1:
+    if html.find(u'退出'.encode('utf-8')) != -1:
         return html
     else:
         print 'login is failed'
         exit(0)
+
+def info(html):
+    begin = html.find('已连续签到')
+    if begin != -1:
+        msg = html[begin:]
+        end = msg.find('</div>')
+        return msg[:end]
+    else:
+        return None
 
 def signin(opener, html):
     """sigin"""
@@ -62,8 +71,12 @@ def signin(opener, html):
               
     SignIn().feed(html)
     if len(signin) == 0:
-        print('the url to signin is not found')
-        return ''
+        msg = info(html)
+        if msg is not None:
+            return msg.decode('utf-8')
+        else:
+            print('the url to signin is not found')
+            exit(0)
     try:
         req = urllib2.Request(host+signin[0])
     except urllib2.HTTPError, e:
@@ -71,20 +84,21 @@ def signin(opener, html):
         exit(0)
     req.add_header('Referer', 'http://www.xiami.com/web')
     html = opener.open(req).read()
-    print html
-    pos = html.find('已经连续签到')
-    if pos != -1:
-        print html[pos:].decode('utf-8')
-        
+    msg = info(html)
+    if msg is not None:
+        return msg.decode('utf-8')
+    else:
+        print 'signin info is not found. SignIn is failed'
+        exit(0)
 
 def logout(opener, url):
     """logout"""
     req = urllib2.Request(url)
     html = opener.open(req).read()
-    if html.find('退出') == -1:
+    if html.find('退出') != -1:
         print 'logout is failed'
         print 'req=', req
-        print 'html=', html
+        print 'html=', html.decode('utf-8')
         exit(0)
     return
 
