@@ -104,16 +104,16 @@ def logout(opener, url):
 
 
 if __name__ == '__main__':
-    emails = ['robot40'+str(i)+'@163.com' for i in range(2)]
-    emails.append('learningxna@sina.com')
     httpHandler = urllib2.HTTPHandler(debuglevel=1)
     cj = cookielib.CookieJar()
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
     post = index(opener, 'http://m.xiami.com')
     post['url'] = host + post['url']
-    for email in emails:
-        post['email'] = email
-        post['password'] = raw_input("%s 's password:" % email)
+    while True:
+        post['email'] = raw_input('email:')
+        if post['email'] is '':
+            break
+        post['password'] = raw_input("%s 's password:" % post['email'])
         html = login(opener, post)
         print signin(opener, html)
         logout(opener, host+'/member/logout?from=mobile')
