@@ -4,6 +4,7 @@ import os
 import pystardict
 import sys
 import re
+import ConfigParser
 class zjdictmod(object):
     def __init__(self):
         self._key = ''
@@ -12,6 +13,14 @@ class zjdictmod(object):
         self._dicts_dir += os.sep + 'dictionary' + os.sep
         self._dicts = list()
         self.cache = list()
+    def loadCfg(self):
+        cfg = ConfigParser.ConfigParser()
+        try:
+            cfg.read('zjdict.ini')
+            path = cfg.get('newword', 'path')
+        except:
+            path = 'newword.txt'
+        return path
     def appendDicts(self):
         self._dicts.append(\
                 pystardict.Dictionary(os.path.join(self._dicts_dir, \
