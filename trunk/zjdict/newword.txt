@@ -1,7 +1,4 @@
-﻿
-
-
-indirection
+﻿indirection
 间接手段
 *[,indi'rekʃәn]
 n. 间接手段, 迂回, 不诚实
@@ -497,10 +494,6 @@ a. 个别指导的, 家庭教师的, 辅导的
 【计】 教程
 
 
-
-===<The C Programming Language(2nd Edition)===
-
-
 convey
 *[kәn'vei]
 vt. 传达, 运输, 转让
@@ -534,110 +527,917 @@ vi. 起重要作用
   make a feature of...
 
 
-tip提示*[tip]n. ? 尖端, ? 末端, 倾斜, 垃圾? 小费, 轻击, 指点, 秘密消息vt. 装顶? 使倾斜, 使翻? 泄露, 告诫, 暗示, ?..小费, 轻击vi. 倾斜, 翻? 倾覆, 踮脚? 给小?
-【计?终端接口处理? 提示, 技?
-【医?? ? 耳轮?
-相关词组:  miss one's tip  have sth at the tip of one's tongue  have sth on the tip of one's tongue  tip over  give sb the tip to do sth  give sb the straight tiprelief*[ri'li:f]n. 减轻, 解除, 救济, 安慰, 调剂, 浮雕, 换班, (地势?起伏【医?缓减, 减轻, 浮雕(绘画?【经?换班, 救济, 减轻byte字节*[bait]n. 字节, 位组【计?字节bit?
-*[bit]n. 少量, 马嚼? 辅币vt. 给马上嚼? 控制bite的过去式和过去分?
-【计?比特, 二进制数? 机内测试【化?刀? 刀? 比特; ? 二进制位【医?钻头【经?? 存储信息容量单位, ?
-相关词组:  to give sb a bit of one's mind  quite a bit  every bit as  bit by bit  a bit of...  a bit of a...  to do one's bit  every bit病毒bing4 du2 virusvirus【化?virus【医?filterable virus; inframicrobe; invisible virus; ultramicroscopic virus             ultravirus; virus相关词组:  病毒自体移转  超显微病?
-  滤过性病?
+tip提示
+*[tip]
+n. �? 尖端, �? 末端, 倾斜, 垃圾�? 小费, 轻击, 指点, 秘密消息
+vt. 装顶�? 使倾斜, 使翻�? 泄露, 告诫, 暗示, �?..小费, 轻击
+vi. 倾斜, 翻�? 倾覆, 踮脚�? 给小�?
+【计�?终端接口处理�? 提示, 技�?
+【医�?�? �? 耳轮�?
+相关词组:
+  miss one's tip
+  have sth at the tip of one's tongue
+  have sth on the tip of one's tongue
+  tip over
+  give sb the tip to do sth
+  give sb the straight tip
+
+
+relief*[ri'li:f]
+n. 减轻, 解除, 救济, 安慰, 调剂, 浮雕, 换班, (地势�?起伏
+【医�?缓减, 减轻, 浮雕(绘画�?
+【经�?换班, 救济, 减轻
+
+
+byte字节
+*[bait]
+n. 字节, 位组
+【计�?字节
+
+
+bit�?
+*[bit]
+n. 少量, 马嚼�? 辅币
+vt. 给马上嚼�? 控制
+bite的过去式和过去分�?
+【计�?比特, 二进制数�? 机内测试
+【化�?刀�? 刀�? 比特; �? 二进制位
+【医�?钻头
+【经�?�? 存储信息容量单位, �?
+相关词组:
+  to give sb a bit of one's mind
+  quite a bit
+  every bit as
+  bit by bit
+  a bit of...
+  a bit of a...
+  to do one's bit
+  every bit
+
+
+病毒bing4 du2 virus
+virus
+【化�?virus
+【医�?filterable virus; inframicrobe; invisible virus; ultramicroscopic virus
+             ultravirus; virus
+相关词组:
+  病毒自体移转
+  超显微病�?
+  滤过性病�?
 architecture体系结构
 *['ɑ:kitektʃә]
-n. 建筑? 建筑式样
-【计?体系结构
+n. 建筑�? 建筑式样
+【计�?体系结构
 
-动画dong4 hua4 animationcartoonmultiply?
-*['mʌltiplai]vt. 繁殖, ? 增加vi. 繁殖, ? 增加【计??
-subtract?
-*[sәb'trækt]vt. 减去, 扣掉, 减少vi. 做减?
-【计??
-【经?扣除, 减去pend*[pend]vi. 悬而未? 待定draft草稿*[dræft, drɑ:ft]n. 气流, 草稿, 汇票, 草案vt. 起草, 征兵【计?草稿【医?顿服? 饮剂, 穿堂?
-【经?汇票formerly从前*['fɒ:mәli]ad. 从前, 以前consist组成*[kәn'sist]vi. 组成, 存在? 一?
-相关词组:  consist of sth  consist ininterpreter解释程序*[in'tә:pritә]n. 直译程序, 解释? 口译? 注释?
-【计?注释?
-internal内部?
-*[in'tә:nәl]a. 内在? 国内?
-【医?内的, 内部?
-【经?内部? 国内?
-raster光栅*['ræstә]n. 光栅【电?试映?
-复杂fu4 za2 complicatedcomplexcomplex; complexity; intricacy相关词组:  错综复杂  错综复杂?
-  复杂?
-  复杂?
-  复杂?
-知识zhi1 shi5 intellectualknowledge-relatedknowledgeinformation; knowledge; lore; reading相关词组:  书本知识  无知识的  无知识的?
-  知识宝库  知识?
-  知识范围  知识分子  知识分子?
-  知识丰富?
-  知识?
-  知识界精?
-  知识体系?
-  直觉的知?
-  著名的知识分?
-适配?
-shi4 pei4 qi4 adapter (device)adapter【计?adaptorswap交换*[swɒp]n. 以货易货vt. 交换, 替换, 交易vi. 交换, 替换, 交易【计?交换【经?交换, 交流graduate from?..毕业college*['kɒlidʒ]n. 学院, 大学, 学会platform平台*['plætfɒ:m]n. 站台, 月台, 讲台, 论坛, 平台【计?平台【化?? 平台; 装卸?
-员工employee; personnel; stuff【机?factory-handemployer*[im'plɒiә]n. 雇主, 老板【经?雇主, 业主foreign外国?
-*['fɒ:rin]a. 外国? 外交? 外省? 外来? 不相关的【机?外来?
-相关词组:  be foreign to...knowledge知识*['nɒlidʒ]n. 知识, 学问, 认识, 知道相关词组:  have no knowledge of  to sb's knowledge  come to sb's knowledgetechnology技?
-*[tek'nɒlәdʒi]n. 技? 工业技? 术语【医?技术学, 工艺?
-【经?技? 工艺, 工艺?
-familiar熟悉?
-*[fә'miljә]a. 熟悉? 常见? 亲密?
-n. 熟友, 常客相关词组:  be familiar to...  be familiar with...  be on familiar terms with...环境huan2 jing4 environmentcircumstancessurroundingsenvironment; circumstance; setting; surroundings【计?ADA environment; environment【化?surroundings【医?environment; milieu; peristasis相关词组:  环境?
-  小环?
-  学术环境presentation陈述*[,prezәn'teiʃәn]n. 赠与, 描述, 介绍【计?简?
-【医?先露, 表象(心理)【经?提示, 交单relation关系*[ri'leiʃәn]n. 关系, 联系, 叙述, 故事, 家属, 亲戚【计?关系【医?关系相关词组:  in relation to  have no relation to  be out of all relation to  bear no relation toanalyzing分析【机?分析? 分析(工作)optimize优化*['ɒptimaiz]vt. 使完? 使完? 充分利用, 乐观地对? 优化vi. 持乐观态度【计?优化【化?使最佳化fear*[fiә]n. 恐? 害? 担心vt. 害? 恐惧, ?..担心, 敬畏vi. 害? 恐惧, ?..担心, 敬畏【医?恐惧, 畏惧相关词组:  I fear  strike fear into...  without fear or favourestablish建立*[i'stæbliʃ]vt. 建立, 确立, 制定vi. 移植生长相关词组:  establish sb as...surface表面*['sә:fis]n. ? 表面, 水面, 外表, 平面a. 表面? 外观? 肤浅? 水面上的vt. 使成平面, 使浮出水?
-vi. 浮出水面, 呈现, 在地面上工作【化?表面【医?? 表面相关词组:  on the surfacefresh新鲜?
-*[freʃ]a. 新鲜? 新奇? 另外? 淡的, 精神饱满? 冒失?
-ad. 最新地, 刚刚n. 开? 泛滥【经?最近的相关词组:  fresh out ofscenario*[si'nɑ:riәu]n. 剧本提纲, 情节, 剧本, 方案, 事?
-【计?方案【经?远景方案awesome*['ɒ:sәm]a. 引起敬畏? 可怕的spectacular*[spek'tækjulә]a. 公开展示? 惊人? 壮观?
-n. 奇观, 惊人之举, 展览?
-audience听众*['ɒ:diәns]n. 听众, 观众, 读?
-【法?听讼, 观众, 听众相关词组:  to grant sb an audience  to have an audience with...  to give audience to...rough粗糙?
-*[rʌf]n. 粗糙的东? 毛坯, 未加工品, 梗概, 草图, 暴徒, 艰难a. 粗糙? 粗暴? 蓬乱? 草率? 大致? 简陋的, 暴风雨的, 艰难?
-vt. 使粗? 使不? 使蓬? 粗制, 草拟, 粗暴对待, ?..动粗vi. 变粗?
-ad. 粗糙? 粗暴?
-【医?粗糙? 不光滑的【经?粗略? 大致? 大概?
-相关词组:  cut up rough  in the rough  rough it  take the rough with the smooth  rough and ready  have a rough time  play rough  be rough on sbjunk*[dʒʌŋk]n. 垃圾, 乌七八糟的东? 舢板【计?清除【医?骨折衬垫, 麻絮敷科【经?便宜? 假货, 旧货deck装饰*[dek]n. 甲板, (汽车后部?行李?
-vt. 装饰, 打扮, 装甲?
-【计?纸牌背面图案相关词组:  deck out with...  on deckhandset*['hændset]n. 电话听筒revenue*['revinju:]n. 收入, 岁入, 税收, 税务局【经?岁入, 税收, 税务局fragmentation存储残片*[,frægmәn'teiʃәn]n. 分裂, 破碎【计?在IP层将打包文件切成适当大小的程?
-【化?碎裂; 裂解【医?断裂, 碎裂, 裂殖factory工厂*['fæktәri]n. 工厂, 产生? 代理?
-【经?工厂, 代理? 商行在国外的代理?
-adoption*[ә'dɒpʃәn]n. 采用, 采纳, 收养【法?收养, 采纳, 采用pave铺设*[peiv]vt. 铺设, 安排, 铺满, ?..铺路【化?铺设相关词组:  pave the way forrespect尊敬*[ri'spekt]n. 尊敬, 尊重, 问?
-vt. 尊敬, 注意, 遵守【经?重视, 考虑, 尊重相关词组:  in every respect  in respect that  pay respect to  with respect tolimitation限制*[,limi'teiʃәn]n. 限制, 缺陷, 限额【医?限界, 限制, 限度associate联合*[ә'sәuʃieit]n. 同伴, 伙伴, 关联的事?
-vt. 使联? 使发生联?
-vi. 交往【计?关联【经?非正式会(?? 同事; 联合相关词组:  to associate A with Binspire*[in'spaiә]vt. 使感? 激? 启示, 吸入, 鼓舞, 产生, 使生灵感vi. 吸入, 赋予灵感seamless无伤痕的*['si:mlis]a. 无缝? 无缝合线?
-【医?无缝?
-concrete*['kɒnkri:t]n. 凝结? 混凝?
-a. 具体? 实在? 混凝土的vt. (?凝结, 用混凝土浇筑vi. (?凝结, 用混凝土浇筑【化?香脂; 浸膏; 混凝?
-【医?混凝? 凝结? 凝结?
-par标准*[pɑ:]n. 标准, 票面价? 平均数量, 同等水平a. 票面? 平常? 标准? 平价?
-【计?重新传输的肯定回?
-【化?4-间苯二酚; 4-2-吡啶基偶氮间苯二?
-【医?? ?
-【经?同价, 平价, 票面金额相关词组:  above par  below par  at par  up to parleverage*['levәridʒ]n. 杠杆作用, 杠杆装置, 杠杆效率【医?杠杆?
-【经?杠杆作用maintainablea. 可维持的, 可维修的, 可保持的, 可供养的, 可主张的, 可坚持的boundary边界*['baundri]n. 边界, 分界?
-【计?边界delegate代表*['deligeit]n. 代表vt. 委派...为代?
-【法?代表相关词组:  delegate sb to docomplexity复杂*[kәm'pleksiti]n. 复杂, 复杂? 复杂的事?
-transition转换*[træn'ziʃәn]n. 转变, 转换, 变迁, 过渡时期, 临时转调【化?跃迁【医?转变, 过渡, 变迁traditional传统?
-*[trә'diʃәnl]a. 传统? 惯例?
-【经?传统? 惯例?
-statistics统计?
-*[stә'tistiks]n. 统计? 统计资料【计?统计信息【医?统计; 统计?
-【经?统计, 统计?
-sink下沉*[siŋk]n. 藏垢的场所, 沟渠, 污水?
-vi. 下沉, 沉没, 下陷, 减弱, 衰退, 消沉, 堕落, 渗?
-vt. 使低? 使下? 陷于, 投入(资金?, 挖掘【化?缩孔【医?洗涤? 洗涤? ? ?心电?【经?跌落, 沉没, 丢掉相关词组:  leave sb to sink or swim  tumble down the sink  sink in  sink sth into sth  sink into vice  sink into a deep sleep  sink or swimadvise劝告*[әd'vaiz]vt. 劝告, ?..出主? 通知, 建议vi. 提意? 商量【经?通知(?, 通知, 建议相关词组:  to advise sb of sth  to advise sb to do  to advise that...  to advise sb against doinginstrumentation*[,instrumen'teiʃәn]n. 乐器? 仪器制造学, 仪表?
-【医?器械用法, 器械操作?
-【经?器械操作, 测试设备infrastructure*['infrәstrʌktʃә]n. 基础结构, 基础设施【经?基础设施
+
+动画
+dong4 hua4 animation
+cartoon
+
+
+multiply
+�?
+*['mʌltiplai]
+vt. 繁殖, �? 增加
+vi. 繁殖, �? 增加
+【计�?�?
+
+
+subtract
+�?
+*[sәb'trækt]
+vt. 减去, 扣掉, 减少
+vi. 做减�?
+【计�?�?
+【经�?扣除, 减去
+
+
+pend
+*[pend]
+vi. 悬而未�? 待定
+
+
+draft
+草稿
+*[dræft, drɑ:ft]
+n. 气流, 草稿, 汇票, 草案
+vt. 起草, 征兵
+【计�?草稿
+【医�?顿服�? 饮剂, 穿堂�?
+【经�?汇票
+
+
+formerly
+从前
+*['fɒ:mәli]
+ad. 从前, 以前
+
+
+consist
+组成
+*[kәn'sist]
+vi. 组成, 存在�? 一�?
+相关词组:
+  consist of sth
+  consist in
+
+
+interpreter
+解释程序
+*[in'tә:pritә]
+n. 直译程序, 解释�? 口译�? 注释�?
+【计�?注释�?
+
+
+internal
+内部�?
+*[in'tә:nәl]
+a. 内在�? 国内�?
+【医�?内的, 内部�?
+【经�?内部�? 国内�?
+
+
+raster
+光栅
+*['ræstә]
+n. 光栅
+【电�?试映�?
+
+
+复杂
+fu4 za2 complicated
+complex
+complex; complexity; intricacy
+相关词组:
+  错综复杂
+  错综复杂�?
+  复杂�?
+  复杂�?
+  复杂�?
+
+
+知识
+zhi1 shi5 intellectual
+knowledge-related
+knowledge
+information; knowledge; lore; reading
+相关词组:
+  书本知识
+  无知识的
+  无知识的�?
+  知识宝库
+  知识�?
+  知识范围
+  知识分子
+  知识分子�?
+  知识丰富�?
+  知识�?
+  知识界精�?
+  知识体系�?
+  直觉的知�?
+  著名的知识分�?
+
+
+适配�?
+shi4 pei4 qi4 adapter (device)
+adapter
+【计�?adaptor
+
+
+swap
+交换
+*[swɒp]
+n. 以货易货
+vt. 交换, 替换, 交易
+vi. 交换, 替换, 交易
+【计�?交换
+【经�?交换, 交流
+
+
+graduate from
+�?..毕业
+
+
+college
+*['kɒlidʒ]
+n. 学院, 大学, 学会
+
+
+platform
+平台
+*['plætfɒ:m]
+n. 站台, 月台, 讲台, 论坛, 平台
+【计�?平台
+【化�?�? 平台; 装卸�?
+
+
+员工
+employee; personnel; stuff
+【机�?factory-hand
+
+
+employer
+*[im'plɒiә]
+n. 雇主, 老板
+【经�?雇主, 业主
+
+
+foreign
+外国�?
+*['fɒ:rin]
+a. 外国�? 外交�? 外省�? 外来�? 不相关的
+【机�?外来�?
+相关词组:
+  be foreign to...
+
+
+knowledge
+知识
+*['nɒlidʒ]
+n. 知识, 学问, 认识, 知道
+相关词组:
+  have no knowledge of
+  to sb's knowledge
+  come to sb's knowledge
+
+
+technology
+技�?
+*[tek'nɒlәdʒi]
+n. 技�? 工业技�? 术语
+【医�?技术学, 工艺�?
+【经�?技�? 工艺, 工艺�?
+
+
+familiar
+熟悉�?
+*[fә'miljә]
+a. 熟悉�? 常见�? 亲密�?
+n. 熟友, 常客
+相关词组:
+  be familiar to...
+  be familiar with...
+  be on familiar terms with...
+
+
+环境
+huan2 jing4 environment
+circumstances
+surroundings
+environment; circumstance; setting; surroundings
+【计�?ADA environment; environment
+【化�?surroundings
+【医�?environment; milieu; peristasis
+相关词组:
+  环境�?
+  小环�?
+  学术环境
+
+
+presentation
+陈述
+*[,prezәn'teiʃәn]
+n. 赠与, 描述, 介绍
+【计�?简�?
+【医�?先露, 表象(心理)
+【经�?提示, 交单
+
+
+relation
+关系
+*[ri'leiʃәn]
+n. 关系, 联系, 叙述, 故事, 家属, 亲戚
+【计�?关系
+【医�?关系
+相关词组:
+  in relation to
+  have no relation to
+  be out of all relation to
+  bear no relation to
+
+
+analyzing
+分析
+【机�?分析�? 分析(工作)
+
+
+optimize
+优化
+*['ɒptimaiz]
+vt. 使完�? 使完�? 充分利用, 乐观地对�? 优化
+vi. 持乐观态度
+【计�?优化
+【化�?使最佳化
+
+
+fear
+*[fiә]
+n. 恐�? 害�? 担心
+vt. 害�? 恐惧, �?..担心, 敬畏
+vi. 害�? 恐惧, �?..担心, 敬畏
+【医�?恐惧, 畏惧
+相关词组:
+  I fear
+  strike fear into...
+  without fear or favour
+
+
+establish
+建立
+*[i'stæbliʃ]
+vt. 建立, 确立, 制定
+vi. 移植生长
+相关词组:
+  establish sb as...
+
+
+surface
+表面
+*['sә:fis]
+n. �? 表面, 水面, 外表, 平面
+a. 表面�? 外观�? 肤浅�? 水面上的
+vt. 使成平面, 使浮出水�?
+vi. 浮出水面, 呈现, 在地面上工作
+【化�?表面
+【医�?�? 表面
+相关词组:
+  on the surface
+
+
+fresh
+新鲜�?
+*[freʃ]
+a. 新鲜�? 新奇�? 另外�? 淡的, 精神饱满�? 冒失�?
+ad. 最新地, 刚刚
+n. 开�? 泛滥
+【经�?最近的
+相关词组:
+  fresh out of
+
+
+scenario
+*[si'nɑ:riәu]
+n. 剧本提纲, 情节, 剧本, 方案, 事�?
+【计�?方案
+【经�?远景方案
+
+
+awesome
+*['ɒ:sәm]
+a. 引起敬畏�? 可怕的
+
+
+spectacular
+*[spek'tækjulә]
+a. 公开展示�? 惊人�? 壮观�?
+n. 奇观, 惊人之举, 展览�?
+
+
+audience
+听众
+*['ɒ:diәns]
+n. 听众, 观众, 读�?
+【法�?听讼, 观众, 听众
+相关词组:
+  to grant sb an audience
+  to have an audience with...
+  to give audience to...
+
+
+rough
+粗糙�?
+*[rʌf]
+n. 粗糙的东�? 毛坯, 未加工品, 梗概, 草图, 暴徒, 艰难
+a. 粗糙�? 粗暴�? 蓬乱�? 草率�? 大致�? 简陋的, 暴风雨的, 艰难�?
+vt. 使粗�? 使不�? 使蓬�? 粗制, 草拟, 粗暴对待, �?..动粗
+vi. 变粗�?
+ad. 粗糙�? 粗暴�?
+【医�?粗糙�? 不光滑的
+【经�?粗略�? 大致�? 大概�?
+相关词组:
+  cut up rough
+  in the rough
+  rough it
+  take the rough with the smooth
+  rough and ready
+  have a rough time
+  play rough
+  be rough on sb
+
+
+junk
+*[dʒʌŋk]
+n. 垃圾, 乌七八糟的东�? 舢板
+【计�?清除
+【医�?骨折衬垫, 麻絮敷科
+【经�?便宜�? 假货, 旧货
+
+
+deck
+装饰
+*[dek]
+n. 甲板, (汽车后部�?行李�?
+vt. 装饰, 打扮, 装甲�?
+【计�?纸牌背面图案
+相关词组:
+  deck out with...
+  on deck
+
+
+handset
+*['hændset]
+n. 电话听筒
+
+
+revenue
+*['revinju:]
+n. 收入, 岁入, 税收, 税务局
+【经�?岁入, 税收, 税务局
+
+
+fragmentation
+存储残片
+*[,frægmәn'teiʃәn]
+n. 分裂, 破碎
+【计�?在IP层将打包文件切成适当大小的程�?
+【化�?碎裂; 裂解
+【医�?断裂, 碎裂, 裂殖
+
+
+factory
+工厂
+*['fæktәri]
+n. 工厂, 产生�? 代理�?
+【经�?工厂, 代理�? 商行在国外的代理�?
+
+
+adoption
+*[ә'dɒpʃәn]
+n. 采用, 采纳, 收养
+【法�?收养, 采纳, 采用
+
+
+pave
+铺设
+*[peiv]
+vt. 铺设, 安排, 铺满, �?..铺路
+【化�?铺设
+相关词组:
+  pave the way for
+
+
+respect
+尊敬
+*[ri'spekt]
+n. 尊敬, 尊重, 问�?
+vt. 尊敬, 注意, 遵守
+【经�?重视, 考虑, 尊重
+相关词组:
+  in every respect
+  in respect that
+  pay respect to
+  with respect to
+
+
+limitation
+限制
+*[,limi'teiʃәn]
+n. 限制, 缺陷, 限额
+【医�?限界, 限制, 限度
+
+
+associate
+联合
+*[ә'sәuʃieit]
+n. 同伴, 伙伴, 关联的事�?
+vt. 使联�? 使发生联�?
+vi. 交往
+【计�?关联
+【经�?非正式会(�?�? 同事; 联合
+相关词组:
+  to associate A with B
 
-temporarily
-暂时
-*['tempәrәrәli]
-ad. 暂时, 一时, 临时
+
+
+inspire
+*[in'spaiә]
+vt. 使感�? 激�? 启示, 吸入, 鼓舞, 产生, 使生灵感
+vi. 吸入, 赋予灵感
+
+
+seamless
+无伤痕的
+*['si:mlis]
+a. 无缝�? 无缝合线�?
+【医�?无缝�?
+
+
+concrete
+*['kɒnkri:t]
+n. 凝结�? 混凝�?
+a. 具体�? 实在�? 混凝土的
+vt. (�?凝结, 用混凝土浇筑
+vi. (�?凝结, 用混凝土浇筑
+【化�?香脂; 浸膏; 混凝�?
+【医�?混凝�? 凝结�? 凝结�?
+
+
+par
+标准
+*[pɑ:]
+n. 标准, 票面价�? 平均数量, 同等水平
+a. 票面�? 平常�? 标准�? 平价�?
+【计�?重新传输的肯定回�?
+【化�?4-间苯二酚; 4-2-吡啶基偶氮间苯二�?
+【医�?�? �?
+【经�?同价, 平价, 票面金额
+相关词组:
+  above par
+  below par
+  at par
+  up to par
+
+
+leverage
+*['levәridʒ]
+n. 杠杆作用, 杠杆装置, 杠杆效率
+【医�?杠杆�?
+【经�?杠杆作用
+
+
+maintainable
+a. 可维持的, 可维修的, 可保持的, 可供养的, 可主张的, 可坚持的
+
+
+boundary
+边界
+*['baundri]
+n. 边界, 分界�?
+【计�?边界
+
+
+delegate
+代表
+*['deligeit]
+n. 代表
+vt. 委派...为代�?
+【法�?代表
+相关词组:
+  delegate sb to do
+
+
+complexity
+复杂
+*[kәm'pleksiti]
+n. 复杂, 复杂�? 复杂的事�?
+
+
+transition
+转换
+*[træn'ziʃәn]
+n. 转变, 转换, 变迁, 过渡时期, 临时转调
+【化�?跃迁
+【医�?转变, 过渡, 变迁
+
+
+traditional
+传统�?
+*[trә'diʃәnl]
+a. 传统�? 惯例�?
+【经�?传统�? 惯例�?
+
+
+statistics
+统计�?
+*[stә'tistiks]
+n. 统计�? 统计资料
+【计�?统计信息
+【医�?统计; 统计�?
+【经�?统计, 统计�?
+
+
+sink
+下沉
+*[siŋk]
+n. 藏垢的场所, 沟渠, 污水�?
+vi. 下沉, 沉没, 下陷, 减弱, 衰退, 消沉, 堕落, 渗�?
+vt. 使低�? 使下�? 陷于, 投入(资金�?, 挖掘
+【化�?缩孔
+【医�?洗涤�? 洗涤�? �? �?心电�?
+【经�?跌落, 沉没, 丢掉
+相关词组:
+  leave sb to sink or swim
+  tumble down the sink
+  sink in
+  sink sth into sth
+  sink into vice
+  sink into a deep sleep
+  sink or swim
+
+
+advise
+劝告
+*[әd'vaiz]
+vt. 劝告, �?..出主�? 通知, 建议
+vi. 提意�? 商量
+【经�?通知(�?, 通知, 建议
+相关词组:
+  to advise sb of sth
+  to advise sb to do
+  to advise that...
+  to advise sb against doing
+
+
+instrumentation
+*[,instrumen'teiʃәn]
+n. 乐器�? 仪器制造学, 仪表�?
+【医�?器械用法, 器械操作�?
+【经�?器械操作, 测试设备
+
+
+infrastructure
+*['infrәstrʌktʃә]
+n. 基础结构, 基础设施
+【经�?基础设施
+
 
 
-permanently
-ad. 永久, 不变, 持久
-【计】 永久性的
+partially
+部分地
+*['pɑ:ʃәli]
+ad. 部分地, 一部分地, 不公平地
+
+
+revoke
+撤回
+*[ri'vәuk]
+vt. 撤回, 废除
+vi. 藏牌
+n. 藏牌
+【计】 取消权限程序
+相关词组:
+  beyond revoke
+
+
+rapid
+快的
+*['ræpid]
+a. 迅速的, 飞快的, 急促的, 陡的
+n. 急流
+【经】 快的, 迅速的
+
+
+prop
+维持
+*[prɒp]
+n. 支柱, 支持者, 倚靠人, 道具, 螺旋桨
+vt. 支撑, 维持
+【医】 支器, 张器
+
+
+acquire
+获得
+*[ә'kwaiә]
+vt. 获得, 学到
+【电】 目标锁定
+
+
+excite
+使兴奋
+*[ik'sait]
+vt. 刺激, 使兴奋, 激励
+
+
+plane
+平面
+*[plein]
+n. 平面, 扁平物, 机翼, 飞机, 水准, 地位
+a. 平的, 平面的
+vt. 将...刨平, 刨平, 掠过水面
+vi. 翱翔, 乘飞机旅行, 刨掉
+【化】 刨削
+【医】 平面
+相关词组:
+  plane the way
+  by plane
+  plane sth smooth
+
+
+property
+属性
+*['prɒpәti]
+n. 财产, 所有权, 性质, 属性
+【计】 属性
+【医】 性质, 性能, 财产, 所有
+【经】 财产
+
+
+exist
+存在
+*[ig'zist]
+vi. 存在, 生存, 发生
+
+=20121217=
+
+alterable
+*['ɒ:ltәrәbl]
+a. 可变的, 可改的
+
+
+unalterable
+*[ʌn'ɒ:ltәrәbl]
+a. 不能改变的, 不变的, 固定不移的
+【法】 不变的, 不能改变的
+
+
+expose
+暴露
+*[ik'spәuz]
+vt. 使暴露, 使曝光, 揭穿, 陈列
+【医】 暴露, 露置
+
+
+pardon
+*['pɑ:dn]
+n. 原谅, 赦免
+vt. 宽恕, 原谅
+【法】 宽恕, 赦免, 免罪
+
+
+handbag
+*['hændbæg]
+n. 手提包
+
+
+彩票
+cai3 piao4 the lottery
+lottery ticket
+lottery
+【经】 lottery ticket
+
+
+umbrella
+*[ʌm'brelә]
+n. 伞, 雨伞, 保护伞
+a. 伞的, 包罗万象的
+vt. 用伞遮掩
+【法】 包罗众多的, 伞状的
+相关词组:
+  under the umbrella of
+
+
+nationality
+*[,næʃә'nælәti]
+n. 国籍, 国家, 民族性
+【法】 国家, 民族, 国民
+
+
+Danish
+丹麦的
+*['deiniʃ]
+n. 丹麦文
+a. 丹麦的, 丹麦人的, 丹麦文的
+
+
+Norwegian
+挪威的
+*[nɒ:'wi:dʒәn]
+n. 挪威人, 挪威语
+a. 挪威的, 挪威人的, 挪威语的
+
+
+tourist
+*['tuәrist]
+n. 观光客, 旅行者
+a. 旅游的
+【法】 旅游者, 观光者
+
+
+
+-*- 2012-12-19 11:42
+
+
+alias
+别名
+*['eiliæs]
+n. 别名, 化名
+ad. 以化名为人所知
+【计】 别名; 替换入口
+
+
+recover
+恢复
+*[ri'kʌvә]
+vt. 重新获得, 恢复, 复原, 拯救
+vi. 痊愈, 复原, 胜诉
+【计】 恢复
+【化】 回收; 回收率
+【经】 回扬, 恢复
+
+
+ellipsis
+省略
+*[i'lipsis]
+n. 省略, 省略符号
+【计】 省略号
+【医】 脱漏, 省略(精神分析中,语句或意思的脱漏)
+
+
+boundary
+边界
+*['baundri]
+n. 边界, 分界线
+【计】 边界
+
+
+trim
+修剪
+*[trim]
+n. 整齐, 情形, 修剪
+a. 整齐的
+vt. 使整齐, 整理, 修剪
+vi. 调整, 见风使舵
+【计】 库存管理检查规则程序
+【化】 密封面; 微调
+【经】 回档整理
+相关词组:
+  be out of trim
+  get into good trim
+
+
+frequency
+频率
+*['fri:kwәnsi]
+n. 频率, 频数
+【计】 频率
+【化】 频率; 频数
+【医】 频率
+【经】 频率
+
+
+trial
+*['traiәl]
+n. 审判, 试验, 艰苦, 麻烦事, 考验
+a. 审讯的, 试验性的
+【经】 试算, 试用, 试验
+相关词组:
+  give sb a trial
+  bring sb to trial
+  bring sb up for trial
+  on a trial basis
+  on trial
+  stand sb's trial for
+  stand trial
+  trial and error
+  make a trial
+
+
+deflate
+[vi]放气
+*[di'fleit]
+vt. 放气, 抽出空气, 使缩小
+vi. 缩小
+
+
+inflate
+膨化
+*[in'fleit]
+vt. 使膨胀, 使得意, 使通货膨胀, 使充气
+vi. 充气, 膨胀
+【经】 使(通货)膨胀, 抬高(物价)
+
+
+browser
+浏览器
+*['brauzә]
+n. 吃嫩叶的动物, 浏览书本的人
+【计】 浏览程序
+
+
+option
+选择
+*['ɒpʃәn]
+n. 选择权, 挑选, 选项
+【计】 选项
+【经】 选择权
+相关词组:
+  at one's option
+  have no option but to do sth
+  make one's option
+
+
+portable
+便携的
+*['pɒ:tәbl]
+a. 可携带的, 可搬运的, 可移动的
+【计】 可移植的
+【经】 轻便的, 手提的
+
+
+archive
+存档
+*['ɑ:kaiv]
+vt. 把...存档
+n. 档案馆, 档案文件
+【计】 挡案库, 存档
 
