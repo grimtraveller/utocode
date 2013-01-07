@@ -50,9 +50,9 @@ def show_record(destination):
         print(destination)
 
 if '__main__' == __name__:
-    print('')
-    fname = 'newword.txt'
     mod = zjdict.zjdictmod()
+    fname = mod.loadCfg()
+    print 'newword=%s' %(fname)
     loading(loadDicts, (mod,))
     if 1 == len(sys.argv):
         while True:
