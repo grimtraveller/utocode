@@ -47,6 +47,11 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
 	path = new QLineEdit;
 	path->setText(settings.value(tr("note/path")).toString());
+	
+	alarm = new QCheckBox(tr("Alarm"));
+	alarm->setCheckState((Qt::CheckState)settings.value(tr("event/alarm")).toInt());
+	settings.setValue(tr("event/alarm"), alarm->checkState());
+	
 	if (path->text() == tr(""))
 	{
 		path->setText(QCoreApplication::applicationDirPath() + tr("/") + DEFAULT_NOTE_FILE_NAME);
@@ -136,7 +141,6 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	QGridLayout* LayoutNote = new QGridLayout(widgetNote);
 	noteEdit = new zjTextEdit(this);
 	connect(noteEdit, SIGNAL(cursorPositionChanged()), this, SLOT(noteEditTextChanged()));
-
 	LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
 	QString fileNameNote = path->text(); 
 	QFile file(fileNameNote);
@@ -145,6 +149,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 		noteEdit->setPlainText(file.readAll());
 	}
 	file.close();
+
 	saveNote = new QPushButton;
 	saveNote->setText(tr("&save"));
 	connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
@@ -158,11 +163,12 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	LayoutCfg->addWidget(notepath, 0, 0, 1, 1);
 	LayoutCfg->addWidget(path, 0, 1, 1, 8);
 
+	LayoutCfg->addWidget(alarm, 1, 0, 1, 9);
 
 	saveCfg = new QPushButton;
 	saveCfg->setText(tr("&save"));
-	//connect(saveCfg, SIGNAL(clicked()), this, SLOT(saveCfgClicked()));
-	LayoutCfg->addWidget(saveNote, 1, 8);
+	connect(saveCfg, SIGNAL(clicked()), this, SLOT(saveCfgClicked()));
+	LayoutCfg->addWidget(saveCfg, 2, 8, 1, 1);
 
 
 	//tray setting
@@ -324,9 +330,12 @@ void zjCalendar::timerEvent(QTimerEvent *event)
 	dt.time = QTime::fromString(t);
 	if (-1 != (id = events.haveEvent(dt)))
 	{
-		if (_sound->isFinished())
+		if (alarm->checkState() == Qt::Checked)
 		{
-			_sound->play();
+			if (_sound->isFinished())
+			{
+				_sound->play();
+			}
 		}
 		mainTab->setCurrentIndex(eventIdx);
 		table->setFocus();
@@ -397,6 +406,14 @@ void zjCalendar::saveNoteClicked()
 	QTextStream out(&file);
 	out << note;
 	file.close();
+}
+
+void zjCalendar::saveCfgClicked()
+{
+		QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
+		settings.setValue(tr("note/path"), path->text());
+		settings.setValue(tr("event/alarm"), alarm->checkState());
+
 }
 
 void zjCalendar::itemChanged(QStandardItem * item)

@@ -42,6 +42,7 @@ public:
      void messageClicked();
 	 void mainTabSelected(const QString & tabname);
 	 void saveNoteClicked();
+	 void saveCfgClicked();
 	 void itemChanged(QStandardItem * item);
 	 void editjobClicked();
 	 void resetStartWorkTimeClicked();
@@ -94,6 +95,7 @@ private:
 	QLabel* notepath;
 	QPushButton* saveCfg;
 	QLineEdit* path;
+	QCheckBox* alarm;
 
 	int _id; //current Event ID 
 	bool _prompt; //show dialog to prompt or not
