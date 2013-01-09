@@ -42,6 +42,18 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	connect(m_CTRL_S_Accel, SIGNAL(activated()), this, SLOT(saveNoteClicked()));
 
+
+	//read config
+	QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
+	path = new QLineEdit;
+	path->setText(settings.value(tr("note/path")).toString());
+	if (path->text() == tr(""))
+	{
+		path->setText(QCoreApplication::applicationDirPath() + tr("/") + DEFAULT_NOTE_FILE_NAME);
+		settings.setValue(tr("note/path"), path->text());
+	}
+
+
 	//menu
 	createActions();
 
@@ -58,6 +70,9 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	jobIdx = mainTab->addTab(widgetJob, QString("Job"));
 	widgetNote = new QWidget();
 	noteIdx = mainTab->addTab(widgetNote, QString("Note"));
+	cfg = new QWidget();
+	cfgIdx = mainTab->addTab(cfg, QString("Config"));
+
 
 
 	//event tab
@@ -75,14 +90,23 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	msgold = new QLabel(tr(""));
 	msgold->resize(100, 10);
-	LayoutJob->addWidget(msgold, 0, 0, 1, 6);
+	LayoutJob->addWidget(msgold, 0, 0, 1, 5);
+
+	record = new QCheckBox(tr("&Record Start Time"));
+	connect(record, SIGNAL(stateChanged(int)), this, SLOT(recordClicked(int)));
+	LayoutJob->addWidget(record, 0, 6, 1, 1);
+	record->setCheckState(Qt::Unchecked);
+
 	QTime t = QTime::currentTime();
 	startTime = new QTimeEdit(t);
 	LayoutJob->addWidget(startTime, 0, 7, 1, 1);
+	startTime->setEnabled(false);
+
 
 	resetStartTime = new QPushButton(tr("&I Am Here"));
 	connect(resetStartTime, SIGNAL(clicked()), this, SLOT(resetStartWorkTimeClicked()));
 	LayoutJob->addWidget(resetStartTime, 0, 8, 1, 1);
+	resetStartTime->setEnabled(false);
 
 	editjob = new QPushButton(tr("&Edit Job"));
 	connect(editjob, SIGNAL(clicked()), this, SLOT(editjobClicked()));
@@ -114,7 +138,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	connect(noteEdit, SIGNAL(cursorPositionChanged()), this, SLOT(noteEditTextChanged()));
 
 	LayoutNote->addWidget(noteEdit, 0, 0, 9, 9);
-	QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
+	QString fileNameNote = path->text(); 
 	QFile file(fileNameNote);
 	if (file.open(QFile::ReadOnly | QFile::Text))
 	{
@@ -125,6 +149,21 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	saveNote->setText(tr("&save"));
 	connect(saveNote, SIGNAL(clicked()), this, SLOT(saveNoteClicked()));
 	LayoutNote->addWidget(saveNote, 9, 8);
+
+
+
+	//config tab
+	QGridLayout* LayoutCfg = new QGridLayout(cfg);
+	notepath = new QLabel(tr("Note Path:"));
+	LayoutCfg->addWidget(notepath, 0, 0, 1, 1);
+	LayoutCfg->addWidget(path, 0, 1, 1, 8);
+
+
+	saveCfg = new QPushButton;
+	saveCfg->setText(tr("&save"));
+	//connect(saveCfg, SIGNAL(clicked()), this, SLOT(saveCfgClicked()));
+	LayoutCfg->addWidget(saveNote, 1, 8);
+
 
 	//tray setting
 	createTrayIcon();
@@ -349,7 +388,7 @@ void zjCalendar::mainTabSelected(const QString & tabname)
 void zjCalendar::saveNoteClicked()
 {
 	QString note = noteEdit->toPlainText();
-	QString fileNameNote = QCoreApplication::applicationDirPath() + tr("\\") + tr(NOTE_FILE_NAME); 
+	QString fileNameNote = path->text(); 
 	QFile file(fileNameNote);
 	if (!file.open(QFile::WriteOnly | QFile::Text))
 	{
@@ -394,8 +433,8 @@ void zjCalendar::addClosingTimeEvent()
 	QString t = time.toString("hh:mm:00");
 	DateTime date_time;
 	date_time.time = QTime::fromString(t, "hh:mm:ss");
-	events.editEvent(new_event_id, date_time, date_time, tr("下班时间到！"));
-#if 0
+	events.editEvent(new_event_id, date_time, date_time, tr("下班时间到！！！"));
+#if 0 ///Z:test 
 	time = startTime->time();
 	new_event_id = events.addEvent();
 	time.setHMS(time.hour(), time.minute(), 0);
@@ -408,7 +447,7 @@ void zjCalendar::addClosingTimeEvent()
 	t = time.toString("hh:mm:00");
 	date_time.time = QTime::fromString(t, "hh:mm:ss");
 	events.editEvent(new_event_id, date_time, date_time, tr("test 2"));
-#endif
+#endif ///Z:end
 }
 
 void zjCalendar::resetStartWorkTimeClicked()
@@ -417,13 +456,43 @@ void zjCalendar::resetStartWorkTimeClicked()
 	loadEvents();
 }
 
+void zjCalendar::recordClicked(int s)
+{
+	Qt::CheckState state = record->checkState();
+
+	if (state == Qt::Checked)
+	{
+		startTime->setEnabled(true);
+		resetStartTime->setEnabled(true);
+	}
+	else if (state == Qt::Unchecked)
+	{
+		startTime->setEnabled(false);
+		resetStartTime->setEnabled(false);
+	}
+	else
+	{
+		return;
+	}
+	events.delEvent(events.size()-1);
+	loadEvents();
+
+}
 void zjCalendar::loadEvents()
 {
 	model->removeRows(0, model->rowCount());
 	QString filenameEvent = QCoreApplication::applicationDirPath() + tr("/") + tr(EVENT_FILE_NAME); 
 	events.getEventsFromFile(filenameEvent);
 
-	addClosingTimeEvent();
+	Qt::CheckState state = record->checkState();
+	if (state == Qt::Checked)
+	{
+		addClosingTimeEvent();
+	}
+	else
+	{
+
+	}
 
 	DateTime dt;
 	//dt.time = time;

@@ -20,6 +20,7 @@
 2012.09.16 Add win+left win+right win+up win+down gloable hot key for move window<br />	\
 2012.09.16 minize and message clicked to hide() and no show dialog until next tip <br />\
 2012.09.27 HACK: the cursor is lost, when input by Google inputmethod  <br />\
+2013.01.08 Choose to auto record start work or not.<br />\
 <b>todo</b><br />	\
 <font color=\"red\">	\
 Add Configure dialog<br />	\

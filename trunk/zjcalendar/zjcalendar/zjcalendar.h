@@ -17,7 +17,7 @@
 #include "eventmsg.h"
 #include "zjtextedit.h"
 #define EVENT_FILE_NAME "zjCalendar.dat"
-#define NOTE_FILE_NAME	"todo.txt"
+#define DEFAULT_NOTE_FILE_NAME	"todo.txt"
 #define MIN_WIDTH	700
 #define MIN_HEIGHT	400
 class QAbstractItemModel;
@@ -45,6 +45,7 @@ public:
 	 void itemChanged(QStandardItem * item);
 	 void editjobClicked();
 	 void resetStartWorkTimeClicked();
+	 void recordClicked(int s);
 	 void menuSelected(QAction* action);
 
 	 void noteEditTextChanged();
@@ -76,21 +77,29 @@ private:
 	QTabWidget* mainTab;
 	QWidget* widgetEvent;
 	QWidget* widgetJob;
-	DigiFlip* digiflip;
 	QWidget* widgetNote;
+	QWidget* cfg;
 	int eventIdx;
 	int jobIdx;
 	int noteIdx;
+	int cfgIdx;
+
+	DigiFlip* digiflip;
 	zjTextEdit* noteEdit;
 	QPushButton* saveNote;
 	QPushButton* editjob;
 	QPushButton* resetStartTime;
 	QTimeEdit* startTime;
+	QCheckBox* record;
+	QLabel* notepath;
+	QPushButton* saveCfg;
+	QLineEdit* path;
 
 	int _id; //current Event ID 
 	bool _prompt; //show dialog to prompt or not
 
 	QSound* _sound;
+
 
 
 };
