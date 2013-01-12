@@ -27,9 +27,8 @@ class zjCalendar : public QDialog
 	Q_OBJECT
 public:
 	zjCalendar(QWidget *parent = 0, Qt::WFlags flags = 0);
-	~zjCalendar();
-
-     void setVisible(bool visible);
+	~zjCalendar();	
+	void setVisible(bool visible);
 
  protected:
      void closeEvent(QCloseEvent *event);
@@ -101,9 +100,6 @@ private:
 	bool _prompt; //show dialog to prompt or not
 
 	QSound* _sound;
-
-
-
 };
 
 #endif // ZJCALENDAR_H

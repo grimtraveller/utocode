@@ -10,11 +10,6 @@ public:
 	~App();
 	void registerHotKey(WId wid);
 	virtual bool winEventFilter(MSG *msg, long *result);
-//signals:
-//	void pressHotKeyUp();
-//	void pressHotKeyDown();
-//	void pressHotKeyLeft();
-//	void pressHotKeyRight();
 private:
 	ATOM hKeyWin[4];
 	WId _wid;

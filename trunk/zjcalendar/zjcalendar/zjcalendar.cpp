@@ -47,16 +47,25 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
 	path = new QLineEdit;
 	path->setText(settings.value(tr("note/path")).toString());
-	
-	alarm = new QCheckBox(tr("Alarm"));
-	alarm->setCheckState((Qt::CheckState)settings.value(tr("event/alarm")).toInt());
-	settings.setValue(tr("event/alarm"), alarm->checkState());
-	
+
 	if (path->text() == tr(""))
 	{
 		path->setText(QCoreApplication::applicationDirPath() + tr("/") + DEFAULT_NOTE_FILE_NAME);
 		settings.setValue(tr("note/path"), path->text());
 	}
+
+	alarm = new QCheckBox(tr("Alarm"));
+	alarm->setCheckState((Qt::CheckState)settings.value(tr("job/alarm")).toInt());
+	settings.setValue(tr("job/alarm"), alarm->checkState());
+	
+
+	record = new QCheckBox(tr("&Record Start Time"));
+	record->setCheckState((Qt::CheckState)settings.value(tr("job/record")).toInt());
+	settings.setValue(tr("job/record"), record->checkState());
+
+	digiflip = new DigiFlip();
+	digiflip->setTransition(settings.value(tr("event/transition")).toInt());
+	settings.setValue(tr("event/transition"), digiflip->getTransition());
 
 
 	//menu
@@ -86,7 +95,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 
 	msg = new EventMsg(widgetEvent);
 	LayoutEvent->addWidget(msg, 0, 0);
-	digiflip = new DigiFlip();
+
 	digiflip->resize(100, 300);
 	LayoutEvent->addWidget(digiflip, 1, 0, 8, 0);
 
@@ -97,10 +106,8 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	msgold->resize(100, 10);
 	LayoutJob->addWidget(msgold, 0, 0, 1, 5);
 
-	record = new QCheckBox(tr("&Record Start Time"));
 	connect(record, SIGNAL(stateChanged(int)), this, SLOT(recordClicked(int)));
 	LayoutJob->addWidget(record, 0, 6, 1, 1);
-	record->setCheckState(Qt::Unchecked);
 
 	QTime t = QTime::currentTime();
 	startTime = new QTimeEdit(t);
@@ -194,6 +201,8 @@ void zjCalendar::noteEditTextChanged()
 
 zjCalendar::~zjCalendar()
 {
+	QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
+	settings.setValue(tr("event/transition"), digiflip->getTransition());
 	killTimer(timeid);
 }
 
@@ -412,8 +421,7 @@ void zjCalendar::saveCfgClicked()
 {
 		QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
 		settings.setValue(tr("note/path"), path->text());
-		settings.setValue(tr("event/alarm"), alarm->checkState());
-
+		settings.setValue(tr("job/alarm"), alarm->checkState());
 }
 
 void zjCalendar::itemChanged(QStandardItem * item)
@@ -491,6 +499,8 @@ void zjCalendar::recordClicked(int s)
 	{
 		return;
 	}
+	QSettings settings(tr("zjcalendar.ini"), QSettings::IniFormat);
+	settings.setValue(tr("job/record"), record->checkState());
 	events.delEvent(events.size()-1);
 	loadEvents();
 
