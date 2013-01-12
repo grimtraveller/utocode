@@ -36,9 +36,12 @@ public:
 		m_sec->setNumber(t.second());
         updateTime();
 
-        QAction *slideAction = new QAction("&Slide", this);
-        QAction *flipAction = new QAction("&Flip", this);
-        QAction *rotateAction = new QAction("&Rotate", this);
+        slideAction = new QAction("&Slide", this);
+        flipAction = new QAction("&Flip", this);
+        rotateAction = new QAction("&Rotate", this);
+		slideAction->setCheckable(true);
+		flipAction->setCheckable(true);
+		rotateAction->setCheckable(true);
         connect(slideAction, SIGNAL(triggered()), SLOT(chooseSlide()));
         connect(flipAction, SIGNAL(triggered()), SLOT(chooseFlip()));
         connect(rotateAction, SIGNAL(triggered()), SLOT(chooseRotate()));
@@ -81,6 +84,23 @@ public:
         updateTime();
     }
 
+	void setTransition(int transition)
+	{
+		if (transition == 0 || transition == 1 || transition == 2)
+		{
+			_transition = transition;
+			m_hour->setTransition(transition);
+			m_minute->setTransition(transition);
+			m_sec->setTransition(transition);
+
+		}
+
+
+	}
+	int getTransition()
+	{
+		return _transition;
+	}
 protected:
     void resizeEvent(QResizeEvent*) {
         int digitsWidth = width() / 3;
@@ -117,6 +137,11 @@ protected:
 
 private slots:
     void chooseSlide() {
+		slideAction->setChecked(true);
+		flipAction->setChecked(false);
+		rotateAction->setChecked(false);
+
+		_transition = 0;
         m_hour->setTransition(0);
         m_minute->setTransition(0);
 		m_sec->setTransition(0);
@@ -124,13 +149,23 @@ private slots:
     }
 
     void chooseFlip() {
-        m_hour->setTransition(1);
+		slideAction->setChecked(false);
+		rotateAction->setChecked(false);
+		flipAction->setChecked(true);
+
+		_transition = 1;
+		m_hour->setTransition(1);
         m_minute->setTransition(1);
 		m_sec->setTransition(1);
         updateTime();
     }
 
     void chooseRotate() {
+		slideAction->setChecked(false);
+		rotateAction->setChecked(true);
+		flipAction->setChecked(false);
+
+		_transition = 2;
         m_hour->setTransition(2);
         m_minute->setTransition(2);
 		m_sec->setTransition(2);
@@ -142,4 +177,9 @@ private:
     Digits *m_hour;
     Digits *m_minute;
 	Digits *m_sec;
+	int _transition;
+	QAction * slideAction; 
+	QAction * flipAction;
+	QAction * rotateAction;
+
 };
