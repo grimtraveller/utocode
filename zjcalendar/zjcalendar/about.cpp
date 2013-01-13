@@ -22,10 +22,12 @@
 2012.09.27 HACK: the cursor is lost, when input by Google inputmethod  <br />\
 2013.01.08 Choose to auto record start work or not.<br />\
 2013.01.12 Add Configure Dialog.Setting Digflip style.<br />\
+2013.01.13 Use zjCalendar Tray Icon<br />\
 <b>todo</b><br />	\
 <font color=\"red\">	\
 Reconstruct class event<br />	\
-change tray icon<br />\
+Add calendar <br /> \
+Add lunar<br />	\
 </font>	\
 <br />	\
 "
