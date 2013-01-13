@@ -22,7 +22,20 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	_prompt = true;
 	timeid = startTimer(1000);  // 1-second timer
 
-	QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+	//QIcon ico = style()->standardIcon(QStyle::SP_MessageBoxInformation);
+	HICON icon = (HICON)LoadImageW(GetModuleHandle(NULL),L"IDI_ICON",IMAGE_ICON,0,0,0);
+
+	ICONINFO info;
+	GetIconInfo(icon, &info);
+	QPixmap pixmap = QPixmap::fromWinHBITMAP( info.hbmColor, QPixmap::Alpha );
+	DeleteObject(info.hbmColor);
+	DeleteObject(info.hbmMask);
+	DestroyIcon(icon);
+	QIcon ico(pixmap);
+
+
+
+
 
 	//main dialog gui setting
 
@@ -35,7 +48,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	setWindowFlags(flags);
 
 	setWindowTitle(tr(APP_NAME));
-	setWindowIcon(icon);
+	setWindowIcon(ico);
 	setMinimumSize(MIN_WIDTH, MIN_HEIGHT);
 
 	QShortcut* m_CTRL_S_Accel = new QShortcut(QKeySequence(tr("Ctrl+S")), this);
@@ -184,7 +197,7 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
 	connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
 		this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-	trayIcon->setIcon(icon);
+	trayIcon->setIcon(ico);
 	trayIcon->show();
 
 }
