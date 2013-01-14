@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import os
 import sys
 import urllib
@@ -156,7 +157,8 @@ class RequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
             args = [script]
             if '=' not in decoded_query:
                 args.append(decoded_query)
-            nobody = nobody_uid()
+            if sys.platform != 'darwin':
+                nobody = CGIHTTPServer.nobody_uid()
             self.wfile.flush() # Always flush before forking
             pid = os.fork()
             if pid != 0:
@@ -171,13 +173,15 @@ class RequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
                 return
             # Child
             try:
-                try:
-                    os.setuid(nobody)
-                except os.error:
-                    pass
+                if sys.platform != 'darwin':
+                    try:
+                        os.setuid(nobody)
+                    except os.error:
+                        pass
                 os.dup2(self.rfile.fileno(), 0)
                 os.dup2(self.wfile.fileno(), 1)
                 os.execve(scriptfile, args, env)
+                print scriptfile, args, env
             except:
                 self.server.handle_error(self.request, self.client_address)
                 os._exit(127)
