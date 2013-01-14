@@ -41,6 +41,7 @@ public:
      void messageClicked();
 	 void mainTabSelected(const QString & tabname);
 	 void saveNoteClicked();
+	 void loadNoteClicked();
 	 void saveCfgClicked();
 	 void itemChanged(QStandardItem * item);
 	 void editjobClicked();
@@ -87,6 +88,7 @@ private:
 	DigiFlip* digiflip;
 	zjTextEdit* noteEdit;
 	QPushButton* saveNote;
+	QPushButton* loadNote;
 	QPushButton* editjob;
 	QPushButton* resetStartTime;
 	QTimeEdit* startTime;

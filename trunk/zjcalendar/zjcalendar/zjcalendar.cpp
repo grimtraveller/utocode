@@ -95,10 +95,10 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 	eventIdx = mainTab->addTab(widgetEvent, QString("Event"));
 	widgetJob = new QWidget();
 	jobIdx = mainTab->addTab(widgetJob, QString("Job"));
-	widgetNote = new QWidget();
-	noteIdx = mainTab->addTab(widgetNote, QString("Note"));
 	cfg = new QWidget();
 	cfgIdx = mainTab->addTab(cfg, QString("Config"));
+	widgetNote = new QWidget();
+	noteIdx = mainTab->addTab(widgetNote, QString("Note"));
 
 
 
@@ -169,6 +169,10 @@ zjCalendar::zjCalendar(QWidget *parent, Qt::WFlags flags)
 		noteEdit->setPlainText(file.readAll());
 	}
 	file.close();
+	loadNote = new QPushButton;
+	loadNote->setText(tr("&load"));
+	connect(loadNote, SIGNAL(clicked()), this, SLOT(loadNoteClicked()));
+	LayoutNote->addWidget(loadNote, 9, 7);
 
 	saveNote = new QPushButton;
 	saveNote->setText(tr("&save"));
@@ -241,6 +245,7 @@ void zjCalendar::hideEvent(QHideEvent *event)
 
 void zjCalendar::closeEvent(QCloseEvent *event)
 {
+	_prompt = false;
 	hide();
 	event->ignore();
 }
@@ -254,7 +259,6 @@ void zjCalendar::iconActivated(QSystemTrayIcon::ActivationReason reason)
 	case QSystemTrayIcon::Trigger:
 		break;
 	case QSystemTrayIcon::DoubleClick:
-		_prompt = true;
 		showNormal();
 		break;
 	case QSystemTrayIcon::MiddleClick:
@@ -268,6 +272,7 @@ void zjCalendar::iconActivated(QSystemTrayIcon::ActivationReason reason)
 void zjCalendar::messageClicked()
 {
 	// show next task message
+	_prompt = false;
 	hide();
 }
 
@@ -416,6 +421,17 @@ void zjCalendar::mainTabSelected(const QString & tabname)
 
 }
 
+void zjCalendar::loadNoteClicked()
+{
+	QString fileNameNote = path->text(); 
+	QFile file(fileNameNote);
+	if (file.open(QFile::ReadOnly | QFile::Text))
+	{
+		noteEdit->setPlainText(file.readAll());
+	}
+	file.close();
+}
+
 void zjCalendar::saveNoteClicked()
 {
 	QString note = noteEdit->toPlainText();
@@ -472,20 +488,6 @@ void zjCalendar::addClosingTimeEvent()
 	DateTime date_time;
 	date_time.time = QTime::fromString(t, "hh:mm:ss");
 	events.editEvent(new_event_id, date_time, date_time, tr("下班时间到！！！"));
-#if 0 ///Z:test 
-	time = startTime->time();
-	new_event_id = events.addEvent();
-	time.setHMS(time.hour(), time.minute(), 0);
-	t = time.toString("hh:mm:00");
-	date_time.time = QTime::fromString(t, "hh:mm:ss");
-	events.editEvent(new_event_id, date_time, date_time, tr("test 1"));
-
-	new_event_id = events.addEvent();
-	time.setHMS(time.hour(), time.minute()+1, 0);
-	t = time.toString("hh:mm:00");
-	date_time.time = QTime::fromString(t, "hh:mm:ss");
-	events.editEvent(new_event_id, date_time, date_time, tr("test 2"));
-#endif ///Z:end
 }
 
 void zjCalendar::resetStartWorkTimeClicked()
@@ -533,6 +535,24 @@ void zjCalendar::loadEvents()
 	{
 
 	}
+#if 0 ///Z:test
+	int new_event_id = events.addEvent();
+	DateTime date_time;
+	QString t;
+	QTime time;
+	time = startTime->time();
+	new_event_id = events.addEvent();
+	time.setHMS(time.hour(), time.minute(), 0);
+	t = time.toString("hh:mm:00");
+	date_time.time = QTime::fromString(t, "hh:mm:ss");
+	events.editEvent(new_event_id, date_time, date_time, tr("test 1"));
+
+	new_event_id = events.addEvent();
+	time.setHMS(time.hour(), time.minute()+1, 0);
+	t = time.toString("hh:mm:00");
+	date_time.time = QTime::fromString(t, "hh:mm:ss");
+	events.editEvent(new_event_id, date_time, date_time, tr("test 2"));
+#endif ///Z:end
 
 	DateTime dt;
 	//dt.time = time;
