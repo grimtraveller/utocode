@@ -23,6 +23,9 @@
 2013.01.08 Choose to auto record start work or not.<br />\
 2013.01.12 Add Configure Dialog.Setting Digflip style.<br />\
 2013.01.13 Use zjCalendar Tray Icon<br />\
+2013.01.15 fix bug:dialog should be top,when event happens<br />\
+2013.01.15 replace Note tab and Config tab<br />\
+2013.01.15 add load event button<br />\
 <b>todo</b><br />	\
 <font color=\"red\">	\
 Reconstruct class event<br />	\
