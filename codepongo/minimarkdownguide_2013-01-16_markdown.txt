@@ -1,0 +1,137 @@
+<h1>Markdown Syntax Guide</h1>
+
+<h1>Title</h1>
+
+<pre><code>This is an Main Title
+=====================
+This is an Sub Title
+----------------------
+</code></pre>
+
+<h1>Section</h1>
+
+<ul>
+<li># This is an H1 #</li>
+<li>## This is an H2 ##</li>
+<li>### This is an H3 ##</li>
+<li>#### This is an H4 ####</li>
+<li>##### This is an H5 #####</li>
+<li>###### This is an H6 ######</li>
+</ul>
+
+<h1>List</h1>
+
+<pre><code>* 1
+
+    + 1-1
+
+        - 1-1-1
+
+        - 1-1-2
+
+    + 1-2
+* 2
+
+* 3
+
+    1. 3-1
+
+    2. 3-2
+</code></pre>
+
+<p>as:</p>
+
+<ul>
+<li>1
+<ul>
+<li>1-1
+<ul>
+<li>1-1-1</li>
+<li>1-1-2</li>
+</ul></li>
+<li>1-2</li>
+</ul></li>
+<li>2</li>
+<li>3
+<ol>
+<li>3-1</li>
+<li>3-2</li>
+</ol></li>
+</ul>
+
+<h1>important</h1>
+
+<ul>
+<li><em>*em*</em></li>
+<li><strong>**strong**</strong></li>
+</ul>
+
+<h1>link</h1>
+
+<ul>
+<li><p><a href="http://codepongo.com/" title="codepongo">This</a> is a reference-style link.</p>
+
+<p>[This][1] is a reference-style link.</p>
+
+<p>[1]: http://codepongo.com/ "codepongo"</p></li>
+<li><p><a href="http://www.baidu.com">This</a> is a link.</p>
+
+<p>[This](http://codepongo.com) is a link.</p></li>
+</ul>
+
+<h1>image</h1>
+
+<p>![alt=markdown.jpg](markdown.jpg)
+ <img src="/markdown.jpg" alt="alt=markdown.jpg" /></p>
+
+<h1>sample</h1>
+
+<hr />
+
+<h1>Mini Markdown Syntax Sample</h1>
+
+<h2>a Mini Markdown for Writing document myself</h2>
+
+<h1>Section One</h1>
+
+<p>This is a Section Contents.</p>
+
+<h1>Section Two</h1>
+
+<p>There is a list in this section.
+* 1
+    + 1-1
+        - 1-1-1
+        - 1-1-2
+    + 1-2
+* 2
+* 3
+    + 3-1
+    + 3-2</p>
+
+<h1>Section Three</h1>
+
+<p>there is a long long long long long long long long long long long long</p>
+
+<p>long long sentence in this section.</p>
+
+<h1>Section Four</h1>
+
+<ul>
+<li><p><a href="http://codepongo.com/" title="codepongo">This</a> is a reference-style link.</p></li>
+<li><p><a href="http://codepongo.com">This</a> is a link.</p></li>
+</ul>
+
+<h1>Section Five</h1>
+
+<p>An image is shown in this section.</p>
+
+<p><img src="/markdown.jpg" alt="alt=markdown.jpg" /></p>
+
+<p><a href="markdown.tw">Markdown zh_tw</a></p>
+
+<p><a href="https://github.com/trentm/python-markdown2">python markdown2</a></p>
+
+<p><a href="http://daringfireball.net/projects/markdown/syntax">Markdown syntax English</a></p>
+
+#html
