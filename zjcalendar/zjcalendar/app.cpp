@@ -115,10 +115,21 @@ App::App(int& argc, char** argv) : QApplication(argc, argv)
 void App::registerHotKey(WId wid)
 {
 	_wid = wid;
-	RegisterHotKey(_wid, hKeyWin[L], MOD_WIN, VK_LEFT);
-	RegisterHotKey(_wid, hKeyWin[R], MOD_WIN, VK_RIGHT);
-	RegisterHotKey(_wid, hKeyWin[U], MOD_WIN, VK_UP);
-	RegisterHotKey(_wid, hKeyWin[D], MOD_WIN, VK_DOWN);
+	if (QSysInfo::WindowsVersion < QSysInfo::WV_WINDOWS7)
+	{
+		RegisterHotKey(_wid, hKeyWin[L], MOD_WIN, VK_LEFT);
+		RegisterHotKey(_wid, hKeyWin[R], MOD_WIN, VK_RIGHT);
+		RegisterHotKey(_wid, hKeyWin[U], MOD_WIN, VK_UP);
+		RegisterHotKey(_wid, hKeyWin[D], MOD_WIN, VK_DOWN);
+	}
+	else
+	{
+		RegisterHotKey(_wid, hKeyWin[L], MOD_WIN|MOD_ALT, VK_LEFT);
+		RegisterHotKey(_wid, hKeyWin[R], MOD_WIN|MOD_ALT, VK_RIGHT);
+		RegisterHotKey(_wid, hKeyWin[U], MOD_WIN|MOD_ALT, VK_UP);
+		RegisterHotKey(_wid, hKeyWin[D], MOD_WIN|MOD_ALT, VK_DOWN);
+
+	}
 }
 
 App::~App()

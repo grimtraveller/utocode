@@ -260,6 +260,7 @@ void zjCalendar::iconActivated(QSystemTrayIcon::ActivationReason reason)
 		break;
 	case QSystemTrayIcon::DoubleClick:
 		showNormal();
+		SetForegroundWindow(winId());
 		break;
 	case QSystemTrayIcon::MiddleClick:
 		show();
