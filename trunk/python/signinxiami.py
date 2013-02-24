@@ -8,10 +8,11 @@ import HTMLParser
 
 post = {}
 host = 'http://www.xiami.com'
+user_agent = 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.57 Safari/537.17'
 def index(opener, url):
     """visit http://m.xiami.com"""
     post = {}
-    req = urllib2.Request(url)
+    req = urllib2.Request(url, headers={"User-Agent":user_agent})
     html = opener.open(req).read().decode('utf-8')
     class Index(HTMLParser.HTMLParser):
         def handle_starttag(self, tag, attrs):
@@ -36,7 +37,7 @@ def login(opener, post):
     data += 'password=' + urllib.quote(post['password']) + '&'
     data += 'LoginButton=' + urllib.quote(post['submit'].encode('utf-8'))
     try:
-        req = urllib2.Request(post['url'], data)
+        req = urllib2.Request(post['url'], data, headers={"User-Agent":user_agent})
     except urllib2.HTTPError, e:
         print 'login request is failed [errorno = %s]' % e.code
         exit(0)
@@ -78,7 +79,7 @@ def signin(opener, html):
             print('the url to signin is not found')
             exit(0)
     try:
-        req = urllib2.Request(host+signin[0])
+        req = urllib2.Request(host+signin[0], headers={"User-Agent":user_agent})
     except urllib2.HTTPError, e:
         print e.code
         exit(0)
@@ -93,7 +94,7 @@ def signin(opener, html):
 
 def logout(opener, url):
     """logout"""
-    req = urllib2.Request(url)
+    req = urllib2.Request(url, headers={"User-Agent":user_agent})
     html = opener.open(req).read()
     if html.find('退出') != -1:
         print 'logout is failed'
