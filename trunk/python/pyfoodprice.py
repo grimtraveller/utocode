@@ -12,7 +12,11 @@ class XiFaDi(object):
     def feed(self, url):
         req = urllib2.Request(url)
         content = urllib2.urlopen(req)
-        html = content.read().decode('gbk')
+        html = content.read()
+        try:
+            html = html.decode('gbk')
+        except:
+            pass
         price = {}
         class Parser(HTMLParser.HTMLParser):
             def __init__(self):
@@ -94,8 +98,10 @@ class XiFaDi(object):
                 if output == sys.stdout and sys.platform == 'win32':
                     print price[i][0], '=', price[i][1]
                 else:
-                    output.write(str(price[i][0].encode('utf-8'))+'='.encode('utf-8')+str(price[i][1])+os.linesep)
-
+                    try:
+                        output.write(str(price[i][0].encode('utf-8'))+'='.encode('utf-8')+str(price[i][1])+os.linesep)
+                    except:
+                        output.write(str(price[i][0])+'='+str(price[i][1])+os.linesep)
             output.write('===')
             if date != None:
                 output.write(date.encode('utf-8')+os.linesep)
@@ -254,7 +260,10 @@ def main():
             help()
             return 0
         if o in ('-o', '--output'):
-            output = open(a, 'wb')
+            if sys.platform == 'win32':
+                output = open(a, 'wb')
+            else:
+                output = open(a, 'w')
         if o in ('-a', '--all'):
             showall = True
     if showall:
