@@ -14,14 +14,18 @@ class Handler(ftpserver.FTPHandler):
             with open(name + '.txt', 'wb') as f:
                 html = markdown2.markdown(md)
                 html = html.replace('<img src="', '<img src="/')
-                f.write(html)
+                f.write(html.encode('utf-8'))
                 f.write('\n#html')
                 f.close()
+if len(sys.argv) == 5:
+    ip = sys.argv[4]
+else:
+    ip = ''
 authorizer = ftpserver.DummyAuthorizer()
 authorizer.add_user(sys.argv[1], sys.argv[2], sys.argv[3], perm="elradfmw")
 handler = Handler
 handler.authorizer = authorizer
 handler.timeout = 0
-address = ("", 21)
+address = (ip, 21)
 ftpd = ftpserver.FTPServer(address, handler)
 ftpd.serve_forever()
