@@ -8,7 +8,10 @@ def hashDir(directory):
     for dirpath, dirnames, filenames in os.walk(directory):
         for i in xrange(len(filenames)):
             full_name = os.path.join(dirpath, filenames[i])
-            relative_path = full_name[len(directory)+1:]
+            if directory[-1] == os.sep:
+                relative_path = full_name[len(directory):]
+            else:
+                relative_path = full_name[len(directory)+1:]
             with open(full_name) as f:
                 c = f.read()
                 f.close()
