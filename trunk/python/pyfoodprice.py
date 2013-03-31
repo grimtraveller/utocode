@@ -76,7 +76,7 @@ class XiFaDi(object):
             all = {}
             page = 1 
             while True:
-                url = ('http://web.xinfadi.com.cn/price/?mid=%s&page=%s') % (mid, page)
+                url = ('http://www.xinfadi.com.cn/price/?mid=%s&page=%s') % (mid, page)
                 finish, p, date = self.feed(url)
                 
                 if finish:
